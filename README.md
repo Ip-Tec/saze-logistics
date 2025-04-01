@@ -17,6 +17,17 @@ To prevent redundant code, the project follows a **monorepo** structure with sha
 saze-logistics/
 ├── apps/
 │   ├── web/                # Next.js App (Frontend + API Routes)
+│   │   ├── app/
+│   │   │   ├── (admin)
+│   │   │   ├── (rider)
+│   │   │   ├── (user)
+│   │   │   ├── (root)
+│   │   │   └── (vendor)
+│   │   ├── components/   # Reusable components
+│   │   │   ├── admin/
+│   │   │   ├── rider/
+│   │   │   ├── user/
+│   │   │   ├── vendor/
 │   │   ├── pages/
 │   │   │   ├── index.tsx   # Landing page
 │   │   │   ├── login.tsx   # Login page
