@@ -5,29 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="57b18a64-2133-4614-8baa-e440b9b92d25" name="Changes" comment="Read me update">
-      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/components/AnythingDelivered.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/components/DownloadApp.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/components/Footer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/components/Header.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/components/HeroSection.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/components/Vendors.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/public/images/bike.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/public/images/bike_.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/public/images/chef.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/public/images/groceries.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/public/images/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/public/images/map.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/public/images/on-the-way.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/web/tailwind.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/shared/Supabase_Schema.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/shared/supabase/calls.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/shared/supabase/client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/components/LetDoItTogether.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/public/images/mockup.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/components/DownloadApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/web/components/DownloadApp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/web/public/images/Untitled design.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +117,7 @@
       <workItem from="1743458445245" duration="2328000" />
       <workItem from="1743502922895" duration="287000" />
       <workItem from="1743507568782" duration="692000" />
+      <workItem from="1743521221642" duration="4696000" />
     </task>
     <servers />
   </component>
