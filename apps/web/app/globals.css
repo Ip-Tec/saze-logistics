@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --background: #0a0a0a;*/
+/*    --foreground: #ededed;*/
+/*  }*/
+/*}*/
+@layer components {
+  .bg-image {
+    @apply absolute inset-0 z-0 bg-cover bg-center opacity-85 ;
+    background-image: url('../public/images/map.jpg');
+  }
+}
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.shapeless-blob {
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 0, 0, 0.3); /* Semi-transparent */
+  border-radius: 50%; /* Starts as a circle */
+  filter: blur(50px); /* Makes edges soft and undefined */
+  backdrop-filter: blur(10px); /* Optional: blurs content behind */
+}
+.shapeless-organic {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(45deg, #ff00cc, #3333ff);
+  clip-path: polygon(
+          0% 20%, 10% 0%, 30% 15%, 50% 0%,
+          70% 10%, 90% 0%, 100% 30%, 80% 50%,
+          100% 70%, 60% 80%, 40% 100%, 20% 70%
+  );
+}
+
+.shapeless-liquid {
+  width: 300px;
+  height: 300px;
+  background: #2081E5;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: morph 8s infinite alternate;
+}
+
+.shapeless-liquid-hero {
+  background: #2081E5;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: morph 4s infinite alternate;
+}
+
+@keyframes morph {
+  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  100% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}

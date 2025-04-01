@@ -1,7 +1,8 @@
 # SazeLogistics App Structure
 
 ## Overview
-SazeLogistics is a logistics-based food ordering platform available on both web (Next.js) and mobile (Expo - React Native). The app includes four main roles:
+Saze Logistics is a logistics-based food ordering platform available on both web (Next.js) and mobile (Expo - React Native). The app includes four main roles:
+- 
 - **User** (Default role)
 - **Rider** (Registers separately, provides additional details)
 - **Vendor** (Registers separately, provides additional details)
@@ -13,27 +14,33 @@ To prevent redundant code, the project follows a **monorepo** structure with sha
 
 ## Folder Structure
 ```
-/sazelogistics-monorepo
-│── apps
-│   ├── web (Next.js)
-│   ├── mobile (Expo - React Native)
-│
-│── packages
-│   ├── shared (Common utilities, hooks, and components)
-│   │   ├── components
-│   │   ├── hooks
-│   │   ├── utils
-│   │   ├── types
-│
-│── backend (Node.js with Express or Fastify)
-│
-│── config
-│   ├── eslint
-│   ├── prettier
-│
-│── .gitignore
-│── package.json
-│── README.md
+saze-logistics/
+├── apps/
+│   ├── web/                # Next.js App (Frontend + API Routes)
+│   │   ├── pages/
+│   │   │   ├── index.tsx   # Landing page
+│   │   │   ├── login.tsx   # Login page
+│   │   │   └── api/
+│   │   │       └── auth/
+│   │   │           └── login.ts  # API route for login using Supabase
+│   │   ├── public/         # Public assets (images, etc.)
+│   │   ├── styles/         # CSS/SCSS files
+│   │   ├── .env.local      # Environment variables for Supabase
+│   │   └── package.json
+│   ├── mobile/             # Expo React Native App
+│   │   ├── App.tsx         # Main entry file
+│   │   ├── src/
+│   │   │   ├── screens/
+│   │   │   │   └── LoginScreen.tsx  # Login screen
+│   │   │   └── supabaseClient.ts    # Supabase client setup
+│   │   ├── app.json        # Expo configuration
+│   │   └── package.json
+├── packages/
+│   └── shared/             # Shared logic, types, utilities
+│       ├── auth.ts         # Common authentication helpers (if needed)
+│       └── types.ts        # Shared TypeScript types (User, Order, etc.)
+├── .gitignore
+└── package.json            # Root package.json for managing dependencies
 ```
 
 ---
@@ -50,7 +57,7 @@ To prevent redundant code, the project follows a **monorepo** structure with sha
 - Dynamic routing for user, rider, vendor, and admin dashboards.
 
 ### Mobile (Expo - React Native)
-- Uses Firebase Auth or a backend-based JWT system.
+- Uses Supabase Auth or a backend-based JWT system.
 - React Navigation for role-based screens.
 - Secure storage for tokens.
 
@@ -82,7 +89,7 @@ To prevent redundant code, the project follows a **monorepo** structure with sha
 ---
 
 ## Next Steps
-1. **Set up monorepo with Turborepo or NX**
+1. **Set up monorepo with Turborepo**
 2. **Implement authentication system**
 3. **Define API routes and database schema**
 4. **Develop role-based UI components**

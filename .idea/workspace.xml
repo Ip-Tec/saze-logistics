@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="57b18a64-2133-4614-8baa-e440b9b92d25" name="Changes" comment="Read me update">
+      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/components/AnythingDelivered.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/components/DownloadApp.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/components/Footer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/components/Header.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/components/HeroSection.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/components/Vendors.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/public/images/bike.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/public/images/bike_.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/public/images/chef.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/public/images/groceries.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/public/images/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/public/images/map.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/public/images/on-the-way.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/web/tailwind.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/shared/Supabase_Schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/shared/supabase/calls.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/shared/supabase/client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ip-Tec&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:Ip-Tec/saze-logistics.git&quot;,
+    &quot;accountId&quot;: &quot;94b68f2b-98e8-4aa5-aae3-702a90380ef8&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2v01NuS7v1KeubV1jdZ3h4UcZip" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Node.js.types.ts.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ChatTagsLlmMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyAccountHistoryMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyAccountsIdsRefresh&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyAssignOrphanedChatsToActiveAccount&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyConvertUrlToCodebaseName&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyHistoryLlmMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyMigrateChatHistory-v2&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyProjectSettingsMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.DeprecatedChatLlmMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ToggleCodyToolWindowAfterMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ip/Ip~Tec/saze-logistics&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/ip/Ip~Tec/saze-logistics/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/ip/Ip~Tec/saze-logistics/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/web/public/images" />
+      <recent name="$PROJECT_DIR$/apps/web/public" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-WS-243.26053.12" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="57b18a64-2133-4614-8baa-e440b9b92d25" name="Changes" comment="" />
+      <created>1743267149347</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743267149347</updated>
+      <workItem from="1743267149354" duration="1015000" />
+      <workItem from="1743268368482" duration="1076000" />
+      <workItem from="1743269498497" duration="3095000" />
+      <workItem from="1743279467500" duration="8134000" />
+      <workItem from="1743289810307" duration="1714000" />
+      <workItem from="1743293234365" duration="3647000" />
+      <workItem from="1743327270026" duration="48000" />
+      <workItem from="1743327354517" duration="2517000" />
+      <workItem from="1743330395588" duration="2764000" />
+      <workItem from="1743361229135" duration="1088000" />
+      <workItem from="1743364035470" duration="8763000" />
+      <workItem from="1743375154701" duration="1261000" />
+      <workItem from="1743406085579" duration="7806000" />
+      <workItem from="1743416840429" duration="8880000" />
+      <workItem from="1743446340235" duration="2713000" />
+      <workItem from="1743452260119" duration="2993000" />
+      <workItem from="1743456484724" duration="1125000" />
+      <workItem from="1743458445245" duration="2328000" />
+      <workItem from="1743502922895" duration="287000" />
+      <workItem from="1743507568782" duration="692000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Read me update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Read me update" />
+  </component>
+</project>
