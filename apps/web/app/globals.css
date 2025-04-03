@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --foreground-default: 0deg 0% 98%;
 }
 
 @theme inline {
@@ -20,8 +21,8 @@
 /*}*/
 @layer components {
   .bg-image {
-    @apply absolute inset-0 z-0 bg-cover bg-center opacity-85 ;
-    background-image: url('../public/images/map.jpg');
+    @apply absolute inset-0 z-0 bg-cover bg-center opacity-85;
+    background-image: url("../public/images/map.jpg");
   }
 }
 body {
@@ -38,32 +39,53 @@ body {
   filter: blur(50px); /* Makes edges soft and undefined */
   backdrop-filter: blur(10px); /* Optional: blurs content behind */
 }
+
 .shapeless-organic {
   width: 300px;
   height: 300px;
   background: linear-gradient(45deg, #ff00cc, #3333ff);
   clip-path: polygon(
-          0% 20%, 10% 0%, 30% 15%, 50% 0%,
-          70% 10%, 90% 0%, 100% 30%, 80% 50%,
-          100% 70%, 60% 80%, 40% 100%, 20% 70%
+    0% 20%,
+    10% 0%,
+    30% 15%,
+    50% 0%,
+    70% 10%,
+    90% 0%,
+    100% 30%,
+    80% 50%,
+    100% 70%,
+    60% 80%,
+    40% 100%,
+    20% 70%
   );
 }
 
 .shapeless-liquid {
   width: 300px;
   height: 300px;
-  background: #2081E5;
+  background: #2081e5;
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   animation: morph 8s infinite alternate;
 }
 
 .shapeless-liquid-hero {
-  background: #2081E5;
+  background: #2081e5;
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: morph 4s infinite alternate;
+}
+.text-foreground {
+  --tw-text-opacity: 1;
+  color: hsl(var(--foreground-default) / var(--tw-text-opacity));
+}
+.move {
   animation: morph 4s infinite alternate;
 }
 
 @keyframes morph {
-  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-  100% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  100% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
 }

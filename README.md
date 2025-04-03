@@ -18,6 +18,10 @@ saze-logistics/
 ├── apps/
 │   ├── web/                # Next.js App (Frontend + API Routes)
 │   │   ├── app/
+|   |   ├── ├── api/
+|   |   |   |  ├── auth/
+|   |   |   |  |  ├── [...nextanth]/
+│   │   │   |  |  |  ├── router.ts
 │   │   │   ├── (admin)
 │   │   │   ├── (rider)
 │   │   │   ├── (user)

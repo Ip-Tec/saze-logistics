@@ -1,6 +1,7 @@
 {
   "name": "saze-logistics",
   "version": "1.0.0",
+  "packageManager": "npm@10.8.2",
   "description": "Saze Logistics is a logistics-based food ordering platform available on both web (Next.js) and mobile (Expo - React Native). The app includes four main roles: - **User** (Default role) - **Rider** (Registers separately, provides additional details) - **Vendor** (Registers separately, provides additional details) - **Admin** (Has additional tools like support and media management)",
   "main": "index.js",
   "workspaces": [
@@ -8,7 +9,11 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "testit": "echo \"Error: no test specified\" && exit 1",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test"
   },
   "repository": {
     "type": "git",
@@ -17,7 +22,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/Ip-Tec/saze-logistics/issues"
   },
@@ -25,11 +30,13 @@
   "homepage": "https://github.com/Ip-Tec/saze-logistics#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
-    "framer-motion": "^12.6.2"
+    "framer-motion": "^12.6.2",
+    "react-native-heroicons": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^9.23.0",
     "prettier": "^3.5.3",
+    "turbo": "^2.4.4",
     "typescript": "^5.8.2"
   }
 }
