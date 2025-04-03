@@ -3,12 +3,14 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
-import AuthCard from "@/components/AuthCard";
-import GoogleIcon from "@mui/icons-material/Google";
-import { useAuthContext } from "@/context/AuthContext";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { toast, ToastContainer } from "react-toastify";
+import AuthCard from "@/components/AuthCard";
+import GoogleIcon from "@mui/icons-material/Google";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useAuthContext } from "@/context/AuthContext";
 
 const roleDetails = {
   user: {
@@ -23,6 +25,13 @@ const roleDetails = {
     title: "Rider Registration",
     description: "Sign up to deliver food and earn money.",
   },
+};
+
+type RegisterFormValues = {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
 };
 
 const Register: React.FC = () => {
@@ -41,36 +50,38 @@ const Register: React.FC = () => {
     }
   }, [searchParams]);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-  });
+  // Initialize react-hook-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormValues>();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: RegisterFormValues) => {
     if (!role) {
-      alert("Please select a role.");
+      toast.error("Please select a role.");
       return;
     }
+
     try {
       await registerUser(
-        formData.name,
-        formData.email,
-        formData.phone,
-        formData.password,
+        data.name,
+        data.email,
+        data.phone,
+        data.password,
         role
       );
-      router.push("/dashboard");
-    } catch (error) {
-      console.error("Registration failed:", error);
+      toast.success("Registration successful! Redirecting...");
+
+      // Determine the correct dashboard based on role
+      let dashboardPath = "/";
+      if (role === "user") dashboardPath = "/(root)/user/";
+      else if (role === "vendor") dashboardPath = "/(root)/vendor/";
+      else if (role === "rider") dashboardPath = "/(root)/rider/";
+
+      setTimeout(() => router.push(dashboardPath), 2000);
+    } catch (error: any) {
+      toast.error(error.message || "Registration failed. Please try again.");
     }
   };
 
@@ -89,20 +100,15 @@ const Register: React.FC = () => {
 
         {!role && (
           <div className="mb-4">
-            <label
-              htmlFor="role"
-              className="block text-gray-700 font-semibold mb-2"
-            >
+            <label className="block text-gray-700 font-semibold mb-2">
               Select Role:
             </label>
             <select
-              id="role"
-              name="role"
               value={role}
               onChange={(e) =>
                 setRole(e.target.value as keyof typeof roleDetails)
               }
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
             >
               <option value="">-- Choose Role --</option>
               {Object.keys(roleDetails).map((key) => (
@@ -115,23 +121,26 @@ const Register: React.FC = () => {
         )}
 
         {role && (
-          <div className="space-y-4">
+          <div className="space-y-2 relative">
             <button
               onClick={() => setRole("")}
-              className="flex items-center absolute top-10 text-blue-500 hover:text-blue-700 mb-4"
+              className="flex items-center cursor-pointer absolute -top-[12rem] left-0 text-blue-500 hover:text-blue-700"
+              aria-label="Change Role"
             >
-              <ArrowBackIcon className="mr-2" /> Change Role
+              <ArrowBackIcon className="mr-2" />
             </button>
+
             <button
               onClick={handleGoogleSignIn}
-              className="w-full flex items-center justify-center space-x-2 text-white cursor-pointer bg-gray-500 px-6 py-3 rounded-lg shadow-md group hover:bg-red-600 transition duration-300 mt-2"
+              className="w-full flex items-center justify-center space-x-2 text-white bg-red-500 px-6 py-3 rounded-lg shadow-md hover:bg-gray-600 transition duration-300 mt-8 hover:cursor-pointer"
             >
-              <GoogleIcon className="text-white w-6 h-6 transition-colors duration-300 group-hover:text-white" />
+              <GoogleIcon className="text-white w-6 h-6" />
               <span>Continue with Google</span>
             </button>
+
             <div className="relative p-2">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-gray-500"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="bg-white/40 rounded-full backdrop-blur-3xl px-2 text-sm">
@@ -140,126 +149,112 @@ const Register: React.FC = () => {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-gray-500 text-sm pt-2 font-semibold"
-                >
-                  {" "}
-                  <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*'] ...">
-                    Full Name:
-                  </span>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <label className="block">
+                <span className="text-gray-700">Full Name:</span>
+                <input
+                  type="text"
+                  {...register("name", { required: "Full Name is required." })}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-blue-400"
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name.message}</p>
+                )}
+              </label>
+
+              <div className="flex gap-2">
+                {" "}
+                <label className="">
+                  <span className="text-gray-700">Email Address:</span>
                   <input
-                    id="name"
-                    type="text"
-                    name="name"
-                    placeholder="Full Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    type="email"
+                    {...register("email", {
+                      required: "Email is required.",
+                      pattern: {
+                        value: /^\S+@\S+\.\S+$/,
+                        message: "Invalid email format.",
+                      },
+                    })}
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-blue-400"
                   />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </p>
+                  )}
+                </label>
+                <label className="">
+                  <span className="text-gray-700">Phone Number:</span>
+                  <input
+                    type="tel"
+                    {...register("phone", {
+                      required: "Phone Number is required.",
+                      pattern: {
+                        value: /^\d+$/,
+                        message: "Phone number must contain only digits.",
+                      },
+                    })}
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-blue-400"
+                  />
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm">
+                      {errors.phone.message}
+                    </p>
+                  )}
                 </label>
               </div>
 
-              <div className="flex gap-3">
-                <div className="w-full">
-                  <label
-                    htmlFor="email"
-                    className="block text-gray-500 text-sm pt-2 font-semibold"
+              <label className="relative">
+                <span className="text-gray-700">Password:</span>
+                <div className="relative w-full">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    {...register("password", {
+                      required: "Password is required.",
+                      minLength: {
+                        value: 6,
+                        message: "Must be at least 6 characters.",
+                      },
+                    })}
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-blue-400"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+                    aria-label="Toggle password visibility"
                   >
-                    <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*'] ...">
-                      Email Address
-                    </span>
-
-                    <input
-                      id="email"
-                      type="email"
-                      name="email"
-                      placeholder="Email Address"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
-                  </label>
+                    {showPassword ? (
+                      <EyeSlashIcon className="w-5 h-5" />
+                    ) : (
+                      <EyeIcon className="w-5 h-5" />
+                    )}
+                  </button>
                 </div>
-
-                <div className="w-full">
-                  <label
-                    htmlFor="phone"
-                    className="block text-gray-500 text-sm pt-2 font-semibold"
-                  >
-                    <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*'] ...">
-                      Phone Number:
-                    </span>
-                    <input
-                      id="phone"
-                      type="tel"
-                      name="phone"
-                      placeholder="Phone Number"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-gray-500 text-sm pt-2 font-semibold"
-                >
-                  <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*']">
-                    Password
-                  </span>
-                  <div className="relative w-full">
-                    <input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      placeholder="Password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
-                    >
-                      {showPassword ? (
-                        <EyeSlashIcon className="w-5 h-5" />
-                      ) : (
-                        <EyeIcon className="w-5 h-5" />
-                      )}
-                    </button>
-                  </div>
-                </label>
-              </div>
+                {errors.password ? (
+                  <p className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
+                ) : (
+                  <p className="text-gray-500 text-sm">
+                    Must be at least 6 characters
+                  </p>
+                )}
+              </label>
 
               <button
                 type="submit"
-                className="w-full cursor-pointer bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-yellow-500 transition duration-300 mt-2"
+                disabled={isSubmitting}
+                className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:cursor-pointer hover:bg-gradient-to-r hover:fromblue-500 hover:to-yellow-500 transition duration-300 mt-2"
               >
-                Register
+                {isSubmitting ? "Registering..." : "Register"}
               </button>
             </form>
+            <p>I have an account <Link href="/auth/login" className="text-blue-500">Login</Link> </p>
           </div>
         )}
 
-        <div className="text-justify text-gray-500 mt-4">
-          <p>
-            Already have an account?{" "}
-            <Link href="/auth/login" className="text-blue-500">
-              Login
-            </Link>
-          </p>
-        </div>
+        <ToastContainer />
       </AuthCard>
     </div>
   );

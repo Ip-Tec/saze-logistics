@@ -10,9 +10,18 @@ import React, {
 import { signIn, signOut, useSession } from "next-auth/react";
 import { supabase } from "@shared/supabaseClient";
 
-// Define context interface
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  secondPhone?: string;
+  role: string;
+  created_at: string;
+}
+
 interface AuthContextProps {
-  user: any;
+  user: UserProfile | null;
   signIn: typeof signIn;
   signOut: typeof signOut;
   registerUser: (
@@ -21,9 +30,12 @@ interface AuthContextProps {
     phone: string,
     password: string,
     role: string
-  ) => Promise<any>;
-  loginUser: (email: string, password: string) => Promise<any>;
-  forgotPassword: (email: string) => Promise<any>;
+  ) => Promise<void>;
+  loginUser: (email: string, password: string) => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (password: string) => Promise<void>;
+  changePhoneNumber: (newPhone: string) => Promise<void>;
+  getUserProfile: () => Promise<UserProfile | null>;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -32,10 +44,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const { data: session } = useSession();
-  const [user, setUser] = useState<any>(session?.user || null);
+  const [user, setUser] = useState<UserProfile | null>(null);
 
   useEffect(() => {
-    setUser(session?.user || null);
+    if (session?.user) {
+      getUserProfile().then(setUser);
+    } else {
+      setUser(null);
+    }
   }, [session]);
 
   /** REGISTER USER */
@@ -49,12 +65,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: { name, role },
-      },
     });
+
     if (error) throw new Error(error.message);
-    return data;
+
+    if (data.user) {
+      const { error: profileError } = await supabase.from("profiles").insert([
+        {
+          id: data.user.id,
+          name,
+          phone,
+          role,
+        },
+      ]);
+
+      if (profileError) throw new Error(profileError.message);
+    }
   };
 
   /** LOGIN USER */
@@ -63,8 +89,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       email,
       password,
     });
+
     if (error) throw new Error(error.message);
-    return data;
+    setUser(await getUserProfile());
   };
 
   /** FORGOT PASSWORD */
@@ -72,19 +99,76 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
+
     if (error) throw new Error(error.message);
+  };
+
+  /** RESET PASSWORD */
+  const resetPassword = async (password: string) => {
+    const { error } = await supabase.auth.updateUser({
+      password,
+    });
+
+    if (error) throw new Error(error.message);
+  };
+
+  /** CHANGE PHONE NUMBER */
+  const changePhoneNumber = async (newPhone: string) => {
+    if (!user) throw new Error("User not authenticated");
+
+    const { error } = await supabase
+      .from("profiles")
+      .update({ phone: newPhone })
+      .eq("id", user.id);
+
+    if (error) throw new Error(error.message);
+
+    setUser(await getUserProfile());
+  };
+
+  /** GET USER PROFILE */
+  const getUserProfile = async (): Promise<UserProfile | null> => {
+    const { data: userData, error: authError } = await supabase.auth.getUser();
+    if (authError || !userData?.user) {
+      console.error("Error fetching authenticated user:", authError?.message);
+      return null;
+    }
+
+    const userId = userData.user.id;
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, name, email, phone, secondPhone, role, created_at")
+      .eq("id", userId)
+      .single();
+
+    if (error) {
+      console.error("Error fetching user profile:", error.message);
+      return null;
+    }
+
+    return data;
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, signIn, signOut, registerUser, loginUser, forgotPassword }}
+      value={{
+        user,
+        signIn,
+        signOut,
+        registerUser,
+        loginUser,
+        forgotPassword,
+        resetPassword,
+        changePhoneNumber,
+        getUserProfile,
+      }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Custom hook for using auth context
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (!context) {

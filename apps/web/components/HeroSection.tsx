@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Bike from "@/public/images/bike_.png";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -29,9 +30,14 @@ const HeroSection = () => {
             <strong>Amala & Ewedu, Pepper Soup,</strong> or even Chinese or
             Lebanese favorites? We have got you covered!
           </p>
-          <button className="mt-6 px-6 py-3 bg-yellow-400 text-white rounded-lg shadow-md hover:bg-yellow-500 font-semibold">
-            ORDER NOW
-          </button>
+          <div className="flex">
+            <Link
+              href={"/order/"}
+              className="mt-10 px-6 py-3 bg-yellow-400 text-white rounded-lg shadow-md hover:bg-yellow-500 font-semibold"
+            >
+              ORDER NOW
+            </Link>
+          </div>
         </div>
 
         {/* Right Content - Image */}
@@ -54,6 +60,7 @@ const HeroSection = () => {
       >
         <path
           fill="#FFF"
+          className="fill-white border-none"
           fillOpacity="1"
           d="M0,192L48,213.3C96,235,192,277,288,277.3C384,277,480,235,576,186.7C672,139,768,85,864,90.7C960,96,1056,160,1152,160C1248,160,1344,96,1392,64L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
         ></path>

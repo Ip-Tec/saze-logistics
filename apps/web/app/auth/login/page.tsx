@@ -20,8 +20,8 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await loginUser(formData.email, formData.password);
-      router.push("/dashboard");
+      const data = await loginUser(formData.email, formData.password);
+      router.push("/(root)/");
     } catch (error) {
       console.error("Login failed:", error);
     }

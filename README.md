@@ -20,13 +20,18 @@ saze-logistics/
 │   │   ├── app/
 |   |   ├── ├── api/
 |   |   |   |  ├── auth/
-|   |   |   |  |  ├── [...nextanth]/
-│   │   │   |  |  |  ├── router.ts
-│   │   │   ├── (admin)
-│   │   │   ├── (rider)
-│   │   │   ├── (user)
-│   │   │   ├── (root)
-│   │   │   └── (vendor)
+|   |   |   |  |   ├── [...nextanth]/
+│   │   │   |  |   |    └── router.ts
+│   │   │   ├── (root)/
+|   |   |   |   |   └── page.tsx
+│   │   │   │   ├── admin/
+|   |   |   |   |    └── page.tsx
+│   │   │   │   ├── rider/
+|   |   |   |   |    └── page.tsx
+│   │   │   │   ├── user/
+|   |   |   |   |    └── page.tsx
+│   │   │   │   └── vendor/
+|   |   |   |       └── page.tsx
 │   │   ├── components/   # Reusable components
 │   │   │   ├── admin/
 │   │   │   ├── rider/

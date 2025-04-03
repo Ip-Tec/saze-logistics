@@ -24,7 +24,7 @@ const AuthCard: React.FC<AuthCardProps> = ({ title, children }) => {
           alt="Logo"
           width={100}
           height={100}
-          className="mx-auto mb-2"
+          className="mx-auto"
         />
         {title && (
           <h2 className="text-2xl font-bold text-center mb-4">{title}</h2>
