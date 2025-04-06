@@ -18,20 +18,20 @@ saze-logistics/
 ├── apps/
 │   ├── web/                # Next.js App (Frontend + API Routes)
 │   │   ├── app/
-|   |   ├── ├── api/
-|   |   |   |  ├── auth/
-|   |   |   |  |   ├── [...nextanth]/
-│   │   │   |  |   |    └── router.ts
+│   │   ├── ├── api/
+│   │   │   │   ├── auth/
+│   │   │   │   │   └── [...nextanth]/
+│   │   │   │   │               └──  router.ts
 │   │   │   ├── (root)/
-|   |   |   |   |   └── page.tsx
+│   │   │   │   │   └── page.tsx
 │   │   │   │   ├── admin/
-|   |   |   |   |    └── page.tsx
+│   │   │   │   │    └── page.tsx
 │   │   │   │   ├── rider/
-|   |   |   |   |    └── page.tsx
+│   │   │   │   │    └── page.tsx
 │   │   │   │   ├── user/
-|   |   |   |   |    └── page.tsx
+│   │   │   │   │    └── page.tsx
 │   │   │   │   └── vendor/
-|   |   |   |       └── page.tsx
+│   │   │   │       └── page.tsx
 │   │   ├── components/   # Reusable components
 │   │   │   ├── admin/
 │   │   │   ├── rider/

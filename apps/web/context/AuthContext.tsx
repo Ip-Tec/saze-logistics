@@ -7,8 +7,9 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { supabase } from "@shared/supabaseClient";
+import { useRouter, usePathname } from "next/navigation";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 interface UserProfile {
   id: string;
@@ -45,14 +46,39 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const { data: session } = useSession();
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [isMounted, setIsMounted] = useState(false); // To track if the component is mounted
+  const router = useRouter();
+  const pathname = usePathname();
+  const publicRoutes = [
+    "/",
+    "/auth/*",
+    "/login",
+    "/auth/register",
+    "/auth/forgot-password",
+  ];
 
   useEffect(() => {
+    setIsMounted(true); // Mark the component as mounted when the effect runs
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return; // Skip the logic until the component is mounted
     if (session?.user) {
       getUserProfile().then(setUser);
     } else {
       setUser(null);
     }
-  }, [session]);
+  }, [session, isMounted]);
+
+  // Automatically redirect to login if user is not authenticated
+  useEffect(() => {
+    // Don't redirect if already authenticated or during initial render
+    if (!isMounted || user) return;
+    // Rmove Public route for been redirected to the login page
+    if (!publicRoutes.includes(pathname)) {
+      router.push("/auth/login");
+    }
+  }, [user, isMounted, pathname, router]);
 
   /** REGISTER USER */
   const registerUser = async (
@@ -66,21 +92,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       email,
       password,
     });
-
+    console.log({ data, error });
     if (error) throw new Error(error.message);
 
-    if (data.user) {
-      const { error: profileError } = await supabase.from("profiles").insert([
-        {
-          id: data.user.id,
-          name,
-          phone,
-          role,
-        },
-      ]);
+    // if (data.user) {
+    //   const { error: profileError } = await supabase.from("profiles").insert([
+    //     {
+    //       id: data.user.id,
+    //       name,
+    //       phone,
+    //       role,
+    //     },
+    //   ]);
 
-      if (profileError) throw new Error(profileError.message);
-    }
+    //   console.log({ data, error });
+    //   if (profileError) throw new Error(profileError.message);
+    // }
   };
 
   /** LOGIN USER */

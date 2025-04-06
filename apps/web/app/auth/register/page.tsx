@@ -75,12 +75,13 @@ const Register: React.FC = () => {
 
       // Determine the correct dashboard based on role
       let dashboardPath = "/";
-      if (role === "user") dashboardPath = "/(root)/user/";
-      else if (role === "vendor") dashboardPath = "/(root)/vendor/";
-      else if (role === "rider") dashboardPath = "/(root)/rider/";
+      if (role === "user") dashboardPath = "/users/";
+      else if (role === "vendor") dashboardPath = "/vendors/";
+      else if (role === "rider") dashboardPath = "/riders/";
 
       setTimeout(() => router.push(dashboardPath), 2000);
     } catch (error: any) {
+      console.log({error})
       toast.error(error.message || "Registration failed. Please try again.");
     }
   };
