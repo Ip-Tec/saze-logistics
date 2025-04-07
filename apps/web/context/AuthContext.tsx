@@ -1,5 +1,4 @@
 "use client";
-
 import React, {
   createContext,
   ReactNode,
@@ -37,6 +36,7 @@ interface AuthContextProps {
   resetPassword: (password: string) => Promise<void>;
   changePhoneNumber: (newPhone: string) => Promise<void>;
   getUserProfile: () => Promise<UserProfile | null>;
+  resendConfirmationEmail: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -46,7 +46,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const { data: session } = useSession();
   const [user, setUser] = useState<UserProfile | null>(null);
-  const [isMounted, setIsMounted] = useState(false); // To track if the component is mounted
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const publicRoutes = [
@@ -58,11 +58,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   ];
 
   useEffect(() => {
-    setIsMounted(true); // Mark the component as mounted when the effect runs
+    setIsMounted(true);
   }, []);
 
   useEffect(() => {
-    if (!isMounted) return; // Skip the logic until the component is mounted
+    if (!isMounted) return;
     if (session?.user) {
       getUserProfile().then(setUser);
     } else {
@@ -70,11 +70,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [session, isMounted]);
 
-  // Automatically redirect to login if user is not authenticated
   useEffect(() => {
-    // Don't redirect if already authenticated or during initial render
     if (!isMounted || user) return;
-    // Rmove Public route for been redirected to the login page
     if (!publicRoutes.includes(pathname)) {
       router.push("/auth/login");
     }
@@ -88,26 +85,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     password: string,
     role: string
   ) => {
+    // Store pending email so we know where to resend confirmation if needed.
+    localStorage.setItem("pending-confirmation-email", email);
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: { role },
+        emailRedirectTo: process.env.NEXT_PUBLIC_BASE_URL + "/complete-signup",
+      },
     });
     console.log({ data, error });
     if (error) throw new Error(error.message);
 
-    // if (data.user) {
-    //   const { error: profileError } = await supabase.from("profiles").insert([
-    //     {
-    //       id: data.user.id,
-    //       name,
-    //       phone,
-    //       role,
-    //     },
-    //   ]);
-
-    //   console.log({ data, error });
-    //   if (profileError) throw new Error(profileError.message);
-    // }
+    // Do NOT create the profile row yet.
+    // That will be done after the user confirms their email and signs in.
   };
 
   /** LOGIN USER */
@@ -116,7 +108,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       email,
       password,
     });
-
     if (error) throw new Error(error.message);
     setUser(await getUserProfile());
   };
@@ -126,7 +117,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
-
     if (error) throw new Error(error.message);
   };
 
@@ -135,21 +125,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     const { error } = await supabase.auth.updateUser({
       password,
     });
-
     if (error) throw new Error(error.message);
   };
 
   /** CHANGE PHONE NUMBER */
   const changePhoneNumber = async (newPhone: string) => {
     if (!user) throw new Error("User not authenticated");
-
     const { error } = await supabase
       .from("profiles")
       .update({ phone: newPhone })
       .eq("id", user.id);
-
     if (error) throw new Error(error.message);
-
     setUser(await getUserProfile());
   };
 
@@ -160,21 +146,36 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       console.error("Error fetching authenticated user:", authError?.message);
       return null;
     }
-
     const userId = userData.user.id;
-
     const { data, error } = await supabase
       .from("profiles")
       .select("id, name, email, phone, secondPhone, role, created_at")
       .eq("id", userId)
       .single();
-
     if (error) {
       console.error("Error fetching user profile:", error.message);
       return null;
     }
-
     return data;
+  };
+
+  /** RESEND CONFIRMATION EMAIL */
+  const resendConfirmationEmail = async () => {
+    const email = localStorage.getItem("pending-confirmation-email");
+    if (!email) {
+      throw new Error(
+        "No pending confirmation email found. Please try logging in."
+      );
+    }
+    // This call uses signUp as a workaround. In production, you might implement a dedicated endpoint.
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password: "dummyPassword", // Using a dummy value; in production consider a secure approach
+      options: {
+        emailRedirectTo: process.env.NEXT_PUBLIC_BASE_URL + "/auth/complete-signup",
+      },
+    });
+    if (error) throw new Error(error.message);
   };
 
   return (
@@ -189,6 +190,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         resetPassword,
         changePhoneNumber,
         getUserProfile,
+        resendConfirmationEmail,
       }}
     >
       {children}

@@ -71,15 +71,13 @@ export default function RegisterContent() {
         data.password,
         role
       );
-      toast.success("Registration successful! Redirecting...");
+      toast.success(
+        "Registration successful! Please check your email to confirm your account."
+      );
 
-      // Determine the correct dashboard based on role
-      let dashboardPath = "/";
-      if (role === "user") dashboardPath = "/users/";
-      else if (role === "vendor") dashboardPath = "/vendors/";
-      else if (role === "rider") dashboardPath = "/riders/";
-
-      setTimeout(() => router.push(dashboardPath), 2000);
+      // Instead of sending the user to a dashboard immediately,
+      // redirect them to a confirmation page.
+      setTimeout(() => router.push("/auth/confirm-email"), 2000);
     } catch (error: any) {
       console.log({ error });
       toast.error(error.message || "Registration failed. Please try again.");

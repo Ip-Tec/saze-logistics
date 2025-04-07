@@ -1,11 +1,12 @@
 "use client"; // This ensures it's a client-side component
 
 import React from "react";
-import { useAuthContext } from "@/context/AuthContext";  // Ensure correct path to AuthContext
+import { useAuthContext } from "@/context/AuthContext"; // Ensure correct path to AuthContext
 import VendorMenuPage from "@/components/vendor/VendorMenuPage";
+import UserOrderPage from "./UserOrderPage";
 
 const UserPage = () => {
-  const { user } = useAuthContext();  // Fetch user from context
+  const { user } = useAuthContext(); // Fetch user from context
 
   return (
     <>
@@ -23,6 +24,7 @@ const UserPage = () => {
         <p>Loading user information...</p>
       )}
       <VendorMenuPage />
+      <UserOrderPage />
     </>
   );
 };

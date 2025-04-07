@@ -38,7 +38,40 @@ const authOptions = {
   }),
   secret: process.env.NEXTAUTH_SECRET!,
   callbacks: {
-    async session({ session, user }: { session: any; user: any }) {
+    // This callback runs when a user signs in.
+    async signIn({ user, account, profile }: any) {
+      if (account.provider === "google") {
+        // Check if a profile row exists for this user.
+        const { data: existingProfile, error: fetchError } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .maybeSingle();
+
+        if (!existingProfile) {
+          // If not, create the profile row.
+          const { error: insertError } = await supabase
+            .from("profiles")
+            .insert([
+              {
+                id: user.id,
+                name: user.name || profile?.name || "Google User",
+                email: user.email,
+                phone: "", // You may not get a phone number from Google, so default to an empty string.
+                role: "user", // Set a default role for OAuth users; adjust as needed.
+              },
+            ]);
+          if (insertError) {
+            console.error("Error creating profile:", insertError.message);
+            // Returning false denies sign-in. You could also choose to let the sign-in proceed.
+            return false;
+          }
+        }
+      }
+      return true;
+    },
+    async session({ session, user }: any) {
+      // Make sure the session includes the user id.
       session.user.id = user.id;
       return session;
     },
