@@ -1,4 +1,4 @@
-import NextAuth, { User } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { SupabaseAdapter } from "@next-auth/supabase-adapter";
@@ -9,7 +9,7 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY!
 );
 
-export const authOptions = {
+const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -23,8 +23,10 @@ export const authOptions = {
       },
       async authorize(credentials) {
         const { email, password } = credentials!;
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
         if (error) throw new Error(error.message);
         return data.user;
       },
@@ -44,4 +46,5 @@ export const authOptions = {
 };
 
 const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };
