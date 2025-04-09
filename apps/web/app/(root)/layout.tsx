@@ -2,8 +2,6 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { SessionProvider } from "next-auth/react";
-import { AuthProvider } from "@/context/AuthContext";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -29,11 +27,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         repeatType: "reverse", // Alternate between the gradients
       }}
     >
-      <div>
-        <SessionProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </SessionProvider>
-      </div>
+      <div>{children}</div>
     </motion.div>
   );
 };

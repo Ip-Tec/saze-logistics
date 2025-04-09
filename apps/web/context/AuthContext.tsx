@@ -15,7 +15,7 @@ interface UserProfile {
   name: string;
   email: string;
   phone: string;
-  secondPhone?: string;
+  second_phone?: string;
   role: string;
   created_at: string;
 }
@@ -31,7 +31,7 @@ interface AuthContextProps {
     password: string,
     role: string
   ) => Promise<void>;
-  loginUser: (email: string, password: string) => Promise<void>;
+  loginUser: (email: string, password: string) => Promise<UserProfile>;
   forgotPassword: (email: string) => Promise<void>;
   resetPassword: (password: string) => Promise<void>;
   changePhoneNumber: (newPhone: string) => Promise<void>;
@@ -51,11 +51,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const pathname = usePathname();
   const publicRoutes = [
     "/",
+    "/auth",
     "/auth/*",
-    "/login",
+    "/auth/login",
     "/auth/register",
+    "/auth/confirm-email",
     "/auth/forgot-password",
   ];
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   useEffect(() => {
     setIsMounted(true);
@@ -63,19 +66,31 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     if (!isMounted) return;
+
+    // If session exists, fetch profile, then turn off loading
     if (session?.user) {
-      getUserProfile().then(setUser);
+      getUserProfile().then((u) => {
+        setUser(u);
+        setIsCheckingAuth(false);
+      });
     } else {
-      setUser(null);
+      setIsCheckingAuth(false);
     }
   }, [session, isMounted]);
 
   useEffect(() => {
-    if (!isMounted || user) return;
-    if (!publicRoutes.includes(pathname)) {
+    // Don’t redirect while we’re still checking auth
+    if (isCheckingAuth || user) return;
+
+    const isPublic = publicRoutes.some((publicRoute) =>
+      publicRoute.endsWith("/*")
+        ? pathname.startsWith(publicRoute.replace("/*", ""))
+        : pathname === publicRoute
+    );
+    if (!isPublic) {
       router.push("/auth/login");
     }
-  }, [user, isMounted, pathname, router]);
+  }, [user, isMounted, isCheckingAuth, pathname, router]);
 
   /** REGISTER USER */
   const registerUser = async (
@@ -85,31 +100,40 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     password: string,
     role: string
   ) => {
-    // Store pending email so we know where to resend confirmation if needed.
     localStorage.setItem("pending-confirmation-email", email);
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: { role },
-        emailRedirectTo: process.env.NEXT_PUBLIC_BASE_URL + "/complete-signup",
+        data: { name, phone, role },
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/complete-signup`,
       },
     });
-    console.log({ data, error });
-    if (error) throw new Error(error.message);
 
-    // Do NOT create the profile row yet.
-    // That will be done after the user confirms their email and signs in.
+    if (error) throw new Error(error.message);
   };
 
   /** LOGIN USER */
-  const loginUser = async (email: string, password: string) => {
+  const loginUser = async (
+    email: string,
+    password: string
+  ): Promise<UserProfile> => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+    console.log({ data, error });
+
     if (error) throw new Error(error.message);
-    setUser(await getUserProfile());
+
+    const profile = await getUserProfile();
+    console.log({ profile });
+    if (!profile) {
+      throw new Error("Profile not found after login");
+    }
+    setUser(profile);
+    return profile;
   };
 
   /** FORGOT PASSWORD */
@@ -144,14 +168,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     const { data: userData, error: authError } = await supabase.auth.getUser();
     if (authError || !userData?.user) {
       console.error("Error fetching authenticated user:", authError?.message);
+      throw new Error(
+        authError?.message || "Error fetching authenticated user"
+      );
       return null;
     }
     const userId = userData.user.id;
     const { data, error } = await supabase
       .from("profiles")
-      .select("id, name, email, phone, secondPhone, role, created_at")
+      .select("*")
       .eq("id", userId)
       .single();
+
+    console.log({ data, error });
     if (error) {
       console.error("Error fetching user profile:", error.message);
       return null;
@@ -172,7 +201,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       email,
       password: "dummyPassword", // Using a dummy value; in production consider a secure approach
       options: {
-        emailRedirectTo: process.env.NEXT_PUBLIC_BASE_URL + "/auth/complete-signup",
+        emailRedirectTo:
+          process.env.NEXT_PUBLIC_BASE_URL + "/auth/complete-signup",
       },
     });
     if (error) throw new Error(error.message);

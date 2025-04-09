@@ -32,6 +32,7 @@
     "@react-google-maps/api": "^2.20.6",
     "@supabase/supabase-js": "^2.49.4",
     "framer-motion": "^12.6.2",
+    "rate-limiter-flexible": "^7.0.0",
     "react-native-heroicons": "^4.0.0"
   },
   "devDependencies": {
