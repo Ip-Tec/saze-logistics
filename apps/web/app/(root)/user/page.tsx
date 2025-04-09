@@ -17,7 +17,7 @@ const UserPage = () => {
           <p>Email: {user?.email}</p>
           <p>Phone: {user?.phone}</p>
           <p>Role: {user?.role}</p>
-          <p>Second Phone: {user?.secondPhone}</p>
+          <p>Second Phone: {user?.second_phone}</p>
           <p>Created At: {user?.created_at}</p>
         </div>
       ) : (

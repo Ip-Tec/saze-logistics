@@ -76,7 +76,7 @@ const VendorMenuPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-10">
-      <div className="max-w-4xl mx-auto">
+      <div className="mx-auto">
         {/* Header */}
         <div className="mb-10 text-center">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">

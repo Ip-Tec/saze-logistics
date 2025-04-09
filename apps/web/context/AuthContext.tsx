@@ -44,7 +44,7 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
@@ -60,37 +60,43 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   ];
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
+  const checkSupabaseSession = async () => {
+    const { data, error } = await supabase.auth.getSession();
+    return data?.session;
+  };
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
-    if (!isMounted) return;
+    const init = async () => {
+      const currentSession = await checkSupabaseSession();
 
-    // If session exists, fetch profile, then turn off loading
-    if (session?.user) {
-      getUserProfile().then((u) => {
-        setUser(u);
-        setIsCheckingAuth(false);
-      });
-    } else {
+      if (currentSession) {
+        const profile = await getUserProfile();
+        setUser(profile);
+      }
+
       setIsCheckingAuth(false);
-    }
-  }, [session, isMounted]);
+    };
+
+    init();
+  }, []);
 
   useEffect(() => {
-    // Don’t redirect while we’re still checking auth
-    if (isCheckingAuth || user) return;
+    if (isCheckingAuth) return;
 
-    const isPublic = publicRoutes.some((publicRoute) =>
-      publicRoute.endsWith("/*")
-        ? pathname.startsWith(publicRoute.replace("/*", ""))
-        : pathname === publicRoute
+    const isPublic = publicRoutes.some((route) =>
+      route.endsWith("/*")
+        ? pathname.startsWith(route.replace("/*", ""))
+        : pathname === route
     );
-    if (!isPublic) {
+
+    if (!isPublic && !user) {
       router.push("/auth/login");
     }
-  }, [user, isMounted, isCheckingAuth, pathname, router]);
+  }, [user, isCheckingAuth, pathname, router]);
 
   /** REGISTER USER */
   const registerUser = async (

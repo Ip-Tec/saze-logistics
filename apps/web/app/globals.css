@@ -89,3 +89,15 @@ body {
     border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
   }
 }
+
+.glass {
+  width: 100%;
+  margin: 1rem;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: center;
+  background: "rgba(255, 255, 255, 0.2)"; /* Light transparent white background */
+  backdrop-filter: "blur(10px)"; /* Blur the background to create the glass effect */
+  border-radius: "10px"; /* Optional: Add rounded corners to the glass effect */
+}
