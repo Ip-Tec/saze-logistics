@@ -23,7 +23,6 @@ const UserPage = () => {
       ) : (
         <p>Loading user information...</p>
       )}
-      <VendorMenuPage />
       <UserOrderPage />
     </>
   );

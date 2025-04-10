@@ -13,7 +13,7 @@ const HeroSection = () => {
         {/* Left Content */}
         <div className="md:w-1/2 text-justify md:text-left">
           <div className="inline-block px-4 py-2 bg-black text-white rounded-full text-sm font-semibold">
-            Saze
+            Sazee
           </div>
           <h1 className="text-5xl font-extrabold text-primary mt-4">
             Delivery

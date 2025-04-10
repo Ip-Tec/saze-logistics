@@ -19,7 +19,7 @@ const DownloadApp = () => {
       <div className="rounded-lg p-8 text-center">
         <h3 className="text-3xl font-bold mb-4">Download the app</h3>
         <p className="text-lg mb-8">
-          Order anything and track it in real time with the Saze app.
+          Order anything and track it in real time with the Sazee app.
         </p>
         <div className="flex items-center justify-center space-x-4">
           <button className="bg-gradient-to-br from-yellow-200 to-blue-500 px-6 py-3 rounded-lg shadow-md hover:bg-gray-200 transition duration-300 cursor-pointer">
@@ -31,7 +31,7 @@ const DownloadApp = () => {
         </div>
       </div>
       <div className="flex flex-col items-center justify-center max-h-1/2">
-        <Image src={MockUp} alt="Saze app icon" className="w-auto h-auto" />
+        <Image src={MockUp} alt="Sazee app icon" className="w-auto h-auto" />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
-# SazeLogistics App Structure
+# Sazee Logistics App Structure
 
 ## Overview
-Saze Logistics is a logistics-based food ordering platform available on both web (Next.js) and mobile (Expo - React Native). The app includes four main roles:
+Sazee Logistics is a logistics-based food ordering platform available on both web (Next.js) and mobile (Expo - React Native). The app includes four main roles:
 - 
 - **User** (Default role)
 - **Rider** (Registers separately, provides additional details)
