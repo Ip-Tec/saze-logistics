@@ -54,7 +54,7 @@ export default function VendorSettingsPage() {
       <h1 className="text-2xl font-bold">Vendor Settings</h1>
 
       {/* Profile Section */}
-      <section className="bg-white p-6 shadow rounded space-y-6">
+      <section className="rounded-2xl bg-white/10 p-5 backdrop-blur border border-white/20 shadow-md space-y-6">
         <h2 className="text-xl font-semibold">Business Info</h2>
 
         <div>
@@ -118,7 +118,7 @@ export default function VendorSettingsPage() {
       </section>
 
       {/* Password Section */}
-      <section className="bg-white p-6 shadow rounded space-y-6">
+      <section className="rounded-2xl bg-white/10 p-5 backdrop-blur border border-white/20 shadow-md space-y-6">
         <h2 className="text-xl font-semibold">Change Password</h2>
 
         <div>

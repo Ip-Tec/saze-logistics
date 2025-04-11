@@ -84,7 +84,7 @@ const VendorOrdersPage: React.FC = () => {
       {list.map((order) => (
         <div
           key={order.id}
-          className="bg-white shadow rounded-lg p-4 border border-gray-200"
+          className="rounded-2xl bg-white/10 p-5 backdrop-blur border border-white/20 shadow-md"
         >
           <div className="flex justify-between items-center mb-2">
             <span className="font-semibold text-lg">#{order.id}</span>
