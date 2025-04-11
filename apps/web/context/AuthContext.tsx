@@ -7,8 +7,8 @@ import React, {
   useState,
 } from "react";
 import { supabase } from "@shared/supabaseClient";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
-import { signIn, signOut, useSession } from "next-auth/react";
 
 interface UserProfile {
   id: string;
@@ -23,7 +23,7 @@ interface UserProfile {
 interface AuthContextProps {
   user: UserProfile | null;
   signIn: typeof signIn;
-  signOut: typeof signOut;
+  signOut: () => Promise<void>;
   registerUser: (
     name: string,
     email: string,
@@ -142,6 +142,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     return profile;
   };
 
+  /** LOGOUT USER */
+  const customSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      throw new Error(error?.message || "Error signing out:");
+      return;
+    }
+    setUser(null); // Clear context state
+    router.push("/auth/login"); // Redirect after logout
+  };
+
   /** FORGOT PASSWORD */
   const forgotPassword = async (email: string) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -219,7 +230,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         user,
         signIn,
-        signOut,
+        signOut: customSignOut,
         registerUser,
         loginUser,
         forgotPassword,

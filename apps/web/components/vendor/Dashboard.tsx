@@ -32,8 +32,8 @@ export default function VendorDashboard() {
   }, []);
 
   return (
-    <div className="p-6 flex items-center justify-center gap-4 glass w-full h-full">
-      <div className="p-6 flex flex-col gap-4 glass w-full h-full">
+    <div className="p-6 flex items-center justify-center gap-4 w-full h-full">
+      <div className="p-6 flex flex-col gap-4 w-full h-full">
         {/* Cards */}
         <div className="flex md:grid-cols-3 gap-4">
           <div className="rounded-2xl bg-white/10 p-5 backdrop-blur border border-white/20 shadow-md">
