@@ -15,7 +15,7 @@ interface Role {
 
 const roles: Role[] = [
   {
-    title: "User",
+    title: "Customer",
     image: Person2,
     description: "Sign up to order delicious meals from your favorite vendors.",
   },
