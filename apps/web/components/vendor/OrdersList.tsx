@@ -1,3 +1,5 @@
+import GlassDiv from "../ui/GlassDiv";
+
 export default function OredrList() {
   return (
     <div className="w-[400px] h-full overflow-y-auto rounded-2xl bg-white/10 p-6 backdrop-blur border border-white/20 shadow-md flex flex-col gap-4 scroll-bar">
@@ -38,13 +40,13 @@ export default function OredrList() {
           status: "Delivered",
         },
       ].map((order, index) => (
-        <div
+        <GlassDiv
           key={index}
-          className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10"
+          className="flex items-center justify-between p-4 rounded-xl !bg-white/70 !text-black border border-white/10"
         >
           <div>
-            <p className="text-white text-sm font-medium">{order.customer}</p>
-            <p className="text-gray-400 text-xs">#{order.id}</p>
+            <p className="text-black text-sm font-medium">{order.customer}</p>
+            <p className="text-gray-900 text-xs">#{order.id}</p>
           </div>
           <div className="text-right">
             <p className="text-green-300 font-semibold text-sm">
@@ -53,18 +55,18 @@ export default function OredrList() {
             <span
               className={`text-xs px-2 py-0.5 rounded-full ${
                 order.status === "Delivered"
-                  ? "bg-green-600/30 text-green-300"
+                  ? "bg-green-600 text-green-300"
                   : order.status === "Pending"
-                    ? "bg-yellow-600/30 text-yellow-300"
+                    ? "bg-yellow-600 text-yellow-300"
                     : order.status === "Cancelled"
-                      ? "bg-red-600/30 text-red-300"
-                      : "bg-blue-600/30 text-blue-300"
+                      ? "bg-red-600 text-red-300"
+                      : "bg-blue-600 text-blue-300"
               }`}
             >
               {order.status}
             </span>
           </div>
-        </div>
+        </GlassDiv>
       ))}
     </div>
   );

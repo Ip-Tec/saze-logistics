@@ -101,3 +101,27 @@ body {
   backdrop-filter: "blur(10px)"; /* Blur the background to create the glass effect */
   border-radius: "10px"; /* Optional: Add rounded corners to the glass effect */
 }
+
+/* styles/glass-scrollbar.css */
+
+.glass-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.glass-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05); /* Light transparent bg */
+  backdrop-filter: blur(10px); /* Glass blur */
+  border-radius: 10px;
+}
+
+.glass-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3); /* Frosty thumb */
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+

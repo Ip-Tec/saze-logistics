@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { BaseUser as User, Rider, Vendor } from "@shared/types"; // optional: type safety if you have types defined
+import GlassDiv from "@/components/ui/GlassDiv";
+import GlassButton from "@/components/ui/GlassButton";
 
 const mockUser = {
   name: "John Doe",
@@ -23,7 +25,7 @@ const UserProfile = () => {
     <div className="min-h-screen bg-gray-50 px-4 py-10">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-6 space-y-10">
         {/* Profile Header */}
-        <div className="flex items-center gap-4">
+        <GlassDiv className="flex items-center gap-4">
           <img
             src={mockUser.avatar}
             alt={mockUser.name}
@@ -34,11 +36,11 @@ const UserProfile = () => {
             <p className="text-gray-500">{mockUser.email}</p>
           </div>
           <div className="ml-auto">
-            <button className="text-sm text-yellow-500 hover:underline">
+            <GlassButton className="text-sm text-yellow-500 hover:underline">
               Edit Profile
-            </button>
+            </GlassButton>
           </div>
-        </div>
+        </GlassDiv>
 
         {/* Order History */}
         <div>
@@ -84,9 +86,9 @@ const UserProfile = () => {
                   <p className="font-medium">{address.label}</p>
                   <p className="text-sm text-gray-500">{address.details}</p>
                 </div>
-                <button className="text-sm text-yellow-500 hover:underline">
+                <GlassButton className="text-sm text-yellow-500 hover:underline">
                   Edit
-                </button>
+                </GlassButton>
               </li>
             ))}
           </ul>
@@ -94,9 +96,9 @@ const UserProfile = () => {
 
         {/* Logout */}
         <div className="text-center">
-          <button className="text-red-500 font-medium hover:underline">
+          <GlassButton className="text-red-500 font-medium hover:underline">
             Logout
-          </button>
+          </GlassButton>
         </div>
       </div>
     </div>
