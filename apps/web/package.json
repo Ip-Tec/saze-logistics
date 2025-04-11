@@ -17,6 +17,7 @@
     "@next-auth/supabase-adapter": "^0.2.1",
     "@sentry/nextjs": "^9.11.0",
     "@supabase/supabase-js": "^2.49.4",
+    "lucide-react": "^0.487.0",
     "next": "15.2.4",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",

@@ -1,8 +1,12 @@
 "use client";
 
+import GlassDiv from "@/components/ui/GlassDiv";
 import React, { useState } from "react";
+import { PencilIcon, SaveIcon } from "lucide-react";
 
 export default function VendorSettingsPage() {
+  const [editing, setEditing] = useState(false);
+
   const [name, setName] = useState("My Delicious Kitchen");
   const [description, setDescription] = useState(
     "We serve the best meals in town."
@@ -16,6 +20,8 @@ export default function VendorSettingsPage() {
 
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
+
+  const toggleEdit = () => setEditing(!editing);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -33,7 +39,7 @@ export default function VendorSettingsPage() {
       contact,
       image,
     });
-    // Send to API or local storage
+    setEditing(false);
   };
 
   const handlePasswordChange = () => {
@@ -46,118 +52,183 @@ export default function VendorSettingsPage() {
       currentPassword,
       newPassword,
     });
-    // Send to API
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto space-y-10">
+    <div className="p-6 mx-auto space-y-10 !text-white">
       <h1 className="text-2xl font-bold">Vendor Settings</h1>
 
-      {/* Profile Section */}
-      <section className="rounded-2xl bg-white/10 p-5 backdrop-blur border border-white/20 shadow-md space-y-6">
-        <h2 className="text-xl font-semibold">Business Info</h2>
+      {/* Profile Group */}
+      <div className=" flex flex-wrap items-center justify-between gap-3 !overflow-auto">
+        <GlassDiv className="rounded-2xl bg-white/10 p-5 backdrop-blur border border-white/20 shadow-md space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-semibold">Business Info</h2>
+              <p className="text-sm text-gray-300">
+                Your public-facing vendor profile.
+              </p>
+            </div>
+            <button
+              onClick={toggleEdit}
+              className="text-sm text-blue-500 hover:underline flex items-center gap-1"
+            >
+              {editing ? <SaveIcon size={16} /> : <PencilIcon size={16} />}
+              {editing ? "Save" : "Edit"}
+            </button>
+          </div>
 
-        <div>
-          <label className="block font-medium mb-1">Business Name</label>
-          <input
-            type="text"
-            className="w-full border p-2 rounded"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+          {editing ? (
+            <>
+              <Input label="Business Name" value={name} onChange={setName} />
+              <TextArea
+                label="Description"
+                value={description}
+                onChange={setDescription}
+              />
+              <Input label="Address" value={address} onChange={setAddress} />
+              <Input label="Contact" value={contact} onChange={setContact} />
 
-        <div>
-          <label className="block font-medium mb-1">Description</label>
-          <textarea
-            className="w-full border p-2 rounded"
-            rows={3}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label className="block font-medium mb-1">Address</label>
-          <input
-            type="text"
-            className="w-full border p-2 rounded"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label className="block font-medium mb-1">Contact</label>
-          <input
-            type="text"
-            className="w-full border p-2 rounded"
-            value={contact}
-            onChange={(e) => setContact(e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label className="block font-medium mb-1">Business Image</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-          {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="mt-2 w-full max-h-48 object-cover rounded"
-            />
+              <div>
+                <label className="block font-medium mb-1">Business Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
+                {imagePreview && (
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="mt-2 w-full max-h-48 object-cover rounded"
+                  />
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="space-y-2 text-gray-100">
+              <InfoItem label="Business Name" value={name} />
+              <InfoItem label="Description" value={description} />
+              <InfoItem label="Address" value={address} />
+              <InfoItem label="Contact" value={contact} />
+              {imagePreview && (
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="mt-2 w-full max-h-48 object-cover rounded"
+                />
+              )}
+            </div>
           )}
-        </div>
+        </GlassDiv>
 
-        <button
-          className="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700"
-          onClick={handleUpdateProfile}
-        >
-          Update Business Info
-        </button>
-      </section>
+        {/* Password Group */}
+        <GlassDiv className="rounded-2xl bg-white/10 p-5 backdrop-blur border border-white/20 shadow-md space-y-6">
+          <h2 className="text-xl font-semibold">Change Password</h2>
+          <p className="text-sm text-gray-300 mb-3">
+            Update your password to keep your account secure.
+          </p>
 
-      {/* Password Section */}
-      <section className="rounded-2xl bg-white/10 p-5 backdrop-blur border border-white/20 shadow-md space-y-6">
-        <h2 className="text-xl font-semibold">Change Password</h2>
-
-        <div>
-          <label className="block font-medium mb-1">Current Password</label>
-          <input
-            type="password"
-            className="w-full border p-2 rounded"
+          <InputPassword
+            label="Current Password"
             value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
+            onChange={setCurrentPassword}
           />
-        </div>
-
-        <div>
-          <label className="block font-medium mb-1">New Password</label>
-          <input
-            type="password"
-            className="w-full border p-2 rounded"
+          <InputPassword
+            label="New Password"
             value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            onChange={setNewPassword}
           />
-        </div>
-
-        <div>
-          <label className="block font-medium mb-1">Confirm New Password</label>
-          <input
-            type="password"
-            className="w-full border p-2 rounded"
+          <InputPassword
+            label="Confirm New Password"
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={setConfirmPassword}
           />
-        </div>
 
-        <button
-          className="bg-red-600 text-white py-2 px-6 rounded hover:bg-red-700"
-          onClick={handlePasswordChange}
-        >
-          Change Password
-        </button>
-      </section>
+          <button
+            className="bg-red-600 text-white py-2 px-6 rounded hover:bg-red-700"
+            onClick={handlePasswordChange}
+          >
+            Change Password
+          </button>
+        </GlassDiv>
+      </div>
+    </div>
+  );
+}
+
+// ------------------ Reusable UI components ------------------
+
+function Input({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <label className="block font-medium mb-1">{label}</label>
+      <input
+        type="text"
+        className="w-full border p-2 rounded bg-white/5 text-white"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function InputPassword({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <label className="block font-medium mb-1">{label}</label>
+      <input
+        type="password"
+        className="w-full border p-2 rounded bg-white/5 text-white"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function TextArea({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <label className="block font-medium mb-1">{label}</label>
+      <textarea
+        className="w-full border p-2 rounded bg-white/5 text-white"
+        rows={3}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function InfoItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-sm font-medium text-white">{label}</p>
+      <p className="text-gray-300">{value}</p>
     </div>
   );
 }

@@ -1,8 +1,7 @@
 "use client";
 
-import Dashboard from "@/components/vendor/Dashboard";
-import VendorMenuManager from "@/components/vendor/VendorMenuManager";
 import React, { useState } from "react";
+import Dashboard from "@/components/vendor/Dashboard";
 
 interface Order {
   id: string;

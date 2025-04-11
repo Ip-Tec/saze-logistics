@@ -1,5 +1,7 @@
 "use client";
 
+import GlassButton from "@/components/ui/GlassButton";
+import GlassDiv from "@/components/ui/GlassDiv";
 import React, { useState } from "react";
 
 type Order = {
@@ -82,9 +84,9 @@ const VendorOrdersPage: React.FC = () => {
   const renderOrders = (list: Order[]) => (
     <div className="flex flex-wrap items-left gap-4 mt-4">
       {list.map((order) => (
-        <div
+        <GlassDiv
           key={order.id}
-          className="rounded-2xl bg-white/10 p-5 backdrop-blur border border-white/20 shadow-md"
+          className="rounded-2xl overflow-hidden"
         >
           <div className="flex justify-between items-center mb-2">
             <span className="font-semibold text-lg">#{order.id}</span>
@@ -114,7 +116,7 @@ const VendorOrdersPage: React.FC = () => {
               </button>
             </div>
           )}
-        </div>
+        </GlassDiv>
       ))}
     </div>
   );
@@ -127,11 +129,11 @@ const VendorOrdersPage: React.FC = () => {
       <div className="flex space-x-4 mb-4">
         {(["incoming", "current", "completed"] as (keyof OrdersData)[]).map(
           (tab) => (
-            <button
+            <GlassButton
               key={tab}
               className={`px-4 py-2 rounded ${
                 activeTab === tab
-                  ? "bg-black text-white"
+                  ? "!bg-black text-white"
                   : "bg-gray-200 text-gray-700"
               }`}
               onClick={() => setActiveTab(tab)}
@@ -141,7 +143,7 @@ const VendorOrdersPage: React.FC = () => {
                 : tab === "current"
                   ? "In Progress"
                   : "Completed"}
-            </button>
+            </GlassButton>
           )
         )}
       </div>

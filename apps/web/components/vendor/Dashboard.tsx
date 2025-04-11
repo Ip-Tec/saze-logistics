@@ -96,8 +96,8 @@ export default function VendorDashboard() {
                     ]
               }
             >
-              <XAxis dataKey="date" stroke="#ccc" />
-              <YAxis stroke="#ccc" />
+              <XAxis dataKey="date" stroke="#fff" />
+              <YAxis stroke="#fff" />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "#333",
