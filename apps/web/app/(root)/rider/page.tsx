@@ -1,11 +1,8 @@
 import React from "react";
+import RiderDashboard from "@/components/rider/RiderDashboard"
 
 const RiderPage = () => {
-  return (
-    <>
-      <h2>Rider Page</h2>
-    </>
-  );
+  return <RiderDashboard />;
 };
 
-export default RiderPage
+export default RiderPage;
