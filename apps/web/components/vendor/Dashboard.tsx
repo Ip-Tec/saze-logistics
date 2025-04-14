@@ -110,7 +110,7 @@ export default function VendorDashboard() {
               <Line
                 type="monotone"
                 dataKey="value"
-                stroke={activeChart === "revenue" ? "#4ADE80" : "#60A5FA"}
+                stroke={activeChart === "revenue" ? "#4ADE80" : "#FF6900"}
                 strokeWidth={3}
               />
             </LineChart>

@@ -11,7 +11,7 @@ export default function RiderLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="p-8 h-full w-full bg-gradient-to-br from-blue-100 via-gray-50 to-green-50 flex items-center justify-center relative overflow-hidden">
+    <div className="p-8 h-auto w-full bg-gradient-to-br from-blue-100 via-gray-50 to-green-50 flex items-center justify-center relative !overflow-hidden">
       {/* Winding road path with 3 bends */}
       {/* Sample SVG tree (simplified) */}
       <svg

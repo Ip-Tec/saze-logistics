@@ -2,8 +2,8 @@ import GlassDiv from "../ui/GlassDiv";
 
 export default function RiderOrderList() {
   return (
-    <div className="w-[400px] h-full overflow-y-auto rounded-2xl bg-white/10 p-6 backdrop-blur border border-white/20 shadow-md flex flex-col gap-4 scroll-bar">
-      <h2 className="text-white font-semibold text-lg mb-2 p-3">
+    <div className="w-[400px] h-full overflow-y-auto rounded-2xl bg-white/10 p-6 backdrop-blur border border-white/20 shadow-md flex flex-col gap-4 glass-scrollbar">
+      <h2 className="text-orange-500 font-semibold text-lg mb-2 p-3">
         Recent Rider Deliveries
       </h2>
 
