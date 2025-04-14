@@ -6,10 +6,8 @@ import { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import QuantityPicker from "@/components/ui/QuantityPicker";
 
-export default function FoodDetailPage(props: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = use(props.params);
+export default function FoodDetailPage({params}: { params: { id: string }}) {
+  const { id } = params;
 
   const { cart, addToCart, updateQuantity, removeFromCart } = useCart();
   const [quantity, setQuantity] = useState(0);
