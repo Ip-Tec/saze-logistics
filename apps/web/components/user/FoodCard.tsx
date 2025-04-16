@@ -7,17 +7,19 @@ import Food from "@/public/images/Pepper_Soup-removebg-preview.png";
 interface FoodCardProps {
   id: string;
   image: string;
-  title: string;
+  name: string;
   vendor: string;
-  price: number;
+  price: number | string;
+  description?: string;
 }
 
 export const FoodCard: React.FC<FoodCardProps> = ({
   id,
   image,
-  title,
+  name,
   vendor,
   price,
+  description,
 }) => {
   return (
     <Link href={`/user/food/${id}`}>
@@ -27,12 +29,15 @@ export const FoodCard: React.FC<FoodCardProps> = ({
           width={100}
           height={100}
           className="w-full h-52 object-cover rounded-xl"
-          alt={title}
+          alt={name}
         />
         <GlassDiv className="w-full absolute bottom-0">
-          <h3 className="font-medium text-sm">{title}</h3>
+          <h3 className="font-medium text-sm">{name}</h3>
           <p className="text-xs text-gray-500">{vendor}</p>
           <p className="text-orange-600 text-sm font-semibold">₦{price}</p>
+          {description ? (
+            <p className="text-xs text-gray-500">{description}</p>
+          ) : null}
         </GlassDiv>
       </GlassDiv>
     </Link>

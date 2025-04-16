@@ -1,0 +1,147 @@
+
+> saze-logistics@0.1.0 dev
+> next dev --turbopack
+
+[@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
+   ▲ Next.js 15.2.4 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.56.1:3000
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+[@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
+[@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
+[@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
+Slow filesystem detected. If C:\Users\Ip\Documents\saze-logistics\apps\web\.next is a network drive, consider moving it to a local folder. If you have an antivirus enabled, consider excluding your project directory.
+ ⚠ Webpack is configured while Turbopack is not, which may cause problems.
+ ⚠ See instructions if you need to configure Turbopack:
+ ✓ Ready in 64.9s
+ ○ Compiling /user/food/[id] ...
+ ✓ Compiled /user/food/[id] in 76s
+ GET /user/food/food-0 200 in 82082ms
+ ○ Compiling /_not-found/page ...
+ ✓ Compiled /_not-found/page in 3.7s
+ GET /sample-food.jpg 404 in 3987ms
+  https://nextjs.org/docs/app/api-reference/next-config-js/turbo
+
+ ○ Compiling /favicon.ico ...
+Error: Route "/user/food/[id]" used `params.id`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at FoodDetailPage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/user/food/%5Bid%5D/page.tsx:10:10)
+   8 |
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 9560ms
+ ✓ Compiled /favicon.ico in 13.1s
+ GET /api/auth/session 200 in 15273ms
+   9 | export default function FoodDetailPage({params}: { params: { id: string }}) {
+> 10 |   const { id } = params;
+     |          ^
+ GET /user/food/food-0 200 in 998ms
+  11 |
+ GET /sample-food.jpg 404 in 345ms
+  12 |   const { cart, addToCart, updateQuantity, removeFromCart } = useCart();
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 618ms
+ GET /api/auth/session 200 in 623ms
+  13 |   const [quantity, setQuantity] = useState(0);
+ ○ Compiling /user/profile ...
+ ⨯ The requested resource isn't a valid image for /sample-food.jpg received text/html; charset=utf-8
+Error: Route "/user/food/[id]" used `params.id`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+ ✓ Compiled /user/profile in 5.9s
+ GET /user/profile 200 in 6252ms
+    at FoodDetailPage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/user/food/%5Bid%5D/page.tsx:10:10)
+   8 |
+   9 | export default function FoodDetailPage({params}: { params: { id: string }}) {
+ ○ Compiling /user/cart ...
+> 10 |   const { id } = params;
+ ✓ Compiled /user/cart in 5.3s
+     |          ^
+ GET /user/cart 200 in 5640ms
+ GET /user/orders 404 in 377ms
+ GET /user/orders 404 in 688ms
+ GET /api/auth/session 200 in 315ms
+ GET /user/cart 200 in 478ms
+ GET /api/auth/session 200 in 536ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 6.4s
+ GET /user 200 in 6674ms
+ GET /user-avatar.png 404 in 547ms
+  11 |
+ ○ Compiling /user/restaurant ...
+ ✓ Compiled /user/restaurant in 7.2s
+  12 |   const { cart, addToCart, updateQuantity, removeFromCart } = useCart();
+ GET /user/restaurant 200 in 7815ms
+  13 |   const [quantity, setQuantity] = useState(0);
+ GET /user/restaurant 200 in 4034ms
+ ⨯ The requested resource isn't a valid image for /sample-food.jpg received text/html; charset=utf-8
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 3162ms
+ GET /api/auth/session 200 in 2422ms
+ ✓ Compiled in 45.5s
+ ✓ Compiled in 1164ms
+ ⨯ The requested resource isn't a valid image for /user-avatar.png received text/html; charset=utf-8
+ ✓ Compiled in 218.1s
+ ⨯ ./apps/web/app/(root)/user/restaurant/page.tsx:1:10
+Ecmascript file had an error
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m { useState } [36mfrom[39m [32m"react"[39m[33m;[39m[0m
+[0m [90m   |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 2 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 3 |[39m[0m
+[0m [90m 4 |[39m [36minterface[39m [33mRestaurant[39m {[0m
+
+You're importing a component that needs `useState`. This React hook only works in a client component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+
+
+
+ ○ Compiling /_error ...
+ GET /user/restaurant 500 in 349227ms
+ GET /favicon.ico 500 in 1338ms
+ ✓ Compiled /_error in 198.3s
+ ○ Compiling /user/restaurant ...
+ ✓ Compiled in 4.8s
+ ✓ Compiled /user/restaurant in 1024ms
+ GET /user/restaurant 200 in 5586ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 973ms
+ GET /api/auth/session 200 in 1673ms
+ ✓ Compiled in 523ms
+ ✓ Compiled in 558ms
+ ✓ Compiled in 274ms
+ ✓ Compiled in 266ms
+ ✓ Compiled in 343ms
+ ✓ Compiled in 361ms
+ ✓ Compiled in 408ms
+ ✓ Compiled in 993ms
+ ✓ Compiled in 381ms
+ ✓ Compiled in 455ms
+ ✓ Compiled in 365ms
+ ✓ Compiled in 230ms
+ ✓ Compiled in 417ms
+ ✓ Compiled in 304ms
+ ✓ Compiled in 345ms
+ ✓ Compiled in 348ms
+ ✓ Compiled in 269ms
+ ✓ Compiled in 308ms
+ ○ Compiling /user/restaurant/[id] ...
+ ✓ Compiled /user/restaurant/[id] in 30.6s
+Error: Route "/user/restaurant/[id]" used `params.id`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at RestaurantDetailPage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/user/restaurant/%5Bid%5D/page.tsx:16:66)
+  14 |   return (
+  15 |     <div className="p-4">
+> 16 |       <h1 className="text-2xl font-bold mb-2">Restaurant: {params.id}</h1>
+     |                                                                  ^
+  17 |       <Image
+  18 |         src={Reimage}
+  19 |         width={100}
+ GET /user/restaurant/4 200 in 38687ms
+ ✓ Compiled in 1380ms
+ ○ Compiling /user/restaurant/[id] ...
+ ✓ Compiled /user/restaurant/[id] in 884ms
+Error: Route "/user/restaurant/[id]" used `params.id`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at RestaurantMenuPage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/user/restaurant/%5Bid%5D/page.tsx:55:30)
+  53 |       <div className="mb-6">
+  54 |         <h1 className="text-2xl sm:text-3xl font-bold mb-1">
+> 55 |           Restaurant: {params.id}
+     |                              ^
+  56 |         </h1>
+  57 |         <p className="text-sm text-gray-600">Pizza, Shawarma • 4.6★</p>
