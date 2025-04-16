@@ -22,11 +22,11 @@ export default function CartPage() {
                 src={item.image}
                 width={80}
                 height={80}
-                alt={item.title}
+                alt={item.name}
                 className="rounded-xl object-cover"
               />
               <div className="flex-1">
-                <h3 className="font-semibold">{item.title}</h3>
+                <h3 className="font-semibold">{item.name}</h3>
                 <p className="text-sm text-gray-500">{item.vendor}</p>
                 <div className="flex items-center gap-2 mt-1">
                   <button

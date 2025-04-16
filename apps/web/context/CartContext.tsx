@@ -1,18 +1,12 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
+import { CartItem } from "@shared/types";
 
-export interface CartItem {
-  id: string;
-  title: string;
-  price: number;
-  quantity: number;
-  image: string;
-  vendor: string;
-}
+
 
 interface CartContextProps {
   cart: CartItem[];
-  addToCart: (item: CartItem) => void;
+  addToCart: (item: CartItem, quantity?: number) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
@@ -32,15 +26,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (item: CartItem) => {
+  const addToCart = (item: CartItem, quantity: number = 1) => {
     setCart((prev) => {
       const exists = prev.find((i) => i.id === item.id);
       if (exists) {
         return prev.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
+          i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
         );
       } else {
-        return [...prev, item];
+        return [...prev, { ...item, quantity }];
       }
     });
   };

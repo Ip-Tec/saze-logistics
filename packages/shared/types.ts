@@ -196,6 +196,9 @@ export interface FoodDetail extends MenuItem {
   image: string;
   vendor: string;
 }
+export interface CartItem extends FoodDetail {
+  quantity: number;
+}
 
 export type PaymentMethodType =
   | "credit_card"

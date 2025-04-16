@@ -5,13 +5,14 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import QuantityPicker from "@/components/ui/QuantityPicker";
-import { FoodDetail } from "@shared/types";
+import { CartItem } from "@shared/types";
 
 export default function FoodDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const [quantity, setQuantity] = useState(0);
-  const [food, setFood] = useState<FoodDetail | null>({
-    id,
+  const [food, setFood] = useState<CartItem>({
+    quantity: 1,
+    id:"2222222",
     name: "Jollof Rice",
     description: "",
     vendor_id: "1234567",
@@ -49,7 +50,7 @@ export default function FoodDetailPage({ params }: { params: { id: string } }) {
       setQuantity(1);
     } else {
       const newQty = quantity + 1;
-      updateQuantity(food.id, newQty);
+      updateQuantity(food!.id, newQty);
       setQuantity(newQty);
     }
   };
@@ -58,10 +59,10 @@ export default function FoodDetailPage({ params }: { params: { id: string } }) {
     const newQuantity = quantity - 1;
 
     if (newQuantity <= 0) {
-      removeFromCart(food.id);
+      removeFromCart(food!.id);
       setQuantity(0);
     } else {
-      updateQuantity(food.id, newQuantity);
+      updateQuantity(food!.id, newQuantity);
       setQuantity(newQuantity);
     }
   };
@@ -69,17 +70,17 @@ export default function FoodDetailPage({ params }: { params: { id: string } }) {
   return (
     <div className="p-4 max-w-md mx-auto">
       <Image
-        src={food.image}
+        src={food?.image ? food.image : "/sample-food.jpg"}
         width={400}
         height={250}
-        alt={food.title}
+        alt={food!.name}
         className="rounded-xl object-cover mb-4"
       />
 
-      <h1 className="text-2xl font-bold">{food.title}</h1>
-      <p className="text-gray-500 mt-1">From {food.vendor}</p>
+      <h1 className="text-2xl font-bold">{food!.name}</h1>
+      <p className="text-gray-500 mt-1">From {food!.vendor}</p>
       <p className="text-orange-600 font-semibold text-lg mt-2">
-        ₦{food.price}
+        ₦{food!.price}
       </p>
 
       <div className="mt-4 flex gap-4 items-center">
