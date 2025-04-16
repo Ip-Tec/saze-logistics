@@ -192,6 +192,11 @@ export interface MenuItemImage {
   created_at: string;
 }
 
+export interface FoodDetail extends MenuItem {
+  image: string;
+  vendor: string;
+}
+
 export type PaymentMethodType =
   | "credit_card"
   | "debit_card"

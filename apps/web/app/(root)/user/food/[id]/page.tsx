@@ -5,23 +5,36 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import QuantityPicker from "@/components/ui/QuantityPicker";
+import { FoodDetail } from "@shared/types";
 
-export default function FoodDetailPage({params}: { params: { id: string }}) {
+export default function FoodDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
-
-  const { cart, addToCart, updateQuantity, removeFromCart } = useCart();
   const [quantity, setQuantity] = useState(0);
-
-  const food = {
+  const [food, setFood] = useState<FoodDetail | null>({
     id,
-    title: "Jollof Rice",
+    name: "Jollof Rice",
+    description: "",
+    vendor_id: "1234567",
+    is_available: true,
     price: 2500,
     image: "/sample-food.jpg",
     vendor: "Mama Cee",
-  };
+    created_at: "",
+  });
+  const { cart, addToCart, updateQuantity, removeFromCart } = useCart();
 
   const existingItem = cart.find((item) => item.id === id);
 
+  useEffect(() => {
+    // Replace this with actual fetch logic
+    const fetchFood = async () => {
+      const res = await fetch(`/api/foods/${id}`);
+      const data = await res.json();
+      setFood(data);
+    };
+
+    fetchFood();
+  }, [id]);
   useEffect(() => {
     if (existingItem) {
       setQuantity(existingItem.quantity);
