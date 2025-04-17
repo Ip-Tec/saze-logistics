@@ -8,6 +8,15 @@ import QuantityPicker from "@/components/ui/QuantityPicker";
 
 import FoodPic from "@/public/images/Jollof_Rice-removebg-preview.png";
 
+interface FoodDetailPageProps {
+  params: {
+    id: string;
+  };
+  searchParams?: {
+    [key: string]: string | string[] | undefined;
+  };
+}
+
 const AVAILABLE_EXTRAS = [
   { id: "icecream", name: "Ice Cream", price: 500, vendor: "Mama Cee" },
   { id: "water", name: "Bottled Water", price: 200, vendor: "Mama Tee" },
@@ -15,7 +24,7 @@ const AVAILABLE_EXTRAS = [
   { id: "softdrink", name: "Soft Drink", price: 400, vendor: "Mama Lee" },
 ];
 
-export default function FoodDetailPage({ params }: { params: { id: string } }) {
+export default function FoodDetailPage({ params }: FoodDetailPageProps) {
   const { id } = params;
   const [quantity, setQuantity] = useState(0);
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
@@ -38,9 +47,14 @@ export default function FoodDetailPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     const fetchFood = async () => {
-      const res = await fetch(`/api/foods/${id}`);
-      const data = await res.json();
-      setFood(data);
+      try {
+        const res = await fetch(`/api/foods/${id}`);
+        if (!res.ok) throw new Error("Failed to fetch food");
+        const data = await res.json();
+        setFood(data);
+      } catch (error) {
+        console.error("Error fetching food:", error);
+      }
     };
 
     fetchFood();
@@ -103,6 +117,7 @@ export default function FoodDetailPage({ params }: { params: { id: string } }) {
           height={500}
           alt={food.name}
           className="w-full h-64 object-cover"
+          priority
         />
       </div>
 
@@ -120,7 +135,7 @@ export default function FoodDetailPage({ params }: { params: { id: string } }) {
         <div className="flex flex-cols gap-3 overflow-x-auto w-full">
           {AVAILABLE_EXTRAS.map((extra) => (
             <label
-              key={extra.id}
+              key={`${extra.id}-${extra.vendor}`} // Fixed duplicate key issue
               className={`border p-3 rounded-xl text-sm cursor-pointer transition ${
                 selectedExtras.includes(extra.id)
                   ? "bg-orange-100 border-orange-400"
