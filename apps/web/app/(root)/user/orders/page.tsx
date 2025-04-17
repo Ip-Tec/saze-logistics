@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { Order } from "@shared/types";
 import { useEffect, useState } from "react";
+import GlassDiv from "@/components/ui/GlassDiv";
 import GlassDivClickable from "@/components/ui/GlassDivClickable";
 
 const MapWithNoSSR = dynamic(() => import("@/components/order/OrderMap"), {
@@ -28,7 +29,7 @@ export default function OrdersPage() {
     <div className="max-w-5xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">My Orders</h1>
 
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+      <GlassDiv className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
         {orders.map((order) => (
           <GlassDivClickable
             key={order.id}
@@ -48,7 +49,7 @@ export default function OrdersPage() {
             </p>
           </GlassDivClickable>
         ))}
-      </div>
+      </GlassDiv>
 
       {selectedOrder && (
         <div className="bg-white border rounded-xl p-6 shadow-md">
