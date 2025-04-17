@@ -6,7 +6,7 @@ export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, getTotal } = useCart();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 w-full h-full">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 w-full h-full mt-36 overflow-auto glass-scrollbar">
       {/* Cart Items */}
       <div className="col-span-2 flex flex-col gap-4">
         <h2 className="text-xl font-bold">Your Cart</h2>

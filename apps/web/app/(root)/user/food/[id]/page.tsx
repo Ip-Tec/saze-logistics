@@ -1,20 +1,30 @@
 "use client";
 
-import { use } from "react";
 import Image from "next/image";
+import { CartItem } from "@shared/types";
 import { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import QuantityPicker from "@/components/ui/QuantityPicker";
-import { CartItem } from "@shared/types";
+
+import FoodPic from "@/public/images/Jollof_Rice-removebg-preview.png";
+
+const AVAILABLE_EXTRAS = [
+  { id: "icecream", name: "Ice Cream", price: 500, vendor: "Mama Cee" },
+  { id: "water", name: "Bottled Water", price: 200, vendor: "Mama Tee" },
+  { id: "softdrink", name: "Soft Drink", price: 400, vendor: "Mama Jee" },
+  { id: "softdrink", name: "Soft Drink", price: 400, vendor: "Mama Lee" },
+];
 
 export default function FoodDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const [quantity, setQuantity] = useState(0);
+  const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
+
   const [food, setFood] = useState<CartItem>({
     quantity: 1,
-    id:"2222222",
+    id: "2222222",
     name: "Jollof Rice",
-    description: "",
+    description: "Spicy, party-style Jollof rice with fried chicken & salad.",
     vendor_id: "1234567",
     is_available: true,
     price: 2500,
@@ -22,12 +32,11 @@ export default function FoodDetailPage({ params }: { params: { id: string } }) {
     vendor: "Mama Cee",
     created_at: "",
   });
-  const { cart, addToCart, updateQuantity, removeFromCart } = useCart();
 
+  const { cart, addToCart, updateQuantity, removeFromCart } = useCart();
   const existingItem = cart.find((item) => item.id === id);
 
   useEffect(() => {
-    // Replace this with actual fetch logic
     const fetchFood = async () => {
       const res = await fetch(`/api/foods/${id}`);
       const data = await res.json();
@@ -36,54 +45,103 @@ export default function FoodDetailPage({ params }: { params: { id: string } }) {
 
     fetchFood();
   }, [id]);
+
   useEffect(() => {
     if (existingItem) {
       setQuantity(existingItem.quantity);
     } else {
-      setQuantity(0); // reset if item is removed
+      setQuantity(0);
     }
   }, [existingItem]);
 
   const handleAdd = () => {
+    const extrasTotal = selectedExtras.reduce((sum, extraId) => {
+      const extra = AVAILABLE_EXTRAS.find((e) => e.id === extraId);
+      return sum + (extra?.price || 0);
+    }, 0);
+
+    const foodWithExtras = {
+      ...food,
+      price: food.price + extrasTotal,
+      extras: selectedExtras,
+    };
+
     if (!existingItem) {
-      addToCart({ ...food, quantity: 1 });
+      addToCart({ ...foodWithExtras, quantity: 1 });
       setQuantity(1);
     } else {
       const newQty = quantity + 1;
-      updateQuantity(food!.id, newQty);
+      updateQuantity(food.id, newQty);
       setQuantity(newQty);
     }
   };
 
   const handleDecrease = () => {
     const newQuantity = quantity - 1;
-
     if (newQuantity <= 0) {
-      removeFromCart(food!.id);
+      removeFromCart(food.id);
       setQuantity(0);
     } else {
-      updateQuantity(food!.id, newQuantity);
+      updateQuantity(food.id, newQuantity);
       setQuantity(newQuantity);
     }
   };
 
+  const toggleExtra = (id: string) => {
+    setSelectedExtras((prev) =>
+      prev.includes(id) ? prev.filter((e) => e !== id) : [...prev, id]
+    );
+  };
+
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <Image
-        src={food?.image ? food.image : "/sample-food.jpg"}
-        width={400}
-        height={250}
-        alt={food!.name}
-        className="rounded-xl object-cover mb-4"
-      />
+    <div className="p-4 w-full mx-auto">
+      {/* Food Image */}
+      <div className="rounded-2xl overflow-hidden mb-4">
+        <Image
+          src={food.image ? food.image : FoodPic}
+          width={800}
+          height={500}
+          alt={food.name}
+          className="w-full h-64 object-cover"
+        />
+      </div>
 
-      <h1 className="text-2xl font-bold">{food!.name}</h1>
-      <p className="text-gray-500 mt-1">From {food!.vendor}</p>
+      {/* Info */}
+      <h1 className="text-2xl sm:text-3xl font-bold mb-1">{food.name}</h1>
+      <p className="text-sm text-gray-500">From {food.vendor}</p>
       <p className="text-orange-600 font-semibold text-lg mt-2">
-        ₦{food!.price}
+        ₦{food.price}
       </p>
+      <p className="text-sm text-gray-600 mt-2">{food.description}</p>
 
-      <div className="mt-4 flex gap-4 items-center">
+      {/* Extras */}
+      <div className="mt-6">
+        <h3 className="text-md font-semibold mb-2">Add Extras</h3>
+        <div className="flex flex-cols gap-3 overflow-x-auto w-full">
+          {AVAILABLE_EXTRAS.map((extra) => (
+            <label
+              key={extra.id}
+              className={`border p-3 rounded-xl text-sm cursor-pointer transition ${
+                selectedExtras.includes(extra.id)
+                  ? "bg-orange-100 border-orange-400"
+                  : "hover:border-gray-400"
+              }`}
+            >
+              <input
+                type="checkbox"
+                value={extra.id}
+                checked={selectedExtras.includes(extra.id)}
+                onChange={() => toggleExtra(extra.id)}
+                className="mr-2"
+              />
+              {extra.name} – ₦{extra.price}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Quantity + Cart Button */}
+      <div className="mt-6 flex items-center gap-4">
         {quantity > 0 ? (
           <QuantityPicker
             quantity={quantity}
@@ -93,7 +151,7 @@ export default function FoodDetailPage({ params }: { params: { id: string } }) {
         ) : (
           <button
             onClick={handleAdd}
-            className="bg-orange-500 text-white px-4 py-2 rounded-xl hover:bg-orange-600"
+            className="bg-orange-500 text-white px-6 py-3 rounded-xl hover:bg-orange-600 transition w-full sm:w-auto"
           >
             Add to Cart
           </button>
