@@ -8,15 +8,6 @@ import QuantityPicker from "@/components/ui/QuantityPicker";
 
 import FoodPic from "@/public/images/Jollof_Rice-removebg-preview.png";
 
-interface FoodDetailPageProps {
-  params: {
-    id: string;
-  };
-  searchParams?: {
-    [key: string]: string | string[] | undefined;
-  };
-}
-
 const AVAILABLE_EXTRAS = [
   { id: "icecream", name: "Ice Cream", price: 500, vendor: "Mama Cee" },
   { id: "water", name: "Bottled Water", price: 200, vendor: "Mama Tee" },
@@ -24,7 +15,7 @@ const AVAILABLE_EXTRAS = [
   { id: "softdrink", name: "Soft Drink", price: 400, vendor: "Mama Lee" },
 ];
 
-export default function FoodDetailPage({ params }: FoodDetailPageProps) {
+export default function FoodDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const [quantity, setQuantity] = useState(0);
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
