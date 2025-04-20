@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import GlassComponent from "@/components/ui/glass";
 import VendorSidebar from "@/components/vendor/Sidebar";
 import { VendorProvider } from "@/context/VendorContext";
+import { ToastContainer } from "react-toastify";
 
 export default function VendorLayout({
   children,
@@ -30,6 +31,7 @@ export default function VendorLayout({
       }}
     >
       <VendorProvider>
+         <ToastContainer position="top-right" autoClose={3000} />
         <GlassComponent>
           <div className="flex w-full h-full p-0 m-0">
             <VendorSidebar />
