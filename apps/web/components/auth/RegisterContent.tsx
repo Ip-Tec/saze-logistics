@@ -129,13 +129,15 @@ export default function RegisterContent() {
               <ArrowBackIcon className="mr-2" />
             </button>
 
-            <button
+            {/* Register with Google */}
+
+            {/* <button
               onClick={handleGoogleSignIn}
               className="w-full flex items-center justify-center space-x-2 text-white bg-red-500 px-6 py-3 rounded-lg shadow-md hover:bg-gray-600 transition duration-300 mt-8 hover:cursor-pointer"
             >
               <GoogleIcon className="text-white w-6 h-6" />
               <span>Continue with Google</span>
-            </button>
+            </button> */}
 
             <div className="relative p-2">
               <div className="absolute inset-0 flex items-center">

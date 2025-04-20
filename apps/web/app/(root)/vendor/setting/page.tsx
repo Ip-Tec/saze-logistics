@@ -7,13 +7,16 @@ import GlassDiv from "@/components/ui/GlassDiv";
 import GlassButton from "@/components/ui/GlassButton";
 import { useVendorProfile } from "@/hooks/useVendorProfile";
 import { PencilIcon, SaveIcon, CameraIcon, Loader2, X } from "lucide-react";
+import Section from "@/components/reuse/Section";
+import Input from "@/components/reuse/Input";
+import TextArea from "@/components/reuse/TextArea";
+import DisplayInfo from "@/components/reuse/DisplayInfo";
+import ChangePassword from "@/components/auth/ChangePassword"
 
 export default function VendorSettingsPage() {
   const [editing, setEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+ 
 
   // store original profile values for cancel
   const [originalProfile, setOriginalProfile] = useState({
@@ -37,13 +40,10 @@ export default function VendorSettingsPage() {
     contact,
     setContact,
     logoPreview,
-    setLogo,
     setLogoPreview,
     bannerPreview,
-    setBanner,
     setBannerPreview,
     updateProfile,
-    changePassword,
   } = profile;
 
   useEffect(() => {
@@ -64,13 +64,11 @@ export default function VendorSettingsPage() {
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
+  
     const preview = URL.createObjectURL(file);
     if (type === "logo") {
-      setLogo(file);
       setLogoPreview(preview);
     } else {
-      setBanner(file);
       setBannerPreview(preview);
     }
   };
@@ -103,18 +101,7 @@ export default function VendorSettingsPage() {
     setEditing(false);
   };
 
-  const handlePasswordChange = async () => {
-    if (newPassword !== confirmPassword) {
-      return toast.error("Passwords do not match!");
-    }
-    const success = await changePassword(currentPassword, newPassword);
-    if (success) {
-      toast.success("Password changed");
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-    }
-  };
+
 
   return (
     <div className="p-6 flex flex-wrap gap-6 text-white !bg-blue-950/20 w-full h-auto overflow-y-auto glass-scrollbar">
@@ -246,129 +233,9 @@ export default function VendorSettingsPage() {
       </GlassDiv>
 
       {/* Password */}
-      <GlassDiv className="w-full rounded-2xl overflow-hidden md:w-[48%] space-y-4">
-        <Section title="Change Password">
-          <p className="text-sm text-gray-100">
-            Update your password to keep your account secure.
-          </p>
-          <InputPassword
-            label="Current Password"
-            value={currentPassword}
-            onChange={setCurrentPassword}
-          />
-          <InputPassword
-            label="New Password"
-            value={newPassword}
-            onChange={setNewPassword}
-          />
-          <InputPassword
-            label="Confirm New Password"
-            value={confirmPassword}
-            onChange={setConfirmPassword}
-          />
-          <GlassButton
-            className="py-2 px-6 rounded"
-            onClick={handlePasswordChange}
-          >
-            Change Password
-          </GlassButton>
-        </Section>
-      </GlassDiv>
+      <ChangePassword className="" />
     </div>
   );
 }
 
 // Reusable Components
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-white">{title}</h3>
-      {children}
-    </div>
-  );
-}
-
-function Input({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div>
-      <label className="block font-medium mb-1">{label}</label>
-      <input
-        type="text"
-        className="w-full border p-2 rounded bg-white/5 text-white"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-    </div>
-  );
-}
-
-function InputPassword({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div>
-      <label className="block font-medium mb-1">{label}</label>
-      <input
-        type="password"
-        className="w-full border p-2 rounded bg-white/5 text-white"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-    </div>
-  );
-}
-
-function TextArea({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div>
-      <label className="block font-medium mb-1">{label}</label>
-      <textarea
-        className="w-full border p-2 rounded bg-white/5 text-white"
-        rows={3}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-    </div>
-  );
-}
-
-function DisplayInfo({ items }: { items: { label: string; value: string }[] }) {
-  return (
-    <div className="space-y-2 text-gray-100">
-      {items.map((item, idx) => (
-        <div key={idx}>
-          <p className="text-sm font-medium text-white">{item.label}</p>
-          <p className="text-gray-300">{item.value}</p>
-        </div>
-      ))}
-    </div>
-  );
-}

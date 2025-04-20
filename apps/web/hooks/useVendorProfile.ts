@@ -109,22 +109,6 @@ export function useVendorProfile() {
     }
   };
 
-  // 4) change password
-  const changePassword = async (
-    currentPassword: string,
-    newPassword: string
-  ): Promise<boolean> => {
-    try {
-      const { error } = await supabase.auth.updateUser({ password: newPassword });
-      if (error) throw error;
-      toast.success("Password changed!");
-      return true;
-    } catch (err: any) {
-      toast.error("Password update failed: " + err.message);
-      return false;
-    }
-  };
-
   return {
     loading,
     profile,
@@ -143,6 +127,5 @@ export function useVendorProfile() {
     setBannerFile,
     setBannerPreview,
     updateProfile,
-    changePassword,
   };
 }

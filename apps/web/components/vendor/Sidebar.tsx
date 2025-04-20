@@ -9,7 +9,7 @@ const links = [
   { name: "Dashboard", href: "/vendor" },
   { name: "Orders", href: "/vendor/orders" },
   { name: "Menu", href: "/vendor/menu" },
-  { name: "Settings", href: "/vendor/settings" },
+  { name: "Setting", href: "/vendor/setting" },
 ];
 
 export default function VendorSidebar() {

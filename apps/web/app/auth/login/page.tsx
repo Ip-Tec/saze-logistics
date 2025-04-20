@@ -83,6 +83,7 @@ export default function Login() {
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
+              disabled={isEmailLoading}
               required
               className="w-full px-4 py-2 border rounded-lg focus:ring-blue-400"
             />
@@ -98,6 +99,7 @@ export default function Login() {
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
+              disabled={isEmailLoading}
               required
               className="w-full px-4 py-2 border rounded-lg focus:ring-blue-400"
             />
@@ -121,7 +123,7 @@ export default function Login() {
             className={`w-full flex items-center justify-center space-x-2 ${
               isEmailLoading
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-500 hover:bg-blue-600"
+                : "bg-blue-500 hover:bg-blue-600 cursor-pointer"
             } text-white px-6 py-3 rounded-lg`}
           >
             {isEmailLoading && (
@@ -151,17 +153,17 @@ export default function Login() {
         </form>
 
         {/* Divider */}
-        <div className="relative p-2 my-4">
+        {/* <div className="relative p-2 my-4">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-gray-500" />
           </div>
           <div className="relative flex justify-center text-sm">
             <span className="bg-gray-200 px-2">or</span>
           </div>
-        </div>
+        </div> */}
 
-        {/* Google */}
-        <button
+        {/* Login with Google */}
+        {/* <button
           onClick={handleGoogleLogin}
           disabled={isGoogleLoading}
           className={`w-full flex items-center justify-center space-x-2 ${
@@ -196,7 +198,7 @@ export default function Login() {
           <span>
             {isGoogleLoading ? "Signing in..." : "Continue with Google"}
           </span>
-        </button>
+        </button> */}
 
         {/* Links */}
         <div className="flex justify-between items-center mt-4">
@@ -204,7 +206,7 @@ export default function Login() {
             Forgot Password?
           </Link>
           <Link href="/auth/register" className="text-blue-500">
-            Register!
+            Register
           </Link>
         </div>
 

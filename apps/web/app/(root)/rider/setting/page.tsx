@@ -4,6 +4,7 @@ import GlassDiv from "@/components/ui/GlassDiv";
 import React, { useEffect, useState } from "react";
 import { PencilIcon, SaveIcon } from "lucide-react";
 import GlassButton from "@/components/ui/GlassButton";
+import ChangePassword from "@/components/auth/ChangePassword";
 
 export default function RiderSettingsPage() {
   const [editing, setEditing] = useState(false);
@@ -202,34 +203,7 @@ export default function RiderSettingsPage() {
         </Section>
       </GlassDiv>
 
-      <GlassDiv className="w-full rounded-2xl overflow-hidden md:w-[48%] space-y-4">
-        <Section title="Change Password">
-          <p className="text-sm text-gray-600">
-            Update your password to keep your account secure.
-          </p>
-          <InputPassword
-            label="Current Password"
-            value={currentPassword}
-            onChange={setCurrentPassword}
-          />
-          <InputPassword
-            label="New Password"
-            value={newPassword}
-            onChange={setNewPassword}
-          />
-          <InputPassword
-            label="Confirm New Password"
-            value={confirmPassword}
-            onChange={setConfirmPassword}
-          />
-          <GlassButton
-            className="py-2 px-6 rounded !bg-orange-500 hover:!text-orange-500"
-            onClick={handlePasswordChange}
-          >
-            Change Password
-          </GlassButton>
-        </Section>
-      </GlassDiv>
+      <ChangePassword className="!text-black" buttonStyle=" !bg-orange-500 hover:!bg-orange-100 hover:!text-orange-500"/>
     </div>
   );
 }
