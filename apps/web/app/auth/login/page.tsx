@@ -51,7 +51,8 @@ export default function Login() {
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        if (event === "SIGNED_IN" && session?.user) {
+        if (event === "SIGNED_IN" && session?.user && session.provider_token) {
+          setIsGoogleLoading(true);
           try {
             // loginUser will detect existing session, fetch profile, setUser, and return it
             const profile = await loginUser(session.user.email!, "");

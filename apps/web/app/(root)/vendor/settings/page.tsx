@@ -1,32 +1,62 @@
 "use client";
 
+import { toast } from "react-toastify";
+import React, { useState, useEffect } from "react";
+import Logo from "@/public/images/logo.png";
 import GlassDiv from "@/components/ui/GlassDiv";
-import React, { useState } from "react";
-import { PencilIcon, SaveIcon, CameraIcon } from "lucide-react";
 import GlassButton from "@/components/ui/GlassButton";
+import { useVendorProfile } from "@/hooks/useVendorProfile";
+import { PencilIcon, SaveIcon, CameraIcon, Loader2, X } from "lucide-react";
 
 export default function VendorSettingsPage() {
   const [editing, setEditing] = useState(false);
-
-  const [name, setName] = useState("My Delicious Kitchen");
-  const [description, setDescription] = useState(
-    "We serve the best meals in town."
-  );
-  const [address, setAddress] = useState("123 Food Street, Flavor City");
-  const [contact, setContact] = useState("08012345678");
-
-  const [logo, setLogo] = useState<File | null>(null);
-  const [banner, setBanner] = useState<File | null>(null);
-  const [logoPreview, setLogoPreview] = useState<string>("/default-logo.png");
-  const [bannerPreview, setBannerPreview] = useState<string>(
-    "/default-banner.jpg"
-  );
-
+  const [isSaving, setIsSaving] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const toggleEdit = () => setEditing(!editing);
+  // store original profile values for cancel
+  const [originalProfile, setOriginalProfile] = useState({
+    name: "",
+    description: "",
+    address: "",
+    contact: "",
+    logo: "",
+    banner: "",
+  });
+
+  const profile = useVendorProfile();
+
+  const {
+    name,
+    setName,
+    description,
+    setDescription,
+    address,
+    setAddress,
+    contact,
+    setContact,
+    logoPreview,
+    setLogo,
+    setLogoPreview,
+    bannerPreview,
+    setBanner,
+    setBannerPreview,
+    updateProfile,
+    changePassword,
+  } = profile;
+
+  useEffect(() => {
+    // save initial values for cancel
+    setOriginalProfile({
+      name,
+      description,
+      address,
+      contact,
+      logo: logoPreview,
+      banner: bannerPreview,
+    });
+  }, []);
 
   const handleImageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -36,7 +66,6 @@ export default function VendorSettingsPage() {
     if (!file) return;
 
     const preview = URL.createObjectURL(file);
-
     if (type === "logo") {
       setLogo(file);
       setLogoPreview(preview);
@@ -46,72 +75,110 @@ export default function VendorSettingsPage() {
     }
   };
 
-  const handleUpdateProfile = () => {
-    console.log("Updating profile with:", {
-      name,
-      description,
-      address,
-      contact,
-      logo,
-      banner,
-    });
+  const handleSave = async () => {
+    setIsSaving(true);
+    const success = await updateProfile();
+    setIsSaving(false);
+    if (success) {
+      toast.success("Profile updated");
+      setOriginalProfile({
+        name,
+        description,
+        address,
+        contact,
+        logo: logoPreview,
+        banner: bannerPreview,
+      });
+      setEditing(false);
+    }
+  };
+
+  const handleCancel = () => {
+    setName(originalProfile.name);
+    setDescription(originalProfile.description);
+    setAddress(originalProfile.address);
+    setContact(originalProfile.contact);
+    setLogoPreview(originalProfile.logo);
+    setBannerPreview(originalProfile.banner);
     setEditing(false);
   };
 
-  const handlePasswordChange = () => {
+  const handlePasswordChange = async () => {
     if (newPassword !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+      return toast.error("Passwords do not match!");
     }
-    console.log("Changing password...", { currentPassword, newPassword });
+    const success = await changePassword(currentPassword, newPassword);
+    if (success) {
+      toast.success("Password changed");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    }
   };
 
   return (
-    <div className="p-6 flex flex-wrap gap-6 justify-start items-start overflow-y-scroll glass-scrollbar text-white">
+    <div className="p-6 flex flex-wrap gap-6 text-white !bg-blue-950/20 w-full h-auto overflow-y-auto glass-scrollbar">
       <div className="w-full flex justify-between items-center">
         <h1 className="text-2xl font-bold">Vendor Settings</h1>
-        <GlassButton
-          onClick={editing ? handleUpdateProfile : toggleEdit}
-          className="text-sm flex items-center gap-1"
-        >
-          {editing ? <SaveIcon size={16} /> : <PencilIcon size={16} />}
-          {editing ? "Save" : "Edit"}
-        </GlassButton>
+        <div className="flex gap-3">
+          {editing && (
+            <GlassButton
+              onClick={handleCancel}
+              className="text-sm flex items-center gap-1 bg-red-500 hover:bg-red-600"
+            >
+              <X size={16} />
+              Cancel
+            </GlassButton>
+          )}
+          <GlassButton
+            onClick={editing ? handleSave : () => setEditing(true)}
+            className="text-sm flex items-center gap-1"
+            disabled={isSaving}
+          >
+            {isSaving ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                Saving...
+              </>
+            ) : editing ? (
+              <>
+                <SaveIcon size={16} />
+                Save
+              </>
+            ) : (
+              <>
+                <PencilIcon size={16} />
+                Edit
+              </>
+            )}
+          </GlassButton>
+        </div>
       </div>
 
-      {/* Banner + Logo Section */}
-      <GlassDiv className="w-full rounded-2xl overflow-hidden">
-        <div className="relative w-full h-60 rounded-xl overflow-hidden">
-          <img
-            src={bannerPreview}
-            alt="Banner"
-            className="w-full h-full object-cover"
-          />
+      <GlassDiv className="w-full">
+        <div className="relative w-full h-60">
+          <img src={bannerPreview} className="w-full h-full object-cover" />
           {editing && (
-            <label className="absolute top-2 right-2 bg-black/50 p-2 rounded-full cursor-pointer hover:bg-black/70">
-              <CameraIcon className="text-white" size={18} />
+            <label className="absolute top-2 right-2 bg-black/50 p-2 rounded-full cursor-pointer">
+              <CameraIcon size={18} />
               <input
                 type="file"
-                accept="image/*"
                 className="hidden"
+                accept="image/*"
                 onChange={(e) => handleImageChange(e, "banner")}
               />
             </label>
           )}
           <div className="absolute bottom-0 left-6">
             <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white bg-white">
-              <img
-                src={logoPreview}
-                alt="Logo"
-                className="w-full h-full object-cover"
-              />
+              <img src={logoPreview} className="w-full h-full object-cover" />
               {editing && (
-                <label className="absolute top-10 right-2 bg-black/50 p-1 rounded-full cursor-pointer hover:bg-black/70">
-                  <CameraIcon className="text-white" size={16} />
+                <label className="absolute top-10 right-2 bg-black/50 p-1 rounded-full cursor-pointer">
+                  <CameraIcon size={16} />
                   <input
                     type="file"
-                    accept="image/*"
                     className="hidden"
+                    accept="image/*"
                     onChange={(e) => handleImageChange(e, "logo")}
                   />
                 </label>
@@ -144,7 +211,7 @@ export default function VendorSettingsPage() {
         </Section>
       </GlassDiv>
 
-      {/* Address Info */}
+      {/* Address */}
       <GlassDiv className="w-full rounded-2xl overflow-hidden md:w-[48%] space-y-4">
         <Section title="Address">
           {editing ? (
@@ -161,7 +228,7 @@ export default function VendorSettingsPage() {
         </Section>
       </GlassDiv>
 
-      {/* Contact Info */}
+      {/* Contact */}
       <GlassDiv className="w-full rounded-2xl overflow-hidden md:w-[48%] space-y-4">
         <Section title="Contact">
           {editing ? (
@@ -178,7 +245,7 @@ export default function VendorSettingsPage() {
         </Section>
       </GlassDiv>
 
-      {/* Password Change */}
+      {/* Password */}
       <GlassDiv className="w-full rounded-2xl overflow-hidden md:w-[48%] space-y-4">
         <Section title="Change Password">
           <p className="text-sm text-gray-100">
@@ -211,8 +278,7 @@ export default function VendorSettingsPage() {
   );
 }
 
-// ------------------ Reusable Components ------------------
-
+// Reusable Components
 function Section({
   title,
   children,

@@ -1,0 +1,107 @@
+
+> saze-logistics@0.1.0 dev
+> next dev --turbopack
+
+[@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
+   ▲ Next.js 15.2.4 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.56.1:3000
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+[@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
+Slow filesystem detected. If C:\Users\Ip\Documents\saze-logistics\apps\web\.next is a network drive, consider moving it to a local folder. If you have an antivirus enabled, consider excluding your project directory.
+[@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
+ ✓ Ready in 97.2s
+[@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
+ ⚠ Webpack is configured while Turbopack is not, which may cause problems.
+ ⚠ See instructions if you need to configure Turbopack:
+  https://nextjs.org/docs/app/api-reference/next-config-js/turbo
+
+ ○ Compiling /vendor/menu ...
+ ✓ Compiled /vendor/menu in 70.5s
+ ⨯ Error: useVendor must be used within VendorProvider
+    at useVendor (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/context/VendorContext.tsx:151:10)
+    at VendorMenuPage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/vendor/menu/page.tsx:19:14)
+  149 |   const ctx = useContext(VendorContext);
+  150 |   if (!ctx) {
+> 151 |     throw new Error("useVendor must be used within VendorProvider");
+      |          ^
+  152 |   }
+  153 |   return ctx;
+  154 | }; {
+  digest: '327460185'
+}
+ GET /vendor/menu 500 in 83112ms
+ ○ Compiling /_not-found/page ...
+ ✓ Compiled /_not-found/page in 2.3s
+ GET /__nextjs_original-stack-frame?isServer=false&isEdgeServer=false&isAppDirectory=true&errorMessage=Error%3A+useVendor+must+be+used+within+VendorProvider&file=file%3A%2F%2F%2FC%3A%2FUsers%2FIp%2FDocuments%2Fsaze-logistics%2Fapps%2Fweb%2F.next%2Fserver%2Fchunks%2Fssr%2F_5c348fcd._.js&methodName=useVendor&arguments=&lineNumber=116&column=15 404 in 2869ms
+ GET /__nextjs_original-stack-frame?isServer=false&isEdgeServer=false&isAppDirectory=true&errorMessage=Error%3A+useVendor+must+be+used+within+VendorProvider&file=file%3A%2F%2F%2FC%3A%2FUsers%2FIp%2FDocuments%2Fsaze-logistics%2Fapps%2Fweb%2F.next%2Fserver%2Fchunks%2Fssr%2Fapps_web_fba0fdd3._.js&methodName=VendorMenuPage&arguments=&lineNumber=424&column=229 404 in 2867ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 4.5s
+ GET /favicon.ico 200 in 4866ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 1216ms
+ ○ Compiling /vendor/menu ...
+ ✓ Compiled /vendor/menu in 552ms
+ GET /vendor/menu 200 in 736ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⨯ Error: useVendor must be used within VendorProvider
+    at useVendor (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/context/VendorContext.tsx:151:10)
+    at VendorMenuPage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/vendor/menu/page.tsx:19:14)
+  149 |   const ctx = useContext(VendorContext);
+  150 |   if (!ctx) {
+> 151 |     throw new Error("useVendor must be used within VendorProvider");
+      |          ^
+  152 |   }
+  153 |   return ctx;
+  154 | }; {
+  digest: '2225373975'
+}
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+ ⨯ [TypeError: Cannot read properties of null (reading 'useState')] {
+  digest: '1956119194'
+}
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+[TypeError: Cannot read properties of null (reading 'use')]
+ ⨯ Error: useVendor must be used within VendorProvider
+    at useVendor (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/context/VendorContext.tsx:151:10)
+    at VendorMenuPage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/vendor/menu/page.tsx:19:14)
+  149 |   const ctx = useContext(VendorContext);
+  150 |   if (!ctx) {
+> 151 |     throw new Error("useVendor must be used within VendorProvider");
+      |          ^
+  152 |   }
+  153 |   return ctx;
+  154 | }; {
+  digest: '2225373975'
+}
+ ⨯ Error: useVendor must be used within VendorProvider
+    at useVendor (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/context/VendorContext.tsx:151:10)
+    at VendorMenuPage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/vendor/menu/page.tsx:19:14)
+  149 |   const ctx = useContext(VendorContext);
+  150 |   if (!ctx) {
+> 151 |     throw new Error("useVendor must be used within VendorProvider");
+      |          ^
+  152 |   }
+  153 |   return ctx;
+  154 | }; {
+  digest: '2225373975'
+}
+ GET /__nextjs_original-stack-frame?isServer=false&isEdgeServer=false&isAppDirectory=true&errorMessage=Error%3A+useVendor+must+be+used+within+VendorProvider&file=file%3A%2F%2F%2FC%3A%2FUsers%2FIp%2FDocuments%2Fsaze-logistics%2Fapps%2Fweb%2F.next%2Fserver%2Fchunks%2Fssr%2Fapps_web_fba0fdd3._.js&methodName=VendorMenuPage&arguments=&lineNumber=424&column=229 404 in 3136ms
+ GET /vendor/menu 500 in 3288ms
+ GET /__nextjs_original-stack-frame?isServer=false&isEdgeServer=false&isAppDirectory=true&errorMessage=TypeError%3A+Cannot+read+properties+of+null+%28reading+%27useState%27%29&file=file%3A%2F%2F%2FC%3A%2FUsers%2FIp%2FDocuments%2Fsaze-logistics%2Fapps%2Fweb%2F.next%2Fserver%2Fchunks%2Fssr%2Fnode_modules_0f507fec._.js&methodName=SessionProvider&arguments=&lineNumber=1692&column=34 404 in 1313ms
+ GET /__nextjs_original-stack-frame?isServer=false&isEdgeServer=false&isAppDirectory=true&errorMessage=Error%3A+useVendor+must+be+used+within+VendorProvider&file=file%3A%2F%2F%2FC%3A%2FUsers%2FIp%2FDocuments%2Fsaze-logistics%2Fapps%2Fweb%2F.next%2Fserver%2Fchunks%2Fssr%2Fapps_web_fba0fdd3._.js&methodName=VendorMenuPage&arguments=&lineNumber=424&column=229 404 in 1906ms

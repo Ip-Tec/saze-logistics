@@ -1,17 +1,10 @@
-type Category = { id: number; name: string };
-type MenuItem = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  categoryId: number;
-};
+import { MenuCategory, MenuItem } from "@shared/types";
 
 export default function MenuList({
   categories,
   menuItems,
 }: {
-  categories: Category[];
+  categories: MenuCategory[];
   menuItems: MenuItem[];
 }) {
   if (categories.length === 0) {
@@ -25,7 +18,7 @@ export default function MenuList({
           <h3 className="text-xl font-semibold mb-2 text-white">{cat.name}</h3>
           <div className="grid gap-4 md:grid-cols-2">
             {menuItems
-              .filter((item) => item.categoryId === cat.id)
+              .filter((item) => item.category_id === cat.id)
               .map((item) => (
                 <div
                   key={item.id}

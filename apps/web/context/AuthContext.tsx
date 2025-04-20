@@ -7,7 +7,6 @@ import React, {
   useState,
 } from "react";
 import { supabase } from "@shared/supabaseClient";
-import { signIn, useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 
 interface UserProfile {
@@ -22,7 +21,6 @@ interface UserProfile {
 
 interface AuthContextProps {
   user: UserProfile | null;
-  signIn: typeof signIn;
   signOut: () => Promise<void>;
   registerUser: (
     name: string,
@@ -44,11 +42,11 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const { data: session, status } = useSession();
   const [user, setUser] = useState<UserProfile | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
+
   const publicRoutes = [
     "/",
     "/auth",
@@ -58,22 +56,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     "/auth/confirm-email",
     "/auth/forgot-password",
   ];
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
-  const checkSupabaseSession = async () => {
-    const { data, error } = await supabase.auth.getSession();
-    return data?.session;
-  };
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
+  /** CHECK CURRENT SESSION */
   useEffect(() => {
     const init = async () => {
-      const currentSession = await checkSupabaseSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
-      if (currentSession) {
+      if (session) {
         const profile = await getUserProfile();
         setUser(profile);
       }
@@ -82,8 +73,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     };
 
     init();
+
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session) {
+          const profile = await getUserProfile();
+          setUser(profile);
+        } else {
+          setUser(null);
+        }
+      }
+    );
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
+  /** REDIRECT IF NOT AUTHENTICATED */
   useEffect(() => {
     if (isCheckingAuth) return;
 
@@ -108,7 +115,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   ) => {
     localStorage.setItem("pending-confirmation-email", email);
 
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -125,32 +132,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     email: string,
     password: string
   ): Promise<UserProfile> => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    console.log({ data, error });
 
     if (error) throw new Error(error.message);
 
     const profile = await getUserProfile();
-    console.log({ profile });
-    if (!profile) {
-      throw new Error("Profile not found after login");
-    }
+    if (!profile) throw new Error("Profile not found after login");
     setUser(profile);
     return profile;
   };
 
-  /** LOGOUT USER */
-  const customSignOut = async () => {
+  /** SIGN OUT */
+  const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) {
-      throw new Error(error?.message || "Error signing out:");
-      return;
-    }
-    setUser(null); // Clear context state
-    router.push("/auth/login"); // Redirect after logout
+    if (error) throw new Error(error.message);
+    setUser(null);
+    router.push("/auth/login");
   };
 
   /** FORGOT PASSWORD */
@@ -163,9 +163,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   /** RESET PASSWORD */
   const resetPassword = async (password: string) => {
-    const { error } = await supabase.auth.updateUser({
-      password,
-    });
+    const { error } = await supabase.auth.updateUser({ password });
     if (error) throw new Error(error.message);
   };
 
@@ -184,24 +182,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const getUserProfile = async (): Promise<UserProfile | null> => {
     const { data: userData, error: authError } = await supabase.auth.getUser();
     if (authError || !userData?.user) {
-      console.error("Error fetching authenticated user:", authError?.message);
-      throw new Error(
-        authError?.message || "Error fetching authenticated user"
-      );
-      return null;
+      throw new Error(authError?.message || "Unable to get authenticated user");
     }
-    const userId = userData.user.id;
+
     const { data, error } = await supabase
       .from("profiles")
       .select("*")
-      .eq("id", userId)
+      .eq("id", userData.user.id)
       .single();
 
-    console.log({ data, error });
     if (error) {
       console.error("Error fetching user profile:", error.message);
       return null;
     }
+
     return data;
   };
 
@@ -209,19 +203,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const resendConfirmationEmail = async () => {
     const email = localStorage.getItem("pending-confirmation-email");
     if (!email) {
-      throw new Error(
-        "No pending confirmation email found. Please try logging in."
-      );
+      throw new Error("No pending confirmation email found.");
     }
-    // This call uses signUp as a workaround. In production, you might implement a dedicated endpoint.
-    const { data, error } = await supabase.auth.signUp({
+
+    const { error } = await supabase.auth.signUp({
       email,
-      password: "dummyPassword", // Using a dummy value; in production consider a secure approach
+      password: "dummyPassword", // Supabase workaround
       options: {
         emailRedirectTo:
           process.env.NEXT_PUBLIC_BASE_URL + "/auth/complete-signup",
       },
     });
+
     if (error) throw new Error(error.message);
   };
 
@@ -229,8 +222,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     <AuthContext.Provider
       value={{
         user,
-        signIn,
-        signOut: customSignOut,
+        signOut,
         registerUser,
         loginUser,
         forgotPassword,

@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
 import GlassComponent from "@/components/ui/glass";
 import VendorSidebar from "@/components/vendor/Sidebar";
+import { VendorProvider } from "@/context/VendorContext";
 
 export default function VendorLayout({
   children,
@@ -28,12 +29,14 @@ export default function VendorLayout({
         repeatType: "reverse", // Alternate between the gradients
       }}
     >
-      <GlassComponent>
-        <div className="flex w-full h-full p-0 m-0">
-          <VendorSidebar />
-          {children}
-        </div>
-      </GlassComponent>
+      <VendorProvider>
+        <GlassComponent>
+          <div className="flex w-full h-full p-0 m-0">
+            <VendorSidebar />
+            {children}
+          </div>
+        </GlassComponent>
+      </VendorProvider>
     </motion.div>
   );
 }

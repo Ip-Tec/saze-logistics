@@ -1,10 +1,10 @@
 // components/rider/Sidebar.tsx
-"use client"
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Package, Clock, LogOut } from "lucide-react";
-import GlassDivClickable from "@/components/ui/GlassDivClickable";
 import { useAuthContext } from "@/context/AuthContext";
+import GlassButton from "../ui/GlassButton";
 
 export default function RiderSidebar() {
   const pathname = usePathname();
@@ -55,14 +55,14 @@ export default function RiderSidebar() {
         </Link>
 
         {/* Logout Link */}
-        <GlassDivClickable
+        <GlassButton
+          className="!text-white !bg-orange-500 hover:!text-orange-500 hover:!bg-orange-100/60 hover:border-orange-500 cursor-pointer rounded-2xl flex items-center absolute bottom-24 w-full h-8"
           onClick={async () => {
             await signOut();
           }}
-          className={`flex items-center absolute bottom-18 w-full h-8 !bg-orange-500 text-white hover:!text-gray-700 hover:!bg-orange-300 hover:border-orange-500 gap-2 p-2 rounded-md ${getLinkClass("/logout")}`}
         >
-          <LogOut size={18} /> Logout
-        </GlassDivClickable>
+          Logout
+        </GlassButton>
       </nav>
     </aside>
   );
