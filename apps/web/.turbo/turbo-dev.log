@@ -14,129 +14,764 @@
 [@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
 Slow filesystem detected. If C:\Users\Ip\Documents\saze-logistics\apps\web\.next is a network drive, consider moving it to a local folder. If you have an antivirus enabled, consider excluding your project directory.
 [@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
- ✓ Ready in 45.9s
+ ✓ Ready in 47.1s
 [@sentry/nextjs] WARNING: You are using the Sentry SDK with Turbopack (`next dev --turbo`). The Sentry SDK is compatible with Turbopack on Next.js version 15.3.0 or later. You are currently on 15.2.4. Please upgrade to a newer Next.js version to use the Sentry SDK with Turbopack. Note that the SDK will continue to work for non-Turbopack production builds. This warning is only about dev-mode.
  ⚠ Webpack is configured while Turbopack is not, which may cause problems.
  ⚠ See instructions if you need to configure Turbopack:
   https://nextjs.org/docs/app/api-reference/next-config-js/turbo
 
- ○ Compiling / ...
-Failed to download `Geist` from Google Fonts. Using fallback font instead.
-Failed to download `Geist Mono` from Google Fonts. Using fallback font instead.
- ✓ Compiled / in 35.1s
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET / 200 in 36937ms
+ ○ Compiling /auth/login ...
+ ✓ Compiled /auth/login in 28.3s
+ GET /auth/login 200 in 29912ms
  ○ Compiling /_not-found/page ...
- ✓ Compiled /_not-found/page in 2.7s
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+ ✓ Compiled /_not-found/page in 5.1s
+ GET /api/auth/session 404 in 5312ms
+ POST /api/auth/_log 404 in 510ms
+ GET /auth/login 200 in 740ms
+ GET /api/auth/session 404 in 874ms
+ POST /api/auth/_log 404 in 635ms
+ ○ Compiling /auth/login ...
+ ✓ Compiled in 2.7s
+ ✓ Compiled /auth/login in 1467ms
+ GET /auth/login 200 in 4060ms
+ GET /auth/login 200 in 4525ms
+ ○ Compiling /rider ...
+ ✓ Compiled /rider in 12.8s
+ GET /rider 200 in 13113ms
+ ○ Compiling /rider/setting ...
+ ✓ Compiled /rider/setting in 3.6s
+ GET /rider/setting 200 in 4102ms
+ ○ Compiling /api/change-password ...
+ ✓ Compiled /api/change-password in 3.9s
+Server-side validation passed. Proceeding with Supabase calls.
+TESX:::> {
+  cookieStore: ResponseCookies { _parsed: Map(0) {}, _headers: Headers {} }
+}
+API: Error getting user or user email: Error [AuthSessionMissingError]: Auth session missing!
+    at <unknown> (../../src/GoTrueClient.ts:1210:48)
+    at SupabaseAuthClient._useSession (../../src/GoTrueClient.ts:1065:19)
+    at async SupabaseAuthClient._getUser (../../src/GoTrueClient.ts:1202:13)
+    at async (../../src/GoTrueClient.ts:1186:13)
+    at async (../../src/GoTrueClient.ts:973:17) {
+  __isAuthError: true,
+  status: 400,
+  code: undefined
+}
+ POST /api/change-password 401 in 4482ms
+ ✓ Compiled in 10.8s
+ ✓ Compiled /rider/setting in 183ms
+ ✓ Compiled in 4.8s
+ GET /rider/setting 200 in 20976ms
+ GET /rider/setting 200 in 21715ms
+ ○ Compiling /auth/login ...
+ ✓ Compiled /auth/login in 1641ms
+ GET /auth/login 200 in 2402ms
+ ✓ Compiled /rider in 239ms
+ GET /rider 200 in 932ms
+ GET /rider/setting 200 in 395ms
+Server-side validation passed. Proceeding with Supabase calls.
+TESX:::> {
+  cookieStore: ResponseCookies {
+    _parsed: Map(1) { 'sb-vxcjmhopnllannvtfwze-auth-token' => [Object] },
+    _headers: Headers {
+      'set-cookie': 'sb-vxcjmhopnllannvtfwze-auth-token=base64-eyJhY2Nlc3NfdG9rZW4iOiJleUpoYkdjaU9pSklVekkxTmlJc0ltdHBaQ0k2SWxKTE4wUnBORTF0VnpSQ1NWWTNSMm9pTENKMGVYQWlPaUpLVjFRaWZRLmV5SnBjM01pT2lKb2RIUndjem92TDNaNFkycHRhRzl3Ym14c1lXNXVkblJtZDNwbExuTjFjR0ZpWVhObExtTnZMMkYxZEdndmRqRWlMQ0p6ZFdJaU9pSmhPVEZrTmpZNVppMDBPR1F6TFRRNFlXUXRPV1U0TmkweU1UVmhNMkl3WlRreVl6UWlMQ0poZFdRaU9pSmhkWFJvWlc1MGFXTmhkR1ZrSWl3aVpYaHdJam94TnpRMU1qVTJPVE0wTENKcFlYUWlPakUzTkRVeU5UTXpNelFzSW1WdFlXbHNJam9pY0dWMFpYSnZkR0ZyYUc5eVFHZHRZV2xzTG1OdmJTSXNJbkJvYjI1bElqb2lJaXdpWVhCd1gyMWxkR0ZrWVhSaElqcDdJbkJ5YjNacFpHVnlJam9pWlcxaGFXd2lMQ0p3Y205MmFXUmxjbk1pT2xzaVpXMWhhV3dpWFgwc0luVnpaWEpmYldWMFlXUmhkR0VpT25zaVpXMWhhV3dpT2lKd1pYUmxjbTkwWVd0b2IzSkFaMjFoYVd3dVkyOXRJaXdpWlcxaGFXeGZkbVZ5YVdacFpXUWlPblJ5ZFdVc0ltNWhiV1VpT2lKUGRHRnJhRzl5SUZCbGRHVnlJaXdpY0dodmJtVWlPaUl3T1RBek5qVTNOemMzT1NJc0luQm9iMjVsWDNabGNtbG1hV1ZrSWpwbVlXeHpaU3dpY205c1pTSTZJblpsYm1SdmNpSXNJbk4xWWlJNkltRTVNV1EyTmpsbUxUUTRaRE10TkRoaFpDMDVaVGcyTFRJeE5XRXpZakJsT1RKak5DSjlMQ0p5YjJ4bElqb2lZWFYwYUdWdWRHbGpZWFJsWkNJc0ltRmhiQ0k2SW1GaGJERWlMQ0poYlhJaU9sdDdJbTFsZEdodlpDSTZJbkJoYzNOM2IzSmtJaXdpZEdsdFpYTjBZVzF3SWpveE56UTFNalV6TXpNMGZWMHNJbk5sYzNOcGIyNWZhV1FpT2lJM00ySXdOamxsTWkxbU5qaGtMVFJqTnpndFltVmhNeTA0WVdVNFlUTXpNV0ZsWm1FaUxDSnBjMTloYm05dWVXMXZkWE1pT21aaGJITmxmUS5MbEF5MGJlUXd0d1BvUTJHWGUwSmJWa3VrUTJmVTY2ZGJ6alN2ZnlRRzNrIiwidG9rZW5fdHlwZSI6ImJlYXJlciIsImV4cGlyZXNfaW4iOjM2MDAsImV4cGlyZXNfYXQiOjE3NDUyNTY5MzQsInJlZnJlc2hfdG9rZW4iOiIwMVpjSDBvNEdfaHRUTzZRLXZpTDV3IiwidXNlciI6eyJpZCI6ImE5MWQ2NjlmLTQ4ZDMtNDhhZC05ZTg2LTIxNWEzYjBlOTJjNCIsImF1ZCI6ImF1dGhlbnRpY2F0ZWQiLCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImVtYWlsIjoicGV0ZXJvdGFraG9yQGdtYWlsLmNvbSIsImVtYWlsX2NvbmZpcm1lZF9hdCI6IjIwMjUtMDQtMDhUMTc6MjU6NDMuMzU2OTY0WiIsInBob25lIjoiIiwiY29uZmlybWF0aW9uX3NlbnRfYXQiOiIyMDI1LTA0LTA4VDE3OjI1OjI4LjU5NDEyN1oiLCJjb25maXJtZWRfYXQiOiIyMDI1LTA0LTA4VDE3OjI1OjQzLjM1Njk2NFoiLCJsYXN0X3NpZ25faW5fYXQiOiIyMDI1LTA0LTIxVDE2OjM1OjM0LjczNTg0NTMxN1oiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6InBldGVyb3Rha2hvckBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik90YWtob3IgUGV0ZXIiLCJwaG9uZSI6IjA5MDM2NTc3Nzc5IiwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJyb2xlIjoidmVuZG9yIiwic3ViIjoiYTkxZDY2OWYtNDhkMy00OGFkLTllODYtMjE1YTNiMGU5MmM0In0sImlkZW50aXRpZXMiOlt7ImlkZW50aXR5X2lkIjoiNDc5YTQ5MzYtZWM1Ni00OTk5LTk4NTAtOTBhMjk0ODNhZTUwIiwiaWQiOiJhOTFkNjY5Zi00OGQzLTQ4YWQtOWU4Ni0yMTVhM2IwZTkyYzQiLCJ1c2VyX2lkIjoiYTkxZDY2OWYtNDhkMy00OGFkLTllODYtMjE1YTNiMGU5MmM0IiwiaWRlbnRpdHlfZGF0YSI6eyJlbWFpbCI6InBldGVyb3Rha2hvckBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik90YWtob3IgUGV0ZXIiLCJwaG9uZSI6IjA5MDM2NTc3Nzc5IiwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJyb2xlIjoidmVuZG9yIiwic3ViIjoiYTkxZDY2OWYtNDhkMy00OGFkLTllODYtMjE1YTNiMGU5MmM0In0sInByb3ZpZGVyIjoiZW1haWwiLCJsYXN0X3NpZ25faW5fYXQiOiIyMDI1LTA0LTA4VDE3OjI1OjI4LjU5MTA2WiIsImNyZWF0ZWRfYXQiOiIyMDI1LTA0LTA4VDE3OjI1OjI4LjU5MTEwOVoiLCJ1cGRhdGVkX2F0IjoiMjAyNS0wNC0wOFQxNzoyNToyOC41OTExMDlaIiwiZW1haWwiOiJwZXRlcm90YWtob3JAZ21haWwuY29tIn1dLCJjcmVhdGVkX2F0IjoiMjAyNS0wNC0wOFQxNzoyNToyOC41ODQzOTFaIiwidXBkYXRlZF9hdCI6IjIwMjUtMDQtMjFUMTY6MzU6MzQuNzQyOTU0WiIsImlzX2Fub255bW91cyI6ZmFsc2V9fQ; Path=/'
+    }
+  }
+}
+ POST /api/change-password 200 in 2800ms
+ GET /auth/login 200 in 576ms
+ GET /auth/login 200 in 349ms
+ GET /rider 200 in 442ms
+ GET /rider/setting 200 in 318ms
+ ○ Compiling /rider/current-order ...
+ ✓ Compiled /rider/current-order in 6s
+ GET /rider/current-order 200 in 6376ms
+ GET /rider/setting 200 in 681ms
+ ✓ Compiled in 3.7s
+ ✓ Compiled in 12.5s
+ GET /rider/setting 200 in 15442ms
+ ✓ Compiled in 3.1s
+ ✓ Compiled in 286ms
+ ✓ Compiled in 368ms
+ ✓ Compiled in 518ms
+ ✓ Compiled in 1519ms
+ ✓ Compiled in 5.5s
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /rider/setting 200 in 16486ms
+ ✓ Compiled in 1899ms
+ ✓ Compiled in 417ms
+ ✓ Compiled in 1568ms
+ ✓ Compiled in 490ms
+ ✓ Compiled in 6.2s
+ ✓ Compiled in 2.2s
+ ✓ Compiled in 3.2s
+ ✓ Compiled in 537ms
+ ✓ Compiled in 728ms
+ ✓ Compiled in 76.9s
+ GET /rider/setting 200 in 31341ms
+ GET /rider/setting 200 in 850ms
+ ✓ Compiled in 27.2s
+ ✓ Compiled in 67.7s
+ ✓ Compiled in 1586ms
+ ✓ Compiled in 416ms
+ ✓ Compiled in 469ms
+ GET /rider/setting 200 in 16056ms
+ GET /rider/setting 200 in 1092ms
+ GET /rider/setting 200 in 970ms
+ GET /rider/setting 200 in 601ms
+ ✓ Compiled in 2.8s
+ ✓ Compiled in 336ms
+ ✓ Compiled in 533ms
+ ✓ Compiled in 646ms
+ ✓ Compiled in 385ms
+ ✓ Compiled in 273ms
+ ✓ Compiled in 339ms
+ ✓ Compiled in 287ms
+ ✓ Compiled in 384ms
+ ✓ Compiled in 464ms
+ ✓ Compiled in 292ms
+ ○ Compiling /api/rider-profile ...
+ ✓ Compiled /api/rider-profile in 56.1s
+ POST /api/rider-profile 500 in 62787ms
+API: Error updating rider profile: {
+  code: 'PGRST204',
+  details: null,
+  hint: null,
+  message: "Could not find the 'licensePlate' column of 'profiles' in the schema cache"
+}
+API: Error updating rider profile: {
+  code: 'PGRST204',
+  details: null,
+ POST /api/rider-profile 500 in 1420ms
+  hint: null,
+  message: "Could not find the 'licensePlate' column of 'profiles' in the schema cache"
+}
+ ✓ Compiled in 778ms
+API: Error updating rider profile: {
+  code: 'PGRST204',
+ POST /api/rider-profile 500 in 1478ms
+  details: null,
+  hint: null,
+  message: "Could not find the 'licensePlate' column of 'profiles' in the schema cache"
+}
+API: Error updating rider profile: {
+  code: 'PGRST204',
+ POST /api/rider-profile 500 in 1452ms
+  details: null,
+  hint: null,
+  message: "Could not find the 'vehicleType' column of 'profiles' in the schema cache"
+}
+ POST /api/rider-profile 200 in 1481ms
+ GET /rider/setting 200 in 4926ms
+ ○ Compiling /_error ...
+ POST /api/rider-profile 200 in 1640ms
+ GET /rider/setting 200 in 517ms
+ ✓ Compiled /_error in 89.4s
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 56044ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /rider/setting 200 in 989ms
+ GET /rider/setting 200 in 414ms
+ ✓ Compiled in 137.5s
+ ✓ Compiled in 15.8s
+ ✓ Compiled in 289ms
+ ○ Compiling /api/upload-image ...
+ ✓ Compiled /api/upload-image in 27s
+ POST /api/upload-image 200 in 29379ms
+ POST /api/upload-image 200 in 972ms
+API: Error updating rider profile: {
+  code: 'PGRST204',
+  details: null,
+ POST /api/rider-profile 500 in 1552ms
+  hint: null,
+  message: "Could not find the 'rider_image_url' column of 'profiles' in the schema cache"
+}
+ POST /api/upload-image 200 in 1662ms
+ POST /api/upload-image 200 in 1343ms
+API: Error updating rider profile: {
+  code: 'PGRST204',
+ POST /api/rider-profile 500 in 1139ms
+  details: null,
+  hint: null,
+  message: "Could not find the 'vehicle_image_url' column of 'profiles' in the schema cache"
+}
+ ✓ Compiled in 281ms
+ GET /rider/setting 200 in 19464ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 4245ms
+ POST /api/upload-image 200 in 2405ms
+ POST /api/upload-image 200 in 1458ms
+API: Error updating rider profile: {
+  code: 'PGRST204',
+ POST /api/rider-profile 500 in 871ms
+  details: null,
+  hint: null,
+  message: "Could not find the 'vehicle_image_url' column of 'profiles' in the schema cache"
+}
+ ✓ Compiled in 525ms
+ POST /api/upload-image 200 in 1978ms
+ POST /api/upload-image 200 in 1220ms
+ POST /api/rider-profile 200 in 1082ms
+ GET /rider/setting 200 in 2893ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 380ms
+ ✓ Compiled in 15.2s
+ ✓ Compiled in 404ms
+ ✓ Compiled in 2.1s
+ ✓ Compiled in 422ms
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled in 79.1s
+ ○ Compiling /rider/setting ...
+ ✓ Compiled /rider/setting in 991ms
+ GET /rider/setting 200 in 23593ms
+ GET /rider/setting 200 in 3028ms
+ GET /rider/setting 200 in 659ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 267ms
+ ✓ Compiled in 403ms
+ ✓ Compiled in 349ms
+ ✓ Compiled in 292ms
+ ✓ Compiled in 260ms
+ ○ Compiling /rider ...
+ ✓ Compiled /rider in 570ms
+ GET /rider 200 in 1349ms
+ ✓ Compiled in 816ms
+ ✓ Compiled in 564ms
+ ✓ Compiled in 4.1s
+ ✓ Compiled in 10.8s
+ ✓ Compiled in 60.3s
+ ✓ Compiled in 898ms
+ GET /rider 200 in 5250ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 1426ms
+ GET /rider 200 in 947ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 379ms
+ GET /rider 200 in 636ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 297ms
+ ✓ Compiled in 1029ms
+ ✓ Compiled in 755ms
+ ✓ Compiled in 615ms
+ ✓ Compiled in 682ms
+ ✓ Compiled in 1609ms
+ ✓ Compiled in 473ms
+ ✓ Compiled in 770ms
+ ✓ Compiled in 761ms
+ ✓ Compiled in 624ms
+ ✓ Compiled in 455ms
+ ✓ Compiled in 552ms
+ ✓ Compiled in 539ms
+ ✓ Compiled in 500ms
+ ✓ Compiled in 1044ms
+ ✓ Compiled in 868ms
+ ✓ Compiled in 740ms
+ ✓ Compiled in 498ms
+ ✓ Compiled in 557ms
+ GET /rider 200 in 2402ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 688ms
+ ✓ Compiled in 485ms
+ ✓ Compiled in 1472ms
+ ✓ Compiled in 850ms
+ ✓ Compiled in 493ms
+ ✓ Compiled in 816ms
+ ✓ Compiled in 727ms
+ GET /rider 200 in 1902ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 425ms
+ ✓ Compiled in 1002ms
+ GET /rider 200 in 1820ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 554ms
+ GET /auth/login 200 in 1995ms
+ GET /auth/login 200 in 2988ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 1062ms
+ GET /auth/login 200 in 643ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 397ms
+ GET /rider 200 in 1048ms
+ ✓ Compiled in 736ms
+ ✓ Compiled in 744ms
+ ✓ Compiled in 810ms
+ ✓ Compiled in 482ms
+ ✓ Compiled in 12.1s
+ ✓ Compiled in 631ms
+ ✓ Compiled in 1284ms
+ ✓ Compiled in 532ms
+ ✓ Compiled in 270ms
+ ✓ Compiled in 725ms
+ ✓ Compiled in 574ms
+ ✓ Compiled in 796ms
+ ✓ Compiled in 808ms
+ ✓ Compiled in 548ms
+ ✓ Compiled in 429ms
+ ✓ Compiled in 378ms
+ ✓ Compiled in 1352ms
+ ✓ Compiled in 509ms
+ ✓ Compiled in 504ms
+ ✓ Compiled in 507ms
+ ✓ Compiled in 555ms
+ ✓ Compiled in 603ms
+ ✓ Compiled in 477ms
+ ✓ Compiled in 419ms
+ ✓ Compiled in 899ms
+ ✓ Compiled in 668ms
+ GET /rider 200 in 2459ms
+ ⨯ A conflicting public file and page file was found for path /favicon.ico https://nextjs.org/docs/messages/conflicting-public-file-page
+ GET /favicon.ico 500 in 518ms
+ ✓ Compiled in 585ms
+ ✓ Compiled in 521ms
+ ✓ Compiled in 514ms
+ ✓ Compiled in 467ms
+ ✓ Compiled in 408ms
+ ✓ Compiled in 749ms
+ ✓ Compiled in 537ms
+ ✓ Compiled in 494ms
+ ✓ Compiled in 774ms
+ ✓ Compiled in 439ms
+ ○ Compiling /rider/current-order ...
+ ✓ Compiled /rider/current-order in 538ms
+ GET /rider/current-order 200 in 1390ms
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
 
 
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+https://nextjs.org/docs/messages/module-not-found
 
 
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
 
 
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+https://nextjs.org/docs/messages/module-not-found
 
 
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
 
 
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+https://nextjs.org/docs/messages/module-not-found
 
 
- GET /vendor3.jpg 404 in 3049ms
- ⨯ The requested resource isn't a valid image for /vendor3.jpg received text/html; charset=utf-8
- GET /vendor2.jpg 404 in 3153ms
- ⨯ The requested resource isn't a valid image for /vendor2.jpg received text/html; charset=utf-8
- GET /vendor1.jpg 404 in 3262ms
- ⨯ The requested resource isn't a valid image for /vendor1.jpg received text/html; charset=utf-8
- ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
-Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
 
 
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+https://nextjs.org/docs/messages/module-not-found
 
 
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
 
 
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+https://nextjs.org/docs/messages/module-not-found
 
 
- ○ Compiling /api/auth/[...nextauth] ...
- ✓ Compiled /api/auth/[...nextauth] in 5.2s
- GET /api/auth/session 200 in 6613ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
 
 
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+https://nextjs.org/docs/messages/module-not-found
 
 
- GET / 200 in 727ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
 
 
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+https://nextjs.org/docs/messages/module-not-found
 
 
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
 
 
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+https://nextjs.org/docs/messages/module-not-found
 
 
- GET /api/auth/session 200 in 682ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
 
 
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+https://nextjs.org/docs/messages/module-not-found
 
 
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+ ✓ Compiled in 100.8s
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m
+[0m [90m 10 |[39m [36mimport[39m [33mDisplayInfo[39m [36mfrom[39m [32m"@/components/reuse/DisplayInfo"[39m[33m;[39m[0m
+
+Import map: aliased to relative './utils/supabase/client' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/rider/current-order/page.tsx:7:1
+Module not found: Can't resolve '@/utils/supabase/client'
+[0m [90m  5 |[39m [36mimport[39m { useAuthContext } [36mfrom[39m [32m"@/context/AuthContext"[39m[33m;[39m[0m
+[0m [90m  6 |[39m [36mimport[39m { [33mDatabase[39m } [36mfrom[39m [32m"@shared/types/supabase"[39m[33m;[39m [90m// Assuming you have Supabase types generated[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/utils/supabase/client"[39m[33m;[39m [90m// Adjust path to your Supabase client utility[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m  8 |[39m [36mimport[39m [33mGlassDiv[39m [36mfrom[39m [32m"@/components/ui/GlassDiv"[39m[33m;[39m[0m
+[0m [90m  9 |[39m [36mimport[39m [33mSection[39m [36mfrom[39m [32m"@/components/reuse/Section"[39m[33m;[39m[0m

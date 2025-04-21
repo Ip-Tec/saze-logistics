@@ -2,9 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import Logo from "@/public/images/logo.png";
 import Bike from "@/public/images/bike_.png";
-import { motion } from "framer-motion";
 
 interface AuthCardProps {
   title?: string;

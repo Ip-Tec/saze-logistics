@@ -33,10 +33,10 @@ export default function RiderDashboard() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center gap-4 w-full h-full text-gray-800">
-      <div className="p-6 flex flex-col gap-4 w-full h-full">
+    <div className="grid grid-cols-1 md:grid-cols-2  justify-items-end w-full h-auto text-gray-800">
+      <div className="sm:w-full p-4 flex flex-col gap-4 h-auto">
         {/* Stat Cards */}
-        <div className="flex md:grid-cols-3 gap-4">
+        <div className="flex md:grid-cols-3 gap-4 w-auto overflow-x-auto">
           <div className="rounded-2xl bg-white p-5 border border-gray-200 shadow-md">
             <h2 className="text-sm text-gray-600 mb-2">Total Deliveries</h2>
             <p className="text-2xl font-semibold">{totalDeliveries}</p>
@@ -124,7 +124,7 @@ export default function RiderDashboard() {
       </div>
 
       {/* Rider Delivery List */}
-      <RiderOrderList />
+        <RiderOrderList />
     </div>
   );
 }

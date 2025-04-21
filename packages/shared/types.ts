@@ -97,6 +97,17 @@ export interface Rider extends BaseUser {
   rating?: number;
 }
 
+export interface RiderProfile extends Rider {
+  name: string;
+  phone: string;
+  second_phone?: string;
+  vehicleType: "bicycle" | "motorcycle" | "car";
+  licensePlate?: string;
+  rider_image_url?: string;
+  vehicle_image_url?: string;
+
+}
+
 // Admin type with sub-roles
 export interface Admin extends BaseUser {
   role: "admin";
@@ -108,7 +119,7 @@ export interface Admin extends BaseUser {
 export type AppUser =
   | User
   | Vendor
-  | Rider
+  | RiderProfile
   | (Admin & {
       conversations?: Conversation[];
       activeCall?: Call | null;
