@@ -43,22 +43,22 @@ export default function RiderSidebar() {
       {/* Sidebar Overlay (visible only on mobile when sidebar is open) */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={toggleSidebar} // Close sidebar when clicking outside
-          aria-hidden="true" // Hide from screen readers
+          className="fixed h-screen inset-0 bg-black/50 z-40 md:hidden"
+          onClick={toggleSidebar}
+          aria-hidden="true"
         ></div>
       )}
 
       {/* Sidebar */}
       <aside
         className={`
-          w-60 bg-white/40 shadow-md h-full p-4 fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out
+          w-full md:w-60 bg-white/40 shadow-md h-screen md:h-auto p-4 fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out
           md:static md:translate-x-0
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
         <h1 className="text-gray-700 text-2xl font-bold mb-10">Rider Panel</h1>
-        <nav className="flex flex-col gap-4 relative h-full">
+        <nav className="flex flex-col gap-4 relative h-auto">
           {/* Dashboard Link */}
           <Link
             href="/rider"
@@ -98,10 +98,10 @@ export default function RiderSidebar() {
           {/* Logout Button */}
           {/* Adjusted position to be relative to the sidebar content */}
           <GlassButton
-            className="!text-white !bg-orange-500 hover:!text-orange-500 hover:!bg-orange-100/60 hover:border-orange-500 cursor-pointer rounded-2xl flex items-center justify-center gap-2 mt-auto mb-4" // Use mt-auto to push to bottom
+            className="!text-white !bg-orange-500 hover:!text-orange-500 hover:!bg-orange-100/60 hover:border-orange-500 cursor-pointer rounded-2xl flex items-center justify-center gap-2 m-auto w-full"
             onClick={async () => {
               await signOut();
-              setIsSidebarOpen(false); // Close sidebar on logout (optional)
+              setIsSidebarOpen(false);
             }}
           >
             <LogOut size={18} /> Logout

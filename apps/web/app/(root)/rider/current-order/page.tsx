@@ -1,20 +1,12 @@
 // apps/web/components/rider/RiderCurrentOrderPage.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useAuthContext } from "@/context/AuthContext";
-// Import Database type from your Supabase generated types
-// Make sure you have generated these types using the Supabase CLI
-import { Database } from "@shared/supabase/types"; // ADJUST PATH IF NECESSARY
-// Corrected: Adjusted import path for Supabase client utility
-import { supabase } from "@shared/supabaseClient"; // ADJUST PATH IF NECESSARY based on your project
-
-// Assuming you have GlassDiv, Section, DisplayInfo, GlassButton components
-import GlassDiv from "@/components/ui/GlassDiv";
-import Section from "@/components/reuse/Section";
-import DisplayInfo from "@/components/reuse/DisplayInfo";
-import GlassButton from "@/components/ui/GlassButton";
 import { toast } from "react-toastify";
+import { Database } from "@shared/supabase/types";
+import { supabase } from "@shared/supabaseClient";
+import React, { useEffect, useState } from "react";
+import GlassButton from "@/components/ui/GlassButton";
+import { useAuthContext } from "@/context/AuthContext";
 
 import {
   MapPin,
@@ -24,22 +16,19 @@ import {
   Clock3,
   CheckCircle,
   XCircle,
-  Loader2, // Added Loader2 for loading states
-  Store, // Added Store icon for vendor
+  Loader2,
+  Store,
 } from "lucide-react";
 import Link from "next/link";
 
-// Define types for fetched data based on your schema and select query
-// Corrected: Explicitly define the type based on the selected columns and relationships
-// Typing relationships that seem to return arrays as arrays, based on observed behavior.
 type Order = {
   id: string;
-  total_amount: number; // Based on order.total_amount in DB type
-  status: string | null; // Based on order.status in DB type
-  special_instructions: string | null; // Based on order.special_instructions in DB type
-  created_at: string | null; // Based on order.created_at in DB type
+  total_amount: number;
+  status: string | null;
+  special_instructions: string | null;
+  created_at: string | null;
 
-  // Typing these as arrays based on observed behavior, even if unexpected for many-to-one relationships
+
   user_id: { name: string | null; phone: string | null }[] | null;
   vendor_id:
     | {
@@ -268,7 +257,7 @@ export default function RiderCurrentOrderPage() {
   // --- Render ---
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-full">
+      <div className="flex w-full justify-center items-center h-full">
         <Loader2 size={32} className="animate-spin text-orange-500" />
         <p className="ml-2 text-gray-700">Loading current order...</p>
       </div>
@@ -290,10 +279,10 @@ export default function RiderCurrentOrderPage() {
 
   if (!currentOrder) {
     return (
-      <div className="text-gray-700 text-center mt-8">
+      <div className="text-gray-700 text-center w-full mt-8">
         <p>You do not have a current order assigned.</p>
         {/* Optional: Link to available orders page if applicable */}
-        <Link href="/rider/available-orders">View available orders</Link> 
+        {/* <Link href="/rider/available-orders">View available orders</Link> */}
       </div>
     );
   }

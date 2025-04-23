@@ -314,7 +314,7 @@ export default function RiderDashboard() {
             <h2 className="text-gray-800 font-semibold">
               {activeChart === "deliveries"
                 ? "Delivered Orders (Last 30 Days)"
-                : "Overview"}{" "}
+                : "Distance Traveled (Last 30 Days)"}
               {/* Adjusted title */}
             </h2>
             {/* Removed distance chart button as data is not available */}
@@ -329,7 +329,7 @@ export default function RiderDashboard() {
               >
                 Deliveries
               </button>
-              Removed distance chart button
+              {/* Removed distance chart button */}
               <button
                 onClick={() => setActiveChart("distance")}
                 className={`px-4 py-1 rounded-full text-sm font-medium ${
