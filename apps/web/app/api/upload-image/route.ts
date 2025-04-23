@@ -4,15 +4,13 @@ import { createClient } from "@supabase/supabase-js";
 import { v4 as uuidv4 } from "uuid";
 import path from "path"; // Used for getting file extension
 
-const SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4Y2ptaG9wbmxsYW5udnRmd3plIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MzU4MzI0NiwiZXhwIjoyMDU5MTU5MjQ2fQ.TItg2vx8zWiHLwe8nS5gAxoLgFuPcOEeYqDoa2IWYbI"
-
 // --- Supabase Configuration ---
 // Ensure you have these environment variables set in your .env.local file
 // NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
 // SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY (Use the service_role key for server-side)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceRoleKey = SUPABASE_SERVICE_ROLE_KEY;
-const supabaseKey = process.env.SUPABASE_KEY;
+const supabaseServiceRoleKey = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 console.log({supabaseUrl, supabaseServiceRoleKey, supabaseKey});
 
 
