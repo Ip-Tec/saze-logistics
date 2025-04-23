@@ -1,172 +1,96 @@
-"use client";
+// apps/web/app/(root)/user/food/[id]/page.tsx
 
-import Image from "next/image";
 import { CartItem } from "@shared/types";
-import { useEffect, useState } from "react";
-import { useCart } from "@/context/CartContext";
-import QuantityPicker from "@/components/ui/QuantityPicker";
 
+import FoodDetailsClient from "@/components/user/FoodDetailsClient";
+
+// Import the placeholder image (can remain here)
 import FoodPic from "@/public/images/Jollof_Rice-removebg-preview.png";
 
+// Define the structure of the extra items (can live here or be fetched)
 const AVAILABLE_EXTRAS = [
   { id: "icecream", name: "Ice Cream", price: 500, vendor: "Mama Cee" },
   { id: "water", name: "Bottled Water", price: 200, vendor: "Mama Tee" },
-  { id: "softdrink", name: "Soft Drink", price: 400, vendor: "Mama Jee" },
-  { id: "softdrink", name: "Soft Drink", price: 400, vendor: "Mama Lee" },
+  {
+    id: "softdrink-jee",
+    name: "Soft Drink (Mama Jee)",
+    price: 400,
+    vendor: "Mama Jee",
+  }, // Give unique IDs
+  {
+    id: "softdrink-lee",
+    name: "Soft Drink (Mama Lee)",
+    price: 400,
+    vendor: "Mama Lee",
+  }, // Give unique IDs
 ];
 
+// Define the type for the params this page expects
+
+// This is now an async Server Component by default
 export default async function FoodDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const [quantity, setQuantity] = useState(0);
-  const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
 
-  const [food, setFood] = useState<CartItem>({
-    quantity: 1,
-    id: "2222222",
-    name: "Jollof Rice",
-    description: "Spicy, party-style Jollof rice with fried chicken & salad.",
-    vendor_id: "1234567",
-    is_available: true,
-    price: 2500,
-    image: "/sample-food.jpg",
-    vendor: "Mama Cee",
-    created_at: "",
-  });
-
-  const { cart, addToCart, updateQuantity, removeFromCart } = useCart();
-  const existingItem = cart.find((item) => item.id === id);
-
-  useEffect(() => {
-    const fetchFood = async () => {
-      try {
-        const res = await fetch(`/api/foods/${id}`);
-        if (!res.ok) throw new Error("Failed to fetch food");
-        const data = await res.json();
-        setFood(data);
-      } catch (error) {
-        console.error("Error fetching food:", error);
+  // *** Data Fetching on the Server ***
+  // Fetch the food item data directly here in the Server Component
+  let foodData: CartItem | null = null;
+  try {
+    // In a real app, you'd fetch from your API or directly query the DB here
+    // Example fetching from your API Route:
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/foods/${id}`,
+      {
+        cache: "no-store", // Or other caching strategies
       }
-    };
-
-    fetchFood();
-  }, [id]);
-
-  useEffect(() => {
-    if (existingItem) {
-      setQuantity(existingItem.quantity);
-    } else {
-      setQuantity(0);
-    }
-  }, [existingItem]);
-
-  const handleAdd = () => {
-    const extrasTotal = selectedExtras.reduce((sum, extraId) => {
-      const extra = AVAILABLE_EXTRAS.find((e) => e.id === extraId);
-      return sum + (extra?.price || 0);
-    }, 0);
-
-    const foodWithExtras = {
-      ...food,
-      price: food.price + extrasTotal,
-      extras: selectedExtras,
-    };
-
-    if (!existingItem) {
-      addToCart({ ...foodWithExtras, quantity: 1 });
-      setQuantity(1);
-    } else {
-      const newQty = quantity + 1;
-      updateQuantity(food.id, newQty);
-      setQuantity(newQty);
-    }
-  };
-
-  const handleDecrease = () => {
-    const newQuantity = quantity - 1;
-    if (newQuantity <= 0) {
-      removeFromCart(food.id);
-      setQuantity(0);
-    } else {
-      updateQuantity(food.id, newQuantity);
-      setQuantity(newQuantity);
-    }
-  };
-
-  const toggleExtra = (id: string) => {
-    setSelectedExtras((prev) =>
-      prev.includes(id) ? prev.filter((e) => e !== id) : [...prev, id]
     );
-  };
+    if (!res.ok) {
+      console.error(
+        `Failed to fetch food item ${id}:`,
+        res.status,
+        res.statusText
+      );
+      // Optionally throw an error to trigger the nearest error.tsx boundary
+      // throw new Error(`Failed to fetch food item ${id}`);
+    } else {
+      foodData = await res.json();
+    }
+  } catch (error) {
+    console.error(`Error fetching food item ${id}:`, error);
+    // Handle the error - maybe return a not found state or render an error message
+  }
 
+  // Handle case where food data wasn't fetched
+  if (!foodData) {
+    // Render a loading state or error message here if data fetching failed
+    // This is server-rendered, so it's displayed immediately.
+    return (
+      <div className="p-4 w-full mx-auto text-center text-red-500">
+        Failed to load food item or item not found.
+      </div>
+    );
+  }
+
+  // *** Render the layout and pass data to the Client Component ***
   return (
+    // This outer div provides the main structure
     <div className="p-4 w-full mx-auto">
-      {/* Food Image */}
-      <div className="rounded-2xl overflow-hidden mb-4">
-        <Image
-          src={food.image ? food.image : FoodPic}
-          width={800}
-          height={500}
-          alt={food.name}
-          className="w-full h-64 object-cover"
-          priority
-        />
-      </div>
+      {/* The Image can be rendered here as it's static */}
+      {/* Although I moved it to the client component in the example for simplicity
+           as the client component already renders other info. You can move it back here
+           if you prefer. If you move it back, pass the image src string to the client component. */}
 
-      {/* Info */}
-      <h1 className="text-2xl sm:text-3xl font-bold mb-1">{food.name}</h1>
-      <p className="text-sm text-gray-500">From {food.vendor}</p>
-      <p className="text-orange-600 font-semibold text-lg mt-2">
-        ₦{food.price}
-      </p>
-      <p className="text-sm text-gray-600 mt-2">{food.description}</p>
+      {/* Pass the fetched data and available extras to the Client Component */}
+      <FoodDetailsClient
+        initialFood={foodData}
+        availableExtras={AVAILABLE_EXTRAS} // Pass the list of extras
+        FoodPic={FoodPic} // Pass the placeholder image if needed in client component
+      />
 
-      {/* Extras */}
-      <div className="mt-6">
-        <h3 className="text-md font-semibold mb-2">Add Extras</h3>
-        <div className="flex flex-cols gap-3 overflow-x-auto w-full">
-          {AVAILABLE_EXTRAS.map((extra) => (
-            <label
-              key={`${extra.id}-${extra.vendor}`} // Fixed duplicate key issue
-              className={`border p-3 rounded-xl text-sm cursor-pointer transition ${
-                selectedExtras.includes(extra.id)
-                  ? "bg-orange-100 border-orange-400"
-                  : "hover:border-gray-400"
-              }`}
-            >
-              <input
-                type="checkbox"
-                value={extra.id}
-                checked={selectedExtras.includes(extra.id)}
-                onChange={() => toggleExtra(extra.id)}
-                className="mr-2"
-              />
-              {extra.name} – ₦{extra.price}
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* Quantity + Cart Button */}
-      <div className="mt-6 flex items-center gap-4">
-        {quantity > 0 ? (
-          <QuantityPicker
-            quantity={quantity}
-            onIncrease={handleAdd}
-            onDecrease={handleDecrease}
-          />
-        ) : (
-          <button
-            onClick={handleAdd}
-            className="bg-orange-500 text-white px-6 py-3 rounded-xl hover:bg-orange-600 transition w-full sm:w-auto"
-          >
-            Add to Cart
-          </button>
-        )}
-      </div>
-    </div>
+      {/* Other static elements could go here */}
+    </div> // Closing div for the main structure
   );
 }
