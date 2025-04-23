@@ -10,6 +10,9 @@ import path from "path"; // Used for getting file extension
 // SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY (Use the service_role key for server-side)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabaseKey = process.env.SUPABASE_KEY;
+console.log({supabaseUrl, supabaseServiceRoleKey, supabaseKey});
+
 
 if (!supabaseUrl || !supabaseServiceRoleKey) {
   console.error(
@@ -22,7 +25,7 @@ if (!supabaseUrl || !supabaseServiceRoleKey) {
 
 // Create a single Supabase client for the server-side
 // Using the service_role key bypasses Row Level Security (RLS)
-const supabase = createClient(supabaseUrl!, supabaseServiceRoleKey!);
+const supabase = createClient(supabaseUrl!,  supabaseKey!);
 
 // Define your Supabase Storage bucket name
 const SUPABASE_STORAGE_BUCKET = "sazzefile";
