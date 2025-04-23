@@ -11,16 +11,18 @@ import React, {
   SetStateAction,
 } from "react";
 import { toast } from "react-toastify";
-import { supabase } from "@shared/supabaseClient";
-import { useAuthContext } from "./AuthContext";
-import { MenuCategory, MenuItem } from "@shared/types";
+import { supabase } from "@shared/supabaseClient"; // ADJUST PATH IF NECESSARY
+import { useAuthContext } from "./AuthContext"; // ADJUST PATH IF NECESSARY
+import { MenuCategory, MenuItem } from "@shared/types"; // ADJUST PATH IF NECESSARY
 
 type VendorContextType = {
-  vendorId: string;
+  vendorId: string | undefined; // vendorId can be undefined initially
   categories: MenuCategory[];
   setCategories: Dispatch<SetStateAction<MenuCategory[]>>;
   menuItems: MenuItem[];
   setMenuItems: Dispatch<SetStateAction<MenuItem[]>>;
+  isLoading: boolean; // Added loading state for initial fetch
+  fetchError: Error | null; // Added error state for initial fetch
   /**
    * Inserts a new category and returns it, or undefined on failure.
    */
@@ -43,26 +45,54 @@ export const VendorProvider: React.FC<{ children: ReactNode }> = ({
   const vendorId = user?.id;
   const [categories, setCategories] = useState<MenuCategory[]>([]);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // State for initial loading
+  const [fetchError, setFetchError] = useState<Error | null>(null); // State for initial fetch error
 
   // Fetch categories & items when we know vendorId
   useEffect(() => {
-    if (!vendorId) return;
-    (async () => {
-      const { data: catData, error: catErr } = await supabase
-        .from("menu_categories")
-        .select("*")
-        .eq("vendor_id", vendorId);
-      if (catErr) toast.error("Failed to load categories");
-      else setCategories(catData || []);
+    const fetchData = async () => {
+      if (!vendorId) {
+        setIsLoading(false); // Stop loading if no vendorId
+        setFetchError(null);
+        setCategories([]);
+        setMenuItems([]);
+        return;
+      }
 
-      const { data: itemData, error: itemErr } = await supabase
-        .from("menu_items")
-        .select("*")
-        .eq("vendor_id", vendorId);
-      if (itemErr) toast.error("Failed to load menu items");
-      else setMenuItems(itemData || []);
-    })();
-  }, [vendorId]);
+      setIsLoading(true); // Start loading
+      setFetchError(null); // Clear previous errors
+
+      try {
+        // Fetch Categories
+        const { data: catData, error: catErr } = await supabase
+          .from("menu_category") // Ensure correct table name 'menu_category'
+          .select("*")
+          .eq("vendor_id", vendorId);
+
+        if (catErr) throw catErr;
+        setCategories(catData || []);
+
+        // Fetch Menu Items
+        const { data: itemData, error: itemErr } = await supabase
+          .from("menu_item") // Ensure correct table name 'menu_item'
+          .select("*")
+          .eq("vendor_id", vendorId);
+
+        if (itemErr) throw itemErr;
+        setMenuItems(itemData || []);
+      } catch (error: any) {
+        console.error("Error fetching vendor menu data:", error);
+        setFetchError(error); // Set fetch error
+        setCategories([]); // Clear data on error
+        setMenuItems([]);
+        toast.error("Failed to load vendor menu."); // Show a toast on fetch error
+      } finally {
+        setIsLoading(false); // Stop loading regardless of success or failure
+      }
+    };
+
+    fetchData(); // Execute the fetch function
+  }, [vendorId]); // Re-run effect when vendorId changes
 
   const addCategory = async (
     name: string,
@@ -70,30 +100,43 @@ export const VendorProvider: React.FC<{ children: ReactNode }> = ({
   ): Promise<MenuCategory | undefined> => {
     if (!vendorId) {
       toast.error("Not authenticated");
-      return;
+      return undefined; // Return undefined on failure
     }
+
+    // Note: You might want loading/error state for mutations too,
+    // but keeping it simple based on your original code.
+    // The MenuForm component manages its own loading state.
 
     const newCat = {
       name,
       description: description ?? null,
       vendor_id: vendorId,
+      // created_at should ideally be set by a database default or server-side
+      // Keeping client-side for now as per your code, but consider server-side.
       created_at: new Date().toISOString(),
     };
 
-    const { data, error } = await supabase
-      .from("menu_categories")
-      .insert(newCat)
-      .select()
-      .single();
+    try {
+      const { data, error } = await supabase
+        .from("menu_category") // Ensure correct table name
+        .insert(newCat)
+        .select()
+        .single();
 
-    if (error || !data) {
-      toast.error("Could not add category");
-      return;
+      if (error || !data) {
+        console.error("Error inserting category:", error);
+        toast.error("Could not add category");
+        return undefined; // Return undefined on failure
+      }
+
+      setCategories((prev) => [...prev, data]);
+      toast.success("Category added successfully!"); // More descriptive toast
+      return data; // Return the newly created category
+    } catch (error: any) {
+      console.error("Unexpected error adding category:", error);
+      toast.error("An unexpected error occurred while adding category.");
+      return undefined; // Return undefined on failure
     }
-
-    setCategories((prev) => [...prev, data]);
-    toast.success("Category added");
-    return data;
   };
 
   const addMenuItem = async (
@@ -101,32 +144,44 @@ export const VendorProvider: React.FC<{ children: ReactNode }> = ({
   ): Promise<MenuItem | undefined> => {
     if (!vendorId) {
       toast.error("Not authenticated");
-      return;
+      return undefined; // Return undefined on failure
     }
 
+    // Note: Generating ID client-side is okay for optimistic UI,
+    // but database-generated UUIDs are generally preferred for uniqueness guarantees.
+    // Keeping client-side as per your code.
     const newItem: MenuItem = {
       ...item,
-      id: crypto.randomUUID(),
+      id: crypto.randomUUID(), // Client-side ID generation
       vendor_id: vendorId,
-      created_at: new Date().toISOString(),
+      // created_at should ideally be set by a database default or server-side
+      created_at: new Date().toISOString(), // Client-side timestamp
     };
 
-    const { error } = await supabase.from("menu_items").insert(newItem);
+    try {
+      const { error } = await supabase.from("menu_item").insert(newItem); // Ensure correct table name
 
-    if (error) {
-      toast.error("Could not add menu item");
-      return;
+      if (error) {
+        console.error("Error inserting menu item:", error);
+        toast.error("Could not add menu item");
+        return undefined; // Return undefined on failure
+      }
+
+      setMenuItems((prev) => [...prev, newItem]);
+      toast.success("Menu item added successfully!"); // More descriptive toast
+      return newItem; // Return the newly created menu item
+    } catch (error: any) {
+      console.error("Unexpected error adding menu item:", error);
+      toast.error("An unexpected error occurred while adding menu item.");
+      return undefined; // Return undefined on failure
     }
-
-    setMenuItems((prev) => [...prev, newItem]);
-    toast.success("Menu item added");
-    return newItem;
   };
 
-  if (!vendorId) {
-    // Optionally you could render a spinner here
-    return <>{children}</>;
-  }
+  // Do not render children if vendorId is not available and loading
+  // The consuming component should handle the loading/error states from the hook
+  // if (!vendorId && isLoading) {
+  //   return <>{children}</>; // Or a specific loading indicator here
+  // }
 
   return (
     <VendorContext.Provider
@@ -136,6 +191,8 @@ export const VendorProvider: React.FC<{ children: ReactNode }> = ({
         setCategories,
         menuItems,
         setMenuItems,
+        isLoading,
+        fetchError,
         addCategory,
         addMenuItem,
       }}

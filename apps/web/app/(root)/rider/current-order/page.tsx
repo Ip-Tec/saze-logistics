@@ -27,6 +27,7 @@ import {
   Loader2, // Added Loader2 for loading states
   Store, // Added Store icon for vendor
 } from "lucide-react";
+import Link from "next/link";
 
 // Define types for fetched data based on your schema and select query
 // Corrected: Explicitly define the type based on the selected columns and relationships
@@ -90,10 +91,7 @@ const ACTIVE_RIDER_STATUSES = ["assigned", "picked_up", "delivering"];
 const FINAL_RIDER_STATUS = "delivered"; // Status after rider completes delivery
 
 export default function RiderCurrentOrderPage() {
-  const { user } = useAuthContext(); // Get the logged-in user (rider)
-  // Corrected: Use the imported 'supabase' instance directly
-  // Ensure your @shared/supabaseClient exports a client instance named 'supabase'
-  // const supabase = createClient(); // Removed this line
+  const { user } = useAuthContext();
 
   // Use the ProcessedOrder type for the state
   const [currentOrder, setCurrentOrder] = useState<ProcessedOrder | null>(null);
@@ -295,7 +293,7 @@ export default function RiderCurrentOrderPage() {
       <div className="text-gray-700 text-center mt-8">
         <p>You do not have a current order assigned.</p>
         {/* Optional: Link to available orders page if applicable */}
-        {/* <Link href="/rider/available-orders">View available orders</Link> */}
+        <Link href="/rider/available-orders">View available orders</Link> 
       </div>
     );
   }
@@ -418,10 +416,12 @@ export default function RiderCurrentOrderPage() {
 
             {/* Estimated Time - NOTE: This is not in your DB schema, hardcoded in demo */}
             {/* You would need to calculate or fetch this from a logistics service */}
-            {/* <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3">
               <Clock3 size={18} />
-              <span>ETA: {order.estimatedTime}</span>
-            </div> */}
+              <span>
+                WAT: {currentOrder.status === "assigned" ? "30 minutes" : "N/A"}
+              </span>
+            </div>
 
             {/* Amount */}
             <div className="flex items-center gap-3">
@@ -495,13 +495,13 @@ export default function RiderCurrentOrderPage() {
                  Consider adding a "Report Issue" button if needed.
             */}
             {/* Example Report Issue Button (requires backend implementation) */}
-            {/* <GlassButton
-                onClick={() => alert('Implement Report Issue')}
-                disabled={isUpdatingStatus}
-                className="flex-1 !bg-red-500 hover:!bg-red-600 text-white font-semibold flex items-center justify-center gap-2"
-             >
-                 <XCircle size={18} /> Report Issue
-             </GlassButton> */}
+            <GlassButton
+              onClick={() => alert("Implement Report Issue")}
+              disabled={isUpdatingStatus}
+              className="flex-1 !bg-red-500 hover:!bg-red-600 text-white font-semibold flex items-center justify-center gap-2"
+            >
+              <XCircle size={18} /> Report Issue
+            </GlassButton>
           </div>
         </div>
 

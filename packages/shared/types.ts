@@ -83,7 +83,7 @@ export interface Vendor extends BaseUser {
   isApproved: boolean;
   menuItems?: MenuItem[];
   openingHours?: OpeningHours;
-  rating?: number;
+  rating?: number | string;
 }
 
 // Rider type

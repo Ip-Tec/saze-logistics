@@ -144,11 +144,12 @@ export default function MenuForm({
               <GlassSelect
                 value={itemCategoryId}
                 disabled={loading}
+                className="bg-gray-900/50 text-white"
                 onChange={(e) => setItemCategoryId(e.target.value)}
               >
                 <option value="">-- Select Category --</option>
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
+                  <option className="text-black" key={cat.id} value={cat.id}>
                     {cat.name}
                   </option>
                 ))}

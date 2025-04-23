@@ -1,7 +1,15 @@
-'use client';
+"use client";
 
-import GlassDiv from "@/components/ui/GlassDiv"; 
-import { CheckCircle, XCircle, DollarSign, AlertCircle, ThumbsDown, Truck } from "lucide-react";
+import GlassDiv from "@/components/ui/GlassDiv";
+import RiderHistoryPage from "@/components/rider/RiderHistoryPage";
+import {
+  CheckCircle,
+  XCircle,
+  DollarSign,
+  AlertCircle,
+  ThumbsDown,
+  Truck,
+} from "lucide-react";
 
 const historyData = [
   {
@@ -48,11 +56,11 @@ const historyData = [
   },
 ];
 
-export default function RiderHistoryPage() {
+export default function RiderHistory() {
   return (
     <div className="p-6 md:p-10 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold text-white mb-6">Order History</h1>
-
+      <h1 className="text-2xl font-bold text-gray-600 mb-6">Order History</h1>
+      <RiderHistoryPage />
       <div className="flex flex-col gap-4">
         {historyData.map((item) => (
           <GlassDiv
@@ -60,9 +68,7 @@ export default function RiderHistoryPage() {
             className="flex items-center justify-between bg-white/10 border border-white/10 p-4 rounded-xl text-white backdrop-blur-sm"
           >
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-white/20 rounded-full">
-                {item.icon}
-              </div>
+              <div className="p-2 bg-white/20 rounded-full">{item.icon}</div>
               <div>
                 <h3 className="font-semibold text-sm">{item.title}</h3>
                 <p className="text-xs text-gray-300">{item.date}</p>
@@ -73,12 +79,12 @@ export default function RiderHistoryPage() {
                 item.status === "Completed" || item.status === "Successful"
                   ? "bg-green-600 text-green-100"
                   : item.status === "Cancelled"
-                  ? "bg-red-600 text-red-100"
-                  : item.status === "Payment"
-                  ? "bg-emerald-600 text-emerald-100"
-                  : item.status === "Declined"
-                  ? "bg-orange-600 text-orange-100"
-                  : "bg-gray-500 text-white"
+                    ? "bg-red-600 text-red-100"
+                    : item.status === "Payment"
+                      ? "bg-emerald-600 text-emerald-100"
+                      : item.status === "Declined"
+                        ? "bg-orange-600 text-orange-100"
+                        : "bg-gray-500 text-white"
               }`}
             >
               {item.status}
@@ -89,4 +95,3 @@ export default function RiderHistoryPage() {
     </div>
   );
 }
-
