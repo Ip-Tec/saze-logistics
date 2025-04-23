@@ -6,35 +6,31 @@ import { CartItem } from "@shared/types";
 import { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import QuantityPicker from "@/components/ui/QuantityPicker";
-
 import FoodPic from "@/public/images/Jollof_Rice-removebg-preview.png";
 
-// Modify the interface to be slightly more general for params
-interface FoodDetailPageProps {
-  params: {
-    id: string;
-    // Add an index signature to potentially satisfy the Record<string, ...> expectation
-    [key: string]: string | string[];
-  };
-  searchParams?: {
-    [key: string]: string | string[] | undefined;
-  };
-}
+const AVAILABLE_EXTRAS = [
+  { id: "1", name: "Extra Chicken", price: 1000 },
+  { id: "2", name: "Extra Sauce", price: 500 },
+  { id: "3", name: "Extra Rice", price: 800 },
+];
 
-// Keep the rest of your component code the same
+type PageProps = {
+  params: { id: string };
+  searchParams: any;
+};
+
 export default function FoodDetailPage({
   params,
   searchParams,
-}: FoodDetailPageProps) {
+}: PageProps) { // <-- Use PageProps here
   const { id } = params;
   const [quantity, setQuantity] = useState(0);
-  const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
-
-  const AVAILABLE_EXTRAS = [
+  const [selectedExtras, setSelectedExtras] = useState([ // Changed to directly define available extras
     { id: "1", name: "Extra Chicken", price: 1000 },
     { id: "2", name: "Extra Sauce", price: 500 },
     { id: "3", name: "Extra Rice", price: 800 },
-  ];
+  ]);
+
 
   const [food, setFood] = useState<CartItem>({
     quantity: 1,
@@ -55,9 +51,10 @@ export default function FoodDetailPage({
   useEffect(() => {
     const fetchFood = async () => {
       try {
+        // Ensure your /api/foods/[id] route actually returns data matching CartItem
         const res = await fetch(`/api/foods/${id}`);
         if (!res.ok) throw new Error("Failed to fetch food");
-        const data = await res.json();
+        const data: CartItem = await res.json(); // Add type assertion if confident in API response
         setFood(data);
       } catch (error) {
         console.error("Error fetching food:", error);
@@ -76,14 +73,13 @@ export default function FoodDetailPage({
   }, [existingItem]);
 
   const handleAdd = () => {
-    const extrasTotal = selectedExtras.reduce((sum, extraId) => {
-      const extra = AVAILABLE_EXTRAS.find((e) => e.id === extraId);
-      return sum + (extra?.price || 0);
+    const extrasTotal = selectedExtras.reduce((sum, extra) => {
+      return sum + (extra.price || 0);
     }, 0);
-    const foodWithExtras = {
+
+    const foodWithExtras: CartItem = {
       ...food,
       price: food.price + extrasTotal,
-      extras: selectedExtras,
     };
 
     if (!existingItem) {
@@ -95,8 +91,7 @@ export default function FoodDetailPage({
       setQuantity(newQty);
     }
   };
-
-  const handleDecrease = () => {
+    const handleDecrease = () => {
     const newQuantity = quantity - 1;
     if (newQuantity <= 0) {
       removeFromCart(food.id);
@@ -109,9 +104,9 @@ export default function FoodDetailPage({
 
   const toggleExtra = (id: string) => {
     setSelectedExtras((prev) =>
-      prev.includes(id) ? prev.filter((e) => e !== id) : [...prev, id]
-    );
+      prev.some(extra => extra.id === id) ? prev.filter((e) => e.id !== id) : [...prev, AVAILABLE_EXTRAS.find(extra => extra.id === id)!]    );
   };
+
 
   return (
     <div className="p-4 w-full mx-auto">
@@ -141,9 +136,9 @@ export default function FoodDetailPage({
         <div className="flex flex-cols gap-3 overflow-x-auto w-full">
           {AVAILABLE_EXTRAS.map((extra) => (
             <label
-              key={`${extra.id}-${extra.name}`}
+              key={extra.id} // Using extra.id should be unique if IDs are unique within the array
               className={`border p-3 rounded-xl text-sm cursor-pointer transition ${
-                selectedExtras.includes(extra.id)
+                selectedExtras.includes(extra)
                   ? "bg-orange-100 border-orange-400"
                   : "hover:border-gray-400"
               }`}
@@ -151,7 +146,7 @@ export default function FoodDetailPage({
               <input
                 type="checkbox"
                 value={extra.id}
-                checked={selectedExtras.includes(extra.id)}
+                checked={selectedExtras.includes(extra)}
                 onChange={() => toggleExtra(extra.id)}
                 className="mr-2"
               />
