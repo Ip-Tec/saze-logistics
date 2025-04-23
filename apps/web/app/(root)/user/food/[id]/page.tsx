@@ -9,26 +9,32 @@ import QuantityPicker from "@/components/ui/QuantityPicker";
 
 import FoodPic from "@/public/images/Jollof_Rice-removebg-preview.png";
 
+// Modify the interface to be slightly more general for params
 interface FoodDetailPageProps {
   params: {
     id: string;
+    // Add an index signature to potentially satisfy the Record<string, ...> expectation
+    [key: string]: string | string[];
   };
   searchParams?: {
     [key: string]: string | string[] | undefined;
   };
 }
 
-const AVAILABLE_EXTRAS = [
-  { id: "icecream", name: "Ice Cream", price: 500, vendor: "Mama Cee" },
-  { id: "water", name: "Bottled Water", price: 200, vendor: "Mama Tee" },
-  { id: "softdrink", name: "Soft Drink", price: 400, vendor: "Mama Jee" },
-  { id: "softdrink", name: "Soft Drink", price: 400, vendor: "Mama Lee" },
-];
-
-export default function FoodDetailPage({ params, searchParams }: FoodDetailPageProps) {
+// Keep the rest of your component code the same
+export default function FoodDetailPage({
+  params,
+  searchParams,
+}: FoodDetailPageProps) {
   const { id } = params;
   const [quantity, setQuantity] = useState(0);
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
+
+  const AVAILABLE_EXTRAS = [
+    { id: "1", name: "Extra Chicken", price: 1000 },
+    { id: "2", name: "Extra Sauce", price: 500 },
+    { id: "3", name: "Extra Rice", price: 800 },
+  ];
 
   const [food, setFood] = useState<CartItem>({
     quantity: 1,
@@ -50,11 +56,11 @@ export default function FoodDetailPage({ params, searchParams }: FoodDetailPageP
     const fetchFood = async () => {
       try {
         const res = await fetch(`/api/foods/${id}`);
-        if (!res.ok) throw new Error('Failed to fetch food');
+        if (!res.ok) throw new Error("Failed to fetch food");
         const data = await res.json();
         setFood(data);
       } catch (error) {
-        console.error('Error fetching food:', error);
+        console.error("Error fetching food:", error);
       }
     };
 
@@ -74,7 +80,6 @@ export default function FoodDetailPage({ params, searchParams }: FoodDetailPageP
       const extra = AVAILABLE_EXTRAS.find((e) => e.id === extraId);
       return sum + (extra?.price || 0);
     }, 0);
-
     const foodWithExtras = {
       ...food,
       price: food.price + extrasTotal,
@@ -136,7 +141,7 @@ export default function FoodDetailPage({ params, searchParams }: FoodDetailPageP
         <div className="flex flex-cols gap-3 overflow-x-auto w-full">
           {AVAILABLE_EXTRAS.map((extra) => (
             <label
-              key={`${extra.id}-${extra.vendor}`} // Fixed duplicate key issue
+              key={`${extra.id}-${extra.name}`}
               className={`border p-3 rounded-xl text-sm cursor-pointer transition ${
                 selectedExtras.includes(extra.id)
                   ? "bg-orange-100 border-orange-400"
