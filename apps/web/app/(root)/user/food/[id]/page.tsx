@@ -1,3 +1,4 @@
+// apps/web/app/(root)/user/food/[id]/page.tsx
 "use client";
 
 import Image from "next/image";
