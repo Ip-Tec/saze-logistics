@@ -1,3 +1,6 @@
+// pages/user/food/page.tsx
+"use client";	
+
 import { useState } from "react";
 import { FoodCard } from "@/components/user/FoodCard";
 

@@ -1,4 +1,6 @@
+// /app/(root)/user/restaurant/page.tsx
 "use client"
+
 import { useState } from "react";
 import { RestaurantCard } from "@/components/user/RestaurantCard";
 
