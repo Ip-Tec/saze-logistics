@@ -4,10 +4,18 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/public/images/logo.png";
-import { useSession } from "next-auth/react";
+import { supabase } from "@shared/supabaseClient";
 
 const Header: React.FC = () => {
-  const { data: session } = useSession();
+  const [session, setSession] = React.useState(null);
+
+  React.useEffect(() => {
+    const getSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setSession(data.session as null);
+    };
+    getSession();
+  }, []);
 
   return (
     <div className="w-full fixed top-0 left-0 flex items-center justify-between bg-gradient-to-br from-yellow-400 to-blue-500 shadow-2xl z-50 px-4">
@@ -30,5 +38,4 @@ const Header: React.FC = () => {
     </div>
   );
 };
-
 export default Header;
