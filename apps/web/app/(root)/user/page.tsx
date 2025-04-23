@@ -48,7 +48,7 @@ export default function UserHomePage() {
               key={i}
               id={`food-${i}`}
               image="/sample-food.jpg"
-              title="Jollof Rice"
+              name="Jollof Rice"
               vendor="Mama Cee"
               price={2500}
             />
