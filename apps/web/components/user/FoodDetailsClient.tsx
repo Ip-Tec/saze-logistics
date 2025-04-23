@@ -7,14 +7,12 @@ import { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import QuantityPicker from "@/components/ui/QuantityPicker";
 
-
 interface Extra {
   id: string;
   name: string;
   price: number;
   vendor?: string;
 }
-
 
 interface FoodDetailsClientProps {
   initialFood: CartItem;
@@ -25,7 +23,7 @@ interface FoodDetailsClientProps {
 export default function FoodDetailsClient({
   initialFood,
   availableExtras,
-  FoodPic, 
+  FoodPic,
 }: FoodDetailsClientProps) {
   const [quantity, setQuantity] = useState(0);
   const [selectedExtraIds, setSelectedExtraIds] = useState<string[]>([]);
@@ -40,7 +38,7 @@ export default function FoodDetailsClient({
     } else {
       setQuantity(0);
     }
-  }, [existingItem]); 
+  }, [existingItem]);
 
   const handleAdd = () => {
     const extrasTotal = selectedExtraIds.reduce((sum, extraId) => {
@@ -85,28 +83,30 @@ export default function FoodDetailsClient({
 
   // Render the UI elements that need client-side logic
   return (
-    <> {/* Using fragment as the root element */}
+    <>
+      {" "}
+      {/* Using fragment as the root element */}
       {/* Food Image - Can be rendered here or passed from server if static */}
-       <div className="rounded-2xl overflow-hidden mb-4">
-         <Image
-           src={food.image ? food.image : FoodPic} // Use state food image or placeholder
-           width={800}
-           height={500}
-           alt={food.name}
-           className="w-full h-64 object-cover"
-           priority
-         />
-       </div>
-
+      <div className="rounded-2xl overflow-hidden mb-4">
+        <Image
+          src={food.image ? food.image : FoodPic} // Use state food image or placeholder
+          width={800}
+          height={500}
+          alt={food.name}
+          className="w-full h-64 object-cover"
+          priority
+        />
+      </div>
       {/* Info - Rendered here because price changes based on extras */}
-      <h1 className="text-2xl sm:text-3xl font-bold mb-1">{food.name}</h1> {/* Use state food name */}
-      <p className="text-sm text-gray-500">From {food.vendor}</p> {/* Use state food vendor */}
+      <h1 className="text-2xl sm:text-3xl font-bold mb-1">{food.name}</h1>{" "}
+      {/* Use state food name */}
+      <p className="text-sm text-gray-500">From {food.vendor}</p>{" "}
+      {/* Use state food vendor */}
       <p className="text-orange-600 font-semibold text-lg mt-2">
         ₦{food.price} {/* Use state food price (will update based on extras) */}
       </p>
-      <p className="text-sm text-gray-600 mt-2">{food.description}</p> {/* Use state food description */}
-
-
+      <p className="text-sm text-gray-600 mt-2">{food.description}</p>{" "}
+      {/* Use state food description */}
       {/* Extras Selection - Interactive part */}
       <div className="mt-6">
         <h3 className="text-md font-semibold mb-2">Add Extras</h3>
@@ -134,7 +134,6 @@ export default function FoodDetailsClient({
           ))}
         </div>
       </div>
-
       {/* Quantity + Cart Button - Interactive part */}
       <div className="mt-6 flex items-center gap-4">
         {quantity > 0 ? (
@@ -152,7 +151,7 @@ export default function FoodDetailsClient({
           </button>
         )}
       </div>
-       {/* The closing div from the original component is now in the Server Component */}
+      {/* The closing div from the original component is now in the Server Component */}
     </>
   );
 }
