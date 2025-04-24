@@ -33,11 +33,11 @@ export default function RiderSidebar() {
     <>
       {/* Mobile Menu Button */}
       <button
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-white/50 backdrop-blur-md shadow-lg text-gray-700 hover:bg-white"
+        className="md:hidden fixed top-4 left-4 z-[90] p-2 rounded-md bg-white/50 backdrop-blur-md shadow-lg text-gray-700 hover:bg-white"
         onClick={toggleSidebar}
         aria-label="Toggle menu"
       >
-        {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+        {isSidebarOpen ? <X size={24}  className="text-red-500"/> : <Menu size={24} />}
       </button>
 
       {/* Sidebar Overlay (visible only on mobile when sidebar is open) */}

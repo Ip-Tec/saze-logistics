@@ -15,6 +15,7 @@ import { Loader2, PencilIcon, SaveIcon, X } from "lucide-react";
 
 // Import the RiderProfile type from your shared types file
 import { RiderProfile } from "@shared/types"; // Adjust the import path as needed
+import router from "next/router";
 
 // Define a type for the expected data structure from getUserProfile for this page
 // This should align with RiderProfile, but can be Partial if not all fields are guaranteed on fetch
@@ -102,7 +103,8 @@ export default function RiderSettingsPage() {
               `User with role ${profile.role} accessed Rider Settings page.`
             );
             toast.error("You do not have permission to view this page.");
-            // Optional: Redirect non-riders, e.g., router.push('/dashboard');
+            // Optional: Redirect non-riders, e.g., 
+            router.push(profile.role);
           } else {
             // Handle case where getUserProfile returned null (e.g., session expired during fetch)
             console.error("Failed to fetch profile data for logged-in user.");
@@ -128,7 +130,6 @@ export default function RiderSettingsPage() {
       if (vehicleImageURL) URL.revokeObjectURL(vehicleImageURL);
     };
   }, [user, getUserProfile]); // Refetch if user or getUserProfile changes
-
   // --- Image Handling ---
   const handleImageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
