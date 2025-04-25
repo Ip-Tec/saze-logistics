@@ -176,16 +176,16 @@ const VendorOrders: React.FC = () => {
         .from("order")
         .select(
           `
-          id,
-          total_amount,
-          status,
-          special_instructions,
-          created_at,
-          updated_at,
-          user_id (name, phone),
-          delivery_address_id (*),
-          order_item (id, quantity, price, notes, order_id, menu_item_id (name))
-          `
+id,
+total_amount,
+status,
+special_instructions,
+created_at,
+updated_at,
+user_id (name, phone),
+delivery_address_id (*),
+order_item (id, quantity, price, notes, order_id, menu_item_id (name))
+`
         )
         .eq("vendor_id", user.id) // Filter by the logged-in vendor's ID
         .order("created_at", { ascending: false }); // Order by creation time, newest first
@@ -201,10 +201,13 @@ const VendorOrders: React.FC = () => {
           const processedOrders = data.map((orderItem) => {
             const typedOrderItem: VendorOrderQueryResult = {
               ...orderItem,
-              order_item: orderItem.order_item?.map(item => ({
-                ...item,
-                menu_item_id: Array.isArray(item.menu_item_id) ? item.menu_item_id[0] : item.menu_item_id
-              })) ?? []
+              order_item:
+                orderItem.order_item?.map((item) => ({
+                  ...item,
+                  menu_item_id: Array.isArray(item.menu_item_id)
+                    ? item.menu_item_id[0]
+                    : item.menu_item_id,
+                })) ?? [],
             };
             return processOrderForDisplay(typedOrderItem);
           });
@@ -399,7 +402,6 @@ const VendorOrders: React.FC = () => {
 
     return (
       <div className="flex flex-col items-left justify-start gap-4 my-4 pb-36">
-        {" "}
         {/* Use flex-col */}
         {list.map((order) => (
           <GlassDivClickable
@@ -410,21 +412,21 @@ const VendorOrders: React.FC = () => {
             <div className="flex justify-between items-center mb-2">
               <span className="font-semibold text-lg">
                 #{order.id.substring(0, 8)}
-              </span>{" "}
+              </span>
               {/* Truncate ID */}
               <span className="text-xs text-gray-500">
                 {activeTab === "incoming"
                   ? order.displayTime
-                  : order.displayStatus}{" "}
+                  : order.displayStatus}
                 {/* Show time for incoming, status for others */}
               </span>
             </div>
             <div className="text-sm text-gray-700">
-              <p>Customer: {order.customer?.name || "N/A"}</p>{" "}
+              <p>Customer: {order.customer?.name || "N/A"}</p>
               {/* Use processed customer name */}
               {order.items && order.items.length > 0 && (
                 <p>
-                  Items:{" "}
+                  Items:
                   {order.items
                     .map(
                       (item) =>
@@ -433,7 +435,7 @@ const VendorOrders: React.FC = () => {
                     .join(", ")}
                 </p>
               )}
-              <p>Total: ₦{order.total_amount?.toFixed(2) || "0.00"}</p>{" "}
+              <p>Total: ₦{order.total_amount?.toFixed(2) || "0.00"}</p>
               {/* Use processed total */}
             </div>
             {activeTab === "incoming" && (
@@ -499,12 +501,10 @@ const VendorOrders: React.FC = () => {
   // --- Main Render ---
   return (
     <div className="p-6 w-full h-full flex flex-col">
-      {" "}
       {/* Use flex-col for layout */}
       <h1 className="text-2xl font-bold mb-6 text-white">Vendor Orders</h1>
       {/* Tabs */}
       <GlassDiv className="flex space-x-4 mb-4 w-auto self-start">
-        {" "}
         {/* self-start to keep tabs left-aligned */}
         {(["incoming", "current", "completed"] as OrderTabKey[]).map((tab) => (
           <GlassButton
@@ -523,47 +523,43 @@ const VendorOrders: React.FC = () => {
       {/* Orders List and Details Columns */}
       {/* Use flex-1 to make these columns take available space and fill height */}
       <div className="flex flex-1 gap-6 min-h-0">
-        {" "}
         {/* min-h-0 crucial for flex items in flex column */}
         {/* Orders Column */}
         {/* Set explicit width and make scrollable */}
         <div className="w-full lg:w-2/3 flex-shrink-0 flex-grow !h-full !overflow-y-scroll glass-scrollbar">
-          {" "}
           {/* Added lg:w-2/3 for responsiveness */}
           {renderOrders(ordersData[activeTab])} {/* Use state data */}
         </div>
         {/* Order Details Column */}
         {/* Set explicit width */}
         <div className="hidden lg:block lg:w-1/3 flex-shrink-0 overflow-y-auto glass-scrollbar">
-          {" "}
           {/* Hide on small screens, show on large */}
           <GlassDiv className="p-4 rounded-2xl shadow-lg bg-gray-100">
             <h3 className="text-xl font-semibold mb-4">Order Details</h3>
             {selectedOrder ? (
               <div className="space-y-2 text-sm">
-                {" "}
                 {/* Add some spacing */}
                 <p>
                   <span className="font-bold">Order ID:</span> #
                   {selectedOrder.id.substring(0, 8)}
-                </p>{" "}
+                </p>
                 {/* Truncate ID */}
                 <p>
-                  <span className="font-medium">Customer:</span>{" "}
+                  <span className="font-medium">Customer:</span>
                   {selectedOrder.customer?.name || "N/A"}
                 </p>
                 <p>
-                  <span className="font-medium">Phone:</span>{" "}
+                  <span className="font-medium">Phone:</span>
                   {selectedOrder.customer?.phone || "N/A"}
                 </p>
                 <p>
-                  <span className="font-medium">Status:</span>{" "}
+                  <span className="font-medium">Status:</span>
                   {selectedOrder.displayStatus}
                 </p>
                 <p>
-                  <span className="font-medium">Ordered:</span>{" "}
+                  <span className="font-medium">Ordered:</span>
                   {selectedOrder.displayTime}
-                </p>{" "}
+                </p>
                 {/* Use display time */}
                 <p>
                   <span className="font-medium">Total:</span> ₦
@@ -571,7 +567,7 @@ const VendorOrders: React.FC = () => {
                 </p>
                 {selectedOrder.special_instructions && (
                   <p>
-                    <span className="font-medium">Instructions:</span>{" "}
+                    <span className="font-medium">Instructions:</span>
                     <span className="italic text-gray-600">
                       {selectedOrder.special_instructions}
                     </span>
@@ -585,9 +581,9 @@ const VendorOrders: React.FC = () => {
                         <li key={item.id} className="text-gray-700">
                           <span className="font-semibold">
                             {item.quantity}x
-                          </span>{" "}
+                          </span>
                           {item.menu_item_name || "Unknown Item"} - ₦
-                          {item.price?.toFixed(2) || "0.00"} each{" "}
+                          {item.price?.toFixed(2) || "0.00"} each
                           {/* Use menu_item_name */}
                           {item.notes && (
                             <span className="text-xs text-gray-500 ml-1">

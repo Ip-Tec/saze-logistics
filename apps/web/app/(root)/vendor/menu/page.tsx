@@ -5,57 +5,49 @@ import React, { useState } from "react";
 // Adjust import paths if necessary
 import MenuForm from "@/components/vendor/MenuForm";
 import MenuList from "@/components/vendor/MenuList";
-import { useVendor } from "@/context/VendorContext";
+import { useVendor } from "@/context/VendorContext"; // Assuming useVendor provides vendorId and add/update functions
 import GlassButton from "@/components/ui/GlassButton";
 import { Loader2 } from "lucide-react"; // Import Loader icon
-import GlassDiv from "@/components/ui/GlassDiv"; // Assuming you have this component
+// GlassDiv is not used directly in this component's render
+// import GlassDiv from "@/components/ui/GlassDiv";
 
 export default function VendorMenuPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formType, setFormType] = useState<"category" | "menu">("category");
 
+  // Get only vendorId, categories (for the form dropdown), and the add functions from the context.
+  // MenuList will now fetch its own menu items data.
   const {
     vendorId,
-    categories,
-    menuItems,
-    isLoading, // Get loading state from context
-    fetchError, // Get fetch error from context
+    categories, // Still need categories for the form dropdown
+    isLoading: isContextLoading, // Use a distinct name for context loading
+    fetchError: contextFetchError, // Use a distinct name for context error
     addCategory,
-    addMenuItem,
+    addMenuItem, // This function should now return the new item's ID
   } = useVendor();
 
-  // Note: The state for form inputs (newCategory, itemName, etc.) was in VendorMenuPage,
-  // but it's better managed inside MenuForm itself as it's specific to the form.
-  // MenuForm already has state for this.
-  // The handleAddCategory/handleAddMenuItem logic in VendorMenuPage is redundant
-  // as MenuForm calls the addCategory/addMenuItem functions directly via props.
-  // Removing the redundant state and handlers from VendorMenuPage.
-
   // --- Render ---
-  // Show loading or error states based on context
-  if (isLoading) {
+  // Show loading or error states based on context's initial state (fetching vendorId and categories)
+  if (isContextLoading) {
     return (
-      <div className="flex justify-center items-center w-full h-full text-gray-800">
+      <div className="flex justify-center items-center w-full h-screen text-gray-800"> {/* Use h-screen for full page loader */}
         <Loader2 size={32} className="animate-spin text-orange-500" />
-        <p className="ml-2 text-white">Loading menu data...</p>
+        <p className="ml-2 text-white">Loading vendor data...</p> {/* Updated message */}
       </div>
     );
   }
 
-  if (fetchError) {
+  if (contextFetchError) {
     return (
       <div className="text-red-600 text-center mt-8">
-        <p>Failed to load vendor menu.</p>
-        <p>{fetchError.message}</p>{" "}
-        {/* Display fetch error message */}
+        <p>Failed to load vendor data.</p> {/* Updated message */}
+        <p>{contextFetchError.message}</p>
       </div>
     );
   }
 
   // Handle case where vendorId is not available after loading (e.g., user not logged in or not a vendor)
-  // Although the context should ideally prevent rendering if user is not authenticated as a vendor,
-  // adding a safeguard here.
-  if (!vendorId && !isLoading && !fetchError) {
+  if (!vendorId && !isContextLoading && !contextFetchError) {
     return (
       <div className="text-gray-700 text-center mt-8">
         <p>You must be logged in as a vendor to manage your menu.</p>
@@ -64,8 +56,9 @@ export default function VendorMenuPage() {
     );
   }
 
+  // If vendorId is available, render the main menu page content
   return (
-    <div className="p-6 w-full h-auto mx-auto space-y-8 overflow-y-scroll">
+    <div className="p-6 w-full h-full mx-auto space-y-8 overflow-y-auto glass-scrollbar"> {/* Use h-full and overflow */}
       <h1 className="text-2xl font-bold text-white">Vendor Menu Manager</h1>
       <div className="flex justify-end gap-4">
         <GlassButton
@@ -81,38 +74,27 @@ export default function VendorMenuPage() {
             setFormType("menu");
             setIsFormOpen(true);
           }}
+           // Disable menu item button if no categories exist
+           disabled={categories.length === 0}
         >
           Create Menu Item
         </GlassButton>
       </div>
-      {/* Pass loading and error states to MenuList if it needs to react to them */}
+      {/* MenuList now fetches its own menu items, pass only vendorId */}
       <MenuList
-        categories={categories}
-        menuItems={menuItems}
-        isLoading={isLoading}
-        error={fetchError}
+         vendorId={vendorId}
       />
-      {/* Pass states */}
+      {/* Pass categories (for dropdown), form state, and add functions to MenuForm */}
       <MenuForm
         isOpen={isFormOpen}
         formType={formType}
-        categories={categories}
+        categories={categories} // Pass categories for the dropdown
         onClose={() => setIsFormOpen(false)}
-        // Pass the functions directly from the context
-        onAddCategory={addCategory}
-        // onAddMenuItem={addMenuItem}
-        // No need to pass vendor_id and created_at here, addMenuItem handles it
-        onAddMenuItem={({ name, description, price, category_id }) =>
-          addMenuItem({
-            name,
-            description,
-            price,
-            is_available: true,
-            category_id,
-            created_at: new Date().toISOString(),
-            vendor_id: vendorId || "",
-          })
-        }
+        onAddCategory={addCategory} // Pass the function from context
+        // Pass the function from context. MenuForm now handles image upload/insertion
+        // The addMenuItem function from context should just insert into menu_item and return the ID
+        onAddMenuItem={addMenuItem}
+        vendorId={vendorId} // Pass vendorId to the form (needed for image upload path) 
       />
     </div>
   );

@@ -7,12 +7,12 @@ import Logo from "@/public/images/logo.png";
 import { supabase } from "@shared/supabaseClient";
 
 const Header: React.FC = () => {
-  const [session, setSession] = React.useState(null);
+  const [session, setSession] = React.useState<any>(null);
 
   React.useEffect(() => {
     const getSession = async () => {
       const { data } = await supabase.auth.getSession();
-      setSession(data.session as null);
+      setSession(data.session);
     };
     getSession();
   }, []);
@@ -27,7 +27,7 @@ const Header: React.FC = () => {
         className="w-16 h-16"
       />
       {session ? (
-        <Link href="/dashboard" className="text-white font-bold">
+        <Link href={session?.user?.user_metadata?.role} className="text-white font-bold">
           Dashboard
         </Link>
       ) : (
@@ -37,5 +37,4 @@ const Header: React.FC = () => {
       )}
     </div>
   );
-};
-export default Header;
+};export default Header;

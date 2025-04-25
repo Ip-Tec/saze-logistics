@@ -11,9 +11,9 @@ import React, {
   SetStateAction,
 } from "react";
 import { toast } from "react-toastify";
-import { supabase } from "@shared/supabaseClient"; // ADJUST PATH IF NECESSARY
-import { useAuthContext } from "./AuthContext"; // ADJUST PATH IF NECESSARY
-import { MenuCategory, MenuItem } from "@shared/types"; // ADJUST PATH IF NECESSARY
+import { supabase } from "@shared/supabaseClient";
+import { useAuthContext } from "./AuthContext"; 
+import { MenuCategory, MenuItem } from "@shared/types"; 
 
 type VendorContextType = {
   vendorId: string | undefined; // vendorId can be undefined initially
