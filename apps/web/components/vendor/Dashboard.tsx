@@ -56,7 +56,7 @@ const formatDate = (dateString: string | null): string => {
 // --- Component ---
 
 export default function VendorDashboard() {
-  const { user } = useAuthContext(); // Get the logged-in user (vendor)
+  const { user } = useAuthContext();
 
   const [totalOrders, setTotalOrders] = useState<number | null>(null);
   const [totalRevenue, setTotalRevenue] = useState<number | null>(null);
@@ -225,7 +225,7 @@ export default function VendorDashboard() {
     <div className="p-6 flex flex-col-reverse md:flex-row items-stretch gap-4 w-full h-full overflow-y-auto glass-scrollbar">
       {/* Changed to a responsive grid */}
       <div className="grid grid-rows-2 gap-4 w-full md:w-[70%] ">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 h-28">
           <div className="rounded-2xl bg-white/10 p-5 backdrop-blur border border-white/20 shadow-md">
             <h2 className="text-sm text-gray-50 mb-2">Total Orders</h2>
             {/* Display fetched totalOrders, handle null state */}

@@ -1,5 +1,6 @@
 // components/ui/Modal.tsx
-import React from 'react';
+import React from "react";
+import GlassDiv from "./GlassDiv";
 
 interface ModalProps {
   isOpen: boolean;
@@ -16,13 +17,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   return (
     // Backdrop - closes modal when clicked outside
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50"
+      className="fixed inset-0 bg-black/20 bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50"
       onClick={onClose}
     >
       {/* Modal Content */}
-      <div
-        className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm md:max-w-md lg:max-w-lg max-h-[90vh] overflow-y-auto" // Added max-h and overflow-y-auto
-        onClick={(e) => e.stopPropagation()} // Prevent clicks inside modal from closing it
+      <GlassDiv
+        className="!bg-gray-100/90 !text-black rounded-lg shadow-xl p-6 w-full max-w-sm md:max-w-md lg:max-w-lg max-h-[90vh] overflow-y-auto"
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
       >
         {/* Modal Header */}
         <div className="flex justify-between items-center mb-4">
@@ -32,8 +33,19 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
             className="text-gray-400 hover:text-gray-600"
             aria-label="Close modal"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
             </svg>
           </button>
         </div>
@@ -45,7 +57,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
 
         {/* Optional: Modal Footer */}
         {/* You could add a footer here if needed for action buttons */}
-      </div>
+      </GlassDiv>
     </div>
   );
 };

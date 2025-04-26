@@ -311,15 +311,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }}
     >
       {/* Show a loading indicator or null while checking auth */}
-      {isCheckingAuth ? (
-          // You might want a loading spinner or null here while auth is being checked
-          // Returning null or a loading component prevents rendering protected content before auth check
-          null // Or <LoadingSpinner />
-      ) : (
-          // Render children only after auth check is complete
-          children
-      )}
-    </AuthContext.Provider>
+       {children}    </AuthContext.Provider>
   );
 };
 
