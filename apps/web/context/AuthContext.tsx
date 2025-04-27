@@ -7,25 +7,55 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { Loader2 } from "lucide-react";
 import { supabase } from "@shared/supabaseClient";
 import { useRouter, usePathname } from "next/navigation";
 
 // Import the AppUser type and other necessary types from your shared types file
 // Make sure the path is correct based on your project structure
-import { AppUser, User, Vendor, RiderProfile, Admin, NotificationPreferences, Conversation, Call, Order, DeliveryAddress, GeoLocation, OrderItem, MenuCategory, MenuItem, MenuItemImage, FoodDetail, CartItem, PaymentMethodType, PaymentMethod, PaymentStatus, OpeningHours, Permission, OrderStatus, BaseUser } from "@shared/types";
-
+import {
+  AppUser,
+  User,
+  Vendor,
+  RiderProfile,
+  Admin,
+  NotificationPreferences,
+  Conversation,
+  Call,
+  Order,
+  DeliveryAddress,
+  GeoLocation,
+  OrderItem,
+  MenuCategory,
+  MenuItem,
+  MenuItemImage,
+  FoodDetail,
+  CartItem,
+  PaymentMethodType,
+  PaymentMethod,
+  PaymentStatus,
+  OpeningHours,
+  Permission,
+  OrderStatus,
+  BaseUser,
+} from "@shared/types";
 
 // Define the interface for the Auth Context's props
 interface AuthContextProps {
   // The user property is now typed as AppUser (the union of all profile types) or null
   user: AppUser | null;
   signOut: () => Promise<void>;
+  isCheckingAuth: boolean; // State indicating if the initial auth check is in progress
+  // Note: AuthContext itself doesn't expose a general 'error' state in its value,
+  // individual function calls like loginUser, registerUser, etc. return errors.
+  // If you need a global auth error state, you would add it here and manage it.
+
   registerUser: (
     name: string,
     email: string,
     phone: string,
     password: string,
-    role: AppUser['role'] // Use the union type for role
+    role: AppUser["role"] // Use the union type for role
   ) => Promise<void>;
   // loginUser should return the specific profile type based on role,
   // or the AppUser union. Let's type it as Promise<AppUser> for simplicity
@@ -48,7 +78,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   // The user state is now typed as AppUser or null
   const [user, setUser] = useState<AppUser | null>(null);
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true); // State to track initial auth check
   const router = useRouter();
   const pathname = usePathname();
 
@@ -62,25 +92,35 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     "/auth/confirm-email",
     "/auth/forgot-password",
     "/auth/reset-password", // Added reset-password as it's public
-    "/complete-signup" // Added complete-signup as it's public
+    "/complete-signup", // Added complete-signup as it's public
   ];
 
   /** CHECK CURRENT SESSION */
   // Effect to check for an existing session on mount and set the user state
   useEffect(() => {
     const init = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-      if (session) {
-        // If a session exists, fetch the user profile
-        const profile = await getUserProfile();
-        // Set the user state with the fetched profile (which is typed as AppUser | null)
-        setUser(profile);
+        if (session) {
+          // If a session exists, fetch the user profile
+          const profile = await getUserProfile();
+          // Set the user state with the fetched profile (which is typed as AppUser | null)
+          setUser(profile);
+        } else {
+          // No active session
+          setUser(null);
+        }
+      } catch (error) {
+        // Catch any errors during session or profile fetch
+        console.error("AuthContext: Error during initial auth check:", error);
+        setUser(null); // Ensure user is null on error
+      } finally {
+        // Always set isCheckingAuth to false after the check is complete
+        setIsCheckingAuth(false);
       }
-
-      setIsCheckingAuth(false);
     };
 
     init();
@@ -127,7 +167,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     // For example, redirect riders to /rider/dashboard, vendors to /vendor/dashboard etc.
     // This would typically happen after a successful login or when the user state is set.
     // You might already handle this in your login page or a dedicated redirect component.
-
   }, [user, isCheckingAuth, pathname, router]); // Effect runs when user, checking status, pathname, or router changes
 
   /** REGISTER USER */
@@ -137,7 +176,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     email: string,
     phone: string,
     password: string,
-    role: AppUser['role'] // Ensure the role passed is one of the valid AppUser roles
+    role: AppUser["role"] // Ensure the role passed is one of the valid AppUser roles
   ) => {
     // Store email temporarily for confirmation flow
     localStorage.setItem("pending-confirmation-email", email);
@@ -161,7 +200,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const loginUser = async (
     email: string,
     password: string
-  ): Promise<AppUser> => { // Type the return as Promise<AppUser>
+  ): Promise<AppUser> => {
+    // Type the return as Promise<AppUser>
     // Sign in user with email and password
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -234,12 +274,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   /** GET USER PROFILE */
   // Function to fetch the user's detailed profile from the database
   // This function is crucial and should fetch data that matches your AppUser structure
-  const getUserProfile = async (): Promise<AppUser | null> => { // Type the return as Promise<AppUser | null>
+  const getUserProfile = async (): Promise<AppUser | null> => {
+    // Type the return as Promise<AppUser | null>
     // Get the authenticated user from the session
     const { data: userData, error: authError } = await supabase.auth.getUser();
     // If no authenticated user or error, return null
     if (authError || !userData?.user) {
-      console.error("AuthContext: Unable to get authenticated user:", authError);
+      console.error(
+        "AuthContext: Unable to get authenticated user:",
+        authError
+      );
       return null;
     }
 
@@ -261,14 +305,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     // You might need to explicitly cast here if the selected data doesn't exactly match AppUser
     // or if there are conflicts (e.g., BaseUser.phoneNumber vs profiles.phone)
     // Ensure the 'role' field is correctly fetched and present in the data
-     if (data && data.role) {
-         // Assuming the 'profiles' table contains all fields for the specific role
-         // and the 'role' field is correctly populated.
-         return data as AppUser; // Cast the fetched data to the AppUser union
-     } else {
-         console.error("AuthContext: Fetched profile data is missing or has no role:", data);
-         return null; // Return null if profile data is incomplete
-     }
+    if (data && data.role) {
+      // Assuming the 'profiles' table contains all fields for the specific role
+      // and the 'role' field is correctly populated.
+      return data as AppUser; // Cast the fetched data to the AppUser union
+    } else {
+      console.error(
+        "AuthContext: Fetched profile data is missing or has no role:",
+        data
+      );
+      return null; // Return null if profile data is incomplete
+    }
   };
 
   /** RESEND CONFIRMATION EMAIL */
@@ -302,6 +349,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         user,
         signOut,
         registerUser,
+        isCheckingAuth, // Expose isCheckingAuth in the context value
         loginUser,
         forgotPassword,
         resetPassword,
@@ -311,7 +359,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }}
     >
       {/* Show a loading indicator or null while checking auth */}
-       {children}    </AuthContext.Provider>
+      {isCheckingAuth ? (
+        // You might want a loading spinner or null here while auth is being checked
+        // Returning null or a loading component prevents rendering protected content before auth check
+        <div className="flex justify-center items-center w-screen h-screen bg-gray-100">
+          {" "}
+          {/* Added background for visibility */}
+          <Loader2 size={32} className="animate-spin text-orange-500" />
+        </div>
+      ) : (
+        // Render children only after auth check is complete
+        children
+      )}
+    </AuthContext.Provider>
   );
 };
 

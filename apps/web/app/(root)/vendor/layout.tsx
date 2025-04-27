@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { ToastContainer } from "react-toastify";
 import GlassComponent from "@/components/ui/glass";
 import VendorSidebar from "@/components/vendor/Sidebar";
 import { VendorProvider } from "@/context/VendorContext";
-import { ToastContainer } from "react-toastify";
 
 export default function VendorLayout({
   children,

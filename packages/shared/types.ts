@@ -1,3 +1,5 @@
+import { Database } from "./supabase/types";
+
 // Base interface for all user types
 export interface BaseUser {
   id: string;
@@ -241,3 +243,43 @@ export type Permission =
   | "manage_payments"
   | "manage_content"
   | "analytics_view";
+
+  
+  export type ProcessedMenuItem = Omit<
+    Database["public"]["Tables"]["menu_item"]["Row"] & {
+        menu_item_image:
+            | Database["public"]["Tables"]["menu_item_image"]["Row"][]
+            | null;
+    },
+    "menu_item_image" | "vendor_id"
+> & {
+    // Add the URL of the *first* image for display
+    imageUrl: string | null;
+    // Keep the full image array for potential editing later
+    images: Database["public"]["Tables"]["menu_item_image"]["Row"][] | null;
+};
+
+// Define the payload type that the FORM SENDS to addMenuItem
+export type AddMenuItemFormPayload = {
+  name: string;
+  description: string | null;
+  price: number;
+  category_id: string | null;
+};
+
+// Define the payload type that the FORM SENDS to updateMenuItem
+export type UpdateMenuItemFormPayload = {
+    id: string; // Need the ID to update
+    name: string;
+    description: string | null;
+    price: number;
+    category_id: string | null;
+    // is_available might also be editable later
+};
+
+// Define the payload type that the FORM SENDS to addCategory
+export type AddCategoryFormPayload = {
+  name: string;
+  description: string | null;
+};
+
