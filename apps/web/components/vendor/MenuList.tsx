@@ -259,10 +259,9 @@ export default function MenuList({ vendorId, onEditMenuItem }: MenuListProps) {
                 // Use GlassDiv or a similar card component for each item
                 <GlassDiv
                   key={item.id}
-                  className="p-4 rounded-xl !bg-white/70 !text-black border border-white/10 flex flex-col items-center gap-4 justify-between" // Added justify-between
+                  className="rounded-xl !p-0 !bg-white/70 !text-black border border-white/10 flex flex-col items-center gap-4 justify-between" // Added justify-between
                 >
-                  <div className="flex items-center gap-4">
-                    {" "}
+                  <div className="flex flex-col w-full items-center gap-4">
                     {/* Wrap image and text content */}
                     {/* Display Image if available */}
                     {item.imageUrl ? ( // Use the processed imageUrl
@@ -271,7 +270,7 @@ export default function MenuList({ vendorId, onEditMenuItem }: MenuListProps) {
                         alt={item.name}
                         width={100}
                         height={100}
-                        className="w-16 h-16 object-cover rounded-md flex-shrink-0" // Fixed size image
+                        className="w-full h-auto object-cover rounded-md flex-shrink-0" // Fixed size image
                         onError={(e) => {
                           // Handle broken image links
                           e.currentTarget.onerror = null; // Prevent infinite loop
@@ -286,7 +285,6 @@ export default function MenuList({ vendorId, onEditMenuItem }: MenuListProps) {
                       </div>
                     )}
                     <div className="flex-1">
-                      {" "}
                       {/* Use flex-1 to make text content fill space */}
                       <h3 className="text-black text-base font-medium">
                         {item.name}
@@ -296,21 +294,24 @@ export default function MenuList({ vendorId, onEditMenuItem }: MenuListProps) {
                           {item.description}
                         </p>
                       )}
-                      <p className="text-green-700 font-semibold mt-2">
-                        ₦{item.price?.toFixed(2) || "0.00"}{" "}
-                        {/* Format price, handle null */}
-                      </p>
                     </div>
                   </div>
 
-                  {/* Edit Button */}
-                  <button
-                    onClick={() => onEditMenuItem(item)} // Call the onEditMenuItem prop
-                    className="p-2 rounded-full text-gray-600 hover:bg-gray-200 focus:outline-none"
-                    aria-label={`Edit ${item.name}`}
-                  >
-                    <Edit size={20} />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <p className="text-green-700 font-semibold mt-2">
+                      ₦{item.price?.toFixed(2) || "0.00"}{" "}
+                      {/* Format price, handle null */}
+                    </p>
+
+                    {/* Edit Button */}
+                    <button
+                      onClick={() => onEditMenuItem(item)} // Call the onEditMenuItem prop
+                      className="p-2 rounded-full text-gray-600 hover:bg-gray-200 focus:outline-none"
+                      aria-label={`Edit ${item.name}`}
+                    >
+                      <Edit size={20} />
+                    </button>
+                  </div>
                 </GlassDiv>
               ))}
             </div>
@@ -339,10 +340,12 @@ export default function MenuList({ vendorId, onEditMenuItem }: MenuListProps) {
                     {" "}
                     {/* Wrap image and text content */}
                     {item.imageUrl ? ( // Use the processed imageUrl
-                      <img
+                      <Image
                         src={item.imageUrl}
                         alt={item.name}
-                        className="w-16 h-16 object-cover rounded-md flex-shrink-0"
+                        width={100}
+                        height={100}
+                        className="w-w-full h-auto object-cover rounded-md flex-shrink-0"
                         onError={(e) => {
                           e.currentTarget.onerror = null;
                           e.currentTarget.src =
@@ -365,7 +368,7 @@ export default function MenuList({ vendorId, onEditMenuItem }: MenuListProps) {
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center justify-between w-full gap-2">
+                  <div className="w-full flex items-center justify-between gap-2">
                     <p className="text-green-700 font-semibold mt-2">
                       ₦{item.price?.toFixed(2) || "0.00"}
                     </p>
