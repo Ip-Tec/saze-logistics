@@ -297,7 +297,7 @@ export default function MenuList({ vendorId, onEditMenuItem }: MenuListProps) {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="w-full flex justify-between items-center gap-2">
                     <p className="text-green-700 font-semibold mt-2">
                       ₦{item.price?.toFixed(2) || "0.00"}{" "}
                       {/* Format price, handle null */}
