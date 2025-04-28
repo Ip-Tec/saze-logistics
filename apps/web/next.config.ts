@@ -1,44 +1,52 @@
-// Remove the import
+// Remove the import if you previously had it and removed it
 // import { withSentryConfig } from "@sentry/nextjs";
 
 import type { NextConfig } from "next";
+import { URL } from "url"; // Import URL module to parse the storage URL
+
+// Get the Supabase Storage hostname from the environment variable
+// It's safer to get this dynamically if your SUPABASE_URL is in env variables
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL; // Assuming you have this env var
+let supabaseHostname = null;
+if (supabaseUrl) {
+  try {
+    const parsedUrl = new URL(supabaseUrl);
+    // The storage hostname is typically the same as the Supabase URL hostname
+    // but includes '/storage/v1/object/public' in the path in the image src.
+    // We only need the hostname part for next.config.js remotePatterns.
+    supabaseHostname = parsedUrl.hostname;
+  } catch (error) {
+    console.error("Failed to parse SUPABASE_URL:", error);
+  }
+}
+
+// Fallback or direct hostname if not using env var for URL
+// You can directly put 'vxcjmhopnllannvtfwze.supabase.co' here if preferred,
+// but using the env var is more flexible.
+if (!supabaseHostname) {
+  // Replace with your actual Supabase project reference if needed,
+  // or keep it as a hardcoded string 'vxcjmhopnllannvtfwze.supabase.co'
+  // if you are sure it won't change and don't use NEXT_PUBLIC_SUPABASE_URL.
+  supabaseHostname = "vxcjmhopnllannvtfwze.supabase.co";
+}
 
 const nextConfig: NextConfig = {
   /* config options here */
+  images: {
+    // Use remotePatterns for Next.js 13 and later
+    remotePatterns: [
+      {
+        protocol: "https", // Or 'http' if you are not using HTTPS (unlikely and not recommended)
+        hostname: supabaseHostname, // Use the hostname obtained above
+        port: "", // Leave empty unless your Supabase is on a custom port (unlikely)
+        pathname: "/storage/v1/object/public/**", // Match the path for public storage objects
+      },
+      // Add other patterns here if you load images from other external domains
+    ],
+    // For older Next.js versions (before 13.x), you would use 'domains' instead:
+    // domains: [supabaseHostname].filter(Boolean), // Add your Supabase hostname here
+  },
 };
 
-// Remove the withSentryConfig wrapper and its options
-// export default withSentryConfig(nextConfig, {
-// // For all available options, see:
-// // https://www.npmjs.com/package/@sentry/webpack-plugin#options
-
-// org: "ip-tec",
-// project: "saze-logistics",
-
-// // Only print logs for uploading source maps in CI
-// silent: !process.env.CI,
-
-// // For all available options, see:
-// // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-// // Upload a larger set of source maps for prettier stack traces (increases build time)
-// widenClientFileUpload: true,
-
-// // Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-// // This can increase your server load as well as your hosting bill.
-// // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-// // side errors will fail.
-// // tunnelRoute: "/monitoring",
-
-// // Automatically tree-shake Sentry logger statements to reduce bundle size
-// disableLogger: true,
-
-// // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
-// // See the following for more information:
-// // https://docs.sentry.io/product/crons/
-// // https://vercel.com/docs/cron-jobs
-// automaticVercelMonitors: true,
-// });
-
-// Just export the nextConfig object directly
+// Export the nextConfig object directly
 export default nextConfig;

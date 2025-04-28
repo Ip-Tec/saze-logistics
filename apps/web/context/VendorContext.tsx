@@ -347,7 +347,7 @@ export const VendorProvider: React.FC<{ children: ReactNode }> = ({
         if (storagePathsToDelete.length > 0) {
           const { data: storageDeleteData, error: storageDeleteError } =
             await supabase.storage
-              .from("vendor_assets") // Replace with your bucket name
+              .from("vendorassets") // Replace with your bucket name
               .remove(storagePathsToDelete);
 
           if (storageDeleteError) {
@@ -377,7 +377,7 @@ export const VendorProvider: React.FC<{ children: ReactNode }> = ({
 
           const { data: uploadData, error: uploadError } =
             await supabase.storage
-              .from("vendor_assets") // Replace with your bucket name
+              .from("vendorassets") // Replace with your bucket name
               .upload(filePath, file);
 
           if (uploadError) {
@@ -390,7 +390,7 @@ export const VendorProvider: React.FC<{ children: ReactNode }> = ({
             console.log("New image uploaded successfully:", file.name); // Debug log
             // Get the public URL
             const { data: publicUrlData } = supabase.storage
-              .from("vendor_assets") // Replace with your bucket name
+              .from("vendorassets") // Replace with your bucket name
               .getPublicUrl(filePath);
             return publicUrlData.publicUrl; // Return the public URL
           }
