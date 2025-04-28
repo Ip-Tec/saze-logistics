@@ -13,7 +13,7 @@ export default function VendorLayout({
 }) {
   return (
     <motion.div
-      className="min-h-screen flex items-center justify-center"
+      className="min-h-screen w-full flex items-center justify-center"
       initial={{
         backgroundImage:
           "linear-gradient(to bottom right, rgb(59, 130, 246), rgb(234, 179, 8))", // Initial gradient
@@ -32,7 +32,7 @@ export default function VendorLayout({
     >
       <VendorProvider>
          <ToastContainer position="top-right" autoClose={3000} />
-        <GlassComponent>
+        <GlassComponent className="w-full h-full">
           <div className="flex w-full h-full p-0 m-0">
             <VendorSidebar />
             {children}

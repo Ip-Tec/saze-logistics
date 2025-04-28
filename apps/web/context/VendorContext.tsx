@@ -18,9 +18,9 @@ import { useAuthContext } from "./AuthContext";
 import {
   MenuCategory,
   MenuItem,
-  AddMenuItemFormPayload, // Import shared type
-  UpdateMenuItemFormPayload, // Import shared type
-  AddCategoryFormPayload, // Import shared type
+  AddMenuItemFormPayload,
+  UpdateMenuItemFormPayload,
+  AddCategoryFormPayload,
 } from "@shared/types";
 // Import Database types
 import { Database } from "@shared/supabase/types";

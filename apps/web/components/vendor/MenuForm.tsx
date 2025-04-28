@@ -1,27 +1,26 @@
 // components/vendor/MenuForm.tsx
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Modal from "@/components/ui/Modal"; // Assuming you have a Modal component at this path
-// Assuming GlassInput, GlassTextarea, GlassSelect, GlassButton, GlassDiv are elsewhere in your ui folder
-import GlassButton from "@/components/ui/GlassButton";
-import GlassInput from "@/components/ui/GlassInput";
-import GlassTextarea from "@/components/ui/GlassTextarea";
-import GlassSelect from "@/components/ui/GlassSelect";
-import GlassDiv from "@/components/ui/GlassDiv"; // Used for image preview/removal
+import { toast } from "react-toastify";
+import { Loader2, XCircle } from "lucide-react";
+import { supabase } from "@shared/supabaseClient";
+import { Database } from "@shared/supabase/types";
 
-import { Database } from "@shared/supabase/types"; // Import DB types
-import { supabase } from "@shared/supabaseClient"; // Import Supabase client
-import { Loader2, XCircle } from "lucide-react"; // For loading indicator and remove icon
-import { toast } from "react-toastify"; // For notifications
+import Modal from "@/components/ui/Modal";
+import React, { useState, useEffect } from "react";
+import GlassInput from "@/components/ui/GlassInput";
+import GlassButton from "@/components/ui/GlassButton";
+import GlassSelect from "@/components/ui/GlassSelect";
+import GlassTextarea from "@/components/ui/GlassTextarea";
+
 
 // Import types from your shared types file
 import {
     MenuCategory,
-    ProcessedMenuItem, // Import shared type
-    AddMenuItemFormPayload, // Import shared type
-    UpdateMenuItemFormPayload, // Import shared type
-    AddCategoryFormPayload // Import shared type
+    ProcessedMenuItem,
+    AddMenuItemFormPayload,
+    UpdateMenuItemFormPayload,
+    AddCategoryFormPayload
 } from "@shared/types";
 
 
@@ -205,11 +204,11 @@ export default function MenuForm({
 
             if (success) {
                  // toast.success and onClose are handled inside onUpdateMenuItem in context now
-                 // toast.success("Menu item updated successfully!"); // Removed
-                 // onClose(); // Removed
+                 toast.success("Menu item updated successfully!"); // Removed
+                 onClose(); // Removed
             } else {
                  // toast.error is handled in context now
-                 // toast.error("Failed to update menu item."); // Removed
+                 toast.error("Failed to update menu item."); // Removed
             }
 
         } else {
@@ -290,8 +289,8 @@ export default function MenuForm({
              }
 
              // toast.success and onClose are handled inside onAddMenuItem in context now
-             // toast.success("Menu item added successfully!"); // Removed
-             // onClose(); // Removed
+             toast.success("Menu item added successfully!"); // Removed
+             onClose(); // Removed
 
         }
 
