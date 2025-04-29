@@ -6,6 +6,7 @@ export default function Input({
     divClass,
     onChange,
     disabled,
+    readOnly,
     inputClass,
   }: {
     label: string;
@@ -13,6 +14,7 @@ export default function Input({
     divClass?: string;
     inputClass?: string;
     disabled?: boolean;
+    readOnly?: boolean;
     onChange: (v: string) => void;
   }) {
     return (
@@ -22,7 +24,7 @@ export default function Input({
           type="text"
           className={`w-full border p-2 rounded bg-white/5 text-white ${inputClass}`}
           value={value}
-          onChange={(e) => onChange(e.target.value)} disabled={disabled}
+          onChange={(e) => onChange(e.target.value)} disabled={disabled} readOnly
         />
       </div>
     );
