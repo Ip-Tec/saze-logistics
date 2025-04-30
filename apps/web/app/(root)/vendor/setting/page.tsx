@@ -163,7 +163,7 @@ export default function VendorSettingsPage() {
     // Only upload if a new file is selected (logoFile is not null)
 
     if (logoFile) {
-      const result = await uploadLogoImage(logoFile); // Use uploadLogoImage
+      const result = await uploadLogoImage(logoFile, "logo"); // Use uploadLogoImage
       if (result?.url) {
         // Check if upload was successful and returned a URL
         uploadedLogoUrl = result.url;
@@ -179,7 +179,7 @@ export default function VendorSettingsPage() {
     } // else: logoFile is null and logoPreview is the same as initialProfileData?.logo_url, so no change to logo_url
     if (!uploadFailed && bannerFile) {
       // Only proceed with banner upload if logo upload didn't fail
-      const result = await uploadBannerImage(bannerFile); // Use uploadBannerImage
+      const result = await uploadBannerImage(bannerFile, "banner"); // Use uploadBannerImage
       if (result?.url) {
         // Check if upload was successful and returned a URL
         uploadedBannerUrl = result.url;

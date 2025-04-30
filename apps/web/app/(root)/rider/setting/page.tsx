@@ -183,7 +183,7 @@ export default function RiderSettingsPage() {
 
     // --- Handle Image Uploads First ---
     if (riderImage) {
-      const result = await uploadImage(riderImage);
+      const result = await uploadImage(riderImage, "rider_image");
       if (result) {
         uploadedRiderImageUrl = result.url;
       } else {
@@ -194,7 +194,7 @@ export default function RiderSettingsPage() {
     }
 
     if (!uploadFailed && vehicleImage) {
-      const result = await uploadImage(vehicleImage);
+      const result = await uploadImage(vehicleImage, "vehicle_image");
       if (result) {
         uploadedVehicleImageUrl = result.url;
       } else {
