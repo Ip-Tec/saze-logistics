@@ -1,0 +1,357 @@
+
+> saze-logistics@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.2.4 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.112:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+Slow filesystem detected. If C:\Users\Ip\Documents\saze-logistics\apps\web\.next is a network drive, consider moving it to a local folder. If you have an antivirus enabled, consider excluding your project directory.
+ ✓ Ready in 32s
+ ○ Compiling / ...
+ ✓ Compiled / in 93.1s
+ GET / 200 in 98943ms
+ ○ Compiling /_not-found/page ...
+ ✓ Compiled /_not-found/page in 10s
+ GET /vendor1.jpg 404 in 14987ms
+ ⨯ The requested resource isn't a valid image for /vendor1.jpg received text/html; charset=utf-8
+ GET /vendor2.jpg 404 in 14939ms
+ ⨯ The requested resource isn't a valid image for /vendor2.jpg received text/html; charset=utf-8
+ GET /vendor3.jpg 404 in 14965ms
+ ⨯ The requested resource isn't a valid image for /vendor3.jpg received text/html; charset=utf-8
+ GET / 200 in 43609ms
+ GET /vendor1.jpg 404 in 12701ms
+ ⨯ The requested resource isn't a valid image for /vendor1.jpg received text/html; charset=utf-8
+ GET /vendor3.jpg 404 in 12781ms
+ ⨯ The requested resource isn't a valid image for /vendor3.jpg received text/html; charset=utf-8
+ GET /vendor2.jpg 404 in 12808ms
+ ⨯ The requested resource isn't a valid image for /vendor2.jpg received text/html; charset=utf-8
+ ○ Compiling /auth/login ...
+ ✓ Compiled /auth/login in 106.5s
+ GET /auth/login 200 in 115661ms
+   Reload env: .env.local
+ GET /auth/login 200 in 6813ms
+ ○ Compiling /vendor ...
+ ✓ Compiled /vendor in 58.2s
+ GET /vendor 200 in 71629ms
+ ○ Compiling /vendor/orders ...
+ GET /vendor/orders 200 in 34869ms
+ ✓ Compiled /vendor/orders in 37.1s
+ GET /vendor/setting 200 in 39289ms
+ ✓ Compiled in 5.6s
+ ✓ Compiled in 545ms
+ ✓ Compiled in 723ms
+ ✓ Compiled in 8.2s
+ ✓ Compiled in 3s
+ ✓ Compiled in 2.6s
+ ✓ Compiled in 986ms
+ ✓ Compiled in 974ms
+ ✓ Compiled in 1025ms
+ ✓ Compiled in 2.2s
+ ○ Compiling /api/upload-image ...
+ ✓ Compiled /api/upload-image in 230.8s
+{
+  supabaseUrl: 'https://vxcjmhopnllannvtfwze.supabase.co',
+  supabaseServiceRoleKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4Y2ptaG9wbmxsYW5udnRmd3plIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MzU4MzI0NiwiZXhwIjoyMDU5MTU5MjQ2fQ.TItg2vx8zWiHLwe8nS5gAxoLgFuPcOEeYqDoa2IWYbI',
+  supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4Y2ptaG9wbmxsYW5udnRmd3plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM1ODMyNDYsImV4cCI6MjA1OTE1OTI0Nn0.BhEJlfKnbzRjorwrfSShLG0vAwxgetRXxzjm7nNKdLc'
+}
+ POST /api/upload-image 500 in 299061ms
+Supabase Storage upload error: {
+  statusCode: '403',
+  error: 'Unauthorized',
+  message: 'new row violates row-level security policy'
+}
+Supabase Storage upload error: {
+  statusCode: '403',
+  error: 'Unauthorized',
+  message: 'new row violates row-level security policy'
+}
+ POST /api/upload-image 500 in 73721ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 289.7s
+ GET /user 200 in 309188ms
+ GET /vendor/setting 200 in 7615ms
+ GET /user 200 in 46517ms
+ GET /user 200 in 13627ms
+ GET /user 200 in 2293ms
+ ✓ Compiled in 948.1s
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ✓ Compiled in 70s
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m
+[0m [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m[0m
+[0m [90m 14 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mUserHomePage[39m() {[0m
+[0m [90m 15 |[39m   [90m// Fetch food items[39m[0m
+
+Import map: aliased to relative './public/images/sample-restaurant.jpg' inside of [project]/apps/web
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./apps/web/app/(root)/user/page.tsx:12:1
+Module not found: Can't resolve '@/public/images/sample-restaurant.jpg'
+[0m [90m 10 |[39m [36mimport[39m { [33mRestaurantCard[39m } [36mfrom[39m [32m"@/components/user/RestaurantCard"[39m[33m;[39m[0m
+[0m [90m 11 |[39m [36mimport[39m [33mDefaultFoodImage[39m [36mfrom[39m [32m"@/public/images/logo.png"[39m[33m;[39m [90m// Fallback image for food[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m [36mimport[39m [33mDefaultRestaurantImage[39m [36mfrom[39m [32m"@/public/images/sample-restaurant.jpg"[39m[33m;[39m [90m// Fallback image for restaurants (adjust path)[39m[0m

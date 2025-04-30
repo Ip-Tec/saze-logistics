@@ -4,11 +4,13 @@ export default function TextArea({
   label,
   value,
   onChange,
-  disabled
+  disabled,
+  required
 }: {
   label: string;
   value: string;
   disabled?: boolean;
+  required?: boolean;
   onChange: (v: string) => void;
 }) {
   return (
@@ -19,7 +21,7 @@ export default function TextArea({
         rows={3}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        disabled={disabled}
+        disabled={disabled} required={required}
       />
     </div>
   );

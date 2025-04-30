@@ -3,6 +3,7 @@ import { Database } from "./supabase/types";
 // Base interface for all user types
 export interface BaseUser {
   id: string;
+  name: string;
   email: string;
   phoneNumber: string; // Now required for calls
   createdAt: Date;

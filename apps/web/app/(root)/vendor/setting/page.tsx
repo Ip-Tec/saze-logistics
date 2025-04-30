@@ -277,8 +277,8 @@ export default function VendorSettingsPage() {
   if (isLoadingProfile) {
     return (
       <div className="flex justify-center items-center h-full text-gray-800">
-                <Loader2 size={32} className="animate-spin text-orange-500" /> 
-              <p className="ml-2">Loading vendor profile...</p>     
+        <Loader2 size={32} className="animate-spin text-orange-500" />
+        <p className="ml-2">Loading vendor profile...</p>
       </div>
     );
   } // Show error state for initial profile fetch from context
@@ -286,9 +286,8 @@ export default function VendorSettingsPage() {
   if (fetchError) {
     return (
       <div className="text-red-600 text-center mt-8">
-                <p>Failed to load vendor profile.</p>       
-        <p>{fetchError.message}</p> {/* Display fetch error message */}   
-         
+        <p>Failed to load vendor profile.</p>
+        <p>{fetchError.message}</p> {/* Display fetch error message */}
       </div>
     );
   } // If no profile data is fetched and not loading/error, might indicate user is not a vendor or not logged in
@@ -297,12 +296,11 @@ export default function VendorSettingsPage() {
     // isLoadingProfile is false, fetchError is null, but fetchedProfile is null
     return (
       <div className="text-gray-700 text-center mt-8">
-               
         <p>
-                    Could not load vendor profile. Please ensure you are logged
-          in as a           vendor and your profile exists.        
+          Could not load vendor profile. Please ensure you are logged in as a
+          vendor and your profile exists.
         </p>
-                {/* Optional: Link to login or dashboard */}     
+        {/* Optional: Link to login or dashboard */}
       </div>
     );
   }
@@ -311,88 +309,70 @@ export default function VendorSettingsPage() {
     // Use fetchedProfile.id as a key if rendering different sections based on vendor,
     // but likely not needed for the main page layout itself.
     <div className="p-6 flex flex-wrap gap-6 text-white !bg-blue-950/20 w-full h-auto overflow-y-auto glass-scrollbar">
-           
       <div className="w-full flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Vendor Settings</h1>       
-        {/* ToastContainer should be in your root layout or app */}       
+        <h1 className="text-2xl font-bold">Vendor Settings</h1>
+        {/* ToastContainer should be in your root layout or app */}
         {/* Make sure you have a ToastContainer component in your root layout or equivalent */}
-               
+
         <div className="flex gap-3">
-                   
           {editing && (
             <GlassButton
               onClick={handleCancel}
               className="text-sm flex items-center gap-1 bg-red-500 hover:bg-red-600"
               disabled={isUpdatingProfile || isImageUploading} // Disable cancel while saving/uploading
             >
-                            <X size={16} /> Cancel            
+              <X size={16} /> Cancel
             </GlassButton>
           )}
-                   
+
           <GlassButton
             onClick={editing ? handleSave : () => setEditing(true)}
             className="text-sm flex items-center gap-1"
             disabled={isSaveDisabled} // Disable while saving or uploading images
           >
-                       
             {isSaveDisabled ? (
               <>
-                                <Loader2 size={16} className="animate-spin" /> 
-                             
+                <Loader2 size={16} className="animate-spin" />
+
                 {isUpdatingProfile
                   ? "Saving..."
                   : isImageUploading
                     ? "Uploading Images..."
                     : "Processing..."}
-                             
               </>
             ) : editing ? (
               <>
-                                <SaveIcon size={16} /> Save              
+                <SaveIcon size={16} /> Save
               </>
             ) : (
               <>
-                                <PencilIcon size={16} /> Edit              
+                <PencilIcon size={16} /> Edit
               </>
             )}
-                     
           </GlassButton>
-                 
         </div>
-             
       </div>
-            {/* Display upload error from hook */}       
+      {/* Display upload error from hook */}
       {imageUploadError && (
         <div className="w-full text-red-600 text-sm mt-2">
-                     Image Upload Error: {imageUploadError}         
+          Image Upload Error: {imageUploadError}
         </div>
       )}
-             {/* Display update error from context */}       
+      {/* Display update error from context */}
       {updateProfileError && (
         <div className="w-full text-red-600 text-sm mt-2">
-                     Profile Update Error: {updateProfileError.message}         
+          Profile Update Error: {updateProfileError.message}
         </div>
       )}
-           
-      <GlassDiv className="w-full rounded-2xl overflow-hidden">
-                {/* Removed fixed height */}       
+
+      <GlassDiv className="w-full overflow-hidden !p-0 !rounded-2xl">
+        {/* Removed fixed height */}
         <div className="relative w-full h-60 bg-gray-200 flex items-center justify-center text-gray-500">
-                    {/* Added fallback background */}         
-          {/* Display banner image preview or fetched URL */}         
+          {/* Added fallback background */}
+          {/* Display banner image preview or fetched URL */}
           {bannerPreview ? (
-            <img // Use next/image component if possible and configured in next.config.js
-            // For simplicity with dynamic URLs from Supabase Storage, a standard <img> tag is often used,
-            // but be mindful of performance if not optimized.
-            // If using next/image, ensure the hostname is in next.config.js as discussed previously.
-            // Example with next/image (requires the import and configuration):
-            // <Image
-            //   src={bannerPreview}
-            //   alt="Banner Preview"
-            //   layout="fill" // or 'responsive', 'intrinsic', 'fixed'
-            //   objectFit="cover"
-            //   onError={(e) => { /* handle error */ }}
-            // />
-              src={bannerPreview} // Using standard img for now
+            <img 
+              src={bannerPreview}
               alt="Banner Preview"
               className="w-full h-full object-cover"
               onError={(e) => {
@@ -405,11 +385,11 @@ export default function VendorSettingsPage() {
           ) : (
             <span>No Banner Image</span>
           )}
-                   
+
           {editing && (
             <label className="absolute top-2 right-2 bg-black/50 text-white p-2 rounded-full cursor-pointer">
-                            <CameraIcon size={18} />
-                           
+              <CameraIcon size={18} />
+
               <input
                 type="file"
                 className="hidden"
@@ -417,17 +397,15 @@ export default function VendorSettingsPage() {
                 onChange={(e) => handleImageChange(e, "banner")}
                 disabled={isSaveDisabled} // Disable file input while saving/uploading
               />
-                         
             </label>
           )}
-                 
         </div>
-               
-        <div className="absolute bottom-0 left-6 transform translate-y-1/2">
-                    {/* Adjusted position */}         
+
+        <div className="absolute bottom-18 left-6 transform translate-y-1/2">
+          {/* Adjusted position */}
           <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white bg-gray-300 flex items-center justify-center text-gray-600">
-                        {/* Added fallback background */}           
-            {/* Display logo image preview or fetched URL */}           
+            {/* Added fallback background */}
+            {/* Display logo image preview or fetched URL */}
             {logoPreview ? (
               <img // Using standard img for now
                 src={logoPreview}
@@ -443,12 +421,12 @@ export default function VendorSettingsPage() {
             ) : (
               <span>No Logo</span>
             )}
-                       
+
             {editing && (
               <label className="absolute bottom-2 right-2 bg-black/50 text-white p-1 rounded-full cursor-pointer">
-                                {/* Adjusted position */}
-                                <CameraIcon size={16} />
-                               
+                {/* Adjusted position */}
+                <CameraIcon size={16} />
+
                 <input
                   type="file"
                   className="hidden"
@@ -456,23 +434,18 @@ export default function VendorSettingsPage() {
                   onChange={(e) => handleImageChange(e, "logo")}
                   disabled={isSaveDisabled} // Disable file input while saving/uploading
                 />
-                             
               </label>
             )}
-                     
           </div>
-                 
         </div>
-             
       </GlassDiv>
-            {/* Personal Info */}     
+      {/* Personal Info */}
+      <div className="flex w-full flex-wrap justify-between items-center">
       <GlassDiv className="w-full rounded-2xl overflow-hidden md:w-[48%] space-y-4">
-               
         <Section title="Business Information">
-                    {/* Adjusted title */}         
+          {/* Adjusted title */}
           {editing ? (
             <>
-                           
               <Input
                 label="Business Name"
                 value={name || ""} // Use empty string for controlled input
@@ -480,14 +453,13 @@ export default function VendorSettingsPage() {
                 disabled={isSaveDisabled} // Disable while saving/uploading
                 inputClass="!text-black"
               />
-                           
+
               <TextArea
                 label="Description"
                 value={description || ""} // Use empty string for controlled input
                 onChange={setDescription}
                 disabled={isSaveDisabled}
               />
-                         
             </>
           ) : (
             <DisplayInfo
@@ -500,15 +472,11 @@ export default function VendorSettingsPage() {
               ]}
             />
           )}
-                 
         </Section>
-             
       </GlassDiv>
-            {/* Address */}     
+      {/* Address */}
       <GlassDiv className="w-full rounded-2xl overflow-hidden md:w-[48%] space-y-4">
-               
         <Section title="Address">
-                   
           {editing ? (
             <Input
               label="Business Address"
@@ -525,20 +493,16 @@ export default function VendorSettingsPage() {
               items={[{ label: "Business Address", value: address || "N/A" }]}
             />
           )}
-                 
         </Section>
-             
       </GlassDiv>
-            {/* Contact */}     
+      </div>
+      {/* Contact */}
       <GlassDiv className="w-full rounded-2xl overflow-hidden md:w-[48%] space-y-4">
-               
         <Section title="Contact">
-                   
           {editing ? (
             <>
-                           
               {/* Ensure the email input maps to the email state */}
-                           
+
               <Input
                 label="Email Address"
                 value={email || ""}
@@ -547,9 +511,9 @@ export default function VendorSettingsPage() {
                 inputClass="!text-black disabled:opacity-70"
                 readOnly={true} // Make it readonly
               />
-                           
+
               {/* Ensure the phone input maps to the contact state which maps to phone in DB */}
-                           
+
               <Input
                 label="Phone / Contact"
                 value={contact || ""} // Use contact state here
@@ -570,13 +534,11 @@ export default function VendorSettingsPage() {
               ]}
             />
           )}
-                 
         </Section>
-             
       </GlassDiv>
-            {/* Password */}     
+      {/* Password */}
       {/* Assuming ChangePassword component exists and handles its own logic */}
-            {!editing && <ChangePassword className="" />}   
+      {!editing && <ChangePassword className="" />}
     </div>
   );
 }
