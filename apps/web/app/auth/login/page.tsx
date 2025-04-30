@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AuthCard from "@/components/AuthCard";
 import { supabase } from "@shared/supabaseClient";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import GoogleIcon from "@mui/icons-material/Google";
 import { toast, ToastContainer } from "react-toastify";
 import { useAuthContext } from "@/context/AuthContext";
@@ -48,7 +48,7 @@ export default function Login() {
   };
 
   // Listen for OAuth callback and call loginUser (which will setUser)
-  useEffect(() => {
+  useMemo(() => {
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (event === "SIGNED_IN" && session?.user && session.provider_token) {

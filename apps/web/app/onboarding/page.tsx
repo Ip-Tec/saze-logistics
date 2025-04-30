@@ -1,26 +1,57 @@
 // apps/web/app/onboarding/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext"; // Adjust the import path
 import { Loader2 } from "lucide-react";
 
 // Import your profile forms (you'll need to create these)
-import UserProfileCompletionForm from "@/components/onboarding/UserProfileCompletionForm"; 
-import VendorProfileCompletionForm from "@/components/onboarding/VendorProfileCompletionForm"; 
-import RiderProfileCompletionForm from "@/components/onboarding/RiderProfileCompletionForm" 
+import UserProfileCompletionForm from "@/components/onboarding/UserProfileCompletionForm";
+import VendorProfileCompletionForm from "@/components/onboarding/VendorProfileCompletionForm";
+import RiderProfileCompletionForm from "@/components/onboarding/RiderProfileCompletionForm";
 import { supabase } from "@shared/supabaseClient";
+import { toast } from "react-toastify";
+
+type MetaDataProps = {
+  sub: string;
+  name: string;
+  role: string;
+  email: string;
+  phone: string;
+  [key: string]: string | boolean;
+  email_verified: boolean | string;
+  phone_verified: boolean | string;
+};
 
 export default function OnboardingPage() {
   const { user, isCheckingAuth, getUserProfile } = useAuthContext();
   const router = useRouter();
 
-  const [profileFetchStatus, setProfileFetchStatus] = useState<"loading" | "found" | "not_found">(
-    "loading"
-  );
-   const [userRole, setUserRole] = useState<string | null>(null);
+  const [profileFetchStatus, setProfileFetchStatus] = useState<
+    "loading" | "found" | "not_found"
+  >("loading");
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [sessionMatadata, setSessionMetadata] = useState<MetaDataProps>({
+    sub: "",
+    name: "",
+    role: "",
+    email: "",
+    phone: "",
+    email_verified: false,
+    phone_verified: false,
+  });
 
+  useMemo(() => {
+    const sessionPromise = supabase.auth
+      .getSession()
+      .then(({ data: { session } }) => {
+        if (session) {
+          setSessionMetadata(session.user.user_metadata as MetaDataProps);
+        }
+      })
+      .catch((error) => console.error("Error fetching session:", error));
+  }, []);
 
   // Effect to check profile status after AuthContext is done checking
   useEffect(() => {
@@ -32,7 +63,9 @@ export default function OnboardingPage() {
 
       // If AuthContext found a full profile, redirect to dashboard
       if (user) {
-        console.log("OnboardingPage: Profile found in AuthContext, redirecting.");
+        console.log(
+          "OnboardingPage: Profile found in AuthContext, redirecting."
+        );
         router.replace(`/${user.role}`); // Redirect using replace to avoid back button loops
         return;
       }
@@ -40,51 +73,69 @@ export default function OnboardingPage() {
       // If AuthContext did NOT find a profile (user is null),
       // fetch the basic user and try fetching the profile again just in case,
       // or assume the user is logged in but profile is missing.
-      console.log("OnboardingPage: User is logged in but profile not in context. Checking again...");
+      console.log(
+        "OnboardingPage: User is logged in but profile not in context. Checking again..."
+      );
       setProfileFetchStatus("loading");
 
       // We need the user ID to check/create the profile row
-      const { data: userData, error: authError } = await supabase.auth.getUser(); // Use supabase directly here to get the current user
+      const { data: userData, error: authError } =
+        await supabase.auth.getUser(); // Use supabase directly here to get the current user
 
       if (authError || !userData?.user) {
-          console.error("OnboardingPage: No authenticated user found, redirecting to login.");
-          router.replace("/auth/login"); // Should not happen if AuthContext did its job, but safety check
-          return;
+        console.error(
+          "Onboarding Page: No authenticated user found, redirecting to login."
+        );
+        toast.error(
+          authError?.message ||
+            "No authenticated user found, redirecting to login."
+        );
+        // router.replace("/auth/login"); // Should not happen if AuthContext did its job, but safety check
+        return;
       }
 
       // Try fetching the profile again to see if a row exists but was incomplete/not loaded correctly before
       const profile = await getUserProfile(); // Use the context function to ensure consistency
 
       if (profile) {
-          console.log("OnboardingPage: Profile found on second check, redirecting.");
-          router.replace(`/${profile.role}`);
+        console.log(
+          "OnboardingPage: Profile found on second check, redirecting."
+        );
+        router.replace(`/${profile.role}`);
       } else {
-          console.log("OnboardingPage: Profile still not found. User needs onboarding.");
-           // User exists (userData.user) but no profile row exists yet.
-           // Or profile exists but role is null/incomplete.
-           // We need to know the intended role. This must come from registration metadata.
-           // How did you store the intended role during signup?
-           // Assuming signup metadata `user.user_metadata.role` holds the intended role.
+        console.log(
+          "OnboardingPage: Profile still not found. User needs onboarding."
+        );
+        // User exists (userData.user) but no profile row exists yet.
+        // Or profile exists but role is null/incomplete.
+        // We need to know the intended role. This must come from registration metadata.
+        // How did you store the intended role during signup?
+        // Assuming signup metadata `user.user_metadata.role` holds the intended role.
 
-           const intendedRole = userData.user.user_metadata?.role as string | null;
+        const intendedRole = userData.user.user_metadata?.role as string | null;
 
-           if (!intendedRole) {
-              console.error("OnboardingPage: User registered without a role metadata. Cannot proceed.");
-              // Handle error: User cannot complete profile without a defined role.
-              // Maybe force them back to registration with a warning or show an error page.
-              // For now, display an error message.
-              setProfileFetchStatus("not_found"); // Use "not_found" status to indicate needing profile creation/selection
-              setUserRole(null); // Ensure role is null if metadata is missing
-              return;
-           }
+        if (!intendedRole) {
+          console.error(
+            "OnboardingPage: User registered without a role metadata. Cannot proceed."
+          );
+          // Handle error: User cannot complete profile without a defined role.
+          // Maybe force them back to registration with a warning or show an error page.
+          // For now, display an error message.
+          setProfileFetchStatus("not_found"); // Use "not_found" status to indicate needing profile creation/selection
+          setUserRole(null); // Ensure role is null if metadata is missing
+          return;
+        }
 
-           console.log("OnboardingPage: User needs to complete profile for role:", intendedRole);
-           setProfileFetchStatus("not_found"); // Profile not found implies it needs creation or completion
-           setUserRole(intendedRole); // Set the intended role from metadata
+        console.log(
+          "OnboardingPage: User needs to complete profile for role:",
+          intendedRole
+        );
+        setProfileFetchStatus("not_found"); // Profile not found implies it needs creation or completion
+        setUserRole(intendedRole); // Set the intended role from metadata
       }
-       // isCheckingAuth becomes false, and then this effect runs.
-       // If user is still null, profileFetchStatus remains 'loading' initially,
-       // then becomes 'not_found' if the second check fails.
+      // isCheckingAuth becomes false, and then this effect runs.
+      // If user is still null, profileFetchStatus remains 'loading' initially,
+      // then becomes 'not_found' if the second check fails.
     };
 
     checkProfile();
@@ -94,7 +145,7 @@ export default function OnboardingPage() {
   if (isCheckingAuth || profileFetchStatus === "loading") {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <Loader2 size={48} className="animate-spin text-blue-500" />
+        <Loader2 size={48} className="animate-spin text-orange-500" />
         <p className="ml-4 text-lg text-gray-700">Checking profile status...</p>
       </div>
     );
@@ -105,11 +156,11 @@ export default function OnboardingPage() {
   if (profileFetchStatus === "not_found" && userRole) {
     switch (userRole) {
       case "user":
-        return <UserProfileCompletionForm />;
+        return <UserProfileCompletionForm metadata={sessionMatadata} />;
       case "vendor":
-        return <VendorProfileCompletionForm />;
+        return <VendorProfileCompletionForm metadata={sessionMatadata} />;
       case "rider":
-        return <RiderProfileCompletionForm />;
+        return <RiderProfileCompletionForm metadata={sessionMatadata} />;
       default:
         // Should not happen if role metadata is valid
         return (
@@ -120,11 +171,11 @@ export default function OnboardingPage() {
     }
   }
 
-   // Fallback state - should ideally be handled by redirects above
+  // Fallback state - should ideally be handled by redirects above
   return (
-     <div className="text-red-600 text-center mt-8">
-       <p>Something went wrong. Could not determine profile status or role.</p>
-       {/* Add a link to log out or try again */}
-     </div>
-   );
+    <div className="text-red-600 text-center mt-8">
+      <p>Something went wrong. Could not determine profile status or role.</p>
+      {/* Add a link to log out or try again */}
+    </div>
+  );
 }

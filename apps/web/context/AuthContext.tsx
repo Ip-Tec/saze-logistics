@@ -15,29 +15,12 @@ import { useRouter, usePathname } from "next/navigation";
 // Make sure the path is correct based on your project structure
 import {
   AppUser,
+  // Make sure these specific types (User, Vendor, RiderProfile, Admin)
+  // are defined in @shared/types and include common profile fields like name, email, phone, role
   User,
   Vendor,
   RiderProfile,
   Admin,
-  NotificationPreferences,
-  Conversation,
-  Call,
-  Order,
-  DeliveryAddress,
-  GeoLocation,
-  OrderItem,
-  MenuCategory,
-  MenuItem,
-  MenuItemImage,
-  FoodDetail,
-  CartItem,
-  PaymentMethodType,
-  PaymentMethod,
-  PaymentStatus,
-  OpeningHours,
-  Permission,
-  OrderStatus,
-  BaseUser,
 } from "@shared/types";
 
 // Define the interface for the Auth Context's props
@@ -46,10 +29,8 @@ interface AuthContextProps {
   user: AppUser | null;
   signOut: () => Promise<void>;
   isCheckingAuth: boolean; // State indicating if the initial auth check is in progress
-  // Note: AuthContext itself doesn't expose a general 'error' state in its value,
-  // individual function calls like loginUser, registerUser, etc. return errors.
-  // If you need a global auth error state, you would add it here and manage it.
 
+  // registerUser should correctly save role in auth metadata
   registerUser: (
     name: string,
     email: string,
@@ -57,15 +38,17 @@ interface AuthContextProps {
     password: string,
     role: AppUser["role"] // Use the union type for role
   ) => Promise<void>;
-  // loginUser should return the specific profile type based on role,
-  // or the AppUser union. Let's type it as Promise<AppUser> for simplicity
-  // since it fetches the profile after login.
+
+  // loginUser should return the specific profile type or throw error if profile missing for existing users
   loginUser: (email: string, password: string) => Promise<AppUser>;
+
   forgotPassword: (email: string) => Promise<void>;
   resetPassword: (password: string) => Promise<void>;
   changePhoneNumber: (newPhone: string) => Promise<void>;
-  // getUserProfile should also return the AppUser union or null
+
+  // getUserProfile should fetch and return the AppUser union or null
   getUserProfile: () => Promise<AppUser | null>;
+
   resendConfirmationEmail: () => Promise<void>;
 }
 
@@ -86,98 +69,210 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const publicRoutes = [
     "/",
     "/auth",
-    "/auth/*", // Wildcard for any path under /auth
+    "/auth/*",
+    "/onboarding",
     "/auth/login",
     "/auth/register",
     "/auth/confirm-email",
     "/auth/forgot-password",
-    "/auth/reset-password", // Added reset-password as it's public
-    "/complete-signup", // Added complete-signup as it's public
+    "/auth/reset-password",
   ];
 
-  /** CHECK CURRENT SESSION */
+  // --- GET USER PROFILE FUNCTION (Declared with 'function' for hoisting) ---
+  /**
+   * Function to fetch the user's detailed profile from the database.
+   * This function returns null if no profile is found or if there's an error.
+   */
+  // MODIFIED: Changed from 'const getUserProfile = async ...' to 'async function getUserProfile ...'
+  async function getUserProfile(): Promise<AppUser | null> {
+    console.log("AuthContext: getUserProfile called.");
+    const { data: userData, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !userData?.user) {
+      console.warn(
+        "AuthContext: No authenticated user found when fetching profile."
+      );
+      return null;
+    }
+
+    console.log(
+      `AuthContext: Attempting to fetch profile for user ID: ${userData.user.id}`
+    );
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*") // Select all columns as per your profiles table
+      .eq("id", userData.user.id)
+      .single();
+
+    if (error) {
+      // Log the specific Supabase error details
+      console.error(
+        "AuthContext: Supabase error fetching user profile:",
+        error
+      );
+      // Note: A 'PostgrestInterpretationAttribute' error or similar
+      // might indicate the row was not found, which is expected for new users.
+      // We return null for any error or no data, signaling profile not found.
+      console.log(
+        `AuthContext: Profile not found for user ${userData.user.id} (or other DB error).`
+      );
+      return null;
+    }
+
+    // If data is found, check for the role and return it cast as AppUser
+    if (data && data.role) {
+      console.log(
+        `AuthContext: Profile found for user ${userData.user.id} with role: ${data.role}.`
+      );
+      // Ensure your AppUser type correctly matches the shape of the 'data' object here.
+      return data as AppUser;
+    } else {
+      // This case means a row was found, but it's missing the 'role' or is empty.
+      // This could indicate an incomplete profile creation. Treat as profile not found/incomplete.
+      console.warn(
+        `AuthContext: Profile data found for user ${userData.user.id} but missing role or is incomplete. Data:`,
+        data
+      );
+      return null;
+    }
+  }
+
+  /** CHECK CURRENT SESSION & PROFILE STATUS */
   // Effect to check for an existing session on mount and set the user state
+  // Also handles redirection if profile is missing
   useEffect(() => {
-    const init = async () => {
-      console.log("AuthContext: Starting initial auth check."); // Added log
-      try {
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
+    const handleAuthStateChange = async (session: any | null) => {
+      console.log(
+        "AuthContext: Auth state change detected. Session:",
+        session ? "present" : "null"
+      ); // Added log
 
-        console.log("AuthContext: getSession completed. Session:", session); // Added log
+      if (session) {
+        console.log("AuthContext: Session found, attempting to fetch profile.");
+        try {
+          // getUserProfile is now declared with 'function', so it's hoisted and available here
+          const profile = await getUserProfile(); // Try fetching the profile
 
-        if (session) {
-          console.log("AuthContext: Session found, fetching profile."); // Added log
-          const profile = await getUserProfile();
-          console.log(
-            "AuthContext: getUserProfile completed. Profile:",
-            profile
-          ); // Added log
-          setUser(profile);
-        } else {
-          console.log("AuthContext: No active session found."); // Added log
-          setUser(null);
+          if (profile) {
+            console.log("AuthContext: Profile found. Setting user state.");
+            setUser(profile);
+
+            // Optional: Redirect logged-in users from auth/onboarding pages to their dashboard
+            const authRelatedPaths = [
+              "/auth/login",
+              "/auth/register",
+              "/auth/confirm-email",
+              "/auth/forgot-password",
+              "/auth/reset-password",
+              "/onboarding",
+            ];
+            if (authRelatedPaths.includes(pathname)) {
+              console.log(
+                `AuthContext: Redirecting authenticated user from ${pathname} to /${profile.role}`
+              );
+              router.replace(`/${profile.role}`); // Redirect to role-specific dashboard
+            }
+          } else {
+            console.log("AuthContext: Session found, but profile NOT found.");
+            setUser(null); // Set user to null if profile is missing
+
+            // --- REDIRECT TO ONBOARDING IF PROFILE IS MISSING ---
+            // If user is logged in (session exists) but profile is null,
+            // and they are NOT already on the onboarding page, redirect them there.
+            if (pathname !== "/onboarding") {
+              console.log(
+                "AuthContext: Profile missing, redirecting to /onboarding."
+              );
+              router.replace("/onboarding");
+            } else {
+              console.log(
+                "AuthContext: Profile missing, already on /onboarding."
+              );
+            }
+          }
+        } catch (error) {
+          console.error(
+            "AuthContext: Error during profile fetch after auth state change:",
+            error
+          );
+          setUser(null); // Ensure user is null on error
+          // Decide redirection on error: to login or a generic error page?
+          // For now, let the non-public route redirect handle it, or redirect to login.
+          if (pathname !== "/auth/login" && !publicRoutes.includes(pathname)) {
+            // Avoid infinite loops
+            router.replace("/auth/login");
+          }
+        } finally {
+          // Set checking state to false after the initial check completes,
+          // or after an auth state change has been fully processed.
+          if (isCheckingAuth) {
+            // Only set false if it was initially true
+            console.log("AuthContext: Initial auth check finished.");
+            setIsCheckingAuth(false);
+          }
         }
-      } catch (error) {
-        // Catch any errors during session or profile fetch
-        console.error("AuthContext: Error during initial auth check:", error);
-        setUser(null); // Ensure user is null on error
-      } finally {
-        // Always set isCheckingAuth to false after the check is complete
+      } else {
+        // No session found or user logged out
         console.log(
-          "AuthContext: Initial auth check finished. Setting isCheckingAuth to false."
-        ); // Added log
-        setIsCheckingAuth(false);
+          "AuthContext: No session found or user logged out. Setting user to null."
+        );
+        setUser(null);
+
+        // If checking was initially true, it's now finished
+        if (isCheckingAuth) {
+          console.log("AuthContext: Initial auth check finished (no session).");
+          setIsCheckingAuth(false);
+        }
       }
     };
 
-    init();
+    // Initial check on mount
+    console.log("AuthContext: Running initial getSession check.");
+    supabase.auth
+      .getSession()
+      .then(({ data: { session } }) => {
+        handleAuthStateChange(session);
+        console.log({ session });
+      })
+      .catch((error) => {
+        console.error("AuthContext: Error during initial getSession:", error);
+        setIsCheckingAuth(false); // Ensure checking is false even on error
+        setUser(null);
+        if (pathname !== "/auth/login" && !publicRoutes.includes(pathname)) {
+          router.replace("/auth/login");
+        }
+      });
 
-    // Listen for authentication state changes (login, logout, token refresh)
+    // Listen for authentication state changes
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log("AuthContext: Auth state change detected:", event); // Added log
-        if (session) {
-          console.log(
-            "AuthContext: Session present after state change, fetching profile."
-          ); // Added log
-          const profile = await getUserProfile();
-          console.log(
-            "AuthContext: getUserProfile after state change completed. Profile:",
-            profile
-          ); // Added log
-          setUser(profile);
-        } else {
-          console.log(
-            "AuthContext: No session after state change, setting user to null."
-          ); // Added log
-          setUser(null);
-        }
+        console.log(`AuthContext: onAuthStateChange event: ${event}`);
+        // We only process the session change here, the logic is in handleAuthStateChange
+        handleAuthStateChange(session);
       }
     );
 
     // Cleanup function to unsubscribe from the auth state change listener
     return () => {
-      console.log("AuthContext: Cleaning up auth state listener."); // Added log
+      console.log("AuthContext: Cleaning up auth state listener.");
       listener.subscription.unsubscribe();
     };
-  }, []); // Effect runs only once on mount
+    // Removed getUserProfile from dependency array as it's now hoisted.
+    // Add back if getUserProfile somehow depends on component state/props (unlikely).
+  }, [pathname, router, publicRoutes]);
 
-  /** REDIRECT IF NOT AUTHENTICATED */
-  // Effect to handle redirection for protected routes
+  /** PROTECTED ROUTE REDIRECT */
+  // Keep the existing redirect effect for protected routes
   useEffect(() => {
     console.log(
-      "AuthContext: Redirection useEffect running. isCheckingAuth:",
-      isCheckingAuth,
-      "user:",
-      user ? "present" : "null",
-      "pathname:",
-      pathname
-    ); // Added log
+      `AuthContext: Protected route redirect check. Path: ${pathname}, User: ${user ? "present" : "null"}, Checking: ${isCheckingAuth}`
+    );
     // Wait until the initial auth check is complete
     if (isCheckingAuth) {
-      console.log("AuthContext: Still checking auth, skipping redirection."); // Added log
+      console.log(
+        "AuthContext: Still checking auth, skipping protected route redirect."
+      );
       return;
     }
 
@@ -188,21 +283,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         : pathname === route
     );
 
-    console.log("AuthContext: Path is public:", isPublic); // Added log
-
     // If the route is NOT public AND there is no logged-in user, redirect to login
     if (!isPublic && !user) {
-      console.log("AuthContext: Not public and no user, redirecting to login."); // Added log
+      console.log(
+        "AuthContext: Not public and no user, redirecting to /auth/login."
+      );
       router.push("/auth/login");
     } else {
-      console.log("AuthContext: Redirection check passed."); // Added log
+      console.log(
+        "AuthContext: Protected route check passed or path is public."
+      );
     }
-
-    // Optional: Add redirection logic based on user role after login if needed
-    // For example, redirect riders to /rider/dashboard, vendors to /vendor/dashboard etc.
-    // This would typically happen after a successful login or when the user state is set.
-    // You might already handle this in your login page or a dedicated redirect component.
-  }, [user, isCheckingAuth, pathname, router]); // Effect runs when user, checking status, pathname, or router changes
+  }, [user, isCheckingAuth, pathname, router, publicRoutes]); // Depend on publicRoutes as well
 
   /** REGISTER USER */
   // Function to handle user registration
@@ -213,26 +305,42 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     password: string,
     role: AppUser["role"] // Ensure the role passed is one of the valid AppUser roles
   ) => {
-    console.log("AuthContext: registerUser called for email:", email); // Added log
-    // Store email temporarily for confirmation flow
-    localStorage.setItem("pending-confirmation-email", email);
+    console.log("AuthContext: registerUser called for email:", email);
+    // No need to store email in local storage if emailRedirectTo goes to onboarding
+    // localStorage.setItem("pending-confirmation-email", email);
 
     // Sign up user with email and password, including profile data in options.data
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: { name, phone, role }, // Pass profile data here
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/complete-signup`, // Redirect URL after email confirmation
+        data: { name, phone, role }, // Pass initial profile data including role
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/onboarding`, // <-- Redirect to the onboarding page after confirmation
       },
     });
 
     // Throw error if sign up fails
     if (error) {
-      console.error("AuthContext: registerUser failed:", error.message); // Added log
+      console.error("AuthContext: registerUser failed:", error.message);
       throw new Error(error.message);
     }
-    console.log("AuthContext: registerUser successful."); // Added log
+
+    // Handle case where user object is returned but requires confirmation
+    if (data?.user && !data.session) {
+      console.log(
+        "AuthContext: registerUser successful, email confirmation required."
+      );
+      // Optionally store email for resend logic if needed later
+      localStorage.setItem("pending-confirmation-email", email);
+      // You might want to redirect the user to a "check your email" page here
+      // router.push('/auth/check-email'); // Example
+    } else {
+      console.log(
+        "AuthContext: registerUser successful, session created (e.g., via phone auth or auto-confirm)."
+      );
+      // If session is created immediately (less common for email/password with confirmation),
+      // the onAuthStateChange listener will pick it up and handle profile creation/onboarding redirect.
+    }
   };
 
   /** LOGIN USER */
@@ -241,240 +349,178 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     email: string,
     password: string
   ): Promise<AppUser> => {
-    // Type the return as Promise<AppUser>
-    console.log("AuthContext: loginUser called for email:", email); // Added log
-    // Sign in user with email and password
-    const { error } = await supabase.auth.signInWithPassword({
+    console.log("AuthContext: loginUser called for email:", email);
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    // Throw error if sign in fails
     if (error) {
-      console.error("AuthContext: loginUser failed:", error.message); // Added log
-      throw new Error(error.message);
+      console.error("AuthContext: loginUser failed:", error.message);
+      throw new Error(error.message); // Keep throwing error for login failures
     }
 
     console.log(
-      "AuthContext: signInWithPassword successful, fetching profile."
-    ); // Added log
-    // Fetch the user profile after successful sign-in
+      "AuthContext: signInWithPassword successful, attempting immediate profile fetch for return value."
+    );
+    // getUserProfile is now declared with 'function', so it's hoisted and available here
     const profile = await getUserProfile();
-    // Check if profile was successfully fetched
+
     if (!profile) {
-      console.error("AuthContext: Profile not found after login."); // Added log
+      console.error("AuthContext: Profile not found immediately after login.");
       throw new Error("Profile not found after login");
     }
-
-    // Set the user state and return the fetched profile
-    console.log(
-      "AuthContext: Profile fetched after login, setting user state."
-    ); // Added log
-    setUser(profile);
-    return profile; // Return the AppUser profile
+    return profile;
   };
 
   /** SIGN OUT */
-  // Function to handle user sign out
   const signOut = async () => {
-    console.log("AuthContext: signOut called."); // Added log
-    // Sign out from Supabase Auth
+    console.log("AuthContext: signOut called.");
     const { error } = await supabase.auth.signOut();
-    // Throw error if sign out fails
     if (error) {
-      console.error("AuthContext: signOut failed:", error.message); // Added log
+      console.error("AuthContext: signOut failed:", error.message);
       throw new Error(error.message);
     }
-    // Set user state to null and redirect to login page
-    console.log(
-      "AuthContext: signOut successful, setting user to null and redirecting."
-    ); // Added log
-    setUser(null);
-    router.push("/auth/login");
+    console.log("AuthContext: signOut successful.");
+    // The onAuthStateChange listener will handle setting user to null and redirecting to login
   };
 
   /** FORGOT PASSWORD */
-  // Function to handle forgot password request
   const forgotPassword = async (email: string) => {
-    console.log("AuthContext: forgotPassword called for email:", email); // Added log
-    // Send password reset email
+    console.log("AuthContext: forgotPassword called for email:", email);
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`, // Redirect URL after clicking email link
+      // Ensure this redirect matches your reset password page route
+      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/reset-password`,
     });
-    // Throw error if request fails
     if (error) {
-      console.error("AuthContext: forgotPassword failed:", error.message); // Added log
+      console.error("AuthContext: forgotPassword failed:", error.message);
       throw new Error(error.message);
     }
-    console.log("AuthContext: forgotPassword successful."); // Added log
+    console.log("AuthContext: forgotPassword successful.");
   };
 
   /** RESET PASSWORD */
-  // Function to handle password reset after clicking email link
   const resetPassword = async (password: string) => {
-    console.log("AuthContext: resetPassword called."); // Added log
-    // Update user's password
+    console.log("AuthContext: resetPassword called.");
     const { error } = await supabase.auth.updateUser({ password });
-    // Throw error if update fails
     if (error) {
-      console.error("AuthContext: resetPassword failed:", error.message); // Added log
+      console.error("AuthContext: resetPassword failed:", error.message);
       throw new Error(error.message);
     }
-    console.log("AuthContext: resetPassword successful."); // Added log
+    console.log("AuthContext: resetPassword successful.");
+    // User is now logged in with new password, onAuthStateChange listener will update state/redirect
   };
 
   /** CHANGE PHONE NUMBER */
-  // Function to update the user's phone number in the profiles table
+  // Assuming this function updates the profiles table directly
   const changePhoneNumber = async (newPhone: string) => {
-    console.log(
-      "AuthContext: changePhoneNumber called with new phone:",
-      newPhone
-    ); // Added log
-    // Ensure user is authenticated
+    console.log("AuthContext: changePhoneNumber called.");
     if (!user) {
       console.error(
         "AuthContext: changePhoneNumber failed, user not authenticated."
-      ); // Added log
+      );
       throw new Error("User not authenticated");
     }
 
-    // Update the 'phone' column in the 'profiles' table for the current user
+    console.log(
+      `AuthContext: Attempting to update phone for user ${user.id} to ${newPhone}`
+    );
+
     const { error } = await supabase
       .from("profiles")
-      .update({ phone: newPhone }) // Assuming 'phone' is the column name
-      .eq("id", user.id); // Update the row matching the user's ID
+      .update({ phone: newPhone })
+      .eq("id", user.id);
 
-    // Throw error if update fails
     if (error) {
-      console.error("AuthContext: changePhoneNumber failed:", error.message); // Added log
+      console.error("AuthContext: changePhoneNumber failed:", error.message);
       throw new Error(error.message);
     }
-    // Refresh the user profile state after successful update
+
     console.log(
-      "AuthContext: changePhoneNumber successful, fetching updated profile."
-    ); // Added log
-    setUser(await getUserProfile());
-    console.log("AuthContext: User state updated after phone number change."); // Added log
-  };
-
-  /** GET USER PROFILE */
-  // Function to fetch the user's detailed profile from the database
-  // This function is crucial and should fetch data that matches your AppUser structure
-  const getUserProfile = async (): Promise<AppUser | null> => {
-    // Type the return as Promise<AppUser | null>
-    console.log("AuthContext: getUserProfile called."); // Added log
-    // Get the authenticated user from the session
-    const { data: userData, error: authError } = await supabase.auth.getUser();
-    // If no authenticated user or error, return null
-    if (authError || !userData?.user) {
-      console.error(
-        "AuthContext: Unable to get authenticated user:",
-        authError?.message || "No user data"
-      ); // Added log
-      return null;
-    }
-
-    console.log("AuthContext: Authenticated user found:", userData.user.id); // Added log
-
-    // Fetch the profile data from the 'profiles' table based on the user's ID
-    // This query needs to select all the fields required for your AppUser union types
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*") // Select all columns from the profiles table
-      .eq("id", userData.user.id) // Filter by the authenticated user's ID
-      .single(); // Expecting a single row
-
-    // If there's an error fetching the profile, log it and return null
-    if (error) {
-      console.error("AuthContext: Error fetching user profile:", error.message); // Added log
-      return null;
-    }
-
-    // If data is found, combine it with base user data and return as AppUser
-    // You might need to explicitly cast here if the selected data doesn't exactly match AppUser
-    // or if there are conflicts (e.g., BaseUser.phoneNumber vs profiles.phone)
-    // Ensure the 'role' field is correctly fetched and present in the data
-    if (data && data.role) {
-      console.log(
-        "AuthContext: Profile data fetched successfully with role:",
-        data.role
-      ); // Added log
-      // Assuming the 'profiles' table contains all fields for the specific role
-      // and the 'role' field is correctly populated.
-      return data as AppUser; // Cast the fetched data to the AppUser union
+      "AuthContext: changePhoneNumber successful, refreshing profile."
+    );
+    // Refresh the user state in AuthContext by re-fetching the profile
+    // This ensures the user object in context is updated with the new phone number
+    // getUserProfile is now declared with 'function', so it's hoisted and available here
+    const updatedProfile = await getUserProfile();
+    if (updatedProfile) {
+      setUser(updatedProfile);
+      console.log("AuthContext: User state updated with new phone number.");
     } else {
-      console.error(
-        "AuthContext: Fetched profile data is missing or has no role:",
-        data
-      ); // Added log
-      return null; // Return null if profile data is incomplete
+      // This case is unlikely if update succeeded, but handle if getUserProfile fails
+      console.warn(
+        "AuthContext: Failed to refresh user profile after phone number change."
+      );
     }
   };
 
   /** RESEND CONFIRMATION EMAIL */
   // Function to resend the confirmation email
   const resendConfirmationEmail = async () => {
-    console.log("AuthContext: resendConfirmationEmail called."); // Added log
+    console.log("AuthContext: resendConfirmationEmail called.");
     // Get the pending confirmation email from local storage
     const email = localStorage.getItem("pending-confirmation-email");
-    // Throw error if no email is found
+
     if (!email) {
       console.error(
-        "AuthContext: resendConfirmationEmail failed, no pending email found."
-      ); // Added log
+        "AuthContext: resendConfirmationEmail failed, no pending email found in local storage."
+      );
       throw new Error("No pending confirmation email found.");
     }
 
+    console.log(
+      `AuthContext: Attempting to resend confirmation email to ${email}`
+    );
+
     // Call Supabase Auth signUp again with a dummy password to trigger resend
+    // Ensure this matches the options used during initial signup if possible
     const { error } = await supabase.auth.signUp({
       email,
       password: "dummyPassword", // Supabase workaround to trigger resend
       options: {
-        emailRedirectTo:
-          process.env.NEXT_PUBLIC_BASE_URL + "/auth/complete-signup", // Redirect URL
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/onboarding`, // Ensure this matches your signup redirect
+        // Do NOT include data: { name, phone, role } here unless resending requires it.
+        // The user already exists; we just need to resend the email.
       },
     });
 
-    // Throw error if resend fails
     if (error) {
       console.error(
         "AuthContext: resendConfirmationEmail failed:",
         error.message
-      ); // Added log
+      );
+      // Handle specific errors like 'rate limited'
+      if (error.message.includes("rate limited")) {
+        throw new Error(
+          "Please wait before requesting another confirmation email."
+        );
+      }
       throw new Error(error.message);
     }
-    console.log("AuthContext: resendConfirmationEmail successful."); // Added log
+    console.log(
+      `AuthContext: Confirmation email resent successfully to ${email}.`
+    );
+    // Remove pending email from local storage? Or keep until confirmed?
+    // localStorage.removeItem('pending-confirmation-email');
   };
 
-  // Provide the context value to the children
+  // Render children regardless of auth state, protected route effect handles redirection
   return (
     <AuthContext.Provider
       value={{
         user,
         signOut,
         registerUser,
-        isCheckingAuth, // Expose isCheckingAuth in the context value
         loginUser,
-        forgotPassword,
         resetPassword,
-        changePhoneNumber,
+        isCheckingAuth,
         getUserProfile,
+        forgotPassword,
+        changePhoneNumber,
         resendConfirmationEmail,
       }}
     >
-      {/* Show a loading indicator or null while checking auth */}
-      {/* {isCheckingAuth ? ( */}
-      {/* // You might want a loading spinner or null here while auth is being checked */}
-      {/* // Returning null or a loading component prevents rendering protected content before auth check */}
-      {/* // <div className="flex justify-center items-center w-screen h-screen bg-gray-100"> */}
-      {/* Added background for visibility */}
-      {/* // <Loader2 size={32} className="animate-spin text-orange-500" />{" "} */}
-      {/* // Loading... */}
-      {/* // </div> */}
-      {/* // ) : ( */}
-      {/* // Render children only after auth check is complete */}
       {children}
-      {/* // )} */}
     </AuthContext.Provider>
   );
 };
