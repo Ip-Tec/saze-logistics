@@ -1,3 +1,4 @@
+// app/(root)/user/food/[id]/FoodDetailClient.tsx
 "use client";
 
 import { useEffect, useState } from "react";
