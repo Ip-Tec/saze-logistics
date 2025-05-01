@@ -1,8 +1,7 @@
 // apps/web/app/(root)/user/food/[id]/page.tsx
-"use client";
-
-import { useRouter, useSearchParams } from "next/navigation";
+"use client"; // only if you need client hooks (you do, for auth & router)
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@shared/supabaseClient";
 import { Loader2 } from "lucide-react";
 import { useAuthContext } from "@/context/AuthContext";
@@ -15,40 +14,29 @@ interface FoodDetail {
   image_url: string | null;
 }
 
-export default function FoodDetailPage() {
-  const params = useSearchParams();
-  const id = params.get("id")!;
+export default function FoodDetailPage({ params }: { params: { id: string } }) {
+  const { id } = params; // ← get it from props
   const { user } = useAuthContext();
+  const router = useRouter();
+
   const [food, setFood] = useState<FoodDetail | null>(null);
   const [qty, setQty] = useState(1);
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   // fetch item
+  // fetch item via API
   useEffect(() => {
-    async function load() {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from("menu_item")
-        .select("id, name, description, price, menu_item_image(image_url)")
-        .eq("id", id)
-        .single();
-      if (error) {
-        setError(error.message);
-      } else {
-        setFood({
-          id: data.id,
-          name: data.name,
-          description: data.description,
-          price: data.price,
-          image_url: data.menu_item_image?.[0]?.image_url ?? null,
-        });
-      }
-      setLoading(false);
-    }
-    load();
+    setLoading(true);
+    fetch(`/api/menu-item?id=${id}`)
+      .then(async (res) => {
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error ?? "Fetch failed");
+        setFood(json as FoodDetail);
+      })
+      .catch((err: any) => setError(err.message))
+      .finally(() => setLoading(false));
   }, [id]);
 
   // add to cart
@@ -56,12 +44,13 @@ export default function FoodDetailPage() {
     if (!user) return router.push("/auth/login");
     setAdding(true);
     try {
-      // ensure cart exists
+      // get or create cart
       const { data: carts } = await supabase
         .from("cart")
         .select("id")
         .eq("user_id", user.id)
         .limit(1);
+
       let cartId = carts?.[0]?.id;
       if (!cartId) {
         const { data: newCart } = await supabase
@@ -69,17 +58,17 @@ export default function FoodDetailPage() {
           .insert({ user_id: user.id })
           .select("id")
           .single();
-        cartId = newCart?.id;
+        cartId = newCart?.id!;
       }
 
-      // insert item
+      // insert cart item
       await supabase.from("cart_item").insert({
         cart_id: cartId,
         menu_item_id: food!.id,
         quantity: qty,
       });
 
-      router.push("/user/cart"); // or show toast
+      router.push("/user/cart");
     } catch (err: any) {
       setError(err.message);
     } finally {

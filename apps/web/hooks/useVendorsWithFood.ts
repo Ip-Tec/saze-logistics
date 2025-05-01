@@ -2,7 +2,7 @@
 
 import useSWR from "swr";
 
-export function useVendorsWithFood(vendorCount = 4, foodsPerVendor = 2) {
+export function useVendorsWithFood(vendorCount = 6, foodsPerVendor = 6) {
   const {
     data,
     error,

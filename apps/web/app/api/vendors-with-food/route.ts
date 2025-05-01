@@ -18,7 +18,7 @@ function shuffleArray<T>(arr: T[]): T[] {
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const vendorCount = Number(url.searchParams.get("vendorCount")) || 4;
-  const foodsPerVendor = Number(url.searchParams.get("foodsPerVendor")) || 2;
+  const foodsPerVendor = Number(url.searchParams.get("foodsPerVendor")) || 6;
   const maxVendors = Number(url.searchParams.get("maxVendors")) || 50;
   const maxFoods = Number(url.searchParams.get("maxFoodsPerVendor")) || 20;
 
