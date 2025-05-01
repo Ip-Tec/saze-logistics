@@ -1,96 +1,129 @@
 // apps/web/app/(root)/user/food/[id]/page.tsx
+"use client";
 
-import { CartItem } from "@shared/types";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { supabase } from "@shared/supabaseClient";
+import { Loader2 } from "lucide-react";
+import { useAuthContext } from "@/context/AuthContext";
 
-import FoodDetailsClient from "@/components/user/FoodDetailsClient";
+interface FoodDetail {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image_url: string | null;
+}
 
-// Import the placeholder image (can remain here)
-import FoodPic from "@/public/images/Jollof_Rice-removebg-preview.png";
+export default function FoodDetailPage() {
+  const params = useSearchParams();
+  const id = params.get("id")!;
+  const { user } = useAuthContext();
+  const [food, setFood] = useState<FoodDetail | null>(null);
+  const [qty, setQty] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [adding, setAdding] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
-// Define the structure of the extra items (can live here or be fetched)
-const AVAILABLE_EXTRAS = [
-  { id: "icecream", name: "Ice Cream", price: 500, vendor: "Mama Cee" },
-  { id: "water", name: "Bottled Water", price: 200, vendor: "Mama Tee" },
-  {
-    id: "softdrink-jee",
-    name: "Soft Drink (Mama Jee)",
-    price: 400,
-    vendor: "Mama Jee",
-  }, // Give unique IDs
-  {
-    id: "softdrink-lee",
-    name: "Soft Drink (Mama Lee)",
-    price: 400,
-    vendor: "Mama Lee",
-  }, // Give unique IDs
-];
-
-// Define the type for the params this page expects
-
-// This is now an async Server Component by default
-export default async function FoodDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-
-  // *** Data Fetching on the Server ***
-  // Fetch the food item data directly here in the Server Component
-  let foodData: CartItem | null = null;
-  try {
-    // In a real app, you'd fetch from your API or directly query the DB here
-    // Example fetching from your API Route:
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/foods/${id}`,
-      {
-        cache: "no-store", // Or other caching strategies
+  // fetch item
+  useEffect(() => {
+    async function load() {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("menu_item")
+        .select("id, name, description, price, menu_item_image(image_url)")
+        .eq("id", id)
+        .single();
+      if (error) {
+        setError(error.message);
+      } else {
+        setFood({
+          id: data.id,
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          image_url: data.menu_item_image?.[0]?.image_url ?? null,
+        });
       }
-    );
-    if (!res.ok) {
-      console.error(
-        `Failed to fetch food item ${id}:`,
-        res.status,
-        res.statusText
-      );
-      // Optionally throw an error to trigger the nearest error.tsx boundary
-      // throw new Error(`Failed to fetch food item ${id}`);
-    } else {
-      foodData = await res.json();
+      setLoading(false);
     }
-  } catch (error) {
-    console.error(`Error fetching food item ${id}:`, error);
-    // Handle the error - maybe return a not found state or render an error message
-  }
+    load();
+  }, [id]);
 
-  // Handle case where food data wasn't fetched
-  if (!foodData) {
-    // Render a loading state or error message here if data fetching failed
-    // This is server-rendered, so it's displayed immediately.
-    return (
-      <div className="p-4 w-full mx-auto text-center text-red-500">
-        Failed to load food item or item not found.
-      </div>
-    );
-  }
+  // add to cart
+  const handleAdd = async () => {
+    if (!user) return router.push("/auth/login");
+    setAdding(true);
+    try {
+      // ensure cart exists
+      const { data: carts } = await supabase
+        .from("cart")
+        .select("id")
+        .eq("user_id", user.id)
+        .limit(1);
+      let cartId = carts?.[0]?.id;
+      if (!cartId) {
+        const { data: newCart } = await supabase
+          .from("cart")
+          .insert({ user_id: user.id })
+          .select("id")
+          .single();
+        cartId = newCart?.id;
+      }
 
-  // *** Render the layout and pass data to the Client Component ***
+      // insert item
+      await supabase.from("cart_item").insert({
+        cart_id: cartId,
+        menu_item_id: food!.id,
+        quantity: qty,
+      });
+
+      router.push("/user/cart"); // or show toast
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  if (loading) return <Loader2 className="animate-spin" />;
+  if (error) return <p className="text-red-600">{error}</p>;
+  if (!food) return <p>Not found.</p>;
+
   return (
-    // This outer div provides the main structure
-    <div className="p-4 w-full mx-auto">
-      {/* The Image can be rendered here as it's static */}
-      {/* Although I moved it to the client component in the example for simplicity
-           as the client component already renders other info. You can move it back here
-           if you prefer. If you move it back, pass the image src string to the client component. */}
+    <div className="p-4 space-y-4">
+      {food.image_url && (
+        <img
+          src={food.image_url}
+          alt={food.name}
+          className="w-full h-64 object-cover rounded-xl"
+        />
+      )}
+      <h1 className="text-2xl font-bold">{food.name}</h1>
+      <p className="text-gray-600">{food.description}</p>
+      <p className="text-orange-600 text-xl font-semibold">₦{food.price}</p>
 
-      {/* Pass the fetched data and available extras to the Client Component */}
-      <FoodDetailsClient
-        initialFood={foodData}
-        availableExtras={AVAILABLE_EXTRAS} // Pass the list of extras
-        FoodPic={FoodPic} // Pass the placeholder image if needed in client component
-      />
+      <div className="flex items-center gap-2">
+        <label>Qty:</label>
+        <input
+          type="number"
+          min={1}
+          value={qty}
+          onChange={(e) => setQty(+e.target.value)}
+          className="w-16 p-1 border rounded"
+        />
+      </div>
 
-      {/* Other static elements could go here */}
-    </div> // Closing div for the main structure
+      <button
+        onClick={handleAdd}
+        disabled={adding}
+        className={`px-6 py-3 rounded-lg text-white ${
+          adding ? "bg-gray-400" : "bg-orange-500 hover:bg-orange-600"
+        }`}
+      >
+        {adding ? "Adding…" : "Add to Cart"}
+      </button>
+    </div>
   );
 }

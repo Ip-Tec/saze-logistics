@@ -30,7 +30,7 @@ export const FoodCard: React.FC<FoodCardProps> = ({
       <GlassDiv className="rounded-2xl shadow-green-200 hover:shadow-lg transition hover:scale-[1.02] cursor-pointer !p-0 overflow-hidden">
         {/* Image Container for next/image fill */}
         <div className="relative w-full h-52">
-          {" "}
+          
           {/* Maintain the card image size */}
           <Image
             // Use the image prop for the source URL
@@ -55,9 +55,9 @@ export const FoodCard: React.FC<FoodCardProps> = ({
 
         {/* Content below the image */}
         <div className="w-full p-4 space-y-1">
-          {" "}
+          
           {/* Add padding here */}
-          <h3 className="font-medium text-base text-gray-800">{name}</h3>{" "}
+          <h3 className="font-medium text-base text-gray-800">{name}</h3>
           {/* Adjust text color if needed */}
           <p className="text-xs text-gray-500">{vendor}</p>
           {/* Ensure price is displayed correctly */}

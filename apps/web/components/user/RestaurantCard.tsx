@@ -24,7 +24,7 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
       className="!bg-white/30 rounded-xl !p-0 shadow hover:shadow-lg transition cursor-pointer"
     >
       <Image
-        src={Food}
+        src={image}
         width={100}
         height={100}
         className="w-full h-48 object-cover rounded-lg mb-2"

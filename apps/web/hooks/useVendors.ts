@@ -1,7 +1,7 @@
 // hooks/useVendors.ts
 import { useEffect, useState } from "react";
-import { supabase } from "@shared/supabaseClient"; // Adjust the import path
-import { Database } from "@shared/supabase/types"; // Adjust the import path
+import { supabase } from "@shared/supabaseClient";
+import { Database } from "@shared/supabase/types";
 
 // Define a type that represents the combined data needed for a restaurant card
 export type VendorForCard = {
@@ -25,9 +25,9 @@ export async function fetchRandomVendors(limit = 8): Promise<VendorForCard[]> {
         description
       `
       )
-      .eq("role", "vendor") // Filter to only get vendors
-      .order("random()") // Order results randomly
-      .limit(limit); // Limit the number of results
+      .eq("role", "vendor")
+      .order("true")
+      .limit(limit);
 
     if (error) {
       console.error("Error fetching random vendors:", error);

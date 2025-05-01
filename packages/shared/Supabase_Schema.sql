@@ -40,3 +40,37 @@ create table notifications (
     metadata jsonb
 );
 
+-- 1a) A helper view that bundles menu items with vendor name & images
+create or replace view public.random_menu_items as
+select
+  mi.id,
+  mi.name,
+  mi.price,
+  mi.description,
+  p.name   as vendor_name,
+  (
+    select array_agg(mii.image_url)
+    from public.menu_item_image mii
+    where mii.menu_item_id = mi.id
+  ) as image_urls
+from public.menu_item mi
+join public.profiles p
+  on p.id = mi.vendor_id
+where mi.is_available = true;
+
+-- 2a) A function to pull N random rows from that view
+create or replace function public.get_random_menu_items(lim integer)
+  returns table (
+    id           uuid,
+    name         text,
+    price        numeric,
+    description  text,
+    vendor_name  text,
+    image_urls   text[]
+  )
+language sql stable as $$
+  select *
+    from public.random_menu_items
+   order by random()
+   limit lim;
+$$;

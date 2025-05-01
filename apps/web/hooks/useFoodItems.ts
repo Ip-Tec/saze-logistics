@@ -21,19 +21,19 @@ export async function fetchRandomFoodItems(
   try {
     // Fetch menu items, order randomly, and limit the results
     const { data: menuItems, error: menuItemsError } = await supabase
-      .from("menu_item")
+      .from("random_menu_items")
       .select(
         `
         id,
         name,
         price,
         description,
-        profiles:vendor_id(name), -- Select the vendor's name via the relationship (using alias 'vendor_id')
-        menu_item_image:menu_item_image(image_url) -- Select related image URLs via the relationship
+        profiles:vendor_id(name),
+        menu_item_image:menu_item_image(image_url) 
       `
       )
       .eq("is_available", true) // Only fetch available items
-      .order("random()") // Order results randomly
+      .order("true") // Order results randomly
       .limit(limit); // Limit the number of results
 
     if (menuItemsError) {
