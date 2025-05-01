@@ -1,7 +1,22 @@
 // app/(root)/user/food/[id]/page.tsx
 
+import { type Metadata } from "next";
 import FoodDetailClient from "@/app/(root)/user/food/[id]/FoodDetailClient";
 
-export default function FoodDetailPage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default function FoodDetailPage({ params }: PageProps) {
   return <FoodDetailClient id={params.id} />;
 }
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  return {
+    title: `Food Item - ${params.id}`,
+  };
+}
+
