@@ -41,7 +41,7 @@ export default function UserHomePage() {
   }
 
   return (
-    <div className="p-4 space-y-8 overflow-y-auto h-full glass-scrollbar">
+    <div className="p-4 space-y-8 w-full m-auto overflow-y-auto h-full glass-scrollbar">
       {vendorBlocks.map((vendor: any) => (
         <section key={vendor.id} className="space-y-4">
           <RestaurantCard
