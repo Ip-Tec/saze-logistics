@@ -9,7 +9,7 @@ interface PageProps {
   };
 }
 
-export default function FoodDetailPage({ params }: PageProps) {
+export default async function FoodDetailPage({ params }: PageProps) {
   return <FoodDetailClient id={params.id} />;
 }
 export async function generateMetadata({

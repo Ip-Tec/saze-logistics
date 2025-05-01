@@ -1,0 +1,204 @@
+
+> saze-logistics@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.2.4 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.137.1:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+Slow filesystem detected. If C:\Users\Ip\Documents\saze-logistics\apps\web\.next is a network drive, consider moving it to a local folder. If you have an antivirus enabled, consider excluding your project directory.
+ ✓ Ready in 35.4s
+ ○ Compiling /auth/login ...
+ ✓ Compiled /auth/login in 63.7s
+ GET /auth/login 200 in 72791ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 16.8s
+ GET /user 200 in 25015ms
+ GET /user 200 in 42250ms
+ GET /user 200 in 42434ms
+ GET /user 200 in 42254ms
+ GET /user 200 in 44233ms
+ GET /user 200 in 44754ms
+ GET /user 200 in 46796ms
+ ✓ Compiled in 3.5s
+ ○ Compiling /user ...
+ ✓ Compiled /user in 25.5s
+ GET /user 200 in 47400ms
+ GET /user 200 in 47025ms
+ GET /user 200 in 46822ms
+ ○ Compiling /auth/login ...
+ GET /user 200 in 49916ms
+ GET /user 200 in 49796ms
+ GET /user 200 in 51699ms
+ ✓ Compiled /auth/login in 17.9s
+ GET /user 200 in 8279ms
+ GET /user 200 in 16275ms
+ GET /user 200 in 16975ms
+ GET /user 200 in 22753ms
+ GET /user 200 in 22765ms
+ GET /auth/login 200 in 23103ms
+ GET /user 200 in 11844ms
+ GET /user 200 in 12353ms
+ ○ Compiling /user/orders ...
+ ✓ Compiled /user/orders in 17.9s
+ GET /user/orders 200 in 25129ms
+ ○ Compiling /_not-found/page ...
+ ✓ Compiled /_not-found/page in 10s
+ GET /api/orders 404 in 16118ms
+ GET /api/orders 404 in 10780ms
+ ✓ Compiled in 13.7s
+ GET /user 200 in 9298ms
+ ✓ Compiled in 428ms
+ ✓ Compiled in 336ms
+ ✓ Compiled in 750ms
+ ✓ Compiled in 3.7s
+ GET /user 200 in 11368ms
+ GET /user 200 in 11464ms
+ ✓ Compiled in 871ms
+ GET /user 200 in 3348ms
+ ✓ Compiled in 892ms
+ GET /user 200 in 13897ms
+ ✓ Compiled in 397ms
+ ✓ Compiled in 16.5s
+ ✓ Compiled in 1045ms
+ GET /user 200 in 18958ms
+ ✓ Compiled in 2.4s
+ GET /user 200 in 2225ms
+ GET /user 200 in 1315ms
+ ✓ Compiled in 136.4s
+ ○ Compiling /api/vendors-with-food ...
+ GET /user 200 in 98596ms
+ ✓ Compiled /api/vendors-with-food in 40.3s
+API error: {
+  code: '42P01',
+  details: null,
+  hint: null,
+  message: 'relation "public.menu_list" does not exist'
+}
+API error: {
+  code: '42P01',
+  details: null,
+  hint: null,
+  message: 'relation "public.menu_list" does not exist'
+}
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 500 in 19849ms
+ GET /user 200 in 10234ms
+API error: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column menu_item.image_urls does not exist'
+}
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 500 in 21600ms
+ ✓ Compiled in 844ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /user 200 in 8286ms
+API error: {
+  code: '42703',
+  details: null,
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 500 in 22476ms
+  hint: null,
+  message: 'column menu_item.image_urls does not exist'
+}
+ GET /user 200 in 13367ms
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 200 in 21747ms
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 200 in 10461ms
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 200 in 9711ms
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 200 in 10875ms
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 200 in 9092ms
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 200 in 15945ms
+ ✓ Compiled in 22.9s
+ ✓ Compiled in 3.2s
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 200 in 4995ms
+ ○ Compiling /user/restaurant/[id] ...
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 200 in 3391ms
+ ✓ Compiled in 59.4s
+ ✓ Compiled /user/restaurant/[id] in 60.6s
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 200 in 7139ms
+ GET /api/vendors-with-food?vendorCount=4&foodsPerVendor=2 200 in 7241ms
+ ✓ Compiled in 1414ms
+ GET /user/restaurant/a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 139258ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 17071ms
+ GET /user/restaurant/a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1510ms
+ GET /user/restaurant/a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 3099ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 11992ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 13005ms
+ ○ Compiling /user/food/[id] ...
+ ✓ Compiled /user/food/[id] in 12.1s
+ GET /user/food/c82546f3-8d73-4dfa-bfaa-f2806da2e97f 200 in 15304ms
+ ○ Compiling /api/menu-item ...
+ ✓ Compiled /api/menu-item in 5.2s
+ GET /api/menu-item?id=c82546f3-8d73-4dfa-bfaa-f2806da2e97f 200 in 7684ms
+ GET /api/menu-item?id=c82546f3-8d73-4dfa-bfaa-f2806da2e97f 200 in 2870ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3640ms
+ ✓ Compiled in 859ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 9140ms
+ ○ Compiling /user/food ...
+ ✓ Compiled /user/food in 11s
+ GET /user/food 200 in 13028ms
+ ✓ Compiled in 3.5s
+Image with src "/images/Jollof_Rice-removebg-preview.png" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/images/Jollof_Rice-removebg-preview.png" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+ ✓ Compiled in 4.5s
+ GET /user/food 200 in 7683ms
+ GET /user/food 200 in 7142ms
+ ✓ Compiled in 1106ms
+ GET /user/food 200 in 11947ms
+ ✓ Compiled in 2.6s
+ ✓ Compiled in 2.3s
+ ✓ Compiled in 9.7s
+ ○ Compiling /user/food ...
+ ✓ Compiled in 12.3s
+ ✓ Compiled /user/food in 18.4s
+Server fetch error: {
+  message: 'TypeError: fetch failed',
+  details: 'TypeError: fetch failed\n' +
+    '    at node:internal/deps/undici/undici:13502:13\n' +
+    '    at async FoodPage (C:\\Users\\Ip\\Documents\\saze-logistics\\apps\\web\\.next\\server\\chunks\\ssr\\[root of the server]__5f84f6b4._.js:136:36)',
+  hint: '',
+  code: ''
+}
+Server fetch error: {
+  message: 'TypeError: fetch failed',
+  details: 'TypeError: fetch failed\n' +
+    '    at node:internal/deps/undici/undici:13502:13\n' +
+    '    at async FoodPage (C:\\Users\\Ip\\Documents\\saze-logistics\\apps\\web\\.next\\server\\chunks\\ssr\\[root of the server]__5f84f6b4._.js:136:36)',
+  hint: '',
+  code: ''
+}
+Server fetch error: {
+  message: 'TypeError: fetch failed',
+  details: 'TypeError: fetch failed\n' +
+    '    at node:internal/deps/undici/undici:13502:13\n' +
+    '    at async FoodPage (C:\\Users\\Ip\\Documents\\saze-logistics\\apps\\web\\.next\\server\\chunks\\ssr\\[root of the server]__5f84f6b4._.js:136:36)',
+  hint: '',
+  code: ''
+}
+ GET /user/food 200 in 88082ms
+ GET /user/food 200 in 89748ms
+ ✓ Compiled in 4.8s
+ GET /user/food 200 in 5410ms
+ GET /images/fallback.png 404 in 5189ms
+ ⨯ The requested resource isn't a valid image for /images/fallback.png received text/html; charset=utf-8
+ GET /images/fallback.png 404 in 3477ms
+ ⨯ The requested resource isn't a valid image for /images/fallback.png received text/html; charset=utf-8
+ GET /images/fallback.png 404 in 10769ms
+ ⨯ The requested resource isn't a valid image for /images/fallback.png received text/html; charset=utf-8
+ GET /images/fallback.png 404 in 13462ms
+ ⨯ The requested resource isn't a valid image for /images/fallback.png received text/html; charset=utf-8
+ GET /images/fallback.png 404 in 13642ms
+ ⨯ The requested resource isn't a valid image for /images/fallback.png received text/html; charset=utf-8
+ GET /images/fallback.png 404 in 15020ms
+ ⨯ The requested resource isn't a valid image for /images/fallback.png received text/html; charset=utf-8
+ ✓ Compiled in 1057ms
+ GET /images/fallback.png 404 in 19329ms
+ ⨯ The requested resource isn't a valid image for /images/fallback.png received text/html; charset=utf-8
+ GET /user/food 200 in 23519ms
+ GET /images/fallback.png 404 in 15621ms
+ ⨯ The requested resource isn't a valid image for /images/fallback.png received text/html; charset=utf-8
+ GET /images/fallback.png 404 in 14540ms
+ ⨯ The requested resource isn't a valid image for /images/fallback.png received text/html; charset=utf-8
