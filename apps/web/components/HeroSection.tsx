@@ -16,19 +16,20 @@ const HeroSection = () => {
             Sazee
           </div>
           <h1 className="text-5xl font-extrabold text-primary mt-4">
-            Delivery
+            Your Delivery Partner
           </h1>
-          <h2 className="text-2xl font-medium text-gray-700">Foods Place</h2>
+          <h2 className="text-2xl font-medium text-gray-700">
+            Delivering More Than Just Food
+          </h2>
           <h4 className="text-xl font-medium text-gray-500">
-            Your Favorite Food, Delivered Fast
+            Your Food & Goods, Delivered Fast
           </h4>
-          <p className="text-gray-400 mt-4 md:px-4 max-w-md">
-            From spicy <strong>Jollof Rice</strong> and smoky{" "}
-            <strong>Suya</strong> to rich <strong>Egusi Soup</strong> and crispy{" "}
-            <strong>Puff Puff</strong>, we bring you authentic flavors from
-            top-rated restaurants and local chefs. Craving{" "}
-            <strong>Amala & Ewedu, Pepper Soup,</strong> or even Chinese or
-            Lebanese favorites? We have got you covered!
+          <p className="text-gray-400 md:px-4 max-w-md">
+            Sazee Logistics is your all-in-one delivery solution. Easily order
+            delicious food from a variety of registered local vendors, or
+            request us to pick up and deliver your goods right to your doorstep.
+            From your favorite meals to important parcels, we've got your
+            delivery needs covered!
           </p>
           <div className="flex">
             <Link

@@ -21,7 +21,7 @@ const AnythingDelivered = () => {
                         width={100}
                         height={100}
                     />
-                    <h2 className="text-2xl font-semibold mt-4">Your city's top restaurants</h2>
+                    <h2 className="text-2xl font-semibold mt-4">Your top restaurants</h2>
                     <p className="text-gray-50 mt-2">
                         With a great variety of restaurants you can order your favourite food or explore new restaurants nearby!
                     </p>

@@ -23,8 +23,8 @@ const Header: React.FC = () => {
         src={Logo}
         alt="Logo"
         width={100}
-        height={100}
-        className="w-16 h-16"
+        height={1000}scale-250
+        className="w-24 h-24 scale-150"
       />
       {session ? (
         <Link href={session?.user?.user_metadata?.role} className="text-white font-bold">

@@ -15,7 +15,7 @@ export default function Home() {
         <Header />
         <HeroSection />
         <AnythingDelivered />
-        <Vendors />
+        {/* <Vendors /> */}
         <DownloadApp />
         <LetDoItTogether />
         <Footer />

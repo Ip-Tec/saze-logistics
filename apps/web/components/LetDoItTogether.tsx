@@ -15,7 +15,7 @@ interface Role {
 
 const roles: Role[] = [
   {
-    title: "Customer",
+    title: "User",
     image: Person2,
     description: "Sign up to order delicious meals from your favorite vendors.",
   },
@@ -35,14 +35,14 @@ const roles: Role[] = [
 
 // Define a mapping for background colors for each role (for the card container)
 const backgroundMap: Record<string, string> = {
-  customer: "bg-blue-100",
+  user: "bg-blue-100",
   vendor: "bg-green-100",
   rider: "bg-amber-100",
 };
 
 // Define a mapping for button background colors for each role
 const buttonBgMap: Record<string, string> = {
-  customer: "bg-blue-500 hover:bg-blue-600",
+  user: "bg-blue-500 hover:bg-blue-600",
   vendor: "bg-green-500 hover:bg-green-600",
   rider: "bg-amber-500 hover:bg-amber-600",
 };
