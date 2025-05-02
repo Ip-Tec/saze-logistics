@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4Y2ptaG9wbmxsYW5udnRmd3plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM1ODMyNDYsImV4cCI6MjA1OTE1OTI0Nn0.BhEJlfKnbzRjorwrfSShLG0vAwxgetRXxzjm7nNKdLc"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4Y2ptaG9wbmxsYW5udnRmd3plIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MzU4MzI0NiwiZXhwIjoyMDU5MTU5MjQ2fQ.TItg2vx8zWiHLwe8nS5gAxoLgFuPcOEeYqDoa2IWYbI"
 );
 
 export async function GET(request: NextRequest) {
