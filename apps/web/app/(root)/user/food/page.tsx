@@ -1,4 +1,4 @@
-// app/user/food/page.tsx   ← Server Component (no "use client")
+// app/user/food/page.tsx 
 import FoodPageClient from "./FoodPageClient";
 import { createClient } from "@supabase/supabase-js";
 import FallbackImage from "@/public/images/logo.png"

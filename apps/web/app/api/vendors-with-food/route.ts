@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!
 );
 
 function shuffleArray<T>(arr: T[]): T[] {
@@ -27,7 +27,9 @@ export async function GET(request: NextRequest) {
     // 1) Fetch up to maxVendors vendor profiles
     const { data: vendors, error: vErr } = await supabase
       .from("profiles")
-      .select("*")
+      .select(
+        "address, banner_url, created_at, description, email, id, licensePlate, logo_url, name, phone, rider_image_url, role, second_phone, vehicle_image_url, vehicleType"
+      )
       .eq("role", "vendor")
       .limit(maxVendors);
 
@@ -35,6 +37,7 @@ export async function GET(request: NextRequest) {
     if (!vendors || vendors.length === 0) {
       return NextResponse.json([], { status: 200 });
     }
+
 
     // 2) Shuffle & pick the first vendorCount
     const chosen = shuffleArray(vendors).slice(0, vendorCount);
@@ -45,9 +48,7 @@ export async function GET(request: NextRequest) {
         const { data: items, error: fErr } = await supabase
           .from("menu_item")
           .select(
-            `
-            *,
-            menu_item_image ( image_url )
+            `category_id, created_at, description, id, is_available, name, price, vendor_id, menu_item_image ( image_url )
           `
           )
           .eq("vendor_id", vendor.id)
