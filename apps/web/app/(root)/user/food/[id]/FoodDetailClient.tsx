@@ -1,10 +1,9 @@
-// app/(root)/user/food/[id]/FoodDetailClient.tsx
 "use client";
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { useAuthContext } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 
 interface FoodDetail {
   id: string;
@@ -12,10 +11,12 @@ interface FoodDetail {
   description: string;
   price: number;
   image_url: string | null;
+  vendor: string;
 }
 
 export default function FoodDetailClient({ id }: { id: string }) {
   const { user } = useAuthContext();
+  const { addToCart } = useCart();
   const router = useRouter();
 
   const [food, setFood] = useState<FoodDetail | null>(null);
@@ -24,7 +25,6 @@ export default function FoodDetailClient({ id }: { id: string }) {
   const [adding, setAdding] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // fetch via our API
   useEffect(() => {
     setLoading(true);
     fetch(`/api/menu-item?id=${id}`)
@@ -41,40 +41,33 @@ export default function FoodDetailClient({ id }: { id: string }) {
 
   const handleAdd = async () => {
     if (!user) return router.push("/auth/login");
+    if (!food) return;
+
     setAdding(true);
     try {
-      // get or create cart
-      const { data: carts } = await fetch("/api/cart?userId=" + user.id).then(
-        (r) => r.json()
+      await addToCart(
+        {
+          id: food.id,
+          name: food.name,
+          vendor: food.vendor,
+          price: food.price,
+          image: food.image_url ?? "",
+          vendor_id: food.vendor,
+          is_available: true,
+          created_at: new Date().toString(),
+        },
+        qty
       );
-      let cartId = carts?.[0]?.id;
-      if (!cartId) {
-        const { id: newCartId } = await fetch("/api/cart", {
-          method: "POST",
-          body: JSON.stringify({ userId: user.id }),
-        }).then((r) => r.json());
-        cartId = newCartId;
-      }
-
-      // add item
-      await fetch("/api/cart-item", {
-        method: "POST",
-        body: JSON.stringify({
-          cartId,
-          menuItemId: food!.id,
-          quantity: qty,
-        }),
-      });
-
       router.push("/user/cart");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (e: any) {
+      console.error(e);
+      setError(e.message || "Could not add to cart");
     } finally {
       setAdding(false);
     }
   };
 
-  if (loading) return <Loader2 className="animate-spin" />;
+  if (loading) return <Loader2 className="animate-spin text-orange-500" />;
   if (error) return <p className="text-red-600">{error}</p>;
   if (!food) return <p>Not found.</p>;
 

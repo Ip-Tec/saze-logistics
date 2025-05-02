@@ -1,0 +1,171 @@
+
+> saze-logistics@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.2.4 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.137.1:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+Slow filesystem detected. If C:\Users\Ip\Documents\saze-logistics\apps\web\.next is a network drive, consider moving it to a local folder. If you have an antivirus enabled, consider excluding your project directory.
+ ✓ Ready in 324.3s
+ ○ Compiling / ...
+ ✓ Compiled / in 766.2s
+Received `true` for a non-boolean attribute `scale-250`.
+
+If you want to write it to the DOM, pass a string instead: scale-250="true" or scale-250={value.toString()}.
+ GET / 200 in 1086957ms
+ GET / 200 in 1093868ms
+ ○ Compiling /_not-found/page ...
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled in 4.2s
+ ✓ Compiled /_not-found/page in 149.9s
+ GET /vendor2.jpg 404 in 201560ms
+ ⨯ The requested resource isn't a valid image for /vendor2.jpg received text/html; charset=utf-8
+ GET /vendor1.jpg 404 in 205065ms
+ ⨯ The requested resource isn't a valid image for /vendor1.jpg received text/html; charset=utf-8
+ GET /vendor3.jpg 404 in 205194ms
+ ⨯ The requested resource isn't a valid image for /vendor3.jpg received text/html; charset=utf-8
+Received `true` for a non-boolean attribute `scale-250`.
+
+If you want to write it to the DOM, pass a string instead: scale-250="true" or scale-250={value.toString()}.
+ GET / 200 in 88654ms
+ ✓ Compiled in 1268ms
+ ✓ Compiled in 1104ms
+ GET /vendor1.jpg 404 in 138190ms
+ ⨯ The requested resource isn't a valid image for /vendor1.jpg received text/html; charset=utf-8
+ GET /vendor2.jpg 404 in 138681ms
+ ⨯ The requested resource isn't a valid image for /vendor2.jpg received text/html; charset=utf-8
+ GET /vendor3.jpg 404 in 139242ms
+ ⨯ The requested resource isn't a valid image for /vendor3.jpg received text/html; charset=utf-8
+Received `true` for a non-boolean attribute `scale-250`.
+
+If you want to write it to the DOM, pass a string instead: scale-250="true" or scale-250={value.toString()}.
+ GET / 200 in 6891ms
+ GET /vendor2.jpg 404 in 21870ms
+ ⨯ The requested resource isn't a valid image for /vendor2.jpg received text/html; charset=utf-8
+ GET /vendor3.jpg 404 in 22108ms
+ ⨯ The requested resource isn't a valid image for /vendor3.jpg received text/html; charset=utf-8
+ GET /vendor1.jpg 404 in 22175ms
+ ⨯ The requested resource isn't a valid image for /vendor1.jpg received text/html; charset=utf-8
+ ✓ Compiled in 955ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1708ms
+ GET / 200 in 3651ms
+ ✓ Compiled in 837ms
+Received `true` for a non-boolean attribute `scale-250`.
+
+If you want to write it to the DOM, pass a string instead: scale-250="true" or scale-250={value.toString()}.
+ GET / 200 in 7717ms
+ GET /vendor3.jpg 404 in 4918ms
+ ⨯ The requested resource isn't a valid image for /vendor3.jpg received text/html; charset=utf-8
+ GET /vendor1.jpg 404 in 4981ms
+ ⨯ The requested resource isn't a valid image for /vendor1.jpg received text/html; charset=utf-8
+ GET /vendor2.jpg 404 in 4999ms
+ ⨯ The requested resource isn't a valid image for /vendor2.jpg received text/html; charset=utf-8
+ ✓ Compiled in 1798ms
+ ○ Compiling /auth/register ...
+ ✓ Compiled /auth/register in 34.7s
+ GET /auth/register?role=user 200 in 44689ms
+ ○ Compiling /auth/login ...
+ ✓ Compiled /auth/login in 20s
+ GET /auth/login 200 in 27516ms
+ ✓ Compiled in 1035ms
+ GET /auth/login 200 in 1770ms
+ GET /vendor1.jpg 404 in 17092ms
+ ⨯ The requested resource isn't a valid image for /vendor1.jpg received text/html; charset=utf-8
+ GET /vendor2.jpg 404 in 17434ms
+ ⨯ The requested resource isn't a valid image for /vendor2.jpg received text/html; charset=utf-8
+ GET /vendor3.jpg 404 in 17879ms
+ ⨯ The requested resource isn't a valid image for /vendor3.jpg received text/html; charset=utf-8
+ ○ Compiling / ...
+ ✓ Compiled / in 4.1s
+Received `true` for a non-boolean attribute `scale-250`.
+
+If you want to write it to the DOM, pass a string instead: scale-250="true" or scale-250={value.toString()}.
+ GET / 200 in 11019ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 20.6s
+ GET /user 200 in 28451ms
+ ○ Compiling /api/vendors-with-food ...
+{ vendorBlocks: [] }
+ GET /user 200 in 14896ms
+ ✓ Compiled /api/vendors-with-food in 49.6s
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 42525ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 185682ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 16437ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3305ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3786ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 2966ms
+{ vendorBlocks: [] }
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 19752ms
+ GET /user 200 in 20142ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 18573ms
+Fetched vendors: {
+  vendors: [
+    {
+      address: null,
+      banner_url: null,
+      created_at: '2025-04-08T17:25:55.809997',
+      description: null,
+      email: 'peterotakhor@gmail.com',
+      id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      licensePlate: '000-90-98YD',
+      logo_url: null,
+      name: 'Do quis non exercita',
+      phone: 'Do obcaecati reprehe',
+      rider_image_url: 'https://vxcjmhopnllannvtfwze.supabase.co/storage/v1/object/public/sazzefile/uploads/f90157dd-d919-4f69-b2f1-4a0f03b55fb3.jpg',
+      role: 'vendor',
+      second_phone: 'Nesciunt dolores qu',
+      vehicle_image_url: 'https://vxcjmhopnllannvtfwze.supabase.co/storage/v1/object/public/sazzefile/uploads/3c4ba745-0325-4b8b-bd0b-23573ea096fa.jpg',
+      vehicleType: 'motorcycle'
+    }
+  ]
+}
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3063ms
+Fetched vendors: {
+  vendors: [
+    {
+      address: null,
+      banner_url: null,
+      created_at: '2025-04-08T17:25:55.809997',
+      description: null,
+      email: 'peterotakhor@gmail.com',
+      id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      licensePlate: '000-90-98YD',
+      logo_url: null,
+      name: 'Do quis non exercita',
+      phone: 'Do obcaecati reprehe',
+      rider_image_url: 'https://vxcjmhopnllannvtfwze.supabase.co/storage/v1/object/public/sazzefile/uploads/f90157dd-d919-4f69-b2f1-4a0f03b55fb3.jpg',
+      role: 'vendor',
+      second_phone: 'Nesciunt dolores qu',
+      vehicle_image_url: 'https://vxcjmhopnllannvtfwze.supabase.co/storage/v1/object/public/sazzefile/uploads/3c4ba745-0325-4b8b-bd0b-23573ea096fa.jpg',
+      vehicleType: 'motorcycle'
+    }
+  ]
+}
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 13913ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3089ms
+ ○ Compiling /user/restaurant/[id] ...
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 4114ms
+ ✓ Compiled /user/restaurant/[id] in 96.3s
+ GET /user/restaurant/a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 118764ms
+ GET /user/restaurant/a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 94674ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 12845ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 11797ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 9624ms
+ ○ Compiling /user/food/[id] ...
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 17930ms
+ ✓ Compiled /user/food/[id] in 28.9s
+ GET /user/food/c9c602ef-8398-47cf-ba5e-b73f86d3964a 200 in 36643ms
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 40244ms
+ ○ Compiling /api/menu-item ...
+ ✓ Compiled /api/menu-item in 6.2s
+ GET /api/menu-item?id=c9c602ef-8398-47cf-ba5e-b73f86d3964a 500 in 8208ms
+ GET /api/menu-item?id=c9c602ef-8398-47cf-ba5e-b73f86d3964a 500 in 2971ms
+ ✓ Compiled in 3.3s
+ GET /user/food/c9c602ef-8398-47cf-ba5e-b73f86d3964a 200 in 5907ms
+ GET /api/menu-item?id=c9c602ef-8398-47cf-ba5e-b73f86d3964a 500 in 2903ms
+ GET /user 200 in 2766ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 2250ms

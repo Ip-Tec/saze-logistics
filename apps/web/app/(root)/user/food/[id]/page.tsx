@@ -7,7 +7,7 @@ export default async function FoodDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const foodId = (await params)
-
+  const foodId = await params;
+  console.log({ foodId });
   return <FoodDetailClient id={foodId.id} />;
 }

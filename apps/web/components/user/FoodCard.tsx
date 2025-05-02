@@ -18,9 +18,9 @@ interface FoodCardProps {
 
 export const FoodCard: React.FC<FoodCardProps> = ({
   id,
-  image, // Use the image prop
+  image,
   name,
-  vendor, // Use the vendor prop
+  vendor,
   price,
   description,
 }) => {
@@ -51,11 +51,9 @@ export const FoodCard: React.FC<FoodCardProps> = ({
         <div className="w-full p-4 space-y-1">
           {/* Add padding here */}
           <h3 className="font-medium text-base text-gray-800">{name}</h3>
-
           <p className="text-xs text-gray-500">{vendor}</p>
-
+          <p className="text-xs text-gray-500">{id}</p>
           <p className="text-orange-600 text-lg font-semibold">₦{price}</p>
-
           {displayDescription ? (
             <p className="text-sm text-gray-600 mt-2">{displayDescription}</p>
           ) : null}

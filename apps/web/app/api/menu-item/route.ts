@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!
 );
 
 export async function GET(request: NextRequest) {
@@ -18,20 +18,20 @@ export async function GET(request: NextRequest) {
     .from("menu_item")
     .select("id, name, description, price, menu_item_image(image_url)")
     .eq("id", id)
-    .single();
-
+    .maybeSingle();
+  console.log({ data });
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
   // Flatten the image_url
-  const image_url = data.menu_item_image?.[0]?.image_url ?? null;
+  const image_url = data?.menu_item_image?.[0]?.image_url ?? null;
 
   return NextResponse.json({
-    id: data.id,
-    name: data.name,
-    description: data.description,
-    price: data.price,
+    id: data?.id || null,
+    name: data?.name,
+    description: data?.description,
+    price: data?.price,
     image_url,
   });
 }
