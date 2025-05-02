@@ -9,6 +9,7 @@ interface Restaurant {
   image: string;
   name: string;
   tags: string;
+  description?: string;
 }
 
 // Mock data – you can replace this with API data later

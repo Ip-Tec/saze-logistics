@@ -61,7 +61,7 @@ export default function UserLayout({
       </div>
 
       {/* Main Glass Area */}
-      <GlassComponent className="!bg-green-600/10 z-10">
+      <GlassComponent className="!bg-green-600/10 z-10 w-full h-full">
         <UserNavbar />
         {children}
       </GlassComponent>

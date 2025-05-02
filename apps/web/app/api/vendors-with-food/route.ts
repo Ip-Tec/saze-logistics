@@ -1,3 +1,4 @@
+// app/api/vendors-with-food/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest) {
   const maxFoods = Number(url.searchParams.get("maxFoodsPerVendor")) || 20;
 
   try {
-    // 1) Fetch vendors
+    // 1) Fetch up to maxVendors vendor profiles
     const { data: vendors, error: vErr } = await supabase
       .from("profiles")
       .select("*")
@@ -32,42 +33,46 @@ export async function GET(request: NextRequest) {
 
     if (vErr) throw vErr;
     if (!vendors || vendors.length === 0) {
-      return NextResponse.json(
-        { message: "No vendors found" },
-        { status: 404 }
-      );
+      return NextResponse.json([], { status: 200 });
     }
 
-    // 2) Randomize & pick
-    const chosenVendors = shuffleArray(vendors).slice(0, vendorCount);
+    // 2) Shuffle & pick the first vendorCount
+    const chosen = shuffleArray(vendors).slice(0, vendorCount);
 
-    // 3) For each, fetch & shuffle foods
+    // 3) For each vendor, fetch up to maxFoods menu items *and* their images
     const payload = await Promise.all(
-      chosenVendors.map(async (v) => {
+      chosen.map(async (vendor) => {
         const { data: items, error: fErr } = await supabase
-          .from("menu_item") // ← adjust your real table name
-          .select("*")
-          .eq("vendor_id", v.id)
+          .from("menu_item")
+          .select(
+            `
+            *,
+            menu_item_image ( image_url )
+          `
+          )
+          .eq("vendor_id", vendor.id)
           .limit(maxFoods);
 
         if (fErr) throw fErr;
 
+        // 4) Shuffle & slice items, then map to the shape your UI expects
         const foods = shuffleArray(items || [])
           .slice(0, foodsPerVendor)
-          .map((item: any) => ({
+          .map((item) => ({
             id: item.id,
             name: item.name,
             price: item.price,
             description: item.description,
-            image_url: item.image_urls?.[0] || null,
-            vendor_name: v.name,
+            // take the first image_url if exists
+            image_url: item.menu_item_image?.[0]?.image_url ?? null,
+            vendor_name: vendor.name,
           }));
 
         return {
-          id: v.id,
-          name: v.name,
-          image_url: v.logo_url,
-          description: v.description,
+          id: vendor.id,
+          name: vendor.name,
+          image_url: vendor.logo_url,
+          description: vendor.description,
           foods,
         };
       })

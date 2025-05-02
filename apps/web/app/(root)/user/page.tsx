@@ -11,7 +11,7 @@ import { RestaurantCard } from "@/components/user/RestaurantCard";
 
 export default function UserHomePage() {
   const { data: vendorBlocks, isLoading, error } = useVendorsWithFood();
-
+  console.log({ vendorBlocks });
   if (isLoading) {
     return (
       <div className="flex m-auto justify-center items-center min-h-screen">

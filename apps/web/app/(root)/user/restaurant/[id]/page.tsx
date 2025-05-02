@@ -3,7 +3,6 @@ import Image from "next/image";
 import Reimage from "@/public/images/bike_.png";
 import { FoodCard } from "@/components/user/FoodCard";
 
-
 // Mock menu data – replace with real API data later
 // Using a number for price is generally better than a string until display
 const mockMenu = [
@@ -35,11 +34,17 @@ const mockMenu = [
 export default async function RestaurantMenuPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{
+    id: string;
+    name: string;
+    price: string;
+    image: string;
+    description: string;
+  }>;
 }) {
-  const { id } = await params 
-  
-  const restaurantName = `Restaurant ${id}`; // Placeholder
+  const { id, name, price, image, description } = await params;
+
+  const restaurantName = name;
 
   return (
     <div className="p-4 w-full h-full overflow-y-scroll glass-scrollbar mx-auto">
@@ -58,14 +63,10 @@ export default async function RestaurantMenuPage({
       {/* Info Section */}
       <div className="mb-6">
         {/* Use dynamic restaurant name */}
-        <h1 className="text-2xl sm:text-3xl font-bold mb-1">{restaurantName}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-1">{name}</h1>
         {/* Replace with real data later */}
         <p className="text-sm text-gray-600">Pizza, Shawarma • 4.6★</p>
         <p className="text-sm text-gray-500 mb-3">Located in: Ekpoma</p>
-
-        <button className="bg-orange-500 text-white px-5 py-2 rounded-xl hover:bg-orange-600 transition">
-          Order Now
-        </button>
       </div>
 
       {/* Menu Section */}
@@ -79,14 +80,15 @@ export default async function RestaurantMenuPage({
             {mockMenu.map((item) => (
               // *** FIX: Add unique key prop and remove empty fragment ***
               <FoodCard
-                key={item.id} // Add the unique key here
-                id={item.id} // Pass the actual item id
+                key={item.id}
+                id={item.id}
                 image={item.image}
                 name={item.name}
-                vendor={"Mama Cee"} // Replace with actual vendor data if available
-                price={item.price} // Pass price as a number (assuming FoodCard expects number)
+                vendor={"Mama Cee"}
+                price={item.price}
                 description={item.description}
-                // Add other props FoodCard might need (e.g., vendor_id, is_available)
+                // vendor_id={item.id}
+                // is_available)
               />
             ))}
           </div>

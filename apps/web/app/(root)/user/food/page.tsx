@@ -1,6 +1,7 @@
 // app/user/food/page.tsx   ← Server Component (no "use client")
 import FoodPageClient from "./FoodPageClient";
 import { createClient } from "@supabase/supabase-js";
+import FallbackImage from "@/public/images/logo.png"
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -23,7 +24,7 @@ export default async function FoodPage() {
   // 2) Flatten into the shape your client wants
   const allFood = (items || []).map((row) => ({
     id: row.id,
-    image: row.menu_item_image?.[0]?.image_url ?? "/images/fallback.png",
+    image: row.menu_item_image?.[0]?.image_url ?? FallbackImage.src,
     name: row.name,
     vendor: row.vendor_id, // or look up vendor name if you prefer
     price: row.price,
