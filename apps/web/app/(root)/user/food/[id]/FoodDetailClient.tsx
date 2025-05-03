@@ -7,7 +7,9 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import GlassDiv from "@/components/ui/GlassDiv";
 import { MenuItem } from "@shared/types";
+import DefaultImage from "@/public/images/logo.png";
 import { toast, ToastContainer } from "react-toastify";
+import Image from "next/image";
 
 interface FoodDetail extends MenuItem {
   image_url: string | null;
@@ -23,6 +25,7 @@ export default function FoodDetailClient({ id }: { id: string }) {
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
 
+  console.log({ food });
   useEffect(() => {
     setLoading(true);
     fetch(`/api/menu-item?id=${id}`)
@@ -78,12 +81,14 @@ export default function FoodDetailClient({ id }: { id: string }) {
 
   return (
     <GlassDiv className="max-w-md mx-auto p-4 space-y-4">
-      <ToastContainer className={"z-[9999] absolute top-4 right-4"}/>
+      <ToastContainer className={"z-[9999] absolute top-4 right-4"} />
       {food.image_url && (
         <img
-          src={food.image_url}
+          width={100}
+          height={100}
           alt={food.name}
           className="w-full h-64 object-cover rounded-xl"
+          src={food.image_url || DefaultImage.src}
         />
       )}
       <h1 className="text-2xl font-bold">{food.name}</h1>

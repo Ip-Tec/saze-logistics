@@ -12,14 +12,43 @@ export async function GET(req: NextRequest) {
   if (!cartId) {
     return NextResponse.json({ error: "Missing cartId" }, { status: 400 });
   }
+
   const { data, error } = await supabase
     .from("cart_item")
-    .select("id, menu_item_id, quantity")
+    .select(
+      `cart_id, id, menu_item_id, notes, quantity,
+      menu_item (
+        id,
+        name,
+        price,
+        vendor_id,
+        category_id,
+        menu_item_image (
+            image_url
+        ),
+        profiles:vendor_id(name)
+      )`
+    )
     .eq("cart_id", cartId);
+
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  return NextResponse.json(data ?? []);
+
+  // flatten to shape your UI expects
+  const items = (data ?? []).map((ci) => ({
+    id: ci.id,
+    notes: ci.notes,
+    quantity: ci.quantity,
+    name: (ci.menu_item as any).name,
+    menu_item: ci.menu_item,
+    price: (ci.menu_item as any).price,
+    vendor: (ci.menu_item as any).profiles.name,
+    category: (ci.menu_item as any).category_id,
+    image: (ci.menu_item as any).menu_item_image?.[0]?.image_url ?? null,
+  }));
+
+  return NextResponse.json(items);
 }
 
 export async function POST(req: NextRequest) {
@@ -33,7 +62,7 @@ export async function POST(req: NextRequest) {
   const { data, error } = await supabase
     .from("cart_item")
     .insert({ cart_id: cartId, menu_item_id: menuItemId, quantity })
-    .select("id, menu_item_id, quantity")
+    .select("*")
     .single();
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -53,7 +82,7 @@ export async function PUT(req: NextRequest) {
     .from("cart_item")
     .update({ quantity })
     .eq("id", id)
-    .select("id, menu_item_id, quantity")
+    .select("*")
     .single();
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

@@ -561,3 +561,674 @@ See https://react.dev/link/invalid-hook-call for tips about how to debug and fix
     vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
     menu_item_image: [ [Object] ]
   }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 10212ms
+ ✓ Compiled in 2.4s
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 9081ms
+ POST /api/cart-item 200 in 6692ms
+ GET /user/cart 200 in 7362ms
+ ✓ Compiled in 1650ms
+ DELETE /api/cart-item 200 in 8964ms
+ GET /user/cart 200 in 15098ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 4169ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 2306ms
+ DELETE /api/cart-item 200 in 13929ms
+ DELETE /api/cart-item 200 in 24369ms
+ DELETE /api/cart-item 200 in 31016ms
+ DELETE /api/cart-item 200 in 31404ms
+ GET /user/cart 200 in 29292ms
+ ✓ Compiled in 3.4s
+ ✓ Compiled in 2.9s
+ ✓ Compiled in 3.9s
+ ✓ Compiled in 3.7s
+ GET /user/cart 200 in 5819ms
+ ✓ Compiled in 3.5s
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 21344ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 15191ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 3155ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 3296ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 3941ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 1571ms
+ GET /user 200 in 3003ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 10571ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 8393ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 2700ms
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 1600ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 2690ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 1633ms
+ ✓ Compiled in 12s
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 7851ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 15185ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 15354ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 2245ms
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 1471ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 9944ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 10015ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 7439ms
+ ✓ Compiled in 887ms
+ ○ Compiling /user/food/[id] ...
+ ✓ Compiled /user/food/[id] in 6.5s
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+{ food: null }
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 9374ms
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 20928ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 5451ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 5566ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 2166ms
+ ✓ Compiled in 387ms
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+{ food: null }
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 2709ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 15616ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 15560ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 8662ms
+ ✓ Compiled in 401ms
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+{ food: null }
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 3214ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 4632ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 4959ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 2536ms
+ ✓ Compiled in 628ms
+ ✓ Compiled in 743ms
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+{ food: null }
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 2703ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 4722ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 5060ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 8242ms
+ ✓ Compiled in 1053ms
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+{ food: null }
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 8757ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 9231ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 9314ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 11172ms
+ ✓ Compiled in 612ms
+ ✓ Compiled in 505ms
+ ○ Compiling /user/food/[id] ...
+ ✓ Compiled in 2.3s
+ ✓ Compiled /user/food/[id] in 1661ms
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 3283ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 6841ms
+ POST /api/cart-item 200 in 2394ms
+ GET /user/cart 200 in 3754ms
+{ data: null }
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 500 in 15506ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 8308ms
+{ foodId: { id: '0fb8164b-3625-41e5-92de-07278a6a3c69' } }
+{ food: null }
+ GET /user/food/0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 8702ms
+ GET /user/cart 200 in 11009ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-21T23:59:36.953+00:00',
+    description: 'Dolores ullam qui a',
+    id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    is_available: true,
+    name: 'Rem ipsam amet quas',
+    price: 40,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: []
+  }
+}
+ GET /api/menu-item?id=0fb8164b-3625-41e5-92de-07278a6a3c69 200 in 15482ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 14673ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 4636ms
+ PUT /api/cart-item 200 in 24191ms
+ PUT /api/cart-item 200 in 23453ms
+ GET /user/cart 200 in 22936ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 14387ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 6295ms
+ GET /user/cart 200 in 8110ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 11290ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 8452ms
+ ✓ Compiled in 6.1s
+ ✓ Compiled in 18.8s
+ ○ Compiling /user/cart ...
+ ✓ Compiled /user/cart in 4.5s
+ GET /user/cart 200 in 9664ms
+ GET /user/cart 200 in 7906ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 21526ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 4188ms
+ ✓ Compiled in 2.8s
+{ cart: [] }
+ GET /user/cart 200 in 20734ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 14808ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 8000ms
+{ cart: [] }
+ GET /user/cart 200 in 7072ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 19186ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 17374ms
+{ cart: [] }
+ GET /user/cart 200 in 8963ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 24459ms
+{
+  data: [
+    {
+      id: '7d854841-fe20-42f3-88ab-bb75c9d6c81f',
+      cart_id: '3cf2d7d0-7dd1-4a47-9711-90fc6ba86708',
+      menu_item_id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+      quantity: 9,
+      notes: null,
+      menu_item: [Object]
+    }
+  ]
+}
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 8112ms
+{ cart: [] }
+ GET /user/cart 200 in 12521ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 14931ms
+{
+  '0': {
+    id: '7d854841-fe20-42f3-88ab-bb75c9d6c81f',
+    cart_id: '3cf2d7d0-7dd1-4a47-9711-90fc6ba86708',
+    menu_item_id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    quantity: 9,
+    notes: null,
+    menu_item: {
+      id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+      name: 'Rem ipsam amet quas',
+      price: 40,
+      vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      created_at: '2025-04-21T23:59:36.953+00:00',
+      category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+      description: 'Dolores ullam qui a',
+      is_available: true
+    }
+  }
+}
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 8732ms
+{ cart: [] }
+ GET /user/cart 200 in 8399ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 21015ms
+{
+  '0': {
+    id: '7d854841-fe20-42f3-88ab-bb75c9d6c81f',
+    cart_id: '3cf2d7d0-7dd1-4a47-9711-90fc6ba86708',
+    menu_item_id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    quantity: 9,
+    notes: null,
+    menu_item: {
+      id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+      name: 'Rem ipsam amet quas',
+      price: 40,
+      vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      created_at: '2025-04-21T23:59:36.953+00:00',
+      category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+      description: 'Dolores ullam qui a',
+      is_available: true,
+      menu_item_image: []
+    }
+  }
+}
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 1907ms
+{ cart: [] }
+ GET /user/cart 200 in 12138ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 16507ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 500 in 9592ms
+{ cart: [] }
+ GET /user/cart 200 in 7641ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 13180ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 500 in 1542ms
+{ cart: [] }
+ GET /user/cart 200 in 1593ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 12124ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 500 in 7314ms
+{ cart: [] }
+ GET /user/cart 200 in 9267ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 18307ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 500 in 9912ms
+{ cart: [] }
+ GET /user/cart 200 in 9694ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 19062ms
+{
+  '0': {
+    id: '7d854841-fe20-42f3-88ab-bb75c9d6c81f',
+    quantity: 9,
+    menu_item: {
+      id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+      name: 'Rem ipsam amet quas',
+      price: 40,
+      vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      created_at: '2025-04-21T23:59:36.953+00:00',
+      category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+      description: 'Dolores ullam qui a',
+      is_available: true,
+      menu_item_image: []
+    }
+  }
+}
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 9951ms
+{ cart: [] }
+ GET /user/cart 200 in 7250ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 16751ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 500 in 9364ms
+{ cart: [] }
+ GET /user/cart 200 in 6401ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 11906ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 500 in 7137ms
+{ cart: [] }
+ GET /user/cart 200 in 2475ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 5798ms
+cart-item GET:: {
+  '0': {
+    cart_id: '3cf2d7d0-7dd1-4a47-9711-90fc6ba86708',
+    id: '7d854841-fe20-42f3-88ab-bb75c9d6c81f',
+    menu_item_id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    notes: null,
+    quantity: 9,
+    menu_item: {
+      id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+      name: 'Rem ipsam amet quas',
+      price: 40,
+      vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+      menu_item_image: []
+    }
+  }
+}
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 2499ms
+{ cart: [] }
+ GET /user/cart 200 in 1737ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 1325ms
+cart-item GET:: {
+  '0': {
+    cart_id: '3cf2d7d0-7dd1-4a47-9711-90fc6ba86708',
+    id: '7d854841-fe20-42f3-88ab-bb75c9d6c81f',
+    menu_item_id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    notes: null,
+    quantity: 9,
+    menu_item: {
+      id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+      name: 'Rem ipsam amet quas',
+      price: 40,
+      vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+      menu_item_image: []
+    }
+  }
+}
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 500 in 5945ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'name')
+    at <unknown> (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/api/cart-item/route.ts:44:26)
+    at Array.map (<anonymous>)
+    at GET (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/api/cart-item/route.ts:40:29)
+  42 |     notes: ci.notes,
+  43 |     quantity: ci.quantity,
+> 44 |     name: ci.menu_item[0].name, // Access the first element of the array
+     |                          ^
+  45 |     menu_item: ci.menu_item,
+  46 |     price: ci.menu_item[0].price,
+  47 |     vendor: ci.menu_item[0].vendor_id,
+ ⨯ TypeError: Cannot read properties of undefined (reading 'name')
+    at <unknown> (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/api/cart-item/route.ts:44:26)
+    at Array.map (<anonymous>)
+    at GET (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/api/cart-item/route.ts:40:29)
+  42 |     notes: ci.notes,
+  43 |     quantity: ci.quantity,
+> 44 |     name: ci.menu_item[0].name, // Access the first element of the array
+     |                          ^
+  45 |     menu_item: ci.menu_item,
+  46 |     price: ci.menu_item[0].price,
+  47 |     vendor: ci.menu_item[0].vendor_id,
+{ cart: [] }
+ GET /user/cart 200 in 539ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 3338ms
+cart-item GET:: {
+  '0': {
+    cart_id: '3cf2d7d0-7dd1-4a47-9711-90fc6ba86708',
+    id: '7d854841-fe20-42f3-88ab-bb75c9d6c81f',
+    menu_item_id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    notes: null,
+    quantity: 9,
+    menu_item: {
+      id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+      name: 'Rem ipsam amet quas',
+      price: 40,
+      vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+      menu_item_image: []
+    }
+  }
+}
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 943ms
+{ cart: [] }
+ GET /user/cart 200 in 9904ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 5161ms
+cart-item GET:: {
+  '0': {
+    cart_id: '3cf2d7d0-7dd1-4a47-9711-90fc6ba86708',
+    id: '7d854841-fe20-42f3-88ab-bb75c9d6c81f',
+    menu_item_id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    notes: null,
+    quantity: 9,
+    menu_item: {
+      id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+      name: 'Rem ipsam amet quas',
+      price: 40,
+      vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+      menu_item_image: []
+    }
+  }
+}
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 786ms
+ GET /user 200 in 1258ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 1595ms
+{ foodId: { id: 'c82546f3-8d73-4dfa-bfaa-f2806da2e97f' } }
+ GET /user/food/c82546f3-8d73-4dfa-bfaa-f2806da2e97f 200 in 1379ms
+{
+  data: {
+    category_id: '4e7f2bcc-b7da-4a45-b921-2cdf470f7b6b',
+    created_at: '2025-04-22T00:01:42.962+00:00',
+    description: 'Inventore minus culp',
+    id: 'c82546f3-8d73-4dfa-bfaa-f2806da2e97f',
+    is_available: true,
+    name: 'Iure eveniet fuga',
+    price: 230,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=c82546f3-8d73-4dfa-bfaa-f2806da2e97f 200 in 1238ms
+{
+  data: {
+    category_id: '4e7f2bcc-b7da-4a45-b921-2cdf470f7b6b',
+    created_at: '2025-04-22T00:01:42.962+00:00',
+    description: 'Inventore minus culp',
+    id: 'c82546f3-8d73-4dfa-bfaa-f2806da2e97f',
+    is_available: true,
+    name: 'Iure eveniet fuga',
+    price: 230,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=c82546f3-8d73-4dfa-bfaa-f2806da2e97f 200 in 952ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 482ms
+ POST /api/cart-item 200 in 1845ms
+ GET /user/cart 200 in 7656ms
+{
+  data: {
+    category_id: '4e7f2bcc-b7da-4a45-b921-2cdf470f7b6b',
+    created_at: '2025-04-22T00:01:42.962+00:00',
+    description: 'Inventore minus culp',
+    id: 'c82546f3-8d73-4dfa-bfaa-f2806da2e97f',
+    is_available: true,
+    name: 'Iure eveniet fuga',
+    price: 230,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=c82546f3-8d73-4dfa-bfaa-f2806da2e97f 200 in 967ms
+{
+  data: {
+    category_id: '4e7f2bcc-b7da-4a45-b921-2cdf470f7b6b',
+    created_at: '2025-04-22T00:01:42.962+00:00',
+    description: 'Inventore minus culp',
+    id: 'c82546f3-8d73-4dfa-bfaa-f2806da2e97f',
+    is_available: true,
+    name: 'Iure eveniet fuga',
+    price: 230,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=c82546f3-8d73-4dfa-bfaa-f2806da2e97f 200 in 2903ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 1311ms
+ ✓ Compiled in 17.7s
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 1060ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 3085ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 751ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 790ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 1173ms
+ POST /api/cart-item 200 in 673ms
+ GET /user/cart 200 in 484ms
+ PUT /api/cart-item 500 in 1247ms
+ ✓ Compiled in 2.6s
+{ cart: [] }
+ GET /user/cart 200 in 4257ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 4433ms
+cart items data: {
+  '0': {
+    cart_id: '3cf2d7d0-7dd1-4a47-9711-90fc6ba86708',
+    id: '7d854841-fe20-42f3-88ab-bb75c9d6c81f',
+    menu_item_id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+    notes: null,
+    quantity: 9,
+    menu_item: {
+      id: '0fb8164b-3625-41e5-92de-07278a6a3c69',
+      name: 'Rem ipsam amet quas',
+      price: 40,
+      profiles: [Object],
+      vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+      menu_item_image: []
+    }
+  },
+  '1': {
+    cart_id: '3cf2d7d0-7dd1-4a47-9711-90fc6ba86708',
+    id: '38582a4a-c448-455b-9ea1-b53de3b5bd2c',
+    menu_item_id: 'c82546f3-8d73-4dfa-bfaa-f2806da2e97f',
+    notes: null,
+    quantity: 1,
+    menu_item: {
+      id: 'c82546f3-8d73-4dfa-bfaa-f2806da2e97f',
+      name: 'Iure eveniet fuga',
+      price: 230,
+      profiles: [Object],
+      vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      category_id: '4e7f2bcc-b7da-4a45-b921-2cdf470f7b6b',
+      menu_item_image: [Array]
+    }
+  },
+  '2': {
+    cart_id: '3cf2d7d0-7dd1-4a47-9711-90fc6ba86708',
+    id: '45ff8219-312d-4d16-ab14-0a815553deaf',
+    menu_item_id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    notes: null,
+    quantity: 1,
+    menu_item: {
+      id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+      name: 'Ethan Cross',
+      price: 379,
+      profiles: [Object],
+      vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+      category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+      menu_item_image: [Array]
+    }
+  }
+}
