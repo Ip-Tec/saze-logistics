@@ -29,9 +29,9 @@ export const useCart = () => {
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [cart, setCart]       = useState<CartItemType[]>([]);
+  const [cart, setCart] = useState<CartItemType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [userId, setUserId]   = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
   // 1) Load session once on mount
   useEffect(() => {
@@ -71,10 +71,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     })();
   }, [userId]);
 
-  const addToCart = async (
-    item: Omit<CartItemType, "quantity">,
-    qty = 1
-  ) => {
+  const addToCart = async (item: Omit<CartItemType, "quantity">, qty = 1) => {
     // optimistic UI
     setCart((prev) => {
       const exists = prev.find((ci) => ci.id === item.id);
