@@ -66,7 +66,7 @@ export default function CartPage() {
       </div>
 
       {/* Summary */}
-      {cart.length === 0 && (
+      {cart.length > 0 && (
         <div className="bg-white rounded-xl shadow p-6 h-fit sticky top-4">
           <h3 className="text-lg font-bold mb-4">Order Summary</h3>
           <div className="flex justify-between mb-2">
