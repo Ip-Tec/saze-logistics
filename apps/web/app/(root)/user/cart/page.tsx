@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import GlassDiv from "@/components/ui/GlassDiv";
 
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, getTotal } = useCart();
@@ -9,9 +10,11 @@ export default function CartPage() {
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 w-full h-full mt-36 overflow-auto glass-scrollbar">
       {/* Cart Items */}
       <div className="col-span-2 flex flex-col gap-4">
-        <h2 className="text-xl font-bold">Your Cart</h2>
+        <h2 className="text-xl font-bold text-center">Your Cart</h2>
         {cart.length === 0 ? (
-          <p>Your cart is empty.</p>
+          <GlassDiv>
+            <p className="text-center">Your cart is empty.</p>
+          </GlassDiv>
         ) : (
           cart.map((item) => (
             <div
@@ -63,25 +66,27 @@ export default function CartPage() {
       </div>
 
       {/* Summary */}
-      <div className="bg-white rounded-xl shadow p-6 h-fit sticky top-4">
-        <h3 className="text-lg font-bold mb-4">Order Summary</h3>
-        <div className="flex justify-between mb-2">
-          <span>Subtotal</span>
-          <span>₦{getTotal()}</span>
+      {cart.length === 0 && (
+        <div className="bg-white rounded-xl shadow p-6 h-fit sticky top-4">
+          <h3 className="text-lg font-bold mb-4">Order Summary</h3>
+          <div className="flex justify-between mb-2">
+            <span>Subtotal</span>
+            <span>₦{getTotal()}</span>
+          </div>
+          <div className="flex justify-between mb-4">
+            <span>Delivery</span>
+            <span>₦500</span>
+          </div>
+          <hr className="my-2" />
+          <div className="flex justify-between text-lg font-semibold">
+            <span>Total</span>
+            <span>₦{getTotal() + 500}</span>
+          </div>
+          <button className="mt-6 w-full bg-orange-500 text-white py-3 rounded-xl hover:bg-orange-600">
+            Proceed to Checkout
+          </button>
         </div>
-        <div className="flex justify-between mb-4">
-          <span>Delivery</span>
-          <span>₦500</span>
-        </div>
-        <hr className="my-2" />
-        <div className="flex justify-between text-lg font-semibold">
-          <span>Total</span>
-          <span>₦{getTotal() + 500}</span>
-        </div>
-        <button className="mt-6 w-full bg-orange-500 text-white py-3 rounded-xl hover:bg-orange-600">
-          Proceed to Checkout
-        </button>
-      </div>
+      )}
     </div>
   );
 }

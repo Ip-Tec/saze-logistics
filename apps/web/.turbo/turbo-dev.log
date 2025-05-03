@@ -337,3 +337,227 @@ See https://react.dev/link/invalid-hook-call for tips about how to debug and fix
   }
 }
  GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 29532ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 405 in 3526ms
+ ✓ Compiled in 1907ms
+ ✓ Compiled in 316ms
+ ✓ Compiled in 766ms
+ ✓ Compiled in 446ms
+ ✓ Compiled in 9.4s
+ ✓ Compiled in 513ms
+ ✓ Compiled in 562ms
+ ✓ Compiled in 684ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 3710ms
+ POST /api/cart-item 200 in 3031ms
+ ○ Compiling /user/cart ...
+ ✓ Compiled /user/cart in 97.5s
+ GET /user/cart 200 in 99155ms
+ GET /user/cart 200 in 71965ms
+ ✓ Compiled in 7.3s
+ GET /user/cart 200 in 9161ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 11389ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 405 in 7383ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 22155ms
+{
+  data: {
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    name: 'Ethan Cross',
+    description: 'Quae ullam sed lorem',
+    price: 379,
+    is_available: true,
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 42790ms
+{
+  data: {
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    name: 'Ethan Cross',
+    description: 'Quae ullam sed lorem',
+    price: 379,
+    is_available: true,
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 25925ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+{ food: null }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 16545ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 10322ms
+{ data: null }
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 500 in 12043ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 405 in 7185ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+{ food: null }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 25451ms
+{ data: null }
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 500 in 25296ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 23888ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 405 in 8429ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+{ food: null }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 7375ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 18137ms
+{ data: null }
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 500 in 18875ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 405 in 6573ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+{ food: null }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 7351ms
+{ data: null }
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 500 in 8043ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 9902ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 405 in 1581ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+{ food: null }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 7416ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 22657ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 23421ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 405 in 6690ms
+ ✓ Compiled in 21.8s
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+{ food: null }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 43819ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 11582ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 13580ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 405 in 2120ms
+ ✓ Compiled in 65s
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 10604ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 3043ms
+ ✓ Compiled in 8.3s
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 3641ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 6781ms
+ POST /api/cart-item 200 in 3978ms
+ GET /user/cart 200 in 12384ms
+ ✓ Compiled in 1780ms
+ DELETE /api/cart-item 200 in 3458ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 2313ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 1646ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 8801ms
+ POST /api/cart-item 200 in 8992ms
+ GET /user/cart 200 in 6862ms
+ ✓ Compiled in 18.7s
+ DELETE /api/cart-item 200 in 16429ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 17024ms
+{
+  data: {
+    category_id: '5c261193-ab66-4b07-839c-1e9ad89615fb',
+    created_at: '2025-04-28T20:44:41.741+00:00',
+    description: 'Quae ullam sed lorem',
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    is_available: true,
+    name: 'Ethan Cross',
+    price: 379,
+    vendor_id: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4',
+    menu_item_image: [ [Object] ]
+  }

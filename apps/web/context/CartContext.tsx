@@ -1,8 +1,9 @@
 // apps/web/context/CartContext.tsx
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { CartItem as CartItemType } from "@shared/types";
 import { supabase } from "@shared/supabaseClient";
+import { CartItem as CartItemType } from "@shared/types";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface CartContextProps {
   cart: CartItemType[];

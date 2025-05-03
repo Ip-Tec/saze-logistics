@@ -16,7 +16,9 @@ export async function GET(request: NextRequest) {
 
   const { data, error } = await supabase
     .from("menu_item")
-    .select("id, name, description, price, menu_item_image(image_url)")
+    .select(
+      "category_id, created_at, description, id, is_available, name, price, vendor_id, menu_item_image(image_url)"
+    )
     .eq("id", id)
     .maybeSingle();
   console.log({ data });
@@ -28,10 +30,14 @@ export async function GET(request: NextRequest) {
   const image_url = data?.menu_item_image?.[0]?.image_url ?? null;
 
   return NextResponse.json({
-    id: data?.id || null,
-    name: data?.name,
-    description: data?.description,
-    price: data?.price,
     image_url,
+    name: data?.name,
+    price: data?.price,
+    id: data?.id || null,
+    vendor_id: data?.vendor_id,
+    created_at: data?.created_at,
+    description: data?.description,
+    category_id: data?.category_id,
+    is_available: data?.is_available,
   });
 }

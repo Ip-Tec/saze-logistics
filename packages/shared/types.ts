@@ -275,7 +275,7 @@ export type UpdateMenuItemFormPayload = {
     description: string | null;
     price: number;
     category_id: string | null;
-    // is_available might also be editable later
+    is_available?: boolean;
 };
 
 // Define the payload type that the FORM SENDS to addCategory
