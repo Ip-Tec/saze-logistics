@@ -1,3 +1,4 @@
+// apps/web/context/CartContext.tsx
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { CartItem as CartItemType } from "@shared/types";
@@ -24,19 +25,26 @@ export const useCart = () => {
   return ctx;
 };
 
-export const CartProvider: React.FC<{ children: React.ReactNode }> = async ({
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [cart, setCart] = useState<CartItemType[]>([]);
+  const [cart, setCart]       = useState<CartItemType[]>([]);
   const [loading, setLoading] = useState(true);
-  const { data } = await supabase.auth.getSession();
+  const [userId, setUserId]   = useState<string | null>(null);
 
-  // On mount: fetch or create the user’s cart items from server
+  // 1) Load session once on mount
   useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setUserId(data.session?.user.id ?? null);
+    });
+  }, []);
+
+  // 2) When userId becomes available, fetch/create cart
+  useEffect(() => {
+    if (!userId) return;
     (async () => {
       try {
-        // 1) get or create cart
-        const userId = data.session?.user.id;
+        // get or create cart
         let carts = await fetch(`/api/cart?userId=${userId}`).then((r) =>
           r.json()
         );
@@ -49,7 +57,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = async ({
           cartId = newCartId;
         }
 
-        // 2) fetch cart items
+        // fetch items
         const items = await fetch(`/api/cart-item?cartId=${cartId}`).then((r) =>
           r.json()
         );
@@ -60,25 +68,26 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = async ({
         setLoading(false);
       }
     })();
-  }, []);
+  }, [userId]);
 
-  const addToCart = async (item: Omit<CartItemType, "quantity">, qty = 1) => {
-    // Optimistically update local state
+  const addToCart = async (
+    item: Omit<CartItemType, "quantity">,
+    qty = 1
+  ) => {
+    // optimistic UI
     setCart((prev) => {
       const exists = prev.find((ci) => ci.id === item.id);
       if (exists) {
         return prev.map((ci) =>
           ci.id === item.id ? { ...ci, quantity: ci.quantity + qty } : ci
         );
-      } else {
-        return [...prev, { ...item, quantity: qty }];
       }
+      return [...prev, { ...item, quantity: qty }];
     });
 
-    // Persist server‑side
+    if (!userId) return;
     try {
-      // ensure cart exists
-      const userId = data.session?.user.id;
+      // same get-or-create logic
       let carts = await fetch(`/api/cart?userId=${userId}`).then((r) =>
         r.json()
       );
@@ -90,8 +99,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = async ({
         }).then((r) => r.json());
         cartId = newCartId;
       }
-
-      // add to cart-item
+      // persist
       await fetch("/api/cart-item", {
         method: "POST",
         body: JSON.stringify({
@@ -102,7 +110,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = async ({
       });
     } catch (e) {
       console.error("Failed to persist addToCart:", e);
-      // Optionally roll back local state here
     }
   };
 
@@ -110,7 +117,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = async ({
     setCart((prev) =>
       prev.map((ci) => (ci.id === cartItemId ? { ...ci, quantity } : ci))
     );
-
     try {
       await fetch("/api/cart-item", {
         method: "PUT",
@@ -123,7 +129,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = async ({
 
   const removeFromCart = async (cartItemId: string) => {
     setCart((prev) => prev.filter((ci) => ci.id !== cartItemId));
-
     try {
       await fetch("/api/cart-item", {
         method: "DELETE",
@@ -136,7 +141,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = async ({
 
   const clearCart = async () => {
     setCart([]);
-    // Optionally call a DELETE /api/cart to wipe server cart
+    // Optionally: delete entire cart server-side
   };
 
   const getTotal = () =>

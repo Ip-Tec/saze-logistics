@@ -169,3 +169,171 @@ Fetched vendors: {
  GET /api/menu-item?id=c9c602ef-8398-47cf-ba5e-b73f86d3964a 500 in 2903ms
  GET /user 200 in 2766ms
  GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 2250ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 2263ms
+ GET /user/food/c9c602ef-8398-47cf-ba5e-b73f86d3964a 200 in 12046ms
+ GET /api/menu-item?id=c9c602ef-8398-47cf-ba5e-b73f86d3964a 500 in 15673ms
+ ✓ Compiled in 1176ms
+ GET /user/food/c9c602ef-8398-47cf-ba5e-b73f86d3964a 200 in 4697ms
+ GET /api/menu-item?id=c9c602ef-8398-47cf-ba5e-b73f86d3964a 200 in 3810ms
+ ✓ Compiled in 932ms
+ GET /user/food/c9c602ef-8398-47cf-ba5e-b73f86d3964a 200 in 4327ms
+ GET /api/menu-item?id=c9c602ef-8398-47cf-ba5e-b73f86d3964a 200 in 3386ms
+ GET /user/food/c9c602ef-8398-47cf-ba5e-b73f86d3964a 200 in 2859ms
+{ data: null }
+ GET /api/menu-item?id=c9c602ef-8398-47cf-ba5e-b73f86d3964a 200 in 3649ms
+ ✓ Compiled in 1243ms
+ ○ Compiling /user/food/[id] ...
+ ✓ Compiled /user/food/[id] in 2.1s
+{ foodId: { id: 'c9c602ef-8398-47cf-ba5e-b73f86d3964a' } }
+ GET /user/food/c9c602ef-8398-47cf-ba5e-b73f86d3964a 200 in 3716ms
+{ vendorBlocks: [] }
+ GET /user 200 in 4252ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 4623ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3039ms
+ ✓ Compiled in 917ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 7783ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 56190ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3722ms
+ ✓ Compiled in 929ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 4404ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3852ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 2889ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3429ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3810ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 11851ms
+{ foodId: { id: '11fa31f2-006f-4185-8cb2-5bbe01956202' } }
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 5772ms
+ GET /user/food/11fa31f2-006f-4185-8cb2-5bbe01956202 200 in 5610ms
+{ data: null }
+ GET /api/menu-item?id=11fa31f2-006f-4185-8cb2-5bbe01956202 200 in 5333ms
+{ vendorBlocks: [] }
+ GET /user 200 in 5397ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 18383ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 10624ms
+{ data: null }
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 14999ms
+{ data: null }
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 11856ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 13522ms
+{
+  data: {
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    name: 'Ethan Cross',
+    description: 'Quae ullam sed lorem',
+    price: 379,
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 20428ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 404 in 8228ms
+ ✓ Compiled in 2.1s
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 3665ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 2177ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 10941ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 8314ms
+ ✓ Compiled in 2.4s
+ ✓ Compiled in 6.8s
+ ○ Compiling /user/food/[id] ...
+ ✓ Compiled /user/food/[id] in 1916ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 3753ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+ ⨯ TypeError: Cannot read properties of null (reading 'useEffect')
+    at CartProvider (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/context/CartContext.tsx:35:12)
+  33 |
+  34 |   // On mount: fetch or create the user’s cart items from server
+> 35 |   useEffect(() => {
+     |            ^
+  36 |     (async () => {
+  37 |       try {
+  38 |         // 1) get or create cart {
+  digest: '1131677302'
+}
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 500 in 6202ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ ✓ Compiled in 1793ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+ ⨯ TypeError: Cannot read properties of null (reading 'useEffect')
+    at CartProvider (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/context/CartContext.tsx:35:12)
+  33 |
+  34 |   // On mount: fetch or create the user’s cart items from server
+> 35 |   useEffect(() => {
+     |            ^
+  36 |     (async () => {
+  37 |       try {
+  38 |         // 1) get or create cart {
+  digest: '1131677302'
+}
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 500 in 4341ms
+ ✓ Compiled in 1141ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+ ⨯ TypeError: Cannot read properties of null (reading 'useEffect')
+    at CartProvider (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/context/CartContext.tsx:35:12)
+  33 |
+  34 |   // On mount: fetch or create the user’s cart items from server
+> 35 |   useEffect(() => {
+     |            ^
+  36 |     (async () => {
+  37 |       try {
+  38 |         // 1) get or create cart {
+  digest: '1131677302'
+}
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 500 in 15820ms
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 26371ms
+ ○ Compiling /api/cart ...
+{
+  data: {
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    name: 'Ethan Cross',
+    description: 'Quae ullam sed lorem',
+    price: 379,
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 45372ms
+ ✓ Compiled /api/cart in 1763.4s
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 1792348ms
+ POST /api/cart 200 in 7692ms
+ ○ Compiling /api/cart-item ...
+ ✓ Compiled /api/cart-item in 33.7s
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 405 in 59910ms
+ ✓ Compiled in 21.6s
+ ✓ Compiled in 8s
+{ foodId: { id: '6ad4aff7-957e-4cba-a707-85c7e740512d' } }
+ GET /user/food/6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 97737ms
+ ✓ Compiled in 114ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 28265ms
+{
+  data: {
+    id: '6ad4aff7-957e-4cba-a707-85c7e740512d',
+    name: 'Ethan Cross',
+    description: 'Quae ullam sed lorem',
+    price: 379,
+    menu_item_image: [ [Object] ]
+  }
+}
+ GET /api/menu-item?id=6ad4aff7-957e-4cba-a707-85c7e740512d 200 in 29532ms
