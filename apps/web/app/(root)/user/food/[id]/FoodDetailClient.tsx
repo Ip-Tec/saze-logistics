@@ -13,7 +13,6 @@ import Image from "next/image";
 
 interface FoodDetail extends MenuItem {
   image_url: string | null;
-  quantity?: number;
 }
 
 export default function FoodDetailClient({ id }: { id: string }) {
