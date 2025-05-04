@@ -53,7 +53,7 @@ export default function FoodDetailsClient({
 
     if (!existingItem) {
       // If item is not in the cart, add it with quantity 1
-      addToCart({ ...itemToCart, quantity: 1 });
+      addToCart({ ...itemToCart }, 1);
       setQuantity(1); // Update local state
     } else {
       // If item is in the cart, increase its quantity
