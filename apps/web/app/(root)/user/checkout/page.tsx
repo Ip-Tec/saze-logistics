@@ -1,4 +1,4 @@
-// apps/web/app/(root)/user/checkout/page.tsx
+// app/(root)/user/checkout/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -7,6 +7,7 @@ import GlassDiv from "@/components/ui/GlassDiv";
 import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import PaystackInline from "@paystack/inline-js";
 
 export default function CheckoutPage() {
   const { cart, getTotal, clearCart } = useCart();
@@ -14,52 +15,79 @@ export default function CheckoutPage() {
   const router = useRouter();
 
   const [address, setAddress] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  // redirect if no items
   useEffect(() => {
     if (cart.length === 0) router.push("/user/cart");
-  }, [cart]);
-
-  const total = getTotal() + 500; // ₦500 delivery
-  const payWithPaystack = () => {
-    if (!address.trim()) {
-      toast.error("Please enter delivery address");
-      return;
-    }
-    const handler = (window as any).PaystackPop.setup({
-      key: process.env.NEXT_PUBLIC_PAYSTACK_PK,
-      email: user?.email,
-      amount: total * 100, // in kobo
-      metadata: {
-        custom_fields: [{ display_name: "Address", value: address }],
-      },
-      callback: function (response: any) {
-        toast.success("Payment successful!");
-        clearCart();
-        router.push("/user/thank-you");
-      },
-      onClose: function () {
-        toast.info("Payment window closed.");
-      },
-    });
-    handler.openIframe();
-  };
-  const handleSuccess = (ref: any) => {
-    // e.g. call your API to record payment, then:
-    clearCart();
-    router.push("/user/thank-you");
-  };
-
-  const handleClose = () => {
-    // closed without payment
-    setError("Payment not completed. Please try again.");
-  };
+  }, [cart, router]);
 
   if (!user) {
     router.push("/auth/login");
     return null;
   }
+
+  const total = getTotal() + 500; // ₦500 delivery
+
+  const payWithPaystack = () => {
+    if (!address.trim()) {
+      toast.error("Please enter delivery address");
+      return;
+    }
+    setLoading(true);
+
+    const paystack = new PaystackInline();
+
+    paystack.newTransaction({
+      key: process.env.NEXT_PUBLIC_PAYSTACK_PK!,
+      email: user.email!,
+      amount: total * 100, // in kobo
+      metadata: {
+        custom_fields: [
+          {
+            display_name: "Delivery address",
+            variable_name: "address",
+            value: address,
+          },
+        ],
+      },
+
+      // success callback
+      onSuccess: async (tranx) => {
+        toast.success("Payment successful! Verifying…");
+        try {
+          const res = await fetch("/api/paystack/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ reference: tranx.reference, cart, address }),
+          });
+          const json = await res.json();
+          if (res.ok) {
+            toast.success("Order placed!");
+            clearCart();
+            router.push("/user/thank-you");
+          } else {
+            toast.error(json.error || "Verification failed");
+          }
+        } catch {
+          toast.error("Server error");
+        } finally {
+          setLoading(false);
+        }
+      },
+
+      // user closed iframe
+      onCancel: () => {
+        toast.info("Payment window closed.");
+        setLoading(false);
+      },
+
+      // error during setup
+      onError: (err) => {
+        toast.error("Payment setup failed: " + err.message);
+        setLoading(false);
+      },
+    });
+  };
 
   return (
     <div className="p-4 max-w-lg mx-auto space-y-6">
@@ -98,20 +126,15 @@ export default function CheckoutPage() {
         </ul>
       </GlassDiv>
 
-      {error && <p className="text-red-500 text-center">{error}</p>}
-
       <button
         onClick={payWithPaystack}
-        className="w-full bg-orange-500 text-white py-3 rounded-xl"
+        disabled={loading}
+        className={`w-full py-3 rounded-xl text-white ${
+          loading ? "bg-gray-400" : "bg-orange-500 hover:bg-orange-600"
+        }`}
       >
-        Pay with Paystack
+        {loading ? "Processing…" : "Pay with Paystack"}
       </button>
-
-      {!address.trim() && (
-        <p className="text-red-500 text-center">
-          Please enter a delivery address to proceed.
-        </p>
-      )}
     </div>
   );
 }

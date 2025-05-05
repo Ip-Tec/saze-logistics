@@ -26,6 +26,7 @@ export default function RiderSettingsPage() {
 
   // State for profile fields, typed appropriately
   const [name, setName] = useState("");
+  const [nin, setNin] = useState('');
   const [vehicleType, setVehicleType] = useState<
     RiderProfile["vehicleType"] | ""
   >(""); // Use union type or empty string
@@ -81,6 +82,7 @@ export default function RiderSettingsPage() {
 
             // Store initial data for cancel functionality
             setInitialProfileData({
+              nin: profile.nin || "",
               name: profile.name || "",
               vehicleType: profile.vehicleType || "",
               licensePlate: profile.licensePlate || "",
@@ -103,7 +105,7 @@ export default function RiderSettingsPage() {
               `User with role ${profile.role} accessed Rider Settings page.`
             );
             toast.error("You do not have permission to view this page.");
-            // Optional: Redirect non-riders, e.g., 
+            // Optional: Redirect non-riders, e.g.,
             router.push(profile.role);
           } else {
             // Handle case where getUserProfile returned null (e.g., session expired during fetch)
@@ -214,6 +216,7 @@ export default function RiderSettingsPage() {
     // Use Partial<RiderProfile> as not all fields might be updated
     const profileDataToUpdate: Partial<RiderProfile> = {
       name,
+      nin,
       // Cast vehicleType state to the union type for the API
       vehicleType: vehicleType as RiderProfile["vehicleType"],
       licensePlate,
@@ -293,6 +296,7 @@ export default function RiderSettingsPage() {
     setContact(initialProfileData.phone || "");
     setAltContact(initialProfileData.second_phone || "");
     setEmail(initialProfileData.email || ""); // Email is likely read-only anyway
+    setNin(initialProfileData.nin || '');
 
     // Revert image previews to initial URLs
     setRiderImageURL(initialProfileData.rider_image_url || null);
@@ -365,6 +369,13 @@ export default function RiderSettingsPage() {
                 value={name}
                 onChange={setName}
                 disabled={isSaveDisabled} // Disable while saving/uploading
+                inputClass="!text-black"
+              />
+              <Input
+                label="National ID Number"
+                value={nin}
+                onChange={setNin}
+                disabled={isSaveDisabled}
                 inputClass="!text-black"
               />
               {/* Use a select input for vehicle type to enforce union type */}
@@ -533,6 +544,7 @@ export default function RiderSettingsPage() {
                 { label: "Phone / Contact", value: contact },
                 { label: "Alternate Contact", value: altContact },
                 { label: "Email Address", value: email },
+                { label: "NIN", value: initialProfileData.nin ?? "———" }
               ]}
             />
           )}

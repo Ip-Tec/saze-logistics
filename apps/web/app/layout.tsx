@@ -6,6 +6,7 @@ import Providers from "@/context/ContextProviders";
 import Logo from "@/public/favicon.ico";
 import LogoApple from "@/public/apple-touch-icon.png";
 import LogoAndroid from "@/public/android-chrome-512x512.png";
+import { NotificationProvider } from "@/context/NotificationContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
     shortcut: LogoAndroid.src, // Example for .ico
     apple: LogoApple.src,
     other: {
-      rel: 'apple-touch-icon-precomposed',
+      rel: "apple-touch-icon-precomposed",
       url: LogoApple.src,
     },
   },
@@ -41,11 +42,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* <script src="https://js.paystack.co/v2/inline.js"></script> */}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-        {children}
+          <NotificationProvider>{children}</NotificationProvider>
         </Providers>
       </body>
     </html>

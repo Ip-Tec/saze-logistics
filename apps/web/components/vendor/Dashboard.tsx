@@ -77,6 +77,7 @@ export default function VendorDashboard() {
   // --- Data Fetching ---
 
   const fetchData = useCallback(async () => {
+    console.log({ user });
     if (!user?.id) {
       // Ensure user is logged in
       setError("Vendor not logged in.");

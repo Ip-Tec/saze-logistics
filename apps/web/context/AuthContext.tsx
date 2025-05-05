@@ -354,7 +354,7 @@ useEffect(() => {
         resendConfirmationEmail,
       }}
     >
-    {children}   {" "}
+    {children}
     </AuthContext.Provider>
   );
 };

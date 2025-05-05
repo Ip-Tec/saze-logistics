@@ -101,6 +101,7 @@ export interface Rider extends BaseUser {
 }
 
 export interface RiderProfile extends Rider {
+  nin?: string;
   name: string;
   phone: string;
   second_phone?: string;

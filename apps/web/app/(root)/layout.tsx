@@ -2,6 +2,7 @@
 
 import React from "react";
 import { CartProvider } from "@/context/CartContext";
+import { NotificationProvider } from "@/context/NotificationContext";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ interface RootLayoutProps {
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <CartProvider>
-      <div>{children}</div>
+      <NotificationProvider>{children}</NotificationProvider>
     </CartProvider>
   );
 };

@@ -637,6 +637,7 @@ export type Database = {
           second_phone: string | null
           vehicle_image_url: string | null
           vehicleType: string | null
+          nin: string | null
         }
         Insert: {
           address?: string | null
