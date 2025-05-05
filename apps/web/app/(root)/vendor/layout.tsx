@@ -33,7 +33,7 @@ export default function VendorLayout({
       <VendorProvider>
          <ToastContainer position="top-right" autoClose={3000} />
         <GlassComponent className="!w-full !min-h-screen ">
-          <div className="items-center justify-center w-full h-auto sm:min-h-screen p-0 m-0">
+          <div className="flex items-center justify-center w-full h-auto sm:min-h-screen p-0 m-0">
             <VendorSidebar />
             {children}
           </div>
