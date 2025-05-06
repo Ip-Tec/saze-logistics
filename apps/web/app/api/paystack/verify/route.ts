@@ -45,12 +45,12 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const userId = paystackJson.data.customer.id; // or attach via metadata
+  const userId = paystackJson.data.customer.id; // customer UUID
 
   // 2) Insert into `order`
   const { data: order, error: orderErr } = await supabase
     .from("order")
-    .insert({
+    .insert<Database["public"]["Tables"]["order"]["Insert"]>({
       user_id: userId,
       vendor_id: null,
       rider_id: null,
@@ -72,12 +72,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Could not create order" }, { status: 500 });
   }
 
+  // ----> Capture the new order ID
+  const orderId = order.id;
+
   // 3) Insert order items
   const orderItems = body.cart.map((ci) => ({
-    order_id: order.id,
+    order_id: orderId,
     menu_item_id: ci.menu_item_id,
-    quantity: ci.quantity,
     price: ci.price,
+    quantity: ci.quantity,
   }));
   const { error: itemsErr } = await supabase
     .from("order_item")
@@ -88,42 +91,50 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Could not create order items" }, { status: 500 });
   }
 
-   // 4a) Push a row into `notification` for the vendor
-  //    Here we assume you know the `vendor_id` for this order.
-  const vendorId = "…"; 
-  await supabase.from("notification").insert({
-    user_id: vendorId,
-    title: "New order received",
-    body: `Order ${orderId} has been placed.`,
-    read: false,
-    metadata: { orderId },
-  });
-
-  // 4b) Push a row for the assigned rider (if any)
-  const riderId = "…"; 
-  if (riderId) {
-    await supabase.from("notification").insert({
-      user_id: riderId,
-      title: "New delivery assigned",
-      body: `You have a new delivery: order ${orderId}.`,
+  // 4a) Push a row into `notification` for the vendor
+  //    Replace `vendorId` with your real logic (e.g. from order.metadata or from the items)
+  const vendorId = /* fetch or derive vendor UUID here */ "";
+  await supabase
+    .from("notification")
+    .insert<Database["public"]["Tables"]["notification"]["Insert"]>({
+      user_id: vendorId,
+      title: "New order received",
+      body: `Order ${orderId} has been placed.`,
       read: false,
       metadata: { orderId },
+      created_at: new Date().toISOString(),
     });
-  }
 
-  // Clients can subscribe to real‑time `notification` events:
-  //
-  supabase
-    .channel('notifications')
-    .on('postgres_changes', {
-      event: 'INSERT',
-      schema: 'public',
-      table: 'notification',
-      filter: `user_id=eq.${currentUser.id}`
-    }, payload => {
-      // show in-app toast or badge
-    })
-    .subscribe();
+  // 4b) Push a row for the assigned rider (if any)
+  const riderId = /* maybe null or a rider UUID */ "";
+  if (riderId) {
+    await supabase
+      .from("notification")
+      .insert<Database["public"]["Tables"]["notification"]["Insert"]>({
+        user_id: riderId,
+        title: "New delivery assigned",
+        body: `You have a new delivery: order ${orderId}.`,
+        read: false,
+        metadata: { orderId },
+        created_at: new Date().toISOString(),
+      });
+  }
 
   return NextResponse.json({ success: true, orderId });
 }
+
+  // Clients can subscribe to real‑time `notification` events:
+  //
+  // supabase
+  //   .channel('notifications')
+  //   .on('postgres_changes', {
+  //     event: 'INSERT',
+  //     schema: 'public',
+  //     table: 'notification',
+  //     filter: `user_id=eq.${currentUser.id}`
+  //   }, payload => {
+  //     // show in-app toast or badge
+  //   })
+  //   .subscribe();
+
+  

@@ -1,9 +1,9 @@
 {
-  "name": "saze-logistics",
+  "name": "saze-logistics-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "cross-env NODE_OPTIONS=--max-old-space-size=4096 next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

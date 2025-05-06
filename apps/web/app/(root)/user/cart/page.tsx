@@ -5,16 +5,17 @@ import { useCart } from "@/context/CartContext";
 import GlassDiv from "@/components/ui/GlassDiv";
 import DefaultImage from "@/public/images/logo.png";
 import GlassButton from "@/components/ui/GlassButton";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, getTotal } = useCart();
-
+  const router = useRouter();
   console.log({ cart });
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 w-full h-auto mt-16md:my-36 overflow-scroll glass-scrollbar">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 w-full items-stretch justify-center h-[calc(100vh-5rem)] overflow-y-scroll">
       {/* Cart Items */}
-      <div className="col-span-2 flex flex-col gap-4">
+      <div className="glass-scrollbar w-full overflow-y-scroll md:col-span-2 flex flex-col gap-4">
         <h2 className="text-xl font-bold text-center">Your Cart</h2>
         {cart.length === 0 ? (
           <GlassDiv>
@@ -24,7 +25,7 @@ export default function CartPage() {
           cart.map((item) => (
             <div
               key={item.id}
-              className="flex gap-4 bg-white rounded-xl shadow p-4 items-center"
+              className="flex w-full h-auto gap-4 bg-white rounded-xl shadow p-4 items-center"
             >
               <Image
                 src={item.image || DefaultImage.src}
@@ -88,7 +89,10 @@ export default function CartPage() {
             <span>Total</span>
             <span>₦{getTotal() + 500}</span>
           </div>
-          <button className="mt-6 w-full bg-orange-500 text-white py-3 rounded-xl hover:bg-orange-600">
+          <button
+            onClick={() => router.push("/user/checkout")}
+            className="mt-6 w-full cursor-pointer bg-orange-500 text-white py-3 rounded-xl hover:bg-orange-600"
+          >
             Proceed to Checkout
           </button>
         </div>

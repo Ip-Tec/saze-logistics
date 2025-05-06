@@ -223,7 +223,7 @@ export default function VendorDashboard() {
   }
 
   return (
-    <div className="md:p-6 flex flex-col-reverse md:flex-row items-stretch gap-4 w-full h-full overflow-y-auto glass-scrollbar">
+    <div className="p-6 flex flex-col-reverse md:flex-row items-stretch gap-4 w-full h-full overflow-y-auto glass-scrollbar">
       {/* Changed to a responsive grid */}
       <div className="grid grid-rows-2 gap-4 w-full md:w-[70%] ">
         <div className="grid grid-cols-3 gap-4 h-28">

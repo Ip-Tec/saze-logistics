@@ -1,7 +1,8 @@
 "use client";
 
-import GlassComponent from "@/components/ui/glass";
+import { BellIcon } from "@/components/reuse/BellIcon";
 import UserNavbar from "@/components/user/UserNavbar";
+import GlassComponent from "@/components/ui/glass";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -63,6 +64,7 @@ export default function UserLayout({
       {/* Main Glass Area */}
       <GlassComponent className="!bg-green-600/10 z-10 w-full h-full">
         <UserNavbar />
+        <BellIcon />
         {children}
       </GlassComponent>
     </div>

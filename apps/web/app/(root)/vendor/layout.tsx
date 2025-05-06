@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import GlassComponent from "@/components/ui/glass";
 import VendorSidebar from "@/components/vendor/Sidebar";
 import { VendorProvider } from "@/context/VendorContext";
+import { BellIcon } from "@/components/reuse/BellIcon";
 
 export default function VendorLayout({
   children,
@@ -35,6 +36,7 @@ export default function VendorLayout({
         <GlassComponent className="!w-full !min-h-screen ">
           <div className="flex items-center justify-center w-full h-auto sm:min-h-screen p-0 m-0">
             <VendorSidebar />
+            <BellIcon />
             {children}
           </div>
         </GlassComponent>
