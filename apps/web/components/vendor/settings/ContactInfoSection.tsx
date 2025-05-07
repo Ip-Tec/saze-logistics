@@ -60,7 +60,7 @@ export default function ContactInfoSection({
 
        // Only include phone in the payload as email is read-only
        const payload: UpdateVendorProfilePayload = {
-           phone: contact?.trim() || null,
+           phone: contact?.trim() || undefined,
        };
 
        try {

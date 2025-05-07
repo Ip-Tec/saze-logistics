@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
 import { CameraIcon, Loader2, SaveIcon, X } from "lucide-react";
 import GlassDiv from "@/components/ui/GlassDiv"; // Assuming GlassDiv exists
 import GlassButton from "@/components/ui/GlassButton"; // Assuming GlassButton exists
