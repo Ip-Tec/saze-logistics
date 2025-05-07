@@ -1,4 +1,5 @@
 // apps/web/app/(root)/user/page.tsx
+
 "use client";
 
 import { Loader2 } from "lucide-react";
@@ -12,14 +13,15 @@ import { RestaurantCard } from "@/components/user/RestaurantCard";
 export default function UserHomePage() {
   const { data: vendorBlocks, isLoading, error } = useVendorsWithFood();
   console.log({ vendorBlocks });
-  if (isLoading) {
-    return (
-      <div className="flex m-auto justify-center items-center min-h-screen">
-        <Loader2 size={48} className="animate-spin text-orange-500" />
-        <span className="ml-4 text-lg">Loading data...</span>
-      </div>
-    );
-  }
+  
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex m-auto justify-center items-center min-h-screen">
+  //       <Loader2 size={48} className="animate-spin text-orange-500" />
+  //       <span className="ml-4 text-lg">Loading data...</span>
+  //     </div>
+  //   );
+  // }
 
   if (error) {
     return (

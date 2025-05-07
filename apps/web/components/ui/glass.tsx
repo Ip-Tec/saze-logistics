@@ -9,11 +9,11 @@ function GlassComponent({
 }) {
   return (
     <div
-      className={`w-full h-full sm:w-full sm:min-h-screen md:w-[95vw] md:h-[95vh] md:m-4 mx-auto flex items-center justify-normal overflow-hidden ${className}`}
+      className={`w-full h-full w-full h-auto mx-auto flex items-center justify-center ${className}`}
       style={{
-        background: "rgba(255, 255, 255, 0.2)", // Light transparent white background
-        backdropFilter: "blur(10px)", // Blur the background to create the glass effect
-        borderRadius: "10px", // Optional: Add rounded corners to the glass effect
+        borderRadius: "10px",
+        backdropFilter: "blur(10px)",
+        background: "rgba(255, 255, 255, 0.2)",
       }}
     >
       {children}

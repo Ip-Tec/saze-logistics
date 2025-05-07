@@ -3,8 +3,9 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import Default from "@/public/images/logo.png";
 import GlassDiv from "@/components/ui/GlassDiv";
 
 interface FoodCardProps {
@@ -36,13 +37,13 @@ export const FoodCard: React.FC<FoodCardProps> = ({
           {/* Maintain the card image size */}
           <Image
             src={image}
-            layout="fill"
-            objectFit="cover"
+            fill // Changed from layout="fill"
             alt={name}
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="object-cover"
             onError={(e) => {
               e.currentTarget.onerror = null;
-              e.currentTarget.src = "/path/to/fallback-image.jpg";
+              e.currentTarget.src = Default.src;
             }}
           />
         </div>

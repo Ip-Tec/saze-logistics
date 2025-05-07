@@ -53,22 +53,27 @@ export default function UserNavbar() {
         <div className="md:hidden bg-white shadow-md border-t border-gray-200">
           <ul className="flex flex-col p-4 space-y-4 text-sm font-medium">
             <li>
-              <Link href="user/" onClick={() => setIsOpen(false)}>
+              <Link href="user/" onClick={() => setIsOpen(false)} prefetch>
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/user/orders" onClick={() => setIsOpen(false)}>
+              <Link href="/user/orders" onClick={() => setIsOpen(false)} prefetch>
                 Orders
               </Link>
             </li>
             <li>
-              <Link href="/user/cart" onClick={() => setIsOpen(false)}>
+              <Link href="/user/booking" onClick={() => setIsOpen(false)} prefetch>
+                Booking
+              </Link>
+            </li>
+            <li>
+              <Link href="/user/cart" onClick={() => setIsOpen(false)} prefetch>
                 Cart
               </Link>
             </li>
             <li>
-              <Link href="/user/profile" onClick={() => setIsOpen(false)}>
+              <Link href="/user/profile" onClick={() => setIsOpen(false)} prefetch>
                 Profile
               </Link>
             </li>

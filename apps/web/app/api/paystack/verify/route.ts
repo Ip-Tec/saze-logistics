@@ -19,6 +19,7 @@ interface VerifyBody {
     price: number;
   }>;
   address: string;
+  userId: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -45,15 +46,15 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const userId = paystackJson.data.customer.id; // customer UUID
+  // const userId = body.userId || paystackJson.data.customer.id; // customer UUID
 
   // 2) Insert into `order`
   const { data: order, error: orderErr } = await supabase
     .from("order")
     .insert<Database["public"]["Tables"]["order"]["Insert"]>({
-      user_id: userId,
       vendor_id: null,
       rider_id: null,
+      user_id: body.userId,
       total_amount: paystackJson.data.amount / 100,
       payment_method: "paystack",
       payment_status: "paid",
@@ -137,4 +138,3 @@ export async function POST(req: NextRequest) {
   //   })
   //   .subscribe();
 
-  

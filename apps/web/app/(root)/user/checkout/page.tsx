@@ -103,7 +103,7 @@ export default function CheckoutPage() {
           const res = await fetch("/api/paystack/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ reference: tranx.reference, cart, address }),
+            body: JSON.stringify({ reference: tranx.reference, cart, address,  userId: user!.id }),
           });
 
           const json = await res.json();

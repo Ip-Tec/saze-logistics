@@ -1,0 +1,268 @@
+
+> saze-logistics-web@0.1.0 dev
+> cross-env NODE_OPTIONS=--max-old-space-size=4096 next dev --turbopack
+
+   ▲ Next.js 15.2.4 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.137.1:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+Slow filesystem detected. If C:\Users\Ip\Documents\saze-logistics\apps\web\.next is a network drive, consider moving it to a local folder. If you have an antivirus enabled, consider excluding your project directory.
+ ✓ Ready in 27.4s
+ ○ Compiling /user ...
+ ✓ Compiled /user in 57s
+{ vendorBlocks: [] }
+ GET /user 200 in 65996ms
+ ○ Compiling /api/vendors-with-food ...
+ ✓ Compiled /api/vendors-with-food in 22s
+ ○ Compiling /_not-found/page ...
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 30142ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 30076ms
+ ✓ Compiled /_not-found/page in 26.3s
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 28784ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 26418ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 6835ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3541ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 42684ms
+ ✓ Compiled in 1437ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 16296ms
+ ✓ Compiled in 869ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 15235ms
+ ✓ Compiled in 10.8s
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 13750ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 20447ms
+ ✓ Compiled in 31.5s
+ ⨯ ./apps/web/hooks/useVendorsWithFood.ts:3:1
+Export default doesn't exist in target module
+[0m [90m 1 |[39m [90m// hooks/useVendorsWithFood.ts[39m[0m
+ ○ Compiling /_error ...
+[0m [90m 2 |[39m[0m
+[0m[31m[1m>[22m[39m[90m 3 |[39m [36mimport[39m useSWR [36mfrom[39m [32m"swr"[39m[33m;[39m[0m
+[0m [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 4 |[39m[0m
+[0m [90m 5 |[39m [36mexport[39m [36mfunction[39m useVendorsWithFood(vendorCount [33m=[39m [35m6[39m[33m,[39m foodsPerVendor [33m=[39m [35m6[39m) {[0m
+[0m [90m 6 |[39m   [36mconst[39m {[0m
+
+The export default was not found in module [project]/node_modules/swr/dist/index/react-server.mjs [app-rsc] (ecmascript) <exports>.
+Did you mean to import unstable_serialize?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+ ✓ Compiled /_error in 19.5s
+ GET /user 500 in 44515ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 21651ms
+ ✓ Compiled in 628ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 9.4s
+ ⨯ Error: Attempted to call useVendorsWithFood() from the server but useVendorsWithFood is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.
+    at <unknown> (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/hooks/useVendorsWithFood.ts/proxy.mjs:3:23)
+    at UserHomePage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/user/page.tsx:13:68)
+  1 | import { registerClientReference } from "react-server-dom-turbopack/server.edge";
+  2 | export const useVendorsWithFood = registerClientReference(
+> 3 |     function() { throw new Error("Attempted to call useVendorsWithFood() from the server but useVendorsWithFood is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component."); },
+    |                       ^
+  4 |     "[project]/apps/web/hooks/useVendorsWithFood.ts <module evaluation>",
+  5 |     "useVendorsWithFood",
+  6 | ); {
+  digest: '4092282794'
+}
+ ⨯ Error: Attempted to call useVendorsWithFood() from the server but useVendorsWithFood is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.
+    at <unknown> (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/hooks/useVendorsWithFood.ts/proxy.mjs:3:23)
+    at UserHomePage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/user/page.tsx:13:68)
+  1 | import { registerClientReference } from "react-server-dom-turbopack/server.edge";
+  2 | export const useVendorsWithFood = registerClientReference(
+> 3 |     function() { throw new Error("Attempted to call useVendorsWithFood() from the server but useVendorsWithFood is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component."); },
+    |                       ^
+  4 |     "[project]/apps/web/hooks/useVendorsWithFood.ts <module evaluation>",
+  5 |     "useVendorsWithFood",
+  6 | ); {
+  digest: '4092282794'
+}
+ GET /user 200 in 26831ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 17021ms
+ ✓ Compiled in 3s
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⨯ Error: Attempted to call useVendorsWithFood() from the server but useVendorsWithFood is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.
+    at <unknown> (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/hooks/useVendorsWithFood.ts/proxy.mjs:3:23)
+    at UserHomePage (file://C%3A/Users/Ip/Documents/saze-logistics/apps/web/app/%28root%29/user/page.tsx:13:68)
+  1 | import { registerClientReference } from "react-server-dom-turbopack/server.edge";
+  2 | export const useVendorsWithFood = registerClientReference(
+> 3 |     function() { throw new Error("Attempted to call useVendorsWithFood() from the server but useVendorsWithFood is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component."); },
+    |                       ^
+  4 |     "[project]/apps/web/hooks/useVendorsWithFood.ts <module evaluation>",
+  5 |     "useVendorsWithFood",
+  6 | ); {
+  digest: '4092282794'
+}
+ GET /user 200 in 13930ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 19467ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 664ms
+ ⨯ ./apps/web/hooks/useVendorsWithFood.ts:3:1
+Export default doesn't exist in target module
+[0m [90m 1 |[39m [90m// hooks/useVendorsWithFood.ts[39m[0m
+[0m [90m 2 |[39m[0m
+[0m[31m[1m>[22m[39m[90m 3 |[39m [36mimport[39m useSWR [36mfrom[39m [32m"swr"[39m[33m;[39m[0m
+[0m [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 4 |[39m[0m
+[0m [90m 5 |[39m [36mexport[39m [36mfunction[39m useVendorsWithFood(vendorCount [33m=[39m [35m6[39m[33m,[39m foodsPerVendor [33m=[39m [35m6[39m) {[0m
+[0m [90m 6 |[39m   [36mconst[39m {[0m
+
+The export default was not found in module [project]/node_modules/swr/dist/index/react-server.mjs [app-rsc] (ecmascript) <exports>.
+Did you mean to import unstable_serialize?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+ GET /user 500 in 12695ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 18537ms
+ ○ Compiling /user ...
+ ✓ Compiled in 4.4s
+ ✓ Compiled /user in 9.1s
+{ vendorBlocks: [] }
+ GET /user 200 in 16916ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 31977ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 31543ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 32938ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 13376ms
+ ✓ Compiled in 595ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 2946ms
+ ✓ Compiled in 580ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 20380ms
+{ vendorBlocks: [] }
+ GET /user 200 in 19995ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 30628ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 30557ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 31098ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 11665ms
+ ✓ Compiled in 834ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 3035ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 4899ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 15021ms
+ ✓ Compiled in 764ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 14359ms
+{ vendorBlocks: [] }
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 7503ms
+ GET /user 200 in 7801ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 4177ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 4049ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 3739ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 1983ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 14825ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 13226ms
+ ○ Compiling /vendor ...
+ ✓ Compiled /vendor in 27.3s
+ GET /vendor 200 in 34400ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 24667ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 21467ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 12015ms
+ ✓ Compiled in 110.1s
+ ⨯ ./apps/web/app/(root)/vendor/page.tsx:2:17
+Ecmascript file had an error
+[0m [90m 1 |[39m[0m
+[0m[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m [33mReact[39m[33m,[39m { useState } [36mfrom[39m [32m"react"[39m[33m;[39m[0m
+[0m [90m   |[39m                 [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 3 |[39m [36mimport[39m [33mDashboard[39m [36mfrom[39m [32m"@/components/vendor/Dashboard"[39m[33m;[39m[0m
+[0m [90m 4 |[39m[0m
+[0m [90m 5 |[39m[0m
+
+You're importing a component that needs `useState`. This React hook only works in a client component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+
+
+
+ GET /vendor 500 in 7019ms
+ ✓ Compiled in 4.1s
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2856ms
+ ✓ Compiled in 853ms
+ ○ Compiling /vendor ...
+ ✓ Compiled /vendor in 8.4s
+ GET /vendor 200 in 16378ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 35065ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 34346ms
+ ✓ Compiled in 13.6s
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 14734ms
+ ✓ Compiled in 1096.5s
+ ✓ Compiled in 97.9s
+ GET /vendor 200 in 20364ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 10708ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 7868ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 3923ms
+ ✓ Compiled in 522.5s
+ ✓ Compiled in 607.3s
+ GET /vendor 200 in 261485ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 63352ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 500 in 110910ms
+ POST /api/cart 200 in 64805ms
+ GET /api/cart-item?cartId=8cbfdc0d-d9d1-4403-8901-766fe9d667f4 200 in 22568ms
+ ✓ Compiled in 172s
+ GET /vendor 200 in 52999ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 13826ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 10011ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 4698ms
+ ✓ Compiled in 34.3s
+ ⨯ ./apps/web/app/(root)/vendor/layout.tsx:46:14
+Ecmascript file had an error
+[0m [90m 44 |[39m }[0m
+[0m [90m 45 |[39m[0m
+[0m[31m[1m>[22m[39m[90m 46 |[39m [36mexport[39m [36mconst[39m metadata [33m=[39m {[0m
+[0m [90m    |[39m              [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 47 |[39m   title[33m:[39m [32m"Vendor Dashboard"[39m[33m,[39m[0m
+[0m [90m 48 |[39m   description[33m:[39m [32m"Vendor Dashboard"[39m[33m,[39m[0m
+[0m [90m 49 |[39m }[33m;[39m[0m
+
+You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+
+
+
+ ✓ Compiled in 348.3s
+ GET /vendor 500 in 8101ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 7770ms
+ ✓ Compiled in 1022ms
+ ○ Compiling /vendor ...
+ ✓ Compiled /vendor in 7s
+ GET /vendor 200 in 8994ms
+ GET /vendor 200 in 19575ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 26997ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 24632ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 15857ms
+ ✓ Compiled in 34.1s
+ GET /vendor 200 in 21780ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 23912ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 24420ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 15310ms
+ ○ Compiling /vendor ...
+ ✓ Compiled in 457.5s
+ ✓ Compiled /vendor in 3.2s
+ GET /vendor 200 in 10462ms
+ GET /vendor 200 in 12974ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2312426ms
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled in 342.5s
+ GET /vendor 200 in 90019ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 29554ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 24344ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 16319ms
+ ○ Compiling /vendor ...
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled in 119.6s
+ ✓ Compiled /vendor in 27.7s
+ GET /vendor 200 in 58424ms
+ GET /vendor 200 in 41458ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 22266ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 20992ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 17201ms
+ ○ Compiling /vendor ...
+ ✓ Compiled in 692.6s
+ ✓ Compiled /vendor in 1608ms
+ GET /vendor 200 in 8753ms
+ ○ Compiling /vendor ...
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled in 114.7s
+ ✓ Compiled /vendor in 16.5s
+ ⚠ Server is approaching the used memory threshold, restarting...
+   ▲ Next.js 15.2.4 (Turbopack)
