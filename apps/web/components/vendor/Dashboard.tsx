@@ -14,7 +14,7 @@ export default function VendorDashboard() {
 
   // Handle initial user loading state
   console.log("isUserLoading", { isUserLoading });
-  if (!isUserLoading) {
+  if (isUserLoading) {
     return (
       <div className="flex w-full justify-center items-center h-screen">
         <Loader2 size={32} className="animate-spin text-orange-500" />
@@ -35,11 +35,11 @@ export default function VendorDashboard() {
       </div>
     );
   }
-
+console.log({ user });
   const vendorId = user.id;
 
   return (
-    <div className="p-6 space-y-6 w-full h-full overflow-y-auto glass-scrollbar">
+    <div className="p-6 space-y-6 w-full h-full">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-gray-200 pb-4">
         <h1 className="text-2xl font-bold text-gray-400">Vendor Dashboard</h1>
@@ -62,10 +62,10 @@ export default function VendorDashboard() {
       <MetricsRow vendorId={vendorId} />
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         {/* Use 3 columns for md+ */}
         {/* Left Column (Span 2 columns on md+) */}
-        <div className="md:col-span-2 space-y-6">
+        <div className="md:col-span-1 space-y-6">
           <OrderManagement vendorId={vendorId} />
           {/* Place Active Menu Items Summary here */}
           <ActiveMenuItemsSummary vendorId={vendorId} />
@@ -75,7 +75,6 @@ export default function VendorDashboard() {
           <SalesOverview vendorId={vendorId} />
           {/* Place Product Listings (detailed) here if needed, matching screenshot's right side */}
           {/* ProductListings vendorId={vendorId} /> */}
-          {/* Re-evaluating screenshot: The right side seems to be generic Product Listings */}
           {/* Let's put the ProductListings (the one with image/name/price/stock) on the right */}
           <ProductListings vendorId={vendorId} />
         </div>

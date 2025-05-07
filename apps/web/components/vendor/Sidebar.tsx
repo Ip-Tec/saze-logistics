@@ -81,7 +81,7 @@ export default function VendorSidebar() {
       */}
       <div
         className={`
-        p-6 w-full h-screen flex flex-col justify-between overflow-y-auto
+        p-6 w-full  h-screen flex flex-col justify-between overflow-y-auto
         bg-purple-800 text-white 
         md:flex md:relative md:translate-x-0 md:z-auto 
         fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out 
@@ -117,7 +117,7 @@ export default function VendorSidebar() {
           {/* Navigation links */}
           <nav className="flex flex-col gap-3">
             {links.map((link) => (
-              <GlassButton
+              <a
                 className={`block text-left px-4 py-2 rounded-xl transition font-medium w-full !text-white hover:!bg-white/10 !border-none !shadow-none !bg-transparent
                   ${getLinkClass(link.href)} 
               `}
@@ -126,7 +126,7 @@ export default function VendorSidebar() {
                 href={link.href}
               >
                 {link.name}
-              </GlassButton>
+              </a>
             ))}
           </nav>
         </div>
@@ -134,7 +134,7 @@ export default function VendorSidebar() {
         {/* Logout button */}
         <GlassButton
           className="
-            !text-white !bg-orange-500 hover:!text-orange-500 hover:!bg-orange-100/60 hover:border-orange-500
+            !text-white !bg-orange-500 hover:!text-orange-500 hover:!bg-white hover:border-none
             cursor-pointer rounded-2xl p-2 text-sm mt-6 md:mt-10 w-full // Ensure full width on mobile
             flex items-center justify-center gap-2 
         "

@@ -459,3 +459,260 @@ isUserLoading { isUserLoading: true }
  ✓ Compiled in 505ms
  ✓ Compiled in 564ms
  ✓ Compiled in 385ms
+ ✓ Compiled in 388ms
+ ✓ Compiled in 978ms
+ ✓ Compiled in 416ms
+ ✓ Compiled in 747ms
+ ✓ Compiled in 514ms
+ ✓ Compiled in 504ms
+ ✓ Compiled in 408ms
+ ✓ Compiled in 285ms
+ ✓ Compiled in 477ms
+ ✓ Compiled in 798ms
+ ✓ Compiled in 725ms
+ ✓ Compiled in 342ms
+ ✓ Compiled in 499ms
+ ✓ Compiled in 609ms
+ ✓ Compiled in 325ms
+ ✓ Compiled in 2.1s
+ ✓ Compiled in 706ms
+ ✓ Compiled in 470ms
+ ✓ Compiled in 625ms
+ ✓ Compiled in 608ms
+ ✓ Compiled in 508ms
+ ✓ Compiled in 492ms
+ ✓ Compiled in 616ms
+ ✓ Compiled in 573ms
+ ✓ Compiled in 481ms
+ ✓ Compiled in 1130ms
+ ✓ Compiled in 1530ms
+ ✓ Compiled in 1096ms
+ ✓ Compiled in 1806ms
+ ✓ Compiled in 2.2s
+ ✓ Compiled in 1292ms
+ ✓ Compiled in 1972ms
+ ✓ Compiled in 1214ms
+ ✓ Compiled in 1293ms
+ ✓ Compiled in 1405ms
+ ✓ Compiled in 1073ms
+ ✓ Compiled in 1040ms
+ ✓ Compiled in 910ms
+ ✓ Compiled in 1133ms
+ ✓ Compiled in 951ms
+ ✓ Compiled in 899ms
+ ✓ Compiled in 2.5s
+ ✓ Compiled in 1801ms
+ ✓ Compiled in 962ms
+ ✓ Compiled in 1152ms
+ ✓ Compiled in 3.7s
+ ✓ Compiled in 994ms
+ ✓ Compiled in 1574ms
+ ✓ Compiled in 885ms
+ ✓ Compiled in 880ms
+ ✓ Compiled in 2.3s
+ ✓ Compiled in 951ms
+ ✓ Compiled in 1059ms
+ ✓ Compiled in 930ms
+ ✓ Compiled in 661ms
+ ✓ Compiled in 3.2s
+isUserLoading { isUserLoading: true }
+ GET /vendor 200 in 23629ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 23668ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 16398ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 9727ms
+ ✓ Compiled in 1523ms
+ ✓ Compiled in 588ms
+isUserLoading { isUserLoading: true }
+ GET /vendor 200 in 5832ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 25644ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 22710ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 9390ms
+ ✓ Compiled in 4.8s
+ ✓ Compiled in 1685ms
+ ✓ Compiled in 911ms
+ ○ Compiling /auth/login ...
+ ✓ Compiled /auth/login in 171.2s
+ GET /auth/login 200 in 174175ms
+ GET /auth/login 200 in 166195ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 8758ms
+ GET /vendor 200 in 7363ms
+ GET /vendor 200 in 9900ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 10097ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 7377ms
+isUserLoading { isUserLoading: true }
+ GET /vendor 200 in 4133ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3357ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 4765ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2025ms
+ ✓ Compiled in 1726ms
+ ✓ Compiled in 820ms
+ ✓ Compiled in 883ms
+ ✓ Compiled in 1484ms
+ ✓ Compiled in 1197ms
+ ✓ Compiled in 1000ms
+ ✓ Compiled in 2.1s
+ ✓ Compiled in 1785ms
+ ✓ Compiled in 847ms
+ ✓ Compiled in 1372ms
+ ✓ Compiled in 1686ms
+ ✓ Compiled in 1626ms
+isUserLoading { isUserLoading: true }
+ GET /vendor 200 in 9506ms
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 20443ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 19254ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2358ms
+ ✓ Compiled in 1578ms
+isUserLoading { isUserLoading: true }
+ GET /vendor 200 in 2047ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1565ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 3708ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 10685ms
+ ✓ Compiled in 1093ms
+ ✓ Compiled in 1352ms
+isUserLoading { isUserLoading: true }
+ GET /vendor 200 in 8729ms
+ ✓ Compiled in 819ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 26674ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 24932ms
+ ✓ Compiled in 524ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 7957ms
+ ✓ Compiled in 514ms
+ ✓ Compiled in 771ms
+ ✓ Compiled in 562ms
+ ✓ Compiled in 749ms
+ ✓ Compiled in 628ms
+ ✓ Compiled in 915ms
+ ✓ Compiled in 370ms
+ ✓ Compiled in 511ms
+ ✓ Compiled in 334ms
+ ✓ Compiled in 516ms
+ ✓ Compiled in 514ms
+ ✓ Compiled in 727ms
+ ✓ Compiled in 1090ms
+ ✓ Compiled in 498ms
+ ✓ Compiled in 828ms
+ ✓ Compiled in 562ms
+ ✓ Compiled in 525ms
+ ✓ Compiled in 744ms
+ ✓ Compiled in 441ms
+ ✓ Compiled in 507ms
+ ✓ Compiled in 670ms
+ ✓ Compiled in 408ms
+ ✓ Compiled in 2.4s
+ ✓ Compiled in 684ms
+ ✓ Compiled in 532ms
+ ✓ Compiled in 495ms
+ ✓ Compiled in 723ms
+ ✓ Compiled in 851ms
+ ✓ Compiled in 608ms
+ ✓ Compiled in 638ms
+ ✓ Compiled in 688ms
+ ✓ Compiled in 1649ms
+ ✓ Compiled in 1390ms
+ ✓ Compiled in 1155ms
+ ✓ Compiled in 612ms
+ ✓ Compiled in 481ms
+ ✓ Compiled in 941ms
+ ✓ Compiled in 2.2s
+ ✓ Compiled in 1925ms
+ ✓ Compiled in 741ms
+ ✓ Compiled in 856ms
+ ✓ Compiled in 762ms
+ ✓ Compiled in 745ms
+ ✓ Compiled in 418ms
+ ✓ Compiled in 549ms
+ ✓ Compiled in 506ms
+ ✓ Compiled in 1262ms
+ ✓ Compiled in 965ms
+ ✓ Compiled in 622ms
+ ✓ Compiled in 438ms
+ ✓ Compiled in 773ms
+ ✓ Compiled in 895ms
+ ✓ Compiled in 580ms
+ ✓ Compiled in 541ms
+ ✓ Compiled in 779ms
+ ✓ Compiled in 511ms
+ ✓ Compiled in 627ms
+ ✓ Compiled in 974ms
+ ✓ Compiled in 346ms
+ ✓ Compiled in 616ms
+ ✓ Compiled in 840ms
+ ✓ Compiled in 887ms
+ ✓ Compiled in 691ms
+ ✓ Compiled in 14.6s
+ ○ Compiling /vendor ...
+ ✓ Compiled in 49.5s
+ ✓ Compiled /vendor in 14.3s
+isUserLoading { isUserLoading: true }
+ GET /vendor 200 in 36419ms
+ GET /vendor 200 in 43764ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 21774ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 15352ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 5366ms
+ ✓ Compiled in 1125ms
+ ✓ Compiled in 1190ms
+ ✓ Compiled in 855ms
+ ✓ Compiled in 787ms
+ ✓ Compiled in 3s
+ ✓ Compiled in 368ms
+ ✓ Compiled in 534ms
+ ✓ Compiled in 497ms
+ ✓ Compiled in 749ms
+ ✓ Compiled in 414ms
+ ✓ Compiled in 492ms
+ ✓ Compiled in 545ms
+ ○ Compiling /vendor/orders ...
+isUserLoading { isUserLoading: true }
+ GET /vendor 200 in 4177ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 19518ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 16943ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 3711ms
+ ✓ Compiled in 73.2s
+ ✓ Compiled /vendor/orders in 75.2s
+ GET /vendor/orders 200 in 14123ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 4974ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 4381ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2500ms
+ ○ Compiling /vendor/products ...
+ ✓ Compiled /vendor/products in 5.1s
+ GET /vendor/products 200 in 6173ms
+ ○ Compiling /vendor/analytics ...
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 6454ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 7276ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 10599ms
+ ✓ Compiled /vendor/analytics in 18.4s
+ GET /vendor/analytics 200 in 19372ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 4585ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 4137ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1836ms
+ ○ Compiling /vendor/setting ...
+ ✓ Compiled /vendor/setting in 25.2s
+ GET /vendor/setting 200 in 26988ms

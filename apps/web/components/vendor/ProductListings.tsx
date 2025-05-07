@@ -22,8 +22,8 @@ type MenuItem = {
 };
 
 const formatCurrency = (amount: number | null): string => {
-    if (amount === null) return "N/A";
-    return `₦${amount.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  if (amount === null) return "N/A";
+  return `₦${amount.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 };
 
 export default function ProductListings({ vendorId }: ProductListingsProps) {
@@ -42,7 +42,7 @@ export default function ProductListings({ vendorId }: ProductListingsProps) {
         .select("id, name, price, is_available, menu_item_image(image_url)")
         .eq("vendor_id", vendorId)
         .order("created_at", { ascending: false })
-        .limit(6); // Limit to a few items for the dashboard view
+        .limit(8); // Limit to a few items for the dashboard view
 
       if (error) throw error;
       setMenuItems(data || []);
@@ -62,7 +62,9 @@ export default function ProductListings({ vendorId }: ProductListingsProps) {
 
   return (
     <div className="rounded-2xl bg-white/10 p-6 backdrop-blur border border-white/50 shadow-md flex-1">
-      <h2 className="text-black font-semibold text-lg mb-4">Product Listings</h2>
+      <h2 className="text-black font-semibold text-lg mb-4">
+        Product Listings
+      </h2>
 
       {isLoading ? (
         <div className="flex w-full justify-center items-center h-40">
@@ -76,31 +78,36 @@ export default function ProductListings({ vendorId }: ProductListingsProps) {
       ) : menuItems.length === 0 ? (
         <div className="text-gray-500 text-center">No menu items found.</div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4"> {/* Responsive grid for items */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Responsive grid for items */}
           {menuItems.map((item) => (
-            <div key={item.id} className="flex items-center space-x-3 bg-white/5 rounded-lg p-3">
-                {/* Image Container */}
-                <div className="relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden">
-                     <Image
-                        src={item.menu_item_image?.[0]?.image_url || DefaultImage.src}
-                        alt={item.name || 'Menu Item'}
-                        fill
-                        sizes="64px" // Define size for this context
-                        className="object-cover"
-                        onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = DefaultImage.src;
-                        }}
-                     />
-                </div>
-                <div>
-                    <p className="text-sm font-medium text-white truncate">{item.name || 'Unnamed Item'}</p>
-                    <p className="text-xs text-gray-500">{formatCurrency(item.price)}</p>
-                     {/* Display stock if available, handle null/undefined/unavailable */}
-                     {/* <p className="text-xs text-gray-400">
-                        Stock: {item.stock !== null && item.stock !== undefined ? item.stock : item.is_available ? 'In Stock' : 'Unavailable'}
-                    </p> */}
-                </div>
+            <div
+              key={item.id}
+              className="flex flex-col items-center space-x-3 bg-white/50 rounded-lg p-3 !text-gray-600 shadow-md"
+            >
+              {/* Image Container */}
+              <div className="relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden">
+                <Image
+                  src={item.menu_item_image?.[0]?.image_url || DefaultImage.src}
+                  alt={item.name || "Menu Item"}
+                  fill
+                  sizes="88px"
+                  className="object-cover"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = DefaultImage.src;
+                  }}
+                />
+              </div>
+              {/* Flex container for text */}
+              <div className="flex flex-col items-center justify-between min-w-full text-gray-600">
+                <p className="text-sm font-medium text-black truncate">
+                  {item.name || "Unnamed Item"}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {formatCurrency(item.price)}
+                </p>
+              </div>
             </div>
           ))}
         </div>
