@@ -91,37 +91,37 @@ export async function POST(req: NextRequest) {
     .single();
 
   // 5b) Get all riders’ last known locations
-  const { data: riders } = await supabase
-    .from("rider_location")        // assume you track this table
-    .select("user_id, lat, lng");
+  // const { data: riders } = await supabase
+  //   .from("rider_location")
+  //   .select("user_id, lat, lng");
 
   // 5c) Compute closest
-  let best: { riderId: string; dist: number } | null = null;
-  for (const r of riders || []) {
-    if (vloc?.lat == null || vloc?.lng == null) continue;
-    const d = getDistance(
-      { latitude: vloc.lat, longitude: vloc.lng },
-      { latitude: r.lat!, longitude: r.lng! }
-    );
-    if (!best || d < best.dist) best = { riderId: r.user_id, dist: d };
-  }
+  // let best: { riderId: string; dist: number } | null = null;
+  // for (const r of riders || []) {
+  //   if (vloc?.lat == null || vloc?.lng == null) continue;
+  //   const d = getDistance(
+  //     { latitude: vloc.lat, longitude: vloc.lng },
+  //     { latitude: r.lat!, longitude: r.lng! }
+  //   );
+  //   if (!best || d < best.dist) best = { riderId: r.user_id, dist: d };
+  // }
 
   // --- 6) Notify that Rider ---
-  if (best) {
-    await supabase.from("notification").insert({
-      user_id: best.riderId,
-      title: "New Pickup Assigned",
-      body: `Pickup order ${orderId} at your nearest vendor.`,
-      metadata: {
-        orderId,
-        vendorLat: vloc?.lat,
-        vendorLng: vloc?.lng,
-        userAddress: address,
-      },
-      read: false,
-      created_at: new Date().toISOString(),
-    });
-  }
+  // if (best) {
+  //   await supabase.from("notification").insert({
+  //     user_id: best.riderId,
+  //     title: "New Pickup Assigned",
+  //     body: `Pickup order ${orderId} at your nearest vendor.`,
+  //     metadata: {
+  //       orderId,
+  //       vendorLat: vloc?.lat,
+  //       vendorLng: vloc?.lng,
+  //       userAddress: address,
+  //     },
+  //     read: false,
+  //     created_at: new Date().toISOString(),
+  //   });
+  // }
 
   return NextResponse.json({ success: true, orderId });
 }
