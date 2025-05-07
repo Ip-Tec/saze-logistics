@@ -11,11 +11,10 @@ const supabase = createClient<Database>(
 // Define the GET handler for the dynamic route
 // Destructure 'params' directly from the second argument
 export async function GET(
-  req: NextRequest, // The first argument is the incoming request
-  { params }: { params: { userId: string } } // The second argument contains dynamic route parameters
+  request: Request,
+  { params }: { params: Promise<{ userId: string }> }
 ) {
-  // Access the userId from the destructured params object
-  const userId = params.userId;
+  const userId = (await params).userId;
 
   console.log(`Fetching address for user ID: ${userId}`);
   // Query the 'delivery_address' table for the address associated with this user ID
