@@ -5,7 +5,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import { supabase } from "@shared/supabaseClient";
 import { Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
-import { formatDate } from "@/utils/formatDate"; // Assuming you move formatDate helper or create one
 
 interface OrderManagementProps {
   vendorId: string;
@@ -93,13 +92,13 @@ export default function OrderManagement({ vendorId }: OrderManagementProps) {
 
 
   return (
-    <div className="rounded-2xl bg-white/10 p-6 backdrop-blur border border-white/20 shadow-md flex-1">
-      <h2 className="text-white font-semibold text-lg mb-4">Order Management</h2>
+    <div className="rounded-2xl bg-white/10 p-6 backdrop-blur border border-black/20 shadow-md flex-1">
+      <h2 className="text-black font-semibold text-lg mb-4">Order Management</h2>
 
       {isLoading ? (
         <div className="flex w-full justify-center items-center h-40">
           <Loader2 size={24} className="animate-spin text-orange-500" />
-          <p className="ml-2 text-gray-300">Loading orders...</p>
+          <p className="ml-2 text-gray-500">Loading orders...</p>
         </div>
       ) : error ? (
         <div className="text-red-500 text-center">

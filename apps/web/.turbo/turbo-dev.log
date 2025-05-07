@@ -266,3 +266,196 @@ You are attempting to export "metadata" from a component marked with "use client
  ✓ Compiled /vendor in 16.5s
  ⚠ Server is approaching the used memory threshold, restarting...
    ▲ Next.js 15.2.4 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.112:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+Slow filesystem detected. If C:\Users\Ip\Documents\saze-logistics\apps\web\.next is a network drive, consider moving it to a local folder. If you have an antivirus enabled, consider excluding your project directory.
+ ✓ Ready in 47.2s
+ ○ Compiling /vendor ...
+ ✓ Compiled /vendor in 50.3s
+ GET /vendor 200 in 27256ms
+ ○ Compiling /_not-found/page ...
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 11279ms
+ ✓ Compiled /_not-found/page in 13.1s
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 13667ms
+ ○ Compiling /api/cart-item ...
+ ✓ Compiled /api/cart-item in 3.7s
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 6551ms
+ ✓ Compiled in 2.3s
+ ✓ Compiled in 1222ms
+ ✓ Compiled in 2s
+ ✓ Compiled in 1764ms
+ ✓ Compiled in 1182ms
+ ✓ Compiled in 2.4s
+ ✓ Compiled in 1169ms
+ ✓ Compiled in 988ms
+ ✓ Compiled in 1065ms
+ ✓ Compiled in 2.5s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ○ Compiling /vendor ...
+ ✓ Compiled /vendor in 14.2s
+ GET /vendor 200 in 20786ms
+ GET /vendor 200 in 20959ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 6034ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 4285ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 2171ms
+ ✓ Compiled in 1218ms
+ ✓ Compiled in 912ms
+ ✓ Compiled in 8.8s
+ ○ Compiling /vendor ...
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled in 19.4s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /vendor in 23.7s
+ GET /vendor 200 in 49906ms
+ GET /vendor 200 in 40011ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 22741ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 20709ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 9050ms
+ ✓ Compiled in 4.1s
+ ○ Compiling /vendor ...
+ ✓ Compiled in 10.1s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /vendor in 4.5s
+TypeError: Invalid URL
+    at Array.map (<anonymous>) {
+  code: 'ERR_INVALID_URL',
+  input: 'images/logo.png'
+}
+ ⨯ Error: Failed to parse src "images/logo.png" on `next/image`, if using relative image it must start with a leading slash "/" or be an absolute URL (http:// or https://)
+    at Array.map (<anonymous>) {
+  digest: '1953976798'
+}
+TypeError: Invalid URL
+    at Array.map (<anonymous>) {
+  code: 'ERR_INVALID_URL',
+  input: 'images/logo.png'
+}
+ ⨯ Error: Failed to parse src "images/logo.png" on `next/image`, if using relative image it must start with a leading slash "/" or be an absolute URL (http:// or https://)
+    at Array.map (<anonymous>) {
+  digest: '1953976798'
+}
+ GET /vendor 200 in 9091ms
+ GET /vendor 200 in 6742ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 8399ms
+ ✓ Compiled in 1433ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /vendor 200 in 12359ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 30493ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 16285ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 8811ms
+ ○ Compiling /vendor ...
+ ✓ Compiled in 7.1s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /vendor in 11.4s
+ GET /vendor 200 in 23497ms
+ GET /vendor 200 in 22005ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 18914ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 16923ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 6900ms
+ ✓ Compiled in 1033ms
+ ✓ Compiled in 1478ms
+ ✓ Compiled in 1093ms
+ ✓ Compiled in 940ms
+ ✓ Compiled in 706ms
+ ✓ Compiled in 1445ms
+ ✓ Compiled in 754ms
+ ✓ Compiled in 936ms
+ GET /vendor 200 in 3202ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3543ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 2693ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 1571ms
+ ✓ Compiled in 942ms
+ ✓ Compiled in 1024ms
+ GET /vendor 200 in 10095ms
+ GET /vendor 200 in 8583ms
+ ✓ Compiled in 997ms
+ GET /vendor 200 in 10177ms
+ GET /vendor 200 in 7521ms
+ ✓ Compiled in 740ms
+ GET /vendor 200 in 3748ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 5328ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 7670ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 10920ms
+ ✓ Compiled in 631ms
+ GET /vendor 200 in 4340ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 5604ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 4769ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 10674ms
+ ✓ Compiled in 1811ms
+ ✓ Compiled in 6s
+ ✓ Compiled in 1816ms
+ ✓ Compiled in 1144ms
+ ✓ Compiled in 1298ms
+ ○ Compiling /vendor ...
+ ✓ Compiled in 2.9s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /vendor in 4.2s
+ GET /vendor 200 in 9889ms
+ GET /vendor 200 in 9473ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 5453ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 4205ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 2780ms
+ ○ Compiling /vendor ...
+ ✓ Compiled in 15.5s
+ ✓ Compiled /vendor in 5.8s
+ GET /vendor 200 in 12713ms
+ ✓ Compiled in 887ms
+ ✓ Compiled in 1452ms
+ ✓ Compiled in 869ms
+ ✓ Compiled in 795ms
+ ✓ Compiled in 638ms
+ ✓ Compiled in 642ms
+ ✓ Compiled in 12.8s
+ ✓ Compiled in 1049ms
+ ✓ Compiled in 854ms
+ ✓ Compiled in 648ms
+ ○ Compiling /vendor ...
+ ✓ Compiled in 6.3s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled in 2.1s
+ ✓ Compiled /vendor in 6s
+ GET /vendor 200 in 14242ms
+ GET /vendor 200 in 10641ms
+ ✓ Compiled in 1147ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 27968ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 22607ms
+ ✓ Compiled in 1726ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 8553ms
+ ✓ Compiled in 1065ms
+ ✓ Compiled in 1388ms
+ ✓ Compiled in 1087ms
+ ✓ Compiled in 792ms
+ ✓ Compiled in 1060ms
+ ✓ Compiled in 1062ms
+ ✓ Compiled in 1031ms
+ ✓ Compiled in 990ms
+ ✓ Compiled in 850ms
+ ✓ Compiled in 1305ms
+ ✓ Compiled in 1395ms
+isUserLoading { isUserLoading: true }
+ GET /vendor 200 in 44454ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 21880ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 20502ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 11280ms
+ ✓ Compiled in 3.5s
+ ✓ Compiled in 1897ms
+ ✓ Compiled in 711ms
+ ✓ Compiled in 1855ms
+ ✓ Compiled in 1444ms
+ ✓ Compiled in 943ms
+ ✓ Compiled in 1195ms
+ ✓ Compiled in 316ms
+ ✓ Compiled in 424ms
+ ✓ Compiled in 458ms
+ ✓ Compiled in 602ms
+ ✓ Compiled in 335ms
+ ✓ Compiled in 721ms
+ ✓ Compiled in 736ms
+ ✓ Compiled in 580ms
+ ✓ Compiled in 505ms
+ ✓ Compiled in 564ms
+ ✓ Compiled in 385ms
