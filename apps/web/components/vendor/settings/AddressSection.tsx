@@ -95,14 +95,14 @@ export default function AddressSection({
 
   return (
     <GlassDiv className="w-full rounded-2xl overflow-hidden md:w-[48%] space-y-4">
-      <Section title="Address">
+      <Section title="Address" className="!text-black">
         {editing ? (
           <Input
             label="Business Address"
             value={address || ""}
             onChange={setAddress}
             disabled={isActionDisabled}
-            inputClass="!text-black"
+            inputClass="!text-black placeholder:!text-gray-600"
           />
         ) : (
           <DisplayInfo
@@ -119,14 +119,14 @@ export default function AddressSection({
             <div className="w-full flex justify-end gap-3 px-4 pb-4">
                  <GlassButton
                      onClick={handleCancelAddress}
-                     className="text-sm flex items-center gap-1 bg-red-500 hover:bg-red-600"
+                     className="text-sm flex items-center gap-1 !bg-red-500 hover:!bg-red-600"
                      disabled={isActionDisabled}
                  >
                      <X size={16} /> Cancel
                  </GlassButton>
                  <GlassButton
                      onClick={handleSaveAddress}
-                     className="text-sm flex items-center gap-1"
+                     className="text-sm flex items-center gap-1 !text-black hover:text-orange-500"
                      disabled={isActionDisabled || !hasChanges} // Disable if no changes
                  >
                      {isSaving ? (

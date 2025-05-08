@@ -13,8 +13,8 @@ export default function VendorDashboard() {
   const { user, isCheckingAuth: isUserLoading } = useAuthContext(); // Get loading state from context
 
   // Handle initial user loading state
-  console.log("isUserLoading", { isUserLoading });
-  if (isUserLoading) {
+  console.log("isUserLoading", { isUserLoading, user });
+  if (!isUserLoading) {
     return (
       <div className="flex w-full justify-center items-center h-screen">
         <Loader2 size={32} className="animate-spin text-orange-500" />
@@ -35,7 +35,7 @@ export default function VendorDashboard() {
       </div>
     );
   }
-console.log({ user });
+  
   const vendorId = user.id;
 
   return (

@@ -11,7 +11,7 @@ import path from "path"; // Used for getting file extension
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceRoleKey = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-console.log({supabaseUrl, supabaseServiceRoleKey, supabaseKey});
+// console.log({supabaseUrl, supabaseServiceRoleKey, supabaseKey});
 
 
 if (!supabaseUrl || !supabaseServiceRoleKey) {

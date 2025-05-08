@@ -12,7 +12,8 @@ import { Database } from "@shared/supabase/types"; // Adjust path if necessary
 import useImageUpload from "@/hooks/useImageUpload"; // Assuming useImageUpload hook exists
 
 type VendorProfileType = Database["public"]["Tables"]["profiles"]["Row"];
-type UpdateVendorProfilePayload = Database["public"]["Tables"]["profiles"]["Update"];
+type UpdateVendorProfilePayload =
+  Database["public"]["Tables"]["profiles"]["Update"];
 
 interface ProfileImageSectionProps {
   profile: VendorProfileType;
@@ -43,7 +44,6 @@ export default function ProfileImageSection({
   const [initialLogoUrl, setInitialLogoUrl] = useState<string | null>(null);
   const [initialBannerUrl, setInitialBannerUrl] = useState<string | null>(null);
 
-
   // Use separate instances of the image upload hook
   const {
     uploadImage: uploadLogoImage,
@@ -63,7 +63,6 @@ export default function ProfileImageSection({
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
-
   // Effect to initialize state from profile data
   useEffect(() => {
     if (profile) {
@@ -71,9 +70,9 @@ export default function ProfileImageSection({
       setBannerPreview(profile.banner_url || null);
       setInitialLogoUrl(profile.logo_url || null);
       setInitialBannerUrl(profile.banner_url || null);
-       // Clear any pending file selections when profile data is re-synced
-       setLogoFile(null);
-       setBannerFile(null);
+      // Clear any pending file selections when profile data is re-synced
+      setLogoFile(null);
+      setBannerFile(null);
     }
   }, [profile]); // Re-run when profile data changes (e.g., after parent fetch or save)
 
@@ -112,14 +111,14 @@ export default function ProfileImageSection({
       setter(null);
       // Revert preview to initial fetched URL if available for this type
       if (type === "logo") {
-         setLogoPreview(initialLogoUrl);
+        setLogoPreview(initialLogoUrl);
       } else {
-         setBannerPreview(initialBannerUrl);
+        setBannerPreview(initialBannerUrl);
       }
     }
     // Clear any previous upload errors for this type when file changes
-     if (type === "logo") setLogoUploadError(null);
-     if (type === "banner") setBannerUploadError(null);
+    if (type === "logo") setLogoUploadError(null);
+    if (type === "banner") setBannerUploadError(null);
   };
 
   const handleSaveImages = async () => {
@@ -142,8 +141,8 @@ export default function ProfileImageSection({
         // uploadImage hook should set logoUploadError
       }
     } else if (logoPreview === null && initialLogoUrl !== null) {
-        // User cleared the logo by clicking 'X' or cancelling file input after selecting a file
-         newLogoUrl = null;
+      // User cleared the logo by clicking 'X' or cancelling file input after selecting a file
+      newLogoUrl = null;
     } // Else: logoFile is null and logoPreview matches initialLogoUrl, no change needed
 
     // 2. Upload Banner if a new file is selected and logo upload didn't fail
@@ -156,77 +155,88 @@ export default function ProfileImageSection({
         // uploadImage hook should set bannerUploadError
       }
     } else if (bannerPreview === null && initialBannerUrl !== null) {
-        // User cleared the banner
-        newBannerUrl = null;
+      // User cleared the banner
+      newBannerUrl = null;
     } // Else: bannerFile is null and bannerPreview matches initialBannerUrl, no change needed
 
-
     if (uploadFailed) {
-       setIsSaving(false);
-       // The specific upload error is already set by the hook
-       toast.error(logoUploadError || bannerUploadError || "Image upload failed.");
-       return; // Stop the save process if upload failed
+      setIsSaving(false);
+      // The specific upload error is already set by the hook
+      toast.error(
+        logoUploadError || bannerUploadError || "Image upload failed."
+      );
+      return; // Stop the save process if upload failed
     }
 
     // 3. Update profile with the new URLs
     try {
-        const success = await updateProfile({ logo_url: newLogoUrl, banner_url: newBannerUrl });
+      const success = await updateProfile({
+        logo_url: newLogoUrl,
+        banner_url: newBannerUrl,
+      });
 
-        if (success) {
-            toast.success("Images updated successfully!");
-            // Update initial URLs to the newly saved ones
-            setInitialLogoUrl(newLogoUrl === undefined ? initialLogoUrl : newLogoUrl); // Handle undefined case
-            setInitialBannerUrl(newBannerUrl === undefined ? initialBannerUrl : newBannerUrl); // Handle undefined case
-            // Clear the selected files state after successful save
-            setLogoFile(null);
-            setBannerFile(null);
-             // No need to manually set previews, the useEffect triggered by profile change will handle it
-        } else {
-            // Error toast is likely handled by the updateProfile function in the parent/context
-             setSaveError("Failed to update images."); // Set local save error if parent update failed
-             toast.error("Failed to update images.");
-        }
+      if (success) {
+        toast.success("Images updated successfully!");
+        // Update initial URLs to the newly saved ones
+        setInitialLogoUrl(
+          newLogoUrl === undefined ? initialLogoUrl : newLogoUrl
+        ); // Handle undefined case
+        setInitialBannerUrl(
+          newBannerUrl === undefined ? initialBannerUrl : newBannerUrl
+        ); // Handle undefined case
+        // Clear the selected files state after successful save
+        setLogoFile(null);
+        setBannerFile(null);
+        // No need to manually set previews, the useEffect triggered by profile change will handle it
+      } else {
+        // Error toast is likely handled by the updateProfile function in the parent/context
+        setSaveError("Failed to update images."); // Set local save error if parent update failed
+        toast.error("Failed to update images.");
+      }
     } catch (error: any) {
-       console.error("Error updating profile images:", error);
-       setSaveError(error.message || "Failed to update images.");
-       toast.error(error.message || "Failed to update images.");
+      console.error("Error updating profile images:", error);
+      setSaveError(error.message || "Failed to update images.");
+      toast.error(error.message || "Failed to update images.");
     } finally {
-        setIsSaving(false);
+      setIsSaving(false);
     }
   };
 
   const handleCancelImages = () => {
-     // Revoke object URLs for currently selected files
-     if (logoFile && logoPreview && logoPreview.startsWith("blob:")) {
-        URL.revokeObjectURL(logoPreview);
-     }
-     if (bannerFile && bannerPreview && bannerPreview.startsWith("blob:")) {
-        URL.revokeObjectURL(bannerPreview);
-     }
+    // Revoke object URLs for currently selected files
+    if (logoFile && logoPreview && logoPreview.startsWith("blob:")) {
+      URL.revokeObjectURL(logoPreview);
+    }
+    if (bannerFile && bannerPreview && bannerPreview.startsWith("blob:")) {
+      URL.revokeObjectURL(bannerPreview);
+    }
 
-     // Revert local state to initial fetched URLs
-     setLogoFile(null);
-     setBannerFile(null);
-     setLogoPreview(initialLogoUrl);
-     setBannerPreview(initialBannerUrl);
+    // Revert local state to initial fetched URLs
+    setLogoFile(null);
+    setBannerFile(null);
+    setLogoPreview(initialLogoUrl);
+    setBannerPreview(initialBannerUrl);
 
-     // Clear any active saving/uploading state or errors for this section
-     setIsSaving(false);
-     setSaveError(null);
-     setLogoUploadError(null);
-     setBannerUploadError(null);
+    // Clear any active saving/uploading state or errors for this section
+    setIsSaving(false);
+    setSaveError(null);
+    setLogoUploadError(null);
+    setBannerUploadError(null);
   };
 
   const isSavingOrUploading = isSaving || isLogoUploading || isBannerUploading;
-  const isActionDisabled = isOverallLoading || isOverallUpdating || isSavingOrUploading;
-   // Check if there are any changes to save
-  const hasChanges = logoFile !== null || bannerFile !== null || // New file selected
-                     logoPreview !== initialLogoUrl || bannerPreview !== initialBannerUrl; // Existing image cleared/changed preview
-
+  const isActionDisabled =
+    isOverallLoading || isOverallUpdating || isSavingOrUploading;
+  // Check if there are any changes to save
+  const hasChanges =
+    logoFile !== null ||
+    bannerFile !== null || // New file selected
+    logoPreview !== initialLogoUrl ||
+    bannerPreview !== initialBannerUrl; // Existing image cleared/changed preview
 
   return (
     <GlassDiv className="w-full overflow-hidden !p-0 !rounded-2xl">
-      <div className="relative w-full h-60 bg-gray-200 flex items-center justify-center text-gray-500">
+      <div className="relative w-full h-72 bg-gray-200 flex items-center justify-center text-gray-500">
         {/* Display banner image preview or fetched URL */}
         {bannerPreview ? (
           <img
@@ -235,7 +245,8 @@ export default function ProfileImageSection({
             className="w-full h-full object-cover"
             onError={(e) => {
               e.currentTarget.onerror = null;
-              e.currentTarget.src = "https://placehold.co/800x240?text=Image+Error"; // Fallback image
+              e.currentTarget.src =
+                "https://placehold.co/800x240?text=Image+Error"; // Fallback image
             }}
           />
         ) : (
@@ -255,18 +266,22 @@ export default function ProfileImageSection({
             />
           </label>
         )}
-         {editing && bannerPreview && (
-             <button
-                 className="absolute top-2 right-12 bg-red-500/50 text-white p-1 rounded-full cursor-pointer"
-                 onClick={() => handleImageChange({ target: { files: null } } as any, 'banner')} // Simulate clear
-                 disabled={isActionDisabled}
-             >
-                 <X size={18} />
-             </button>
-         )}
+        {editing && bannerPreview && (
+          <button
+            className="absolute top-2 right-12 bg-red-500/50 text-white p-1 rounded-full cursor-pointer"
+            onClick={() =>
+              handleImageChange({ target: { files: null } } as any, "banner")
+            } // Simulate clear
+            disabled={isActionDisabled}
+          >
+            <X size={18} />
+          </button>
+        )}
       </div>
 
-      <div className="absolute bottom-0 left-6 transform translate-y-1/2 z-10"> {/* Adjusted position and z-index */}
+      <div className="absolute bottom-16 left-6 transform translate-y-1/2 z-10">
+        {" "}
+        {/* Adjusted position and z-index */}
         <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white bg-gray-300 flex items-center justify-center text-gray-600">
           {/* Display logo image preview or fetched URL */}
           {logoPreview ? (
@@ -276,7 +291,8 @@ export default function ProfileImageSection({
               className="w-full h-full object-cover"
               onError={(e) => {
                 e.currentTarget.onerror = null;
-                e.currentTarget.src = "https://placehold.co/128x128?text=Image+Error"; // Fallback image
+                e.currentTarget.src =
+                  "https://placehold.co/128x128?text=Image+Error"; // Fallback image
               }}
             />
           ) : (
@@ -284,68 +300,71 @@ export default function ProfileImageSection({
           )}
 
           {editing && (
-            <label className="absolute bottom-2 right-2 bg-black/50 text-white p-1 rounded-full cursor-pointer">
-              <CameraIcon size={16} />
+            <label className="absolute bottom-2 right-6 bg-black/50 text-white p-1 rounded-full cursor-pointer">
+              <CameraIcon size={16}/>
               <input
                 type="file"
                 className="hidden"
                 accept="image/*"
                 onChange={(e) => handleImageChange(e, "logo")}
                 disabled={isActionDisabled}
-                 key={logoPreview} // Key helps reset input
+                key={logoPreview} // Key helps reset input
               />
             </label>
           )}
-           {editing && logoPreview && (
-             <button
-                 className="absolute bottom-2 right-10 bg-red-500/50 text-white p-1 rounded-full cursor-pointer"
-                 onClick={() => handleImageChange({ target: { files: null } } as any, 'logo')} // Simulate clear
-                 disabled={isActionDisabled}
-             >
-                 <X size={16} />
-             </button>
-         )}
+          {editing && logoPreview && (
+            <button
+              className="absolute bottom-2 right-10 bg-red-500/50 text-white p-1 rounded-full cursor-pointer"
+              onClick={() =>
+                handleImageChange({ target: { files: null } } as any, "logo")
+              } // Simulate clear
+              disabled={isActionDisabled}
+            >
+              <X size={16} />
+            </button>
+          )}
         </div>
       </div>
 
       {/* Button Container (Offset to align with the rest of the content below the banner/logo) */}
-       <div className="w-full flex justify-end p-4 pt-20"> {/* Added padding top to account for logo overlap */}
-          {editing && (
-              <>
-                  <GlassButton
-                      onClick={handleCancelImages}
-                      className="text-sm flex items-center gap-1 bg-red-500 hover:bg-red-600 mr-2"
-                       disabled={isActionDisabled}
-                  >
-                      <X size={16} /> Cancel
-                  </GlassButton>
+      <div className="w-full flex justify-end">
+        {/* Added padding top to account for logo overlap */}
+        {editing && (
+          <div className="w-full flex justify-end -mt-16 mr-3 absolute">
+            <GlassButton
+              onClick={handleCancelImages}
+              className="text-sm flex items-center gap-1 !bg-red-500 hover:!bg-red-600 mr-2"
+              disabled={isActionDisabled}
+            >
+              <X size={16} /> Cancel
+            </GlassButton>
 
-                  <GlassButton
-                      onClick={handleSaveImages}
-                      className="text-sm flex items-center gap-1"
-                      disabled={isActionDisabled || !hasChanges} // Disable if no changes
-                  >
-                      {isSavingOrUploading ? (
-                          <>
-                              <Loader2 size={16} className="animate-spin" />
-                               {isSaving ? "Saving..." : "Uploading Images..."}
-                          </>
-                      ) : (
-                          <>
-                              <SaveIcon size={16} /> Save Images
-                          </>
-                      )}
-                  </GlassButton>
-              </>
-          )}
-       </div>
+            <GlassButton
+              onClick={handleSaveImages}
+              className="text-sm flex items-center gap-1 !text-black hover:text-orange-500"
+              disabled={isActionDisabled || !hasChanges} // Disable if no changes
+            >
+              {isSavingOrUploading ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  {isSaving ? "Saving..." : "Uploading Images..."}
+                </>
+              ) : (
+                <>
+                  <SaveIcon size={16} /> Save Images
+                </>
+              )}
+            </GlassButton>
+          </div>
+        )}
+      </div>
 
-        {/* Display Section Error */}
-       {(logoUploadError || bannerUploadError || saveError) && (
-            <div className="w-full text-red-600 text-sm px-4 pb-4">
-               Error: {logoUploadError || bannerUploadError || saveError}
-            </div>
-       )}
+      {/* Display Section Error */}
+      {(logoUploadError || bannerUploadError || saveError) && (
+        <div className="w-full text-red-600 text-sm px-4 pb-4">
+          Error: {logoUploadError || bannerUploadError || saveError}
+        </div>
+      )}
     </GlassDiv>
   );
 }

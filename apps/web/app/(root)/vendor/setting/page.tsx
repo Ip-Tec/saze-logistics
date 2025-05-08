@@ -102,7 +102,7 @@ export default function VendorSettingsPage() {
           {editing ? (
             <GlassButton
               onClick={() => setEditing(false)} // Simply exit editing mode
-              className="text-sm flex items-center gap-1 bg-red-500 hover:bg-red-600"
+              className="text-sm flex items-center gap-1 !bg-red-500 hover:!bg-red-600"
               // Disable only if any section is currently saving/uploading or overall loading
               disabled={isUpdatingProfile || isLoadingProfile} // Rely on overall states or pass child states up if needed
             >
@@ -111,7 +111,7 @@ export default function VendorSettingsPage() {
           ) : (
             <GlassButton
               onClick={() => setEditing(true)}
-              className="text-sm flex items-center gap-1"
+              className="text-sm flex items-center gap-1 !bg-orange-500 hover:!bg-orange-200"
               disabled={isLoadingProfile} // Disable while initial profile is loading
             >
               <PencilIcon size={16} /> Edit Profile
@@ -159,7 +159,7 @@ export default function VendorSettingsPage() {
       </div>
       {/* Change Password Section (remains separate) */}
       {/* It should manage its own state and use the auth context for password changes */}
-      {!editing && <ChangePassword className="mt-6" />} {/* Add margin top */}
+      {!editing && <ChangePassword className="mt-6 !text-gray-600" buttonStyle="!bg-orange-500 hover:!bg-orange-700 hover:!text-white" />} {/* Add margin top */}
     </div>
   );
 }

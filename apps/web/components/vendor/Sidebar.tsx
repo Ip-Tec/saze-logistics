@@ -10,6 +10,7 @@ import { LogOut, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Logo from "@/public/images/logo.png";
+import Link from "next/link";
 
 const links = [
   { name: "Dashboard", href: "/vendor" },
@@ -90,7 +91,7 @@ export default function VendorSidebar() {
       >
         <div>
           {/* Adjust heading size for smaller screens */}
-          <div className="mb-4">
+          <div className="mb-4 z-10">
             <img
               src={Logo.src}
               alt="Sazee"
@@ -107,7 +108,7 @@ export default function VendorSidebar() {
           {isSidebarOpen && (
             <button
               onClick={toggleSidebar} // Or setIsSidebarOpen(false)
-              className="absolute top-4 right-4 text-white md:hidden focus:outline-none"
+              className="absolute top-4 right-4 text-white md:hidden focus:outline-none z-20"
               aria-label="Close menu"
             >
               <X size={24} />
@@ -115,9 +116,9 @@ export default function VendorSidebar() {
           )}
 
           {/* Navigation links */}
-          <nav className="flex flex-col gap-3">
+          <nav className="flex flex-col gap-3 z-20">
             {links.map((link) => (
-              <a
+              <Link prefetch={true}
                 className={`block text-left px-4 py-2 rounded-xl transition font-medium w-full !text-white hover:!bg-white/10 !border-none !shadow-none !bg-transparent
                   ${getLinkClass(link.href)} 
               `}
@@ -126,7 +127,7 @@ export default function VendorSidebar() {
                 href={link.href}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
@@ -136,7 +137,7 @@ export default function VendorSidebar() {
           className="
             !text-white !bg-orange-500 hover:!text-orange-500 hover:!bg-white hover:border-none
             cursor-pointer rounded-2xl p-2 text-sm mt-6 md:mt-10 w-full // Ensure full width on mobile
-            flex items-center justify-center gap-2 
+            flex items-center justify-center gap-2  z-20
         "
           onClick={async () => {
             await signOut();
