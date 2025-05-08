@@ -3,15 +3,15 @@
 
 import React, { useState, useEffect } from "react";
 import { Loader2, SaveIcon, X } from "lucide-react";
-import GlassDiv from "@/components/ui/GlassDiv"; // Assuming GlassDiv exists
-import GlassButton from "@/components/ui/GlassButton"; // Assuming GlassButton exists
-import Section from "@/components/reuse/Section"; // Assuming Section exists
-import Input from "@/components/reuse/Input"; // Assuming Input exists
-import DisplayInfo from "@/components/reuse/DisplayInfo"; // Assuming DisplayInfo exists
+import GlassDiv from "@/components/ui/GlassDiv";
+import GlassButton from "@/components/ui/GlassButton";
+import Section from "@/components/reuse/Section";
+import Input from "@/components/reuse/Input";
+import DisplayInfo from "@/components/reuse/DisplayInfo";
 import { toast } from "react-toastify";
 
 // Import necessary types
-import { Database } from "@shared/supabase/types"; // Adjust path if necessary
+import { Database } from "@shared/supabase/types";
 
 type VendorProfileType = Database["public"]["Tables"]["profiles"]["Row"];
 type UpdateVendorProfilePayload = Database["public"]["Tables"]["profiles"]["Update"];
