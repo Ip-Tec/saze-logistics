@@ -266,3 +266,204 @@ isUserLoading { isUserLoading: true, user: null }
  ✓ Compiled in 945ms
 { user: null, isCheckingAuth: true, vendorId: undefined }
  GET /vendor/orders 200 in 13900ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 23106ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 19760ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2914ms
+ ✓ Compiled in 1742ms
+ ✓ Compiled in 921ms
+{ user: null, isCheckingAuth: true, vendorId: undefined }
+ GET /vendor/orders 200 in 37935ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 26939ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 23668ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2045ms
+ ✓ Compiled in 5.3s
+ ✓ Compiled in 691ms
+ ✓ Compiled in 893ms
+ ✓ Compiled in 738ms
+ ✓ Compiled in 1545ms
+ ✓ Compiled in 1140ms
+ ✓ Compiled in 646ms
+ ○ Compiling /vendor/products ...
+ ✓ Compiled /vendor/products in 958ms
+{ user: null, isCheckingAuth: true, vendorId: undefined }
+ GET /vendor/products 200 in 2159ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3148ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2688ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1472ms
+{ user: null, isCheckingAuth: true, vendorId: undefined }
+ GET /vendor/orders 200 in 2115ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3886ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 3077ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1573ms
+ ✓ Compiled in 37.4s
+{ user: null, isCheckingAuth: true, vendorId: undefined }
+ GET /vendor/orders 200 in 18454ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 12223ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 8079ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 3532ms
+ ✓ Compiled in 10.5s
+ ✓ Compiled in 26.3s
+ GET /vendor/orders 200 in 25857ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 4329ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 3713ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2072ms
+ ✓ Compiled in 1188ms
+ ✓ Compiled in 2.2s
+ ✓ Compiled in 1094ms
+ ✓ Compiled in 2.2s
+ ✓ Compiled in 1210ms
+ GET /vendor/orders 200 in 3977ms
+ GET /vendor/orders 200 in 1641ms
+ ✓ Compiled in 1532ms
+ GET /api/v/orders 404 in 3890ms
+ GET /vendor/orders 200 in 3731ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 12897ms
+ GET /api/v/orders 404 in 13135ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 19358ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 14818ms
+ ✓ Compiled in 1007ms
+ ○ Compiling /api/order/v ...
+ ✓ Compiled /api/order/v in 115s
+ GET /api/order/v 200 in 122690ms
+ GET /vendor/orders 200 in 3667ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 13080ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 19909ms
+API order/v: { data: [] }
+ GET /api/order/v 200 in 26446ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2277ms
+ GET /vendor/orders 200 in 11808ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 27486ms
+Vendor ID: { vendorId: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4' }
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 28044ms
+API order/v: { data: [] }
+ GET /api/order/v 200 in 29028ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 11927ms
+ ○ Compiling /vendor/setting ...
+ ✓ Compiled /vendor/setting in 3.8s
+{ isLoadingProfile: true, fetchedProfile: null, fetchError: null }
+ GET /vendor/setting 200 in 6863ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 6825ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 5727ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2583ms
+ ○ Compiling /auth/login ...
+ ✓ Compiled /auth/login in 104.4s
+ GET /auth/login 200 in 90483ms
+ GET /auth/login 200 in 93051ms
+ GET /auth/login 200 in 125197ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 26.8s
+ GET /user 200 in 28465ms
+ ○ Compiling /api/vendors-with-food ...
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 7954ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 936796ms
+ ✓ Compiled /api/vendors-with-food in 1057.3s
+{ vendorBlocks: [] }
+{ vendorBlocks: [] }
+{ vendorBlocks: [] }
+ GET /user 200 in 2262ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 10398ms
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 9209ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 10549ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 7821ms
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ ⨯ upstream image response timed out for https://vxcjmhopnllannvtfwze.supabase.co/storage/v1/object/public/vendorassets/menu_item_images/11fa31f2-006f-4185-8cb2-5bbe01956202/0.6200144166758541.jpg
+ ○ Compiling /_error ...
+ ⨯ upstream image response timed out for https://vxcjmhopnllannvtfwze.supabase.co/storage/v1/object/public/vendorassets/menu_item_images/c82546f3-8d73-4dfa-bfaa-f2806da2e97f/0.9341835699236196.jpg
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ ✓ Compiled /_error in 23.6s
+ GET /_next/image?url=https%3A%2F%2Fvxcjmhopnllannvtfwze.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fsazzefile%2Fuploads%2Ff90157dd-d919-4f69-b2f1-4a0f03b55fb3.jpg&w=128&q=75 500 in 35188ms
+ GET /_next/image?url=https%3A%2F%2Fvxcjmhopnllannvtfwze.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fsazzefile%2Fuploads%2Ff90157dd-d919-4f69-b2f1-4a0f03b55fb3.jpg&w=128&q=75 500 in 27710ms
+ GET /api/vendors-with-food?vendorCount=6&foodsPerVendor=6 200 in 6404ms
+ ⨯ upstream image response timed out for https://vxcjmhopnllannvtfwze.supabase.co/storage/v1/object/public/vendorassets/menu_item_images/5d4301a2-318f-41cb-a260-10d091412204/0.12375870062792504.jpg
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
