@@ -7,7 +7,6 @@ import GlassDiv from "@/components/ui/GlassDiv";
 import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
-import PaystackInline from "@paystack/inline-js";
 
 export default function CheckoutClient() {
   const { cart, getTotal, clearCart } = useCart();
@@ -16,7 +15,17 @@ export default function CheckoutClient() {
 
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
+  const [Paystack, setPaystack] = useState<any>(null);
 
+  // lazy-load PaystackInline on the client
+  useEffect(() => {
+    (async () => {
+      if (typeof window !== "undefined") {
+        const mod = await import("@paystack/inline-js");
+        setPaystack(() => mod.default);
+      }
+    })();
+  }, []);
   // Redirect if cart is empty
   useEffect(() => {
     if (cart.length === 0) router.push("/user/cart");
@@ -80,9 +89,14 @@ export default function CheckoutClient() {
       return;
     }
 
+    if (!Paystack) {
+      toast.error("Payment SDK not loaded yet");
+      return;
+    }
+
     setLoading(true);
 
-    const paystack = new PaystackInline();
+    const paystack = new Paystack();
 
     paystack.newTransaction({
       key: process.env.NEXT_PUBLIC_PAYSTACK_PK!,
@@ -98,13 +112,18 @@ export default function CheckoutClient() {
         ],
       },
 
-      onSuccess: async (tranx) => {
+      onSuccess: async (tranx: any) => {
         toast.success("Payment successful! Verifying…");
         try {
           const res = await fetch("/api/paystack/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ reference: tranx.reference, cart, address,  userId: user!.id }),
+            body: JSON.stringify({
+              reference: tranx.reference,
+              cart,
+              address,
+              userId: user!.id,
+            }),
           });
 
           const json = await res.json();
@@ -127,7 +146,7 @@ export default function CheckoutClient() {
         setLoading(false);
       },
 
-      onError: (err) => {
+      onError: (err: any) => {
         toast.error("Payment setup failed: " + err.message);
         setLoading(false);
       },
