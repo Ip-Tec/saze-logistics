@@ -14,7 +14,7 @@ export default function VendorDashboard() {
 
   // Handle initial user loading state
   console.log("isUserLoading", { isUserLoading, user });
-  if (!isUserLoading) {
+  if (isUserLoading == false && !user?.id) {
     return (
       <div className="flex w-full justify-center items-center h-screen">
         <Loader2 size={32} className="animate-spin text-orange-500" />

@@ -14,8 +14,8 @@ export async function POST(req: NextRequest) {
     reference,
     cart,
     address,
-    userId,    // your app’s UUID
-    vendorId,  // UUID of the selected vendor
+    userId,
+    vendorId,
   } = (await req.json()) as {
     reference: string;
     cart: Array<{ menu_item_id: string; quantity: number; price: number }>;
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       payment_method: "paystack",
       payment_status: "paid",
       status: "pending",
-      delivery_address_id: null,         // you could insert address table here
+      delivery_address_id: null,
       customer_support_conversation_id: null,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),

@@ -118,7 +118,7 @@ export default function VendorSidebar() {
           {/* Navigation links */}
           <nav className="flex flex-col gap-3 z-20">
             {links.map((link) => (
-              <Link prefetch={true}
+              <a 
                 className={`block text-left px-4 py-2 rounded-xl transition font-medium w-full !text-white hover:!bg-white/10 !border-none !shadow-none !bg-transparent
                   ${getLinkClass(link.href)} 
               `}
@@ -127,7 +127,7 @@ export default function VendorSidebar() {
                 href={link.href}
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
           </nav>
         </div>

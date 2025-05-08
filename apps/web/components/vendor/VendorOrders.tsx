@@ -4,8 +4,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
 import { Database } from "@shared/supabase/types";
-import { supabase } from "@shared/supabaseClient";
-import { useAuthContext } from "@/context/AuthContext";
+import { supabase } from "@shared/supabaseClient"; // Keep for Realtime subscription
+import { useAuthContext } from "@/context/AuthContext"; // Keep for user ID in Realtime filter
 
 // Import your UI components
 import GlassDiv from "@/components/ui/GlassDiv";
@@ -26,50 +26,33 @@ const VENDOR_STATUSES = {
     "picked_up",
     "delivering",
   ], // Orders accepted and in progress
-  completed: ["delivered", "cancelled", "rejected"], // Orders finished or cancelled
+  completed: ["delivered", "cancelled", "rejected"],
 };
 
-// Define the type for an Order object *directly* from the Supabase query result
-// This type explicitly matches the structure returned by your `.select()` query.
-type VendorOrderQueryResult = {
-  id: string;
-  total_amount: number;
-  status: string | null;
-  special_instructions: string | null;
-  created_at: string | null;
-  updated_at: string | null;
+// --- Raw Types matching Supabase Query Result Structure ---
+// These types are needed because the API returns data in this raw structure
+type RawVendorOrderItemResult =
+  Database["public"]["Tables"]["order_item"]["Row"] & {
+    menu_item_id: { name: string | null }[] | null;
+  };
 
-  // Relationships selected as arrays
-  user_id: { name: string | null; phone: string | null }[] | null; // Customer profile relationship
-  delivery_address_id:
-    | Database["public"]["Tables"]["delivery_address"]["Row"][]
-    | null; // Delivery address relationship
+type RawVendorOrderQueryResult =
+  Database["public"]["Tables"]["order"]["Row"] & {
+    user_id: { name: string | null; phone: string | null }[] | null;
+    delivery_address_id:
+      | Database["public"]["Tables"]["delivery_address"]["Row"][]
+      | null;
+    order_item: RawVendorOrderItemResult[] | null;
+  };
 
-  // order_item relationship - array of items
-  order_item:
-    | {
-        // Each item in the order_item array
-        id: string; // order_item row field
-        quantity: number; // order_item row field
-        price: number; // order_item row field
-        notes: string | null; // order_item row field
-        order_id: string | null; // order_item row field
-        // Nested menu_item_id relationship within order_item
-        menu_item_id: { name: string | null } | null; // This relationship returns an object or null
-      }[]
-    | null; // The order_item array itself can be null
-};
-
-// Define the type for the Order object *after* processing for display
-// This type represents the simplified structure used in the component's state.
-// We define the shape of the processed item first.
+// --- Processed Types for Component State ---
+// ... (ProcessedVendorOrderItem, ProcessedVendorOrder, VendorOrdersDataState remain the same) ...
 type ProcessedVendorOrderItem = {
-  id: string; // Keep item ID for keys
+  id: string;
   quantity: number;
   price: number;
   notes: string | null;
-  // We don't need order_id here as it's part of the parent order object
-  menu_item_name: string | null; // The extracted name from the nested relationship
+  menu_item_name: string | null;
 };
 
 type ProcessedVendorOrder = {
@@ -77,22 +60,16 @@ type ProcessedVendorOrder = {
   total_amount: number;
   status: string | null;
   special_instructions: string | null;
-  // created_at and updated_at are processed into displayTime
-
-  // Flattened relationships
-  customer: { name: string | null; phone: string | null } | null; // Extracted from user_id array
+  customer: { name: string | null; phone: string | null } | null;
   delivery_address:
     | Database["public"]["Tables"]["delivery_address"]["Row"]
-    | null; // Extracted from delivery_address_id array
-  items: ProcessedVendorOrderItem[] | null; // Array of processed items
-
-  // Display-friendly fields
+    | null;
+  items: ProcessedVendorOrderItem[] | null;
   displayTime: string;
   displayStatus: string;
 };
 
-// State types for orders data organized by tab
-type OrderTabKey = keyof typeof VENDOR_STATUSES; // 'incoming', 'current', 'completed'
+type OrderTabKey = keyof typeof VENDOR_STATUSES;
 type VendorOrdersDataState = {
   [key in OrderTabKey]: ProcessedVendorOrder[];
 };
@@ -100,7 +77,10 @@ type VendorOrdersDataState = {
 // --- Component ---
 
 const VendorOrders: React.FC = () => {
-  const { user } = useAuthContext(); // Get the logged-in user (vendor)
+  // useAuthContext is still needed for the Realtime subscription filter (user?.id)
+  // The API route handles auth for the data fetch itself.
+  const { user } = useAuthContext();
+
   const [activeTab, setActiveTab] = useState<OrderTabKey>("incoming");
   const [selectedOrder, setSelectedOrder] =
     useState<ProcessedVendorOrder | null>(null); // Track the selected order details
@@ -114,183 +94,164 @@ const VendorOrders: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false); // For button loading state
 
-  // Helper function to process raw fetched order data into the display format
-  // Takes the raw query result item type and returns the processed state type
+  // Helper function to process raw fetched order data (now received from API)
   const processOrderForDisplay = (
-    order: VendorOrderQueryResult
+    order: RawVendorOrderQueryResult // Accept the raw type matching the API result
   ): ProcessedVendorOrder => {
-    // Get time string (e.g., "X mins ago" or formatted date) - Basic implementation
     const timeString = order.created_at
-      ? new Date(order.created_at).toLocaleString() // Simple date format
-      : "N/A"; // Or use a library like `date-fns` for "time ago"
-
-    // Get display status string
+      ? new Date(order.created_at).toLocaleString()
+      : "N/A";
     const displayStatus = order.status?.replace("_", " ") || "Unknown Status";
 
-    // Process nested items - Map order_item array
     const processedItems: ProcessedVendorOrderItem[] | null =
       order.order_item?.map((item) => ({
-        id: item.id, // Keep item's ID
-        quantity: item.quantity, // Keep quantity
-        price: item.price, // Keep price
-        notes: item.notes, // Keep notes
-        // Extract item name from the nested menu_item_id object
-        menu_item_name: item.menu_item_id?.name ?? null,
-      })) ?? null; // Ensure null if order_item array is null
+        id: item.id,
+        quantity: item.quantity,
+        price: item.price,
+        notes: item.notes,
+        menu_item_name:
+          item.menu_item_id && item.menu_item_id.length > 0
+            ? (item.menu_item_id[0]?.name ?? null)
+            : null,
+      })) ?? null;
+
+    const customer =
+      order.user_id && order.user_id.length > 0 ? order.user_id[0] : null;
+    const deliveryAddress =
+      order.delivery_address_id && order.delivery_address_id.length > 0
+        ? order.delivery_address_id[0]
+        : null;
 
     return {
       id: order.id,
       total_amount: order.total_amount,
       status: order.status,
       special_instructions: order.special_instructions,
-      // Flattened relationships
-      customer:
-        order.user_id && order.user_id.length > 0 ? order.user_id[0] : null,
-      delivery_address:
-        order.delivery_address_id && order.delivery_address_id.length > 0
-          ? order.delivery_address_id[0]
-          : null,
-      items: processedItems, // Assign the processed items array
-      // Display fields
+      customer: customer,
+      delivery_address: deliveryAddress,
+      items: processedItems,
       displayTime: timeString,
       displayStatus: displayStatus,
     };
   };
 
-  // --- Data Fetching ---
+  // --- Data Fetching (Now calls API) ---
   const fetchOrders = useCallback(async () => {
-    if (!user?.id) {
-      // Ensure user and user ID are available
-      setError("Vendor not logged in.");
-      setIsLoading(false);
-      return;
-    }
+    // We no longer perform the Supabase query directly here.
+    // Authentication and filtering are handled by the API route.
+    // This component just needs to *try* and fetch the data.
 
     setIsLoading(true);
-    setError(null);
+    setError(null); // Clear previous errors
 
     try {
-      // Fetch all orders for this vendor
-      // data will be VendorOrderQueryResult[] | null
-      const { data, error: fetchError } = await supabase
-        .from("order")
-        .select(
-          `
-id,
-total_amount,
-status,
-special_instructions,
-created_at,
-updated_at,
-user_id (name, phone),
-delivery_address_id (*),
-order_item (id, quantity, price, notes, order_id, menu_item_id (name))
-`
-        )
-        .eq("vendor_id", user.id) // Filter by the logged-in vendor's ID
-        .order("created_at", { ascending: false }); // Order by creation time, newest first
+      // Call the new API route to fetch vendor orders
+      // Ensure the path matches your API route file (e.g., /api/vendor/orders)
+      const response = await fetch("/api/order/v/");
 
-      if (fetchError) {
-        console.error("Error fetching vendor orders:", fetchError);
-        setError("Failed to load orders.");
-        setOrdersData({ incoming: [], current: [], completed: [] }); // Clear data on error
-      } else {
-        // Data is an array (VendorOrderQueryResult[] | null) or [] if no results
-        if (data) {
-          // Process the fetched orders array
-          const processedOrders = data.map((orderItem) => {
-            const typedOrderItem: VendorOrderQueryResult = {
-              ...orderItem,
-              order_item:
-                orderItem.order_item?.map((item) => ({
-                  ...item,
-                  menu_item_id: Array.isArray(item.menu_item_id)
-                    ? item.menu_item_id[0]
-                    : item.menu_item_id,
-                })) ?? [],
-            };
-            return processOrderForDisplay(typedOrderItem);
-          });
-
-          // Filter processed orders into the correct tabs based on status
-          const newOrdersData: VendorOrdersDataState = {
-            incoming: [],
-            current: [],
-            completed: [],
-          };
-
-          processedOrders.forEach((order) => {
-            if (
-              order.status &&
-              VENDOR_STATUSES.incoming.includes(order.status)
-            ) {
-              newOrdersData.incoming.push(order);
-            } else if (
-              order.status &&
-              VENDOR_STATUSES.current.includes(order.status)
-            ) {
-              newOrdersData.current.push(order);
-            } else if (
-              order.status &&
-              VENDOR_STATUSES.completed.includes(order.status)
-            ) {
-              newOrdersData.completed.push(order);
-            }
-            // Ignore orders with unexpected statuses
-          });
-
-          setOrdersData(newOrdersData);
-
-          // --- Logic to maintain or update selected order ---
-          const currentTabOrders = newOrdersData[activeTab];
-          if (selectedOrder) {
-            // If an order is currently selected, check if it still exists in the *new* data for the *current* tab
-            const updatedSelectedOrder = currentTabOrders.find(
-              (order) => order.id === selectedOrder.id
-            );
-            if (updatedSelectedOrder) {
-              // If it exists, update the selected order state to have the latest data
-              setSelectedOrder(updatedSelectedOrder);
-            } else {
-              // If the previously selected order is no longer in the current tab (e.g., status changed), deselect it
-              setSelectedOrder(null);
-              // Optionally auto-select the first order if the tab is not empty
-              if (currentTabOrders.length > 0) {
-                setSelectedOrder(currentTabOrders[0]);
-              }
-            }
-          } else if (currentTabOrders.length > 0) {
-            // If no order was selected and the current tab has orders, auto-select the first one
-            setSelectedOrder(currentTabOrders[0]);
-          } else {
-            // If the current tab is empty, ensure no order is selected
-            setSelectedOrder(null);
-          }
-          // --- End selected order logic ---
-        } else {
-          // Data is null or empty results array
-          setOrdersData({ incoming: [], current: [], completed: [] });
-          setSelectedOrder(null); // Deselect if no data
-        }
-        setError(null); // Clear error on successful fetch (even if no data)
+      // Check if the API request was successful
+      if (!response.ok) {
+        // Read the error message from the API's JSON response
+        const errorResult = await response.json();
+        console.error("API fetch error:", errorResult);
+        // Throw an error with the message received from the API
+        throw new Error(
+          errorResult.message || `API returned status ${response.status}`
+        );
       }
-    } catch (err) {
-      console.error("An unexpected error occurred during fetch:", err);
-      setError("An unexpected error occurred while loading orders.");
-      setOrdersData({ incoming: [], current: [], completed: [] });
-      setSelectedOrder(null);
+
+      // Parse the JSON data from the successful API response
+      // We expect an array matching the RawVendorOrderQueryResult structure
+      const data: RawVendorOrderQueryResult[] = await response.json();
+
+      console.log("Fetched vendor orders from API:", { data });
+
+      // Process the fetched orders array using the function that accepts the raw type
+      const processedOrders: ProcessedVendorOrder[] = data.map(
+        processOrderForDisplay
+      );
+
+      // Filter processed orders into the correct tabs based on status
+      const newOrdersData: VendorOrdersDataState = {
+        incoming: [],
+        current: [],
+        completed: [],
+      };
+
+      processedOrders.forEach((order) => {
+        if (order.status && VENDOR_STATUSES.incoming.includes(order.status)) {
+          newOrdersData.incoming.push(order);
+        } else if (
+          order.status &&
+          VENDOR_STATUSES.current.includes(order.status)
+        ) {
+          newOrdersData.current.push(order);
+        } else if (
+          order.status &&
+          VENDOR_STATUSES.completed.includes(order.status)
+        ) {
+          newOrdersData.completed.push(order);
+        }
+      });
+
+      setOrdersData(newOrdersData);
+
+      // --- Logic to maintain or update selected order ---
+      // Find the selected order based on the *new* data for the *current* tab
+      const updatedSelectedOrder = newOrdersData[activeTab].find(
+        (order) => selectedOrder && order.id === selectedOrder.id
+      );
+
+      if (updatedSelectedOrder) {
+        // If the previously selected order is still in the current tab, update its data
+        setSelectedOrder(updatedSelectedOrder);
+      } else {
+        // If the previously selected order is NOT in the current tab (or was null),
+        // try to select the first one in the current tab.
+        const firstOrderInNewTab =
+          newOrdersData[activeTab].length > 0
+            ? newOrdersData[activeTab][0]
+            : null;
+        setSelectedOrder(firstOrderInNewTab);
+      }
+      // --- End selected order logic ---
+
+      setError(null); // Clear error on successful fetch
+    } catch (err: any) {
+      // Handle errors that occurred during the fetch or JSON parsing
+      console.error("An unexpected error occurred during API fetch:", err);
+      const errorMessage = err.message || "An unexpected error occurred.";
+      setError(`Failed to load orders: ${errorMessage}`);
+      setOrdersData({ incoming: [], current: [], completed: [] }); // Clear data on error
+      setSelectedOrder(null); // Deselect on error
+      toast.error(`Failed to load orders: ${errorMessage}`); // Show toast
     } finally {
       setIsLoading(false); // Stop loading
     }
-  }, [user?.id, activeTab]); // Dependencies: user ID, refetch when tab changes. Removed selectedOrder dependency from here to prevent loops.
-  // Fetch data when the component mounts or user changes
+  }, [activeTab, selectedOrder?.id]); // Dependencies: activeTab (when tab changes), selectedOrder.id (to update details if selected order moves tab)
+  // Note: user is NOT a dependency here because the API route handles the user check server-side
+
+  // Fetch data when the component mounts and whenever the fetchOrders callback changes
+  // The fetchOrders callback now changes when activeTab or selectedOrder?.id changes.
   useEffect(() => {
+    // We no longer need the user check here to decide *if* to fetch,
+    // the API route will handle if the user is authorized.
+    // Just call fetchOrders to initiate the data load.
     fetchOrders();
   }, [fetchOrders]); // Effect depends on the fetchOrders callback
 
-  // Optional: Set up Realtime subscription for vendor's orders
+  // Realtime subscription remains client-side, uses the client-side supabase instance
+  // This still requires the user ID to filter events for this specific vendor.
   useEffect(() => {
-    if (!user?.id) return;
+    // Ensure user is available before attempting to subscribe
+    if (!user?.id) {
+      console.warn(
+        "Realtime subscription skipped: User ID not available for filter."
+      );
+      return; // Do not subscribe if user ID is missing
+    }
+
+    console.log("Attempting Realtime subscription for vendor:", user.id);
 
     const channel = supabase
       .channel(`vendor_orders_${user.id}`)
@@ -300,69 +261,85 @@ order_item (id, quantity, price, notes, order_id, menu_item_id (name))
           event: "*", // Listen to INSERT, UPDATE, DELETE
           schema: "public",
           table: "order",
-          filter: `vendor_id=eq.${user.id}`, // Filter for this vendor's orders
+          filter: `vendor_id=eq.${user.id}`, // Still filter client-side using the user ID from AuthContext
         },
         (payload) => {
-          console.log("Vendor order change received!", payload);
-          // A change occurred, refetch the orders to update the lists
-          // A more sophisticated approach would update state directly based on payload
-          fetchOrders(); // Simpler approach: just refetch
+          console.log("Vendor order change received via Realtime!", payload);
+          // A change occurred, trigger a refetch via the API to update the lists
+          // This keeps the data fresh after DB changes initiated elsewhere (e.g., by customer app)
+          fetchOrders();
         }
       )
       .subscribe();
 
-    // Cleanup the subscription on component unmount
+    // Cleanup the subscription on component unmount or when user ID changes
     return () => {
+      console.log("Unsubscribing from Realtime channel.");
       supabase.removeChannel(channel);
     };
-  }, [user?.id, fetchOrders]); // Re-subscribe if user or fetchOrders changes
+  }, [user?.id, fetchOrders]); // Re-subscribe if user.id changes or fetchOrders callback changes
 
   // --- Status Update Actions ---
-
+  // This function already correctly calls the /api/vendor/update-order-status route.
+  // No change needed here.
   const handleStatusUpdate = async (orderId: string, newStatus: string) => {
     setIsUpdatingStatus(true);
-    setError(null);
+    // Error for status update is handled within the try/catch block
+
     try {
-      // Recommend using an API route for security and business logic
+      // Call the API route for updating status
+      // Ensure the path matches your status update API route
       const response = await fetch("/api/vendor/update-order-status", {
-        method: "POST", // Or PATCH
+        method: "POST", // Or PATCH, depends on your API
         headers: {
           "Content-Type": "application/json",
-          // Add Authorization header if your API route requires it
-          // e.g., 'Authorization': `Bearer ${await supabase.auth.getSession()?.then(s => s?.data.session?.access_token)}`
         },
         body: JSON.stringify({
           orderId,
           status: newStatus,
-          vendorId: user?.id,
-        }), // Pass vendorId for server-side verification
+          // Do NOT send vendorId from the client here for security.
+          // The API route /api/vendor/update-order-status must get the vendor ID
+          // from the authenticated session server-side to authorize the update.
+          // vendorId: user?.id, // <-- Make sure this is commented out or removed
+        }),
       });
 
-      const result = await response.json();
-
-      if (response.ok) {
-        toast.success(
-          result.message ||
-            `Order ${orderId.substring(0, 8)} status updated to ${newStatus}.`
+      // Check if the API request for status update was successful
+      if (!response.ok) {
+        // Read the error message from the API's JSON response
+        const errorResult = await response.json();
+        console.error("Status update API error:", errorResult);
+        // Throw an error with the message received from the API
+        throw new Error(
+          errorResult.message ||
+            `Status update API returned status ${response.status}`
         );
-        // After successful update, refetch orders to move the order to the correct tab
-        fetchOrders();
-        // The selectedOrder will be updated by the fetchOrders logic now
-      } else {
-        console.error("Failed to update order status:", result.error);
-        setError(result.error || "Failed to update order status.");
-        toast.error(result.error || "Failed to update order status.");
       }
-    } catch (err) {
+
+      // Status update successful
+      const result = await response.json(); // API might return a success message
+
+      toast.success(
+        result.message ||
+          `Order ${orderId.substring(0, 8)} status updated to ${newStatus.replace("_", " ")}.`
+      );
+
+      // Refetch orders after successful update to refresh the list and potentially move the order to a different tab
+      // fetchOrders is called here and will also update the selected order based on the new data
+      fetchOrders();
+    } catch (err: any) {
+      // Handle errors that occurred during the API call for status update
       console.error("Error calling status update API:", err);
-      setError("An unexpected error occurred while updating status.");
-      toast.error("An unexpected error occurred while updating status.");
+      const errorMsg =
+        err.message || "An unexpected error occurred while updating status.";
+      setError(errorMsg); // Set error state for status update
+      toast.error(errorMsg); // Show toast
     } finally {
       setIsUpdatingStatus(false);
     }
   };
 
-  // Placeholder handlers (will call handleStatusUpdate)
+  // Placeholder handlers remain the same, they just call handleStatusUpdate
   const handleAccept = (orderId: string) =>
     handleStatusUpdate(orderId, "accepted");
   const handleReject = (orderId: string) =>
@@ -371,28 +348,18 @@ order_item (id, quantity, price, notes, order_id, menu_item_id (name))
     handleStatusUpdate(orderId, "ready");
 
   // --- Render Helpers ---
-
-  const renderOrders = (list: ProcessedVendorOrder[]) => {
-    if (isLoading) {
+  // ... (renderOrdersList remains the same, it just uses the data from ordersData state) ...
+  const renderOrdersList = (list: ProcessedVendorOrder[]) => {
+    if (error && list.length === 0 && !isLoading) {
       return (
-        <div className="flex w-full justify-center items-center p-8">
-          <Loader2 size={24} className="animate-spin text-orange-500" />
-          <p className="ml-2 text-gray-700">Loading orders...</p>
-        </div>
-      );
-    }
-
-    if (error && list.length === 0) {
-      // Only show error if lists are empty
-      return (
-        <div className="text-orange-500 text-center p-8">
+        <div className="text-red-600 text-center p-8">
           <p>{error}</p>
           <p>Could not load orders.</p>
         </div>
       );
     }
 
-    if (!list || list.length === 0) {
+    if (!isLoading && (!list || list.length === 0)) {
       return (
         <div className="text-gray-700 text-center p-8">
           <p>No {activeTab} orders found.</p>
@@ -400,30 +367,30 @@ order_item (id, quantity, price, notes, order_id, menu_item_id (name))
       );
     }
 
+    if (isLoading || (error && list.length === 0)) {
+      return null; // Don't render list if main loading or error state is active
+    }
+
     return (
       <div className="flex flex-col items-left justify-start gap-4 my-4 pb-36">
-        {/* Use flex-col */}
         {list.map((order) => (
           <GlassDivClickable
             key={order.id}
-            className={`w-full ${selectedOrder?.id === order.id ? "!border-blue-500 border-2" : ""}`} // Highlight selected order
+            className={`w-full ${selectedOrder?.id === order.id ? "!border-blue-500 border-2" : ""}`}
             onClick={() => setSelectedOrder(order)}
           >
             <div className="flex justify-between items-center mb-2">
-              <span className="font-semibold text-lg">
+              <span className="font-semibold text-lg text-black">
                 #{order.id.substring(0, 8)}
               </span>
-              {/* Truncate ID */}
               <span className="text-xs text-gray-500">
                 {activeTab === "incoming"
                   ? order.displayTime
                   : order.displayStatus}
-                {/* Show time for incoming, status for others */}
               </span>
             </div>
             <div className="text-sm text-gray-700">
               <p>Customer: {order.customer?.name || "N/A"}</p>
-              {/* Use processed customer name */}
               {order.items && order.items.length > 0 && (
                 <p>
                   Items:
@@ -435,17 +402,18 @@ order_item (id, quantity, price, notes, order_id, menu_item_id (name))
                     .join(", ")}
                 </p>
               )}
-              <p>Total: ₦{order.total_amount?.toFixed(2) || "0.00"}</p>
-              {/* Use processed total */}
+              <p>Total: ₦{order.total_amount?.toFixed(2) || "0.00"}</p>{" "}
+              {/* Use order.total_amount here */}
             </div>
+
             {activeTab === "incoming" && (
               <div className="flex gap-2 mt-4">
                 <GlassButton
-                  className="px-4 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                  className="px-4 py-1 bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleAccept(order.id);
-                  }} // Prevent click on parent div
+                  }}
                   disabled={isUpdatingStatus}
                 >
                   {isUpdatingStatus ? (
@@ -455,11 +423,11 @@ order_item (id, quantity, price, notes, order_id, menu_item_id (name))
                   )}
                 </GlassButton>
                 <GlassButton
-                  className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleReject(order.id);
-                  }} // Prevent click on parent div
+                  }}
                   disabled={isUpdatingStatus}
                 >
                   {isUpdatingStatus ? (
@@ -470,158 +438,208 @@ order_item (id, quantity, price, notes, order_id, menu_item_id (name))
                 </GlassButton>
               </div>
             )}
-            {activeTab === "current" &&
-              order.status !== "ready" &&
-              order.status !== "delivered" &&
-              order.status !== "cancelled" &&
-              order.status !== "rejected" && ( // Only show "Mark Ready" if in a valid current state
-                <div className="mt-4">
-                  <GlassButton
-                    className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleMarkReady(order.id);
-                    }} // Prevent click on parent div
-                    disabled={isUpdatingStatus}
-                  >
-                    {isUpdatingStatus ? (
-                      <Loader2 size={16} className="animate-spin" />
-                    ) : (
-                      "Mark as Ready"
-                    )}
-                  </GlassButton>
-                </div>
-              )}
-            {/* Add other buttons/actions for current tab if needed (e.g., contact customer) */}
+
+            {/* Show Mark Ready in list only if status is accepted */}
+            {activeTab === "current" && order.status === "accepted" && (
+              <div className="mt-4">
+                <GlassButton
+                  className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMarkReady(order.id);
+                  }}
+                  disabled={isUpdatingStatus}
+                >
+                  {isUpdatingStatus ? (
+                    <Loader2 size={16} className="animate-spin" />
+                  ) : (
+                    "Mark as Ready"
+                  )}
+                </GlassButton>
+              </div>
+            )}
           </GlassDivClickable>
         ))}
       </div>
     );
   };
+
   // --- Main Render ---
   return (
-    <div className="p-6 w-full h-full flex flex-col">
-      {/* Use flex-col for layout */}
-      <h1 className="text-2xl font-bold mb-6 text-white">Vendor Orders</h1>
-      {/* Tabs */}
-      <GlassDiv className="flex space-x-4 mb-4 w-auto self-start">
-        {/* self-start to keep tabs left-aligned */}
-        {(["incoming", "current", "completed"] as OrderTabKey[]).map((tab) => (
-          <GlassButton
-            key={tab}
-            className={`px-4 py-2 rounded !shadow-none ${activeTab === tab ? "!bg-black text-white" : "bg-gray-200 text-gray-700"}`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab === "incoming"
-              ? "Incoming"
-              : tab === "current"
-                ? "In Progress"
-                : "Completed"}
-          </GlassButton>
-        ))}
-      </GlassDiv>
-      {/* Orders List and Details Columns */}
-      {/* Use flex-1 to make these columns take available space and fill height */}
-      <div className="flex flex-1 gap-6 min-h-0">
-        {/* min-h-0 crucial for flex items in flex column */}
-        {/* Orders Column */}
-        {/* Set explicit width and make scrollable */}
-        <div className="w-full lg:w-2/3 flex-shrink-0 flex-grow !h-full !overflow-y-scroll glass-scrollbar">
-          {/* Added lg:w-2/3 for responsiveness */}
-          {renderOrders(ordersData[activeTab])} {/* Use state data */}
+    <div className="p-6 w-full h-full flex flex-col text-gray-800">
+      {/* Full component loading state */}
+      {isLoading ? (
+        <div className="flex flex-1 justify-center items-center">
+          <Loader2 size={32} className="animate-spin text-orange-500" />
+          <p className="ml-2 text-gray-700">Loading orders...</p>
         </div>
-        {/* Order Details Column */}
-        {/* Set explicit width */}
-        <div className="hidden lg:block lg:w-1/3 flex-shrink-0 overflow-y-auto glass-scrollbar">
-          {/* Hide on small screens, show on large */}
-          <GlassDiv className="p-4 rounded-2xl shadow-lg bg-gray-100">
-            <h3 className="text-xl font-semibold mb-4">Order Details</h3>
-            {selectedOrder ? (
-              <div className="space-y-2 text-sm">
-                {/* Add some spacing */}
-                <p>
-                  <span className="font-bold">Order ID:</span> #
-                  {selectedOrder.id.substring(0, 8)}
-                </p>
-                {/* Truncate ID */}
-                <p>
-                  <span className="font-medium">Customer:</span>
-                  {selectedOrder.customer?.name || "N/A"}
-                </p>
-                <p>
-                  <span className="font-medium">Phone:</span>
-                  {selectedOrder.customer?.phone || "N/A"}
-                </p>
-                <p>
-                  <span className="font-medium">Status:</span>
-                  {selectedOrder.displayStatus}
-                </p>
-                <p>
-                  <span className="font-medium">Ordered:</span>
-                  {selectedOrder.displayTime}
-                </p>
-                {/* Use display time */}
-                <p>
-                  <span className="font-medium">Total:</span> ₦
-                  {selectedOrder.total_amount?.toFixed(2) || "0.00"}
-                </p>
-                {selectedOrder.special_instructions && (
-                  <p>
-                    <span className="font-medium">Instructions:</span>
-                    <span className="italic text-gray-600">
-                      {selectedOrder.special_instructions}
-                    </span>
-                  </p>
-                )}
-                {selectedOrder.items && selectedOrder.items.length > 0 && (
-                  <div>
-                    <p className="font-medium mt-2 mb-1">Items:</p>
-                    <ul className="list-disc pl-5">
-                      {selectedOrder.items.map((item) => (
-                        <li key={item.id} className="text-gray-700">
-                          <span className="font-semibold">
-                            {item.quantity}x
-                          </span>
-                          {item.menu_item_name || "Unknown Item"} - ₦
-                          {item.price?.toFixed(2) || "0.00"} each
-                          {/* Use menu_item_name */}
-                          {item.notes && (
-                            <span className="text-xs text-gray-500 ml-1">
-                              ({item.notes})
-                            </span>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {selectedOrder.delivery_address && (
-                  <div>
-                    <p className="font-medium mt-2 mb-1">Delivery Address:</p>
-                    <p className="text-gray-700">
-                      {selectedOrder.delivery_address.street}
-                      {selectedOrder.delivery_address.city
-                        ? ", " + selectedOrder.delivery_address.city
-                        : ""}
-                      {selectedOrder.delivery_address.state
-                        ? ", " + selectedOrder.delivery_address.state
-                        : ""}
-                      {selectedOrder.delivery_address.country
-                        ? ", " + selectedOrder.delivery_address.country
-                        : ""}
-                    </p>
-                    {/* Optional: Link to map for delivery address */}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <p className="text-gray-500">
-                Click an order to see its details.
-              </p>
+      ) : (
+        // Main content when not loading
+        <>
+          <h1 className="text-2xl font-bold mb-6 text-gray-800">
+            Vendor Orders
+          </h1>
+          {/* Tabs */}
+          <GlassDiv className="flex space-x-4 mb-4 w-auto self-start">
+            {(["incoming", "current", "completed"] as OrderTabKey[]).map(
+              (tab) => (
+                <GlassButton
+                  key={tab}
+                  className={`px-4 py-2 text-black rounded !shadow-none ${activeTab === tab ? "!bg-black hover:!text-gray-300" : "!bg-gray-200 !text-gray-700"}`}
+                  onClick={() => setActiveTab(tab)}
+                  disabled={isUpdatingStatus} // Disable tab switching while updating status
+                >
+                  {tab === "incoming"
+                    ? `Incoming (${ordersData.incoming.length})`
+                    : tab === "current"
+                      ? `In Progress (${ordersData.current.length})`
+                      : `Completed (${ordersData.completed.length})`}
+                </GlassButton>
+              )
             )}
           </GlassDiv>
-        </div>
-      </div>
+          {/* Orders List and Details Columns */}
+          <div className="flex flex-1 gap-6 min-h-0">
+            {/* Orders Column */}
+            <div className="w-full lg:w-2/3 flex-shrink-0 flex-grow !h-full !overflow-y-scroll glass-scrollbar">
+              {renderOrdersList(ordersData[activeTab])}
+            </div>
+            {/* Order Details Column */}
+            <div className="hidden lg:block lg:w-1/3 flex-shrink-0 overflow-y-auto glass-scrollbar">
+              <GlassDiv className="p-4 rounded-2xl shadow-lg bg-gray-100 h-full">
+                <h3 className="text-xl font-semibold mb-4 text-black">
+                  Order Details
+                </h3>
+                {selectedOrder ? (
+                  <div className="space-y-2 text-sm">
+                    <p>
+                      <span className="font-bold">Order ID:</span> #
+                      {selectedOrder.id.substring(0, 8)}
+                    </p>
+                    <p>
+                      <span className="font-medium">Customer:</span>
+                      {selectedOrder.customer?.name || "N/A"}
+                    </p>
+                    <p>
+                      <span className="font-medium">Phone:</span>
+                      {selectedOrder.customer?.phone || "N/A"}
+                    </p>
+                    <p>
+                      <span className="font-medium">Status:</span>
+                      {selectedOrder.displayStatus}
+                    </p>
+                    <p>
+                      <span className="font-medium">Ordered:</span>
+                      {selectedOrder.displayTime}
+                    </p>
+                    <p>
+                      <span className="font-medium">Total:</span> ₦
+                      {selectedOrder.total_amount?.toFixed(2) || "0.00"}
+                    </p>
+                    {selectedOrder.special_instructions && (
+                      <p>
+                        <span className="font-medium">Instructions:</span>
+                        <span className="italic text-gray-600">
+                          {selectedOrder.special_instructions}
+                        </span>
+                      </p>
+                    )}
+                    {selectedOrder.items && selectedOrder.items.length > 0 && (
+                      <div>
+                        <p className="font-medium mt-2 mb-1">Items:</p>
+                        <ul className="list-disc pl-5">
+                          {selectedOrder.items.map((item) => (
+                            <li key={item.id} className="text-gray-700">
+                              <span className="font-semibold">
+                                {item.quantity}x
+                              </span>
+                              {item.menu_item_name || "Unknown Item"} - ₦
+                              {item.price?.toFixed(2) || "0.00"} each
+                              {item.notes && (
+                                <span className="text-xs text-gray-500 ml-1">
+                                  ({item.notes})
+                                </span>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {selectedOrder.delivery_address && (
+                      <div>
+                        <p className="font-medium mt-2 mb-1">
+                          Delivery Address:
+                        </p>
+                        <p className="text-gray-700">
+                          {selectedOrder.delivery_address.street}
+                          {selectedOrder.delivery_address.city
+                            ? ", " + selectedOrder.delivery_address.city
+                            : ""}
+                          {selectedOrder.delivery_address.state
+                            ? ", " + selectedOrder.delivery_address.state
+                            : ""}
+                          {selectedOrder.delivery_address.country
+                            ? ", " + selectedOrder.delivery_address.country
+                            : ""}
+                        </p>
+                      </div>
+                    )}
+                    {selectedOrder.status === "pending" && (
+                      <div className="flex gap-2 mt-4">
+                        <GlassButton
+                          onClick={() => handleAccept(selectedOrder.id)}
+                          className="px-4 py-1 bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50"
+                          disabled={isUpdatingStatus}
+                        >
+                          {isUpdatingStatus ? (
+                            <Loader2 size={16} className="animate-spin" />
+                          ) : (
+                            "Accept"
+                          )}
+                        </GlassButton>
+                        <GlassButton
+                          onClick={() => handleReject(selectedOrder.id)}
+                          className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
+                          disabled={isUpdatingStatus}
+                        >
+                          {isUpdatingStatus ? (
+                            <Loader2 size={16} className="animate-spin" />
+                          ) : (
+                            "Reject"
+                          )}
+                        </GlassButton>
+                      </div>
+                    )}
+                    {selectedOrder.status === "accepted" && (
+                      <div className="mt-4">
+                        <GlassButton
+                          onClick={() => handleMarkReady(selectedOrder.id)}
+                          className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                          disabled={isUpdatingStatus}
+                        >
+                          {isUpdatingStatus ? (
+                            <Loader2 size={16} className="animate-spin" />
+                          ) : (
+                            "Mark as Ready"
+                          )}
+                        </GlassButton>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-gray-500">
+                    Click an order to see its details.
+                  </p>
+                )}
+              </GlassDiv>
+            </div>
+          </div>
+        </>
+      )}
+
+      {!isLoading && error && ordersData[activeTab].length === 0 && (
+        <div className="w-full text-red-600 text-center mt-4">{error}</div>
+      )}
     </div>
   );
 };

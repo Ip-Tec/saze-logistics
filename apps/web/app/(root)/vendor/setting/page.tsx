@@ -1,7 +1,7 @@
 // apps/web/app/(root)/vendor/setting/page.tsx
 "use client";
 
-import { toast } from "react-toastify"; // Keep toast import
+import { toast } from "react-toastify";
 import React, { useState, useEffect } from "react";
 
 import { useVendor } from "@/context/VendorContext";
@@ -119,12 +119,14 @@ export default function VendorSettingsPage() {
           )}
         </div>
       </div>
+
       {/* Display global update error from context */}
       {updateProfileError && (
         <div className="w-full text-red-600 text-sm mt-2">
           Profile Update Error: {updateProfileError.message}
         </div>
       )}
+
       {/* Render Section Components */}
       <ProfileImageSection
         profile={fetchedProfile}

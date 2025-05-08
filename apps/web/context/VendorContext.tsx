@@ -95,7 +95,6 @@ export const VendorProvider: React.FC<{ children: ReactNode }> = ({
   // individual function calls return errors.
   // Use user.id directly as vendorId
   const vendorId = user?.id;
-  console.log({ user, isCheckingAuth, vendorId });
 
   const [categories, setCategories] = useState<MenuCategory[]>([]); // Add state for vendor profile
   const [vendorProfile, setVendorProfile] = useState<VendorProfileType | null>(
@@ -160,8 +159,6 @@ export const VendorProvider: React.FC<{ children: ReactNode }> = ({
           setVendorProfile(profile); // Store the fetched profile data
         } // Check if the fetched profile exists and has the 'vendor' role
 
-        console.log("Checking profile role:", profile?.role); // Log role check
-
         if (!profile || profile.role !== "vendor") {
           // User is authenticated but not a vendor or profile fetch failed critically
           console.log(
@@ -184,7 +181,6 @@ export const VendorProvider: React.FC<{ children: ReactNode }> = ({
           .eq("vendor_id", user.id) // Use user.id as vendor_id
           .order("name", { ascending: true });
 
-        console.log("Fetched categories:", catData);
         if (catErr) {
           console.error("Error fetching categories:", catErr);
           setFetchError(catErr); // Overwrite previous profile error if category fails

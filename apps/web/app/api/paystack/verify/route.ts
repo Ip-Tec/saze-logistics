@@ -45,14 +45,29 @@ export async function POST(req: NextRequest) {
       { status: 402 }
     );
   }
+  // 2) Derive vendor_id from the first cart item
+  const firstItemId = body.cart[0].menu_item_id;
+  const { data: menuItem, error: menuErr } = await supabase
+    .from("menu_item")
+    .select("vendor_id")
+    .eq("id", firstItemId)
+    .single();
 
-  // const userId = body.userId || paystackJson.data.customer.id; // customer UUID
-
-  // 2) Insert into `order`
+  if (menuErr || !menuItem?.vendor_id) {
+    console.error("Could not determine vendor:", menuErr);
+    return NextResponse.json(
+      { error: "Could not determine vendor for this order" },
+      { status: 500 }
+    );
+  }
+  const vendorId = menuItem.vendor_id;
+  
+  
+  // 3) Insert into `order` with both user_id and vendor_id
   const { data: order, error: orderErr } = await supabase
     .from("order")
     .insert<Database["public"]["Tables"]["order"]["Insert"]>({
-      vendor_id: null,
+      vendor_id: vendorId,
       rider_id: null,
       user_id: body.userId,
       total_amount: paystackJson.data.amount / 100,
@@ -72,12 +87,10 @@ export async function POST(req: NextRequest) {
     console.error(orderErr);
     return NextResponse.json({ error: "Could not create order" }, { status: 500 });
   }
-
-  // ----> Capture the new order ID
   const orderId = order.id;
 
-  // 3) Insert order items
-  const orderItems = body.cart.map((ci) => ({
+   // 4) Insert order items
+   const orderItems = body.cart.map((ci) => ({
     order_id: orderId,
     menu_item_id: ci.menu_item_id,
     price: ci.price,
@@ -86,40 +99,20 @@ export async function POST(req: NextRequest) {
   const { error: itemsErr } = await supabase
     .from("order_item")
     .insert<Database["public"]["Tables"]["order_item"]["Insert"]>(orderItems);
-
   if (itemsErr) {
     console.error(itemsErr);
     return NextResponse.json({ error: "Could not create order items" }, { status: 500 });
   }
 
-  // 4a) Push a row into `notification` for the vendor
-  //    Replace `vendorId` with your real logic (e.g. from order.metadata or from the items)
-  const vendorId = /* fetch or derive vendor UUID here */ "";
-  await supabase
-    .from("notification")
-    .insert<Database["public"]["Tables"]["notification"]["Insert"]>({
-      user_id: vendorId,
-      title: "New order received",
-      body: `Order ${orderId} has been placed.`,
-      read: false,
-      metadata: { orderId },
-      created_at: new Date().toISOString(),
-    });
-
-  // 4b) Push a row for the assigned rider (if any)
-  const riderId = /* maybe null or a rider UUID */ "";
-  if (riderId) {
-    await supabase
-      .from("notification")
-      .insert<Database["public"]["Tables"]["notification"]["Insert"]>({
-        user_id: riderId,
-        title: "New delivery assigned",
-        body: `You have a new delivery: order ${orderId}.`,
-        read: false,
-        metadata: { orderId },
-        created_at: new Date().toISOString(),
-      });
-  }
+  // 5) Create notifications
+  await supabase.from("notification").insert({
+    user_id: vendorId,
+    title: "New order received",
+    body: `Order ${orderId} has been placed.`,
+    read: false,
+    metadata: { orderId },
+    created_at: new Date().toISOString(),
+  });
 
   return NextResponse.json({ success: true, orderId });
 }
