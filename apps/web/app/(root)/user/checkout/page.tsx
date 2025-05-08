@@ -1,8 +1,12 @@
-import React from 'react'
-import CheckoutClient from "@/app/(root)/user/checkout/CheckoutClient";
+// app/(root)/user/checkout/page.tsx
+import dynamic from "next/dynamic";
+import React from "react";
+
+const CheckoutClient = dynamic(
+  () => import("./CheckoutClient"),
+  { ssr: false }  // ← skip SSR completely
+);
 
 export default function CheckOutPage() {
-  return (
-    <CheckoutClient />
-  )
+  return <CheckoutClient />;
 }
