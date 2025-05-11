@@ -25,7 +25,8 @@ if (!supabaseUrl || !supabaseServiceRoleKey) {
 
 // Create a single Supabase client for the server-side
 // Using the service_role key bypasses Row Level Security (RLS)
-const supabase = createClient(supabaseUrl!,  supabaseKey!);
+const supabase = createClient(supabaseUrl!,  supabaseServiceRoleKey!);
+
 
 // Define your Supabase Storage bucket name
 const SUPABASE_STORAGE_BUCKET = "sazzefile";

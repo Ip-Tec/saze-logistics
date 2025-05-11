@@ -152,7 +152,10 @@ export default function RegisterContent() {
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <label className="block">
-                <span className="text-gray-700">Full Name:</span>
+                <span className="text-gray-700">
+                  {role == "vendor" ? "Business Name" : "Full Name:"}
+                </span>
+
                 <input
                   type="text"
                   {...register("name", { required: "Full Name is required." })}

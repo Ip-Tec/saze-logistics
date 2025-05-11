@@ -110,6 +110,7 @@ export default function BusinessInfoSection({
             <Input
               label="Business Name"
               value={name || ""}
+              placeholder="Enter business name"
               onChange={setName}
               disabled={isActionDisabled}
               inputClass="!text-black placeholder:!text-gray-400"

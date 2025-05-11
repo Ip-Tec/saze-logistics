@@ -10,6 +10,7 @@ import {
   ShipmentCreationResponse,
 } from "@shared/types";
 
+import Modal from "@/components/ui/Modal";
 // Import the new components
 import VendorTabs from "@/components/vendor/product/VendorTabs";
 import ProductList from "@/components/vendor/product/ProductList";
@@ -51,6 +52,9 @@ const VendorLogisticsPage: React.FC = () => {
   const [shipmentSubmissionStatus, setShipmentSubmissionStatus] = useState<
     string | null
   >(null);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [productToDelete, setProductToDelete] = useState<Product | null>(null);
 
   // --- Fetch Categories on mount ---
   useEffect(() => {
@@ -128,78 +132,70 @@ const VendorLogisticsPage: React.FC = () => {
     setEditingProduct(product);
     // Modal will open via useEffect in ProductFormModal when editingProduct changes
   };
+  const handleDeleteProduct = (product: Product) => {
+    setProductToDelete(product);
+    setShowDeleteModal(true);
+    confirmDeleteProduct();
+  };
+  
+const confirmDeleteProduct = async () => {
+  if (!productToDelete) return;
 
-  const handleDeleteProduct = async (productId: string) => {
-    if (
-      confirm(
-        "Are you sure you want to delete this product? This action cannot be undone."
-      )
-    ) {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
-        toast.error("You must be logged in to delete products.");
-        return;
-      }
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-      setError(null);
+  if (!user) {
+    toast.error("You must be logged in to delete products.");
+    return;
+  }
 
-      // Find the product locally before deleting from DB to get its image URL
-      const productToDelete = vendorProducts.find((p) => p.id === productId);
+  const { id: productId, image_url } = productToDelete;
 
-      // --- Supabase Delete Call ---
-      const { error: deleteError } = await supabase
-        .from("products")
-        .delete()
-        .eq("id", productId)
-        .eq("vendor_id", user.id);
+  setError(null);
 
-      if (deleteError) {
-        console.error("Error deleting product:", deleteError);
-        setError(`Failed to delete product: ${deleteError.message}`);
-      } else {
-        // --- Update local state optimistically ---
-        setVendorProducts(vendorProducts.filter((p) => p.id !== productId));
-        toast.success("Product deleted successfully!");
+  const { error: deleteError } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", productId)
+    .eq("vendor_id", user.id);
 
-        // Optional: Delete image from storage using your API or Supabase client
-        if (productToDelete?.image_url) {
-          try {
-            // Extract storage path from URL
-            const imagePath = productToDelete.image_url;
-            if (imagePath && imagePath !== productToDelete.image_url) {
-              // Basic check if path extraction worked
-              // Call your API route to delete the image securely
-              // You need to create a separate API route for deletion if you want it server-side
-              const deleteResponse = await fetch("/api/delete-image", {
-                method: "DELETE", // Or DELETE
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ imagePath: imagePath }), // Pass the storage path
-              });
-              if (!deleteResponse.ok) {
-                const errorData = await deleteResponse.json();
-                console.error("Image delete API error:", errorData);
-              } else {
-                console.log("Old image deleted from storage:", imagePath);
-              }
+  if (deleteError) {
+    console.error("Error deleting product:", deleteError);
+    setError(`Failed to delete product: ${deleteError.message}`);
+  } else {
+    setVendorProducts(vendorProducts.filter((p) => p.id !== productId));
+    toast.success("Product deleted successfully!");
 
-              const { error: storageError } = await supabase.storage
-                .from("sazzefile")
-                .remove([imagePath]); // !! Adjust bucket name
-              if (storageError)
-                console.error(
-                  "Error deleting old image from storage:",
-                  storageError
-                );
-            }
-          } catch (e) {
-            console.error("Failed to parse or delete old image URL:", e);
-          }
+    // Optionally delete the image
+    if (image_url) {
+      try {
+        const deleteResponse = await fetch("/api/delete-image", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ imagePath: image_url }),
+        });
+        if (!deleteResponse.ok) {
+          const errorData = await deleteResponse.json();
+          console.error("Image delete API error:", errorData);
         }
+
+        const { error: storageError } = await supabase.storage
+          .from("sazzefile")
+          .remove([image_url]);
+
+        if (storageError)
+          console.error("Error deleting image from storage:", storageError);
+      } catch (e) {
+        console.error("Failed to delete image from storage:", e);
       }
     }
-  };
+  }
+
+  setShowDeleteModal(false);
+  setProductToDelete(null);
+};
+
 
   const handleToggleHideProduct = async (
     productId: string,

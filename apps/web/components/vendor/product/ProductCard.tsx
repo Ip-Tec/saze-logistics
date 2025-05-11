@@ -4,6 +4,7 @@ import React from "react";
 // --- Import Supabase types ---
 // Adjust the path based on where your shared supabase/types.ts file is located
 import { Database } from "@shared/supabase/types";
+import Image from "next/image";
 
 // --- Use the exact Supabase Row types ---
 // This ensures the type matches the data structure from your DB query
@@ -36,10 +37,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
               {/* Use product.image_url (already correct) */}
        
-      <img
+      <Image
         src={
           product.image_url || "https://via.placeholder.com/150?text=No+Image"
         }
+        width={150}
+        height={150}
         alt={product.name}
         className="w-full h-40 object-cover"
       />
@@ -66,7 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="mt-4 flex justify-between items-center text-sm">
           <button // onEdit expects the entire product object (with snake_case)
             onClick={() => onEdit(product)}
-            className="text-blue-600 hover:text-blue-800 font-medium"
+            className="text-blue-600 cursor-pointer hover:text-blue-800 font-medium"
           >
             
             Edit
@@ -74,14 +77,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
           <button // onToggleHide expects product.id (string) and the current is_hidden state
             onClick={() => onToggleHide(product.id, !product.is_hidden)}
-            className={`${product.is_hidden ? "text-green-600 hover:text-green-800" : "text-yellow-600 hover:text-yellow-800"} font-medium`}
+            className={` cursor-pointer ${product.is_hidden ? "text-green-600 hover:text-green-800" : "text-yellow-600 hover:text-yellow-800"} font-medium`}
           >
             {product.is_hidden ? "Unhide" : "Hide"}
           </button>
 
           <button // onDelete expects product.id (string)
             onClick={() => onDelete(product.id)}
-            className="text-red-600 hover:text-red-800 font-medium"
+            className="text-red-600 cursor-pointer hover:text-red-800 font-medium"
           >
             
             Delete

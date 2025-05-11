@@ -13,7 +13,7 @@ interface ProductListProps {
   onAddProductClick: () => void;
 
   onEditProduct: (product: Product) => void;
-  onDeleteProduct: (productId: string) => void;
+  onDeleteProduct: (product: Product) => void;
   onToggleHideProduct: (productId: string, isHidden: boolean) => void;
 }
 
@@ -45,7 +45,7 @@ const ProductList: React.FC<ProductListProps> = ({
             product={product}
             categories={categories}
             onEdit={onEditProduct}
-            onDelete={() => onDeleteProduct(product.id)}
+            onDelete={() => onDeleteProduct(product)}
             onToggleHide={() =>
               onToggleHideProduct(product.id, !product.is_hidden)
             }
