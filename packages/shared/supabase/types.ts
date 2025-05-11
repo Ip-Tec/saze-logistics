@@ -123,7 +123,38 @@ export type Database = {
             referencedRelation: "menu_item"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "cart_item_menu_item_id_fkey"
+            columns: ["menu_item_id"]
+            isOneToOne: false
+            referencedRelation: "random_menu_items"
+            referencedColumns: ["id"]
+          },
         ]
+      }
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       conversation: {
         Row: {
@@ -328,6 +359,13 @@ export type Database = {
             columns: ["menu_item_id"]
             isOneToOne: false
             referencedRelation: "menu_item"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "menu_item_image_menu_item_id_fkey"
+            columns: ["menu_item_id"]
+            isOneToOne: false
+            referencedRelation: "random_menu_items"
             referencedColumns: ["id"]
           },
         ]
@@ -580,6 +618,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "order_item_menu_item_id_fkey"
+            columns: ["menu_item_id"]
+            isOneToOne: false
+            referencedRelation: "random_menu_items"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "order_item_order_id_fkey"
             columns: ["order_id"]
             isOneToOne: false
@@ -620,10 +665,68 @@ export type Database = {
           },
         ]
       }
+      products: {
+        Row: {
+          available_quantity: number
+          category_id: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_hidden: boolean
+          name: string
+          unit_price: number
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          available_quantity: number
+          category_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_hidden?: boolean
+          name: string
+          unit_price: number
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          available_quantity?: number
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_hidden?: boolean
+          name?: string
+          unit_price?: number
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           address: string | null
           banner_url: string | null
+          cac: string | null
           created_at: string | null
           description: string | null
           email: string
@@ -631,17 +734,18 @@ export type Database = {
           licensePlate: string | null
           logo_url: string | null
           name: string
+          nin: string | null
           phone: string
           rider_image_url: string | null
           role: string
           second_phone: string | null
           vehicle_image_url: string | null
           vehicleType: string | null
-          nin: string | null
         }
         Insert: {
           address?: string | null
           banner_url?: string | null
+          cac?: string | null
           created_at?: string | null
           description?: string | null
           email: string
@@ -649,6 +753,7 @@ export type Database = {
           licensePlate?: string | null
           logo_url?: string | null
           name: string
+          nin?: string | null
           phone: string
           rider_image_url?: string | null
           role?: string
@@ -659,6 +764,7 @@ export type Database = {
         Update: {
           address?: string | null
           banner_url?: string | null
+          cac?: string | null
           created_at?: string | null
           description?: string | null
           email?: string
@@ -666,6 +772,7 @@ export type Database = {
           licensePlate?: string | null
           logo_url?: string | null
           name?: string
+          nin?: string | null
           phone?: string
           rider_image_url?: string | null
           role?: string
@@ -700,10 +807,30 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      random_menu_items: {
+        Row: {
+          description: string | null
+          id: string | null
+          image_urls: string[] | null
+          name: string | null
+          price: number | null
+          vendor_name: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      get_random_menu_items: {
+        Args: { lim: number }
+        Returns: {
+          id: string
+          name: string
+          price: number
+          description: string
+          vendor_name: string
+          image_urls: string[]
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

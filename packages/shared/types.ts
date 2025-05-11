@@ -1,3 +1,5 @@
+// packages\shared\types.ts
+
 import { Database } from "./supabase/types";
 
 // Base interface for all user types
@@ -285,3 +287,35 @@ export type AddCategoryFormPayload = {
   description: string | null;
 };
 
+
+// Derived Supabase types
+export type Product = Database["public"]["Tables"]["products"]["Row"];
+export type ProductInsert = Database["public"]["Tables"]["products"]["Insert"];
+export type ProductUpdate = Database["public"]["Tables"]["products"]["Update"];
+export type Category = Database["public"]["Tables"]["categories"]["Row"];
+
+// Product Form Data type (used by the form and passed to onSubmit)
+// Ensure 'id' is string | undefined to match Supabase UUIDs
+export interface ProductFormData {
+  id?: string;
+  name: string;
+  unitPrice: number; 
+  availableQuantity: number; 
+  category: string;
+  description?: string;
+}
+
+// Shipment related types (keep here or in another shared file)
+export interface ShipmentFormData {
+  recipientName: string;
+  recipientAddress: string;
+  packageWeight: number;
+  packageDimensions: string;
+  serviceType: "standard" | "express" | "international";
+}
+
+export interface ShipmentCreationResponse {
+  success: boolean;
+  trackingNumber?: string;
+  message: string;
+}

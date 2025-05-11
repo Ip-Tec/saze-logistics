@@ -1,26 +1,46 @@
+// app/vendor/VendorLogisticsPage.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { supabase } from "@shared/supabaseClient";
+import { Database } from "@shared/supabase/types";
+import {
+  ProductFormData,
+  ShipmentFormData,
+  ShipmentCreationResponse,
+} from "@shared/types";
 
-// Define types for form data and potentially a simulated response
-interface ShipmentFormData {
-  recipientName: string;
-  recipientAddress: string;
-  packageWeight: number;
-  packageDimensions: string; // e.g., "10x20x15 cm"
-  serviceType: "standard" | "express" | "international";
-}
+// Import the new components
+import VendorTabs from "@/components/vendor/product/VendorTabs";
+import ProductList from "@/components/vendor/product/ProductList";
+import ShipmentForm from "@/components/vendor/product/ShipmentForm";
+import ProductFormModal from "@/components/vendor/product/ProductFormModal";
+import { toast, ToastContainer } from "react-toastify";
 
-interface ShipmentCreationResponse {
-  success: boolean;
-  trackingNumber?: string;
-  message: string;
-}
+// --- Derive Types Directly from your Database type ---
+type Product = Database["public"]["Tables"]["products"]["Row"];
+type ProductInsert = Database["public"]["Tables"]["products"]["Insert"];
+type ProductUpdate = Database["public"]["Tables"]["products"]["Update"];
+type Category = Database["public"]["Tables"]["categories"]["Row"];
 
 const VendorLogisticsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
-    "sending" | "receiving" | "selling"
-  >("sending");
+    "sending" | "receiving" | "selling" | "products"
+  >("products");
+
+  // --- State for fetching data and handling loading/errors ---
+  const [vendorProducts, setVendorProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // --- State for controlling form/modal visibility ---
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
+  const [showCreateShipmentForm, setShowCreateShipmentForm] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+
+  // State for Shipment form (kept for context)
   const [shipmentFormData, setShipmentFormData] = useState<ShipmentFormData>({
     recipientName: "",
     recipientAddress: "",
@@ -28,9 +48,412 @@ const VendorLogisticsPage: React.FC = () => {
     packageDimensions: "",
     serviceType: "standard",
   });
-  const [submissionStatus, setSubmissionStatus] = useState<string | null>(null);
+  const [shipmentSubmissionStatus, setShipmentSubmissionStatus] = useState<
+    string | null
+  >(null);
 
-  const handleInputChange = (
+  // --- Fetch Categories on mount ---
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setIsLoadingCategories(true);
+      const { data, error: fetchError } = await supabase
+        .from("categories")
+        .select("*");
+
+      if (fetchError) {
+        console.error("Error fetching categories:", fetchError);
+        setError("Failed to load categories.");
+      } else {
+        setCategories(data || []);
+      }
+      setIsLoadingCategories(false);
+    };
+
+    fetchCategories();
+  }, []);
+
+  // --- Fetch Vendor Products when tab is 'products' ---
+  const fetchVendorProducts = useCallback(async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setError("You must be logged in to view your products.");
+      setIsLoadingProducts(false);
+      setVendorProducts([]);
+      return;
+    }
+
+    setIsLoadingProducts(true);
+    setError(null);
+
+    const { data, error: fetchError } = await supabase
+      .from("products")
+      .select("*")
+      .eq("vendor_id", user.id);
+
+    if (fetchError) {
+      console.error("Error fetching products:", fetchError);
+      setError(`Failed to load your products: ${fetchError.message}`);
+      setVendorProducts([]);
+    } else {
+      setVendorProducts(data || []);
+    }
+    setIsLoadingProducts(false);
+  }, []);
+
+  useEffect(() => {
+    if (activeTab === "products" && !isLoadingCategories) {
+      fetchVendorProducts();
+    }
+  }, [activeTab, isLoadingCategories, fetchVendorProducts]);
+
+  // --- Handler for Tab Change ---
+  const handleTabChange = (
+    tab: "sending" | "receiving" | "selling" | "products"
+  ) => {
+    setActiveTab(tab);
+    setShowCreateShipmentForm(false);
+    handleCloseProductModal();
+  };
+
+  // --- Handlers for Product Actions (passed to ProductList/ProductCard) ---
+  const handleAddProductClick = () => {
+    setEditingProduct(null);
+    setShowAddProductModal(true);
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct(product);
+    // Modal will open via useEffect in ProductFormModal when editingProduct changes
+  };
+
+  const handleDeleteProduct = async (productId: string) => {
+    if (
+      confirm(
+        "Are you sure you want to delete this product? This action cannot be undone."
+      )
+    ) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error("You must be logged in to delete products.");
+        return;
+      }
+
+      setError(null);
+
+      // Find the product locally before deleting from DB to get its image URL
+      const productToDelete = vendorProducts.find((p) => p.id === productId);
+
+      // --- Supabase Delete Call ---
+      const { error: deleteError } = await supabase
+        .from("products")
+        .delete()
+        .eq("id", productId)
+        .eq("vendor_id", user.id);
+
+      if (deleteError) {
+        console.error("Error deleting product:", deleteError);
+        setError(`Failed to delete product: ${deleteError.message}`);
+      } else {
+        // --- Update local state optimistically ---
+        setVendorProducts(vendorProducts.filter((p) => p.id !== productId));
+        toast.success("Product deleted successfully!");
+
+        // Optional: Delete image from storage using your API or Supabase client
+        if (productToDelete?.image_url) {
+          try {
+            // Extract storage path from URL
+            const imagePath = productToDelete.image_url;
+            if (imagePath && imagePath !== productToDelete.image_url) {
+              // Basic check if path extraction worked
+              // Call your API route to delete the image securely
+              // You need to create a separate API route for deletion if you want it server-side
+              const deleteResponse = await fetch("/api/delete-image", {
+                method: "DELETE", // Or DELETE
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ imagePath: imagePath }), // Pass the storage path
+              });
+              if (!deleteResponse.ok) {
+                const errorData = await deleteResponse.json();
+                console.error("Image delete API error:", errorData);
+              } else {
+                console.log("Old image deleted from storage:", imagePath);
+              }
+
+              const { error: storageError } = await supabase.storage
+                .from("sazzefile")
+                .remove([imagePath]); // !! Adjust bucket name
+              if (storageError)
+                console.error(
+                  "Error deleting old image from storage:",
+                  storageError
+                );
+            }
+          } catch (e) {
+            console.error("Failed to parse or delete old image URL:", e);
+          }
+        }
+      }
+    }
+  };
+
+  const handleToggleHideProduct = async (
+    productId: string,
+    isHidden: boolean
+  ) => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      toast.warning("You must be logged in to update products.");
+      return;
+    }
+
+    setError(null);
+
+    // --- Supabase Update Call ---
+    const { data, error: updateError } = await supabase
+      .from("products")
+      .update({ is_hidden: isHidden } as ProductUpdate)
+      .eq("id", productId)
+      .eq("vendor_id", user.id)
+      .select()
+      .single();
+
+    if (updateError) {
+      console.error(
+        `Error ${isHidden ? "hiding" : "unhiding"} product:`,
+        updateError
+      );
+      setError(
+        `Failed to ${isHidden ? "hide" : "unhide"} product: ${updateError.message}`
+      );
+    } else {
+      if (data) {
+        setVendorProducts(
+          vendorProducts.map((p) => (p.id === productId ? data : p))
+        );
+      }
+      toast.success(`Product ${isHidden ? "hid" : "unhid"} successfully!`);
+    }
+  };
+
+  // --- Handler for Product Form Submission (passed to ProductFormModal) ---
+  const handleProductFormSubmit = async (
+    formData: ProductFormData,
+    imageFile: File | null
+  ) => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      // This error will be caught by the modal's try/catch
+      throw new Error("You must be logged in to add/edit products.");
+    }
+
+    setError(null);
+
+    // Start with the existing image_url if editing and no new file is selected
+    // This variable will hold the URL that will be saved to the database
+    let imageUrlToSave: string | null = editingProduct?.image_url || null;
+
+    // 1. Handle Image Upload using the API route IF a new file is selected
+    if (imageFile) {
+      const formDataApi = new FormData();
+      formDataApi.append("image", imageFile); // Append the file under the key 'image'
+      // Your API route might expect the vendor ID for structuring storage paths securely
+      // formDataApi.append('vendorId', user.id);
+
+      try {
+        console.log("Uploading image via API...");
+        const response = await fetch("/api/upload-image", {
+          // Call your API route
+          method: "POST",
+          body: formDataApi, // Send the FormData object
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Image upload API error response:", errorData);
+          // Throw the error so the modal's onSubmit can catch it
+          throw new Error(
+            errorData.error ||
+              `Image upload failed with status ${response.status}.`
+          );
+        }
+
+        const result = await response.json();
+        if (!result.url) {
+          console.error("Image upload API did not return a URL:", result);
+          throw new Error("Image upload API did not return a valid URL.");
+        }
+        imageUrlToSave = result.url; // Get the public URL from the API response
+
+        console.log("Image uploaded successfully. URL:", imageUrlToSave);
+
+        // Image deletion of the old one (if editing) should happen securely on the backend.
+        // You could modify your upload API to accept the old image URL/path and delete it
+        // as part of the upload process, using the service role key.
+        // Example (concept, implement in API):
+        // if (editingProduct?.image_url) {
+        //     // Call a backend function or endpoint to delete old image
+        //     await fetch('/api/delete-image', { ... body: { imageUrl: editingProduct.image_url } });
+        // }
+      } catch (apiError: any) {
+        console.error("Error calling image upload API:", apiError);
+        // Propagate the error so the modal can display it
+        throw new Error(`Image upload failed: ${apiError.message}`);
+      }
+    } else {
+      // If no new file is selected, the image URL to save remains
+      // the existing one (from editingProduct?.image_url) OR null if adding.
+      // If you add a "Clear Image" checkbox to the form, you would check that here
+      // and set imageUrlToSave = null if it's checked, AND call your delete API.
+      console.log("No new image file selected. Keeping existing URL or null.");
+    }
+
+    // 2. Get Category ID from Name
+    const selectedCategory = categories.find(
+      (cat) => cat.name === formData.category
+    );
+    if (!selectedCategory) {
+      // This indicates a mismatch between available categories and selected one
+      console.error("Category not found:", formData.category);
+      throw new Error(`Invalid category selected: ${formData.category}`);
+    }
+    const categoryId = selectedCategory.id;
+
+    // 3. Insert or Update Product in Supabase
+    if (formData.id) {
+      // Editing existing product (ID exists)
+      // Use ProductUpdate type to ensure correct structure for update payload
+      const productUpdatePayload: ProductUpdate = {
+        name: formData.name,
+        unit_price: formData.unitPrice,
+        available_quantity: formData.availableQuantity,
+        category_id: categoryId,
+        image_url: imageUrlToSave, // Use the determined image URL (new, existing, or null)
+        description: formData.description,
+        // vendor_id, is_hidden, created_at, updated_at are not typically updated directly here
+      };
+
+      console.log("Updating product in DB:", productUpdatePayload);
+      // --- Supabase Update Call ---
+      const { data, error: updateError } = await supabase
+        .from("products")
+        .update(productUpdatePayload) // Pass the typed payload
+        .eq("id", formData.id) // Match the product ID
+        .eq("vendor_id", user.id) // Double check vendor ownership (important for RLS)
+        .select() // Select the updated row to get the latest data
+        .single(); // Expecting one row back
+
+      if (updateError) {
+        console.error("Error updating product in DB:", updateError);
+        // Throw the error so the modal's onSubmit can catch it
+        throw new Error(`Product update failed: ${updateError.message}`);
+      }
+
+      console.log("Product updated successfully in DB:", data);
+      // --- Update local state with the updated product data ---
+      if (data) {
+        setVendorProducts(
+          vendorProducts.map((p) =>
+            // Ensure we're updating the correct product with the returned data
+            p.id === data.id ? data : p
+          )
+        );
+      }
+      toast.success("Product updated successfully!");
+    } else {
+      // Adding new product (no ID)
+      // Use ProductInsert type for the insert payload
+      const productInsertPayload: ProductInsert = {
+        vendor_id: user.id,
+        category_id: categoryId,
+        name: formData.name,
+        unit_price: formData.unitPrice,
+        available_quantity: formData.availableQuantity,
+        image_url: imageUrlToSave, // Use the determined image URL (uploaded or null)
+        is_hidden: false, // New products are visible by default
+        description: formData.description,
+      };
+
+      console.log("Inserting new product into DB:", productInsertPayload);
+      // --- Supabase Insert Call ---
+      const { data, error: insertError } = await supabase
+        .from("products")
+        .insert(productInsertPayload) // Pass the typed payload
+        .select() // Select the newly inserted row to get its generated ID and timestamps
+        .single(); // Expecting one row back
+
+      if (insertError) {
+        console.error("Error adding product to DB:", insertError);
+        // Throw the error so the modal's onSubmit can catch it
+        throw new Error(`Product creation failed: ${insertError.message}`);
+      }
+
+      console.log("New product added successfully to DB:", data);
+      // --- Update local state with the new product data ---
+      if (data) {
+        setVendorProducts([...vendorProducts, data]);
+      }
+      toast.success("Product added successfully!");
+    }
+
+    // The modal's onSubmit handler in ProductFormModal should
+    // call onClose() if this function completes successfully (which it will
+    // if no errors were thrown above).
+  };
+
+  // --- Handler for Shipment Form Submission (kept for context) ---
+  // (No changes)
+  const handleShipmentFormSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    setShipmentSubmissionStatus("Submitting shipment...");
+
+    // --- DEMO LOGIC: Replace with Supabase/API call to create shipment ---
+    console.log("Submitting shipment data:", shipmentFormData);
+    // In a real app, you would likely insert a row into a 'shipments' table
+    // linking to the vendor_id and the relevant order/product info.
+    // const { data, error } = await supabase.from('shipments').insert({...}).select().single();
+
+    await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API delay
+
+    const simulatedResponse: ShipmentCreationResponse = {
+      success: true,
+      trackingNumber: `TRK${Math.floor(Math.random() * 1000000)}`,
+      message: "Shipment created successfully!",
+    };
+    // --- END DEMO LOGIC ---
+
+    if (simulatedResponse.success) {
+      setShipmentSubmissionStatus(
+        `Success: ${simulatedResponse.message} Tracking Number: ${simulatedResponse.trackingNumber}`
+      );
+      // Hide the form on success
+      setShowCreateShipmentForm(false);
+      setShipmentFormData({
+        // Reset form
+        recipientName: "",
+        recipientAddress: "",
+        packageWeight: 0,
+        packageDimensions: "",
+        serviceType: "standard",
+      });
+    } else {
+      setShipmentSubmissionStatus(`Error: ${simulatedResponse.message}`);
+    }
+  };
+
+  // --- Handler for Shipment Form Input Change (kept for context) ---
+  // (No changes)
+  const handleShipmentFormInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
@@ -42,205 +465,91 @@ const VendorLogisticsPage: React.FC = () => {
     });
   };
 
-  const handleShipmentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSubmissionStatus("Submitting shipment...");
+  // Handler to close Product Modal
+  const handleCloseProductModal = useCallback(() => {
+    setShowAddProductModal(false);
+    setEditingProduct(null);
+    // Reset form and image states are handled internally by ProductFormModal's useEffect
+  }, []);
 
-    // --- DEMO LOGIC: Simulate API Call ---
-    console.log("Submitting shipment data:", shipmentFormData);
-
-    // In a real application, you would send shipmentFormData to your backend API
-    // using fetch, axios, etc.
-    // const response = await fetch('/api/create-shipment', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(shipmentFormData),
-    // });
-    // const result: ShipmentCreationResponse = await response.json();
-
-    // Simulate a successful response after a delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    const simulatedResponse: ShipmentCreationResponse = {
-      success: true,
-      trackingNumber: `TRK${Math.floor(Math.random() * 1000000)}`,
-      message: "Shipment created successfully!",
-    };
-
-    // --- END DEMO LOGIC ---
-
-    if (simulatedResponse.success) {
-      setSubmissionStatus(
-        `Success: ${simulatedResponse.message} Tracking Number: ${simulatedResponse.trackingNumber}`
-      );
-      // Reset form or redirect
-      setShipmentFormData({
-        recipientName: "",
-        recipientAddress: "",
-        packageWeight: 0,
-        packageDimensions: "",
-        serviceType: "standard",
-      });
-    } else {
-      setSubmissionStatus(`Error: ${simulatedResponse.message}`);
-    }
-  };
-
-  // Placeholder functions for other tabs' logic
+  // Placeholder functions for other tabs' logic (kept for context)
   const handleTrackPackage = () => {
-    alert("Demo: Track package logic goes here!");
-    // You would typically have an input field for tracking number
-    // and display tracking details after fetching from API
+    toast.warning("Demo: Track package logic goes here! (Receiving)");
   };
 
   const handleViewOrders = () => {
-    alert("Demo: View and manage sales orders logistics goes here!");
-    // You would fetch vendor's sales orders and their logistics status
+    toast.warning(
+      "Demo: View and manage sales orders logistics goes here! (Selling)"
+    );
   };
+
+  if (isLoadingProducts || isLoadingCategories) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center text-gray-600">
+        Loading vendor data...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center text-red-600">
+        Error: {error}
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <ToastContainer />
       <h1 className="text-3xl font-bold text-gray-800 mb-6">
-        Vendor Logistics Dashboard
+        Vendor Dashboard
       </h1>
 
-      {/* Tabs */}
-      <div className="border-b border-gray-200 mb-6">
-        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-          <button
-            className={`${activeTab === "sending" ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-            onClick={() => setActiveTab("sending")}
-          >
-            Send a Shipment
-          </button>
-          <button
-            className={`${activeTab === "receiving" ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-            onClick={() => setActiveTab("receiving")}
-          >
-            Track Receiving
-          </button>
-          <button
-            className={`${activeTab === "selling" ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-            onClick={() => setActiveTab("selling")}
-          >
-            Sales Logistics
-          </button>
-        </nav>
-      </div>
+      <VendorTabs activeTab={activeTab} onTabChange={handleTabChange} />
 
-      {/* Tab Content */}
       <div>
+        {activeTab === "products" && (
+          <ProductList
+            products={vendorProducts}
+            categories={categories}
+            onAddProductClick={handleAddProductClick}
+            onEditProduct={handleEditProduct}
+            onDeleteProduct={handleDeleteProduct}
+            onToggleHideProduct={handleToggleHideProduct}
+          />
+        )}
+
         {activeTab === "sending" && (
           <div>
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-              Create New Shipment
+              Ship Products or Items
             </h2>
-            <form onSubmit={handleShipmentSubmit} className="space-y-4">
-              <div>
-                <label
-                  htmlFor="recipientName"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Recipient Name
-                </label>
-                <input
-                  type="text"
-                  name="recipientName"
-                  id="recipientName"
-                  value={shipmentFormData.recipientName}
-                  onChange={handleInputChange}
-                  required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="recipientAddress"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Recipient Address
-                </label>
-                <textarea
-                  name="recipientAddress"
-                  id="recipientAddress"
-                  rows={3}
-                  value={shipmentFormData.recipientAddress}
-                  onChange={handleInputChange}
-                  required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                ></textarea>
-              </div>
-              <div>
-                <label
-                  htmlFor="packageWeight"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Package Weight (kg)
-                </label>
-                <input
-                  type="number"
-                  name="packageWeight"
-                  id="packageWeight"
-                  value={shipmentFormData.packageWeight}
-                  onChange={handleInputChange}
-                  required
-                  min="0.1"
-                  step="0.1"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="packageDimensions"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Package Dimensions (e.g., 10x20x15 cm)
-                </label>
-                <input
-                  type="text"
-                  name="packageDimensions"
-                  id="packageDimensions"
-                  value={shipmentFormData.packageDimensions}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="serviceType"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Service Type
-                </label>
-                <select
-                  name="serviceType"
-                  id="serviceType"
-                  value={shipmentFormData.serviceType}
-                  onChange={handleInputChange}
-                  required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                >
-                  <option value="standard">Standard</option>
-                  <option value="express">Express</option>
-                  <option value="international">International</option>
-                </select>
-              </div>
 
-              <div>
-                <button
-                  type="submit"
-                  className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  Create Shipment
-                </button>
-              </div>
-            </form>
-
-            {submissionStatus && (
-              <div
-                className={`mt-4 p-3 rounded-md ${submissionStatus.startsWith("Error") ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}
+            {!showCreateShipmentForm && (
+              <button
+                onClick={() => setShowCreateShipmentForm(true)}
+                className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mb-6"
               >
-                {submissionStatus}
+                Create New Shipment
+              </button>
+            )}
+
+            <ShipmentForm
+              isOpen={showCreateShipmentForm}
+              onClose={() => {
+                setShowCreateShipmentForm(false);
+                setShipmentSubmissionStatus(null);
+              }}
+              formData={shipmentFormData}
+              onInputChange={handleShipmentFormInputChange}
+              onSubmit={handleShipmentFormSubmit}
+              submissionStatus={shipmentSubmissionStatus}
+            />
+
+            {!showCreateShipmentForm && (
+              <div className="text-gray-500 italic mt-4">
+                List of pending/recent shipments would appear here.
               </div>
             )}
           </div>
@@ -252,7 +561,6 @@ const VendorLogisticsPage: React.FC = () => {
               Track Incoming Shipments
             </h2>
             <p className="text-gray-600 mb-4">
-              {/* Placeholder for tracking input and results */}
               Enter tracking number to see status of incoming packages.
             </p>
             <button
@@ -261,7 +569,6 @@ const VendorLogisticsPage: React.FC = () => {
             >
               Simulate Track
             </button>
-            {/* Display tracking results here */}
           </div>
         )}
 
@@ -271,7 +578,6 @@ const VendorLogisticsPage: React.FC = () => {
               Manage Sales Order Logistics
             </h2>
             <p className="text-gray-600 mb-4">
-              {/* Placeholder for listing orders and their shipping status */}
               View your sales orders and initiate shipping for them.
             </p>
             <button
@@ -280,10 +586,17 @@ const VendorLogisticsPage: React.FC = () => {
             >
               Simulate View Orders
             </button>
-            {/* Display order list here */}
           </div>
         )}
       </div>
+
+      <ProductFormModal
+        isOpen={showAddProductModal}
+        onClose={handleCloseProductModal}
+        onSubmit={handleProductFormSubmit}
+        initialData={editingProduct}
+        categories={categories.map((cat) => cat.name)}
+      />
     </div>
   );
 };

@@ -74,3 +74,77 @@ language sql stable as $$
    order by random()
    limit lim;
 $$;
+
+
+CREATE TABLE public.categories (
+    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), -- Unique ID for each category
+    name text UNIQUE NOT NULL, -- e.g., 'Foodstuff', 'Clothes'
+    description text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+-- Insert initial categories (Optional, you can do this via UI/API too)
+INSERT INTO categories (name) VALUES
+('Foodstuff'),
+('Clothes'),
+('Toiletries'),
+('Electronics'),
+('Books'),
+('Home Goods'),
+('Other');
+
+-- Set up Row Level Security (RLS) for categories
+-- Categories are usually publicly viewable
+ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Categories are public."
+  ON categories FOR SELECT USING (true);
+
+-- Define policies for INSERT, UPDATE, DELETE based on admin/moderator roles if needed
+-- For a simple setup, maybe only service role can modify categories
+
+
+
+
+CREATE TABLE public.products (
+    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), -- Unique ID for each product
+    vendor_id uuid NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE, -- Link to the vendor's profile
+    category_id uuid NOT NULL REFERENCES public.categories(id) ON DELETE RESTRICT, -- Link to the product category
+    name text NOT NULL,
+    description text, -- Added description for product details
+    unit_price decimal(10, 2) NOT NULL, -- Use DECIMAL for currency
+    available_quantity integer NOT NULL CHECK (available_quantity >= 0), -- "Number in Stock"
+    image_url text, -- URL to the image stored in Supabase Storage
+    is_hidden boolean DEFAULT FALSE NOT NULL, -- To hide/show the product
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+-- Create an index on vendor_id for faster lookups
+CREATE INDEX idx_products_vendor_id ON products (vendor_id);
+
+-- Set up Row Level Security (RLS) for products
+-- This is CRITICAL for multi-vendor applications
+ALTER TABLE products ENABLE ROW LEVEL SECURITY;
+
+-- Policy for vendors to view their own products
+CREATE POLICY "Vendors can view their own products."
+  ON products FOR SELECT USING (auth.uid() = vendor_id); -- auth.uid() gets the logged-in user's ID
+
+-- Policy for vendors to create products (linking to their own ID)
+CREATE POLICY "Vendors can create products for themselves."
+  ON products FOR INSERT WITH CHECK (auth.uid() = vendor_id); -- Ensure the vendor_id matches the logged-in user
+
+-- Policy for vendors to update their own products
+CREATE POLICY "Vendors can update their own products."
+  ON products FOR UPDATE USING (auth.uid() = vendor_id);
+
+-- Policy for vendors to delete their own products
+CREATE POLICY "Vendors can delete their own products."
+  ON products FOR DELETE USING (auth.uid() = vendor_id);
+
+-- Policy for customers (public) to view products that are NOT hidden
+CREATE POLICY "Customers can view visible products."
+  ON products FOR SELECT USING (is_hidden = FALSE); -- Allows anyone (auth or not) to see non-hidden products
+
