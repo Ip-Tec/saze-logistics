@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import GlassDiv from "@/components/ui/GlassDiv";
+import DefaultImage from "@/public/images/logo.png";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@shared/supabase/types";
 
@@ -27,13 +28,13 @@ export default async function CategoriesPage() {
   console.log({ categories });
 
   return (
-    <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="p-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 place-items-center place-content-center w-full md:mt-32">
       {categories?.map((cat) => (
         <Link key={cat.id} href={`/user/category/${cat.id}`}>
           <GlassDiv className="flex flex-col items-center p-4 hover:shadow-lg transition cursor-pointer">
             <div className="w-full h-32 relative mb-2">
               <Image
-                src={cat.image_url || "/images/category-placeholder.png"}
+                src={cat.image_url || DefaultImage}
                 alt={cat.name}
                 fill
                 className="object-cover rounded-lg"

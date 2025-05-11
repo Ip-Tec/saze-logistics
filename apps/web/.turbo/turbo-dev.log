@@ -4,692 +4,1086 @@
 
    ▲ Next.js 15.2.4 (Turbopack)
    - Local:        http://localhost:3000
+   - Network:      http://192.168.137.1:3000
    - Environments: .env.local
 
  ✓ Starting...
 Slow filesystem detected. If C:\Users\Ip\Documents\saze-logistics\apps\web\.next is a network drive, consider moving it to a local folder. If you have an antivirus enabled, consider excluding your project directory.
- ✓ Ready in 27.7s
- ○ Compiling /vendor/products ...
-Failed to download `Geist` from Google Fonts. Using fallback font instead.
-Failed to download `Geist Mono` from Google Fonts. Using fallback font instead.
- ✓ Compiled /vendor/products in 42.5s
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /vendor/products 200 in 44474ms
+ ✓ Ready in 38.1s
+ ○ Compiling /user ...
+ ✓ Compiled /user in 65.2s
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
+}
+ GET /user 200 in 67671ms
  ○ Compiling /_not-found/page ...
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ✓ Compiled /_not-found/page in 6s
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 6320ms
- ○ Compiling /api/cart ...
- ✓ Compiled /api/cart in 7s
- GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 500 in 7751ms
- POST /api/cart 500 in 205ms
- ○ Compiling /api/cart-item ...
- ✓ Compiled /api/cart-item in 3.6s
- GET /api/cart-item?cartId=undefined 500 in 3747ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /vendor/products 200 in 455ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1564ms
- GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 500 in 265ms
- POST /api/cart 500 in 307ms
- GET /api/cart-item?cartId=undefined 500 in 412ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /vendor/products 200 in 833ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 816ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 500 in 288ms
- POST /api/cart 500 in 251ms
- GET /api/cart-item?cartId=undefined 500 in 243ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /vendor/products 200 in 878ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1732ms
  ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
- GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1403ms
-[TypeError: fetch failed] {
-  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
-    errno: -3008,
-    code: 'ENOTFOUND',
-    syscall: 'getaddrinfo',
-    hostname: 'via.placeholder.com'
-  }
+ GET /images/category-placeholder.png 404 in 1270ms
+ ⨯ The requested resource isn't a valid image for /images/category-placeholder.png received text/html; charset=utf-8
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3099ms
+ ✓ Compiled /_not-found/page in 8.9s
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 8358ms
+ ○ Compiling /api/cart-item ...
+ ✓ Compiled /api/cart-item in 2.4s
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 2951ms
+ ○ Compiling /user ...
+ ✓ Compiled in 6.7s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /user in 3.7s
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
 }
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ○ Compiling /_error ...
- GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2952ms
- ✓ Compiled /_error in 5.6s
- GET /_next/image?url=https%3A%2F%2Fvia.placeholder.com%2F150%3Ftext%3DNo%2BImage&w=256&q=75 500 in 6862ms
- GET /_next/image?url=https%3A%2F%2Fvia.placeholder.com%2F150%3Ftext%3DNo%2BImage&w=256&q=75 500 in 6226ms
- ✓ Compiled in 662ms
- ✓ Compiled in 557ms
-[TypeError: fetch failed] {
-  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
-    errno: -3008,
-    code: 'ENOTFOUND',
-    syscall: 'getaddrinfo',
-    hostname: 'via.placeholder.com'
-  }
+ GET /user 200 in 10616ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
 }
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /_next/image?url=https%3A%2F%2Fvia.placeholder.com%2F150%3Ftext%3DNo%2BImage&w=256&q=75 500 in 368ms
- GET /_next/image?url=https%3A%2F%2Fvia.placeholder.com%2F150%3Ftext%3DNo%2BImage&w=256&q=75 500 in 147ms
- ✓ Compiled in 811ms
-[TypeError: fetch failed] {
-  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
-    errno: -3008,
-    code: 'ENOTFOUND',
-    syscall: 'getaddrinfo',
-    hostname: 'via.placeholder.com'
-  }
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
 }
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /_next/image?url=https%3A%2F%2Fvia.placeholder.com%2F150%3Ftext%3DNo%2BImage&w=256&q=75 500 in 182ms
- GET /_next/image?url=https%3A%2F%2Fvia.placeholder.com%2F150%3Ftext%3DNo%2BImage&w=256&q=75 500 in 155ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /vendor/products 200 in 5318ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2106ms
- GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1478ms
- GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 798ms
- ○ Compiling /api/upload-image ...
- ✓ Compiled /api/upload-image in 3.2s
-Supabase Storage upload error: {
-  statusCode: '403',
-  error: 'Unauthorized',
-  message: 'new row violates row-level security policy'
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
 }
- POST /api/upload-image 500 in 4246ms
- POST /api/upload-image 200 in 1637ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /vendor/products 200 in 641ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1792ms
- GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2653ms
- GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 485ms
- ○ Compiling /vendor/orders ...
- ✓ Compiled /vendor/orders in 10.8s
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /vendor/orders 200 in 11380ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 275ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ○ Compiling /api/order/v ...
- GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1320ms
- GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 480ms
- ✓ Compiled /api/order/v in 3.2s
-Vendor ID: { vendorId: 'a91d669f-48d3-48ad-9e86-215a3b0e92c4' }
-API order/v: { data: [] }
- GET /api/order/v 200 in 4553ms
- ○ Compiling /vendor/setting ...
- ✓ Compiled /vendor/setting in 11.5s
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
-{ isLoadingProfile: true, fetchedProfile: null, fetchError: null }
- GET /vendor/setting 200 in 12312ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2291ms
- GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1412ms
- GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1269ms
- ✓ Compiled in 6.4s
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
-{ isLoadingProfile: true, fetchedProfile: null, fetchError: null }
- GET /vendor/setting 200 in 10190ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 4768ms
- GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 10684ms
- GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2129ms
- ✓ Compiled in 1599ms
- ✓ Compiled in 1011ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
-{ isLoadingProfile: true, fetchedProfile: null, fetchError: null }
- GET /vendor/setting 200 in 2313ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 896ms
-
-
- GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 3193ms
- GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1277ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- GET /vendor/products 200 in 1338ms
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_e531dabc.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
-
-
- ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
-Error while requesting resource
-There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
-
-
+ GET /user 200 in 8949ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2976ms
+ GET /images/category-placeholder.png 404 in 3021ms
+ ⨯ The requested resource isn't a valid image for /images/category-placeholder.png received text/html; charset=utf-8
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 3172ms
+ GET /api/cart-item?cartId=3cf2d7d0-7dd1-4a47-9711-90fc6ba86708 200 in 907ms
+ GET /images/category-placeholder.png 404 in 561ms
+ ⨯ The requested resource isn't a valid image for /images/category-placeholder.png received text/html; charset=utf-8
+ GET /images/category-placeholder.png 404 in 526ms
+ ⨯ The requested resource isn't a valid image for /images/category-placeholder.png received text/html; charset=utf-8
+ GET /images/category-placeholder.png 404 in 595ms
+ ⨯ The requested resource isn't a valid image for /images/category-placeholder.png received text/html; charset=utf-8
+ ✓ Compiled in 1657ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 857ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
+}
+ GET /user 200 in 2895ms
+ GET /images/category-placeholder.png 404 in 888ms
+ ⨯ The requested resource isn't a valid image for /images/category-placeholder.png received text/html; charset=utf-8
+ ✓ Compiled in 1593ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 610ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
+}
+ GET /user 200 in 2923ms
+ ✓ Compiled in 2.6s
+ ○ Compiling /user ...
+ ✓ Compiled /user in 556ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
+}
+ GET /user 200 in 3351ms
+ ✓ Compiled in 2.1s
+ ○ Compiling /user ...
+ ✓ Compiled /user in 767ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
+}
+ GET /user 200 in 3542ms
+ ✓ Compiled in 3.7s
+ ○ Compiling /user ...
+ ✓ Compiled /user in 1819ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
+}
+ GET /user 200 in 5236ms
+ ✓ Compiled in 1811ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 1609ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
+}
+ GET /user 200 in 4183ms
+ ✓ Compiled in 3.4s
+ ○ Compiling /user ...
+ ✓ Compiled /user in 1034ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
+}
+ GET /user 200 in 3406ms
+ ✓ Compiled in 1991ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 735ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
+}
+ GET /user 200 in 3398ms
+ ✓ Compiled in 2.8s
+ ○ Compiling /user ...
+ ✓ Compiled /user in 699ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'a6114ef1-6284-4863-8e2a-92ec73f48127',
+      name: 'Other',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    }
+  ]
+}
+ GET /user 200 in 3209ms
+ ✓ Compiled in 2s
+ ○ Compiling /user ...
+ ✓ Compiled /user in 1086ms
+{
+  categories: [
+    {
+      id: '1f39ec05-cdec-490d-95e3-924209cf7c16',
+      name: 'Foodstuff',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '8b297c16-0757-4708-a99a-14a549baad90',
+      name: 'Clothes',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '571a4e04-20be-4fb4-a201-80fa42020db0',
+      name: 'Toiletries',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '027e6ef6-472e-4c7e-ab55-b3d40294c5e7',
+      name: 'Electronics',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '35a44b80-9ef6-4383-82b9-4fd7a7b796b8',
+      name: 'Technology',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: 'd5cd37f5-0d1c-4c86-9ab5-99cc30a82f1f',
+      name: 'Books',
+      description: null,
+      created_at: '2025-05-10T16:54:05.783655+00:00',
+      updated_at: '2025-05-10T16:54:05.783655+00:00',
+      image_url: null
+    },
+    {
+      id: '17c12a7b-0aae-4687-8694-6ff8f7a73e0b',
+      name: 'Home Goods',
+      description: null,
