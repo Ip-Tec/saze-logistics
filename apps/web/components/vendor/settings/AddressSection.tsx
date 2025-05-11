@@ -6,7 +6,7 @@ import { Loader2, SaveIcon, X } from "lucide-react";
 import GlassDiv from "@/components/ui/GlassDiv";
 import GlassButton from "@/components/ui/GlassButton";
 import Section from "@/components/reuse/Section";
-import Input from "@/components/reuse/Input";
+import Input from "@/components/reuse/Input"; // Assuming this is the problematic one
 import DisplayInfo from "@/components/reuse/DisplayInfo";
 import { toast } from "react-toastify";
 
@@ -14,7 +14,8 @@ import { toast } from "react-toastify";
 import { Database } from "@shared/supabase/types";
 
 type VendorProfileType = Database["public"]["Tables"]["profiles"]["Row"];
-type UpdateVendorProfilePayload = Database["public"]["Tables"]["profiles"]["Update"];
+type UpdateVendorProfilePayload =
+  Database["public"]["Tables"]["profiles"]["Update"];
 
 interface AddressSectionProps {
   profile: VendorProfileType;
@@ -31,67 +32,66 @@ export default function AddressSection({
   isOverallLoading,
   isOverallUpdating,
 }: AddressSectionProps) {
-  const [address, setAddress] = useState<string | null>("");
+  const [address, setAddress] = useState<string | null>(""); // Keep track of initial value
 
-   // Keep track of initial value
-   const [initialAddress, setInitialAddress] = useState<string | null>("");
+  const [initialAddress, setInitialAddress] = useState<string | null>(""); // Internal saving state for this section
 
-   // Internal saving state for this section
-   const [isSaving, setIsSaving] = useState(false);
-   const [saveError, setSaveError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null); // Effect to initialize state from profile data
 
-
-  // Effect to initialize state from profile data
   useEffect(() => {
     if (profile) {
       setAddress(profile.address || null);
-      setInitialAddress(profile.address || null);
-        // Clear local error when profile data is re-synced
+      setInitialAddress(profile.address || null); // Clear local error when profile data is re-synced
       setSaveError(null);
     }
-  }, [profile]); // Re-run when profile data changes
+  }, [profile]);
 
-   const handleSaveAddress = async () => {
-       setIsSaving(true);
-       setSaveError(null);
+  // --- Handler for Address Input Change ---
+  // Use an explicit handler that receives the string value from Input
+  const handleAddressChange = (value: string) => {
+    // Assigning string to state of type string | null is perfectly fine
+    setAddress(value);
+  };
 
-       const payload: UpdateVendorProfilePayload = {
-           address: address?.trim() || null,
-       };
+  const handleSaveAddress = async () => {
+    setIsSaving(true);
+    setSaveError(null);
 
-       try {
-           const success = await updateProfile(payload); // Use the passed update function
+    const payload: UpdateVendorProfilePayload = {
+      address: address?.trim() || null,
+    };
 
-           if (success) {
-               toast.success("Address updated successfully!");
-               // Update initial state to reflect saved changes
-                setInitialAddress(address?.trim() || null);
-           } else {
-                // Error toast is likely handled by updateProfile function
-               setSaveError("Failed to update address."); // Set local error
-               toast.error("Failed to update address.");
-           }
-       } catch (error: any) {
-           console.error("Error updating address:", error);
-           setSaveError(error.message || "Failed to update address.");
-           toast.error(error.message || "Failed to update address.");
-       } finally {
-           setIsSaving(false);
-       }
-   };
+    try {
+      const success = await updateProfile(payload); // Use the passed update function
 
-   const handleCancelAddress = () => {
-       // Revert local state to initial values
-       setAddress(initialAddress);
-        // Clear any active saving state or errors for this section
-       setIsSaving(false);
-       setSaveError(null);
-   };
+      if (success) {
+        toast.success("Address updated successfully!"); // Update initial state to reflect saved changes
+        setInitialAddress(address?.trim() || null);
+      } else {
+        // Error toast is likely handled by updateProfile function
+        setSaveError("Failed to update address."); // Set local error
+        toast.error("Failed to update address.");
+      }
+    } catch (error: any) {
+      console.error("Error updating address:", error);
+      setSaveError(error.message || "Failed to update address.");
+      toast.error(error.message || "Failed to update address.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
-   const isActionDisabled = isOverallLoading || isOverallUpdating || isSaving;
-    // Check if there are any changes to save
-   const hasChanges = (address?.trim() || null) !== (initialAddress?.trim() || null);
+  const handleCancelAddress = () => {
+    // Revert local state to initial values
+    setAddress(initialAddress); // Clear any active saving state or errors for this section
+    setIsSaving(false);
+    setSaveError(null);
+  };
 
+  const isActionDisabled = isOverallLoading || isOverallUpdating || isSaving; // Check if there are any changes to save
+  const hasChanges =
+    (address?.trim() || null) !== (initialAddress?.trim() || null);
 
   return (
     <GlassDiv className="w-full rounded-2xl overflow-hidden md:w-[48%] space-y-4">
@@ -100,7 +100,7 @@ export default function AddressSection({
           <Input
             label="Business Address"
             value={address || ""}
-            onChange={setAddress}
+            onChange={handleAddressChange} 
             disabled={isActionDisabled}
             inputClass="!text-black placeholder:!text-gray-600"
           />
@@ -113,40 +113,41 @@ export default function AddressSection({
           />
         )}
       </Section>
+        {/* Section specific buttons */}
+      {editing && (
+        <div className="w-full flex justify-end gap-3 px-4 pb-4">
+          <GlassButton
+            onClick={handleCancelAddress}
+            className="text-sm flex items-center gap-1 !bg-red-500 hover:!bg-red-600"
+            disabled={isActionDisabled}
+          >
+               <X size={16} /> Cancel
+          </GlassButton>
 
-        {/* Section specific buttons */}
-        {editing && (
-            <div className="w-full flex justify-end gap-3 px-4 pb-4">
-                 <GlassButton
-                     onClick={handleCancelAddress}
-                     className="text-sm flex items-center gap-1 !bg-red-500 hover:!bg-red-600"
-                     disabled={isActionDisabled}
-                 >
-                     <X size={16} /> Cancel
-                 </GlassButton>
-                 <GlassButton
-                     onClick={handleSaveAddress}
-                     className="text-sm flex items-center gap-1 !text-black hover:text-orange-500"
-                     disabled={isActionDisabled || !hasChanges} // Disable if no changes
-                 >
-                     {isSaving ? (
-                         <>
-                             <Loader2 size={16} className="animate-spin" /> Saving...
-                         </>
-                     ) : (
-                         <>
-                             <SaveIcon size={16} /> Save Address
-                         </>
-                     )}
-                 </GlassButton>
-            </div>
-        )}
-         {/* Display Section Error */}
-        {saveError && (
-             <div className="w-full text-red-600 text-sm px-4 pb-4">
-                Error: {saveError}
-             </div>
-        )}
+          <GlassButton
+            onClick={handleSaveAddress}
+            className="text-sm flex items-center gap-1 !text-black hover:text-orange-500"
+            disabled={isActionDisabled || !hasChanges} // Disable if no changes
+          >
+               
+            {isSaving ? (
+              <>
+                <Loader2 size={16} className="animate-spin" /> Saving...  
+              </>
+            ) : (
+              <>
+                <SaveIcon size={16} /> Save Address{" "}
+              </>
+            )}
+          </GlassButton>
+        </div>
+      )}
+         {/* Display Section Error */}
+      {saveError && (
+        <div className="w-full text-red-600 text-sm px-4 pb-4">
+              Error: {saveError}  
+        </div>
+      )}
     </GlassDiv>
   );
 }

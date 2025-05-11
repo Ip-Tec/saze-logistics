@@ -28,7 +28,7 @@ export default function Input({
           type="text"
           className={`w-full border p-2 rounded bg-white/5 text-white ${inputClass}`}
           value={value}
-          onChange={(e) => onChange(e.target.value)} disabled={disabled} readOnly required={required} placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)} disabled={disabled} readOnly={readOnly} required={required} placeholder={placeholder}
         />
       </div>
     );
