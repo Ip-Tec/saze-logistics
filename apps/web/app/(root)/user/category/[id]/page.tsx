@@ -10,12 +10,19 @@ const supabase = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-interface Params {
-  params: { id: string };
-}
+export default async function CategoryPage({ params,
+}: {
+  params: Promise<{
+    id: string;
+    name?: string;
+    price?: string;
+    image?: string;
+    description?: string;
+  }>;
+}) {
+  const { id, name, price, image, description } = await params;
 
-export default async function CategoryPage({ params }: Params) {
-  const categoryId = params.id;
+  const categoryId = id;
 
   const { data: products, error } = await supabase
     .from("products")
