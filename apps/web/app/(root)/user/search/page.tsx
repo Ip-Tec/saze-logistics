@@ -12,41 +12,37 @@ const supabase = createClient<Database>(
 
 const PAGE_SIZE = 12;
 
-export default async function SearchPage(
-  props: Promise<{
-    searchParams: { q?: string; page?: string };
-  }>
-) {
-  // 1️⃣ Await the entire props
-  const { searchParams } = await props;
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: { q?: string; page?: string };
+}) {
   const q = (searchParams.q ?? "").trim();
   const pageNum = parseInt(searchParams.page ?? "1", 10);
 
   if (!q) {
     return (
       <div className="p-6 text-center text-gray-500">
-        Please enter something to search.
+        Please enter a search term.
       </div>
     );
   }
 
-  // 2️⃣ Pagination math
   const from = (pageNum - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
-  // 3️⃣ Count matching items
   const { count } = await supabase
     .from("products")
     .select("id", { head: true, count: "exact" })
     .ilike("name", `%${q}%`)
     .eq("is_hidden", false);
 
-  // 4️⃣ Fetch one page
   const { data, error } = await supabase
     .from("products")
     .select(
-      `*, profiles!products_vendor_id_fkey(id,name,logo_url),
-          categories!products_category_id_fkey(id,name,image_url)`
+      `*, 
+       profiles!products_vendor_id_fkey(id,name,logo_url),
+       categories!products_category_id_fkey(id,name,image_url)`
     )
     .ilike("name", `%${q}%`)
     .eq("is_hidden", false)
@@ -66,10 +62,10 @@ export default async function SearchPage(
   return (
     <div className="p-6 space-y-6 min-h-screen">
       <h1 className="text-2xl font-bold">
-        Search results for “{q}” ({total})
+        Results for “{q}” ({total})
       </h1>
 
-      {data && data.length > 0 ? (
+      {data && data.length ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {data.map((p) => (
             <ProductCard
@@ -77,7 +73,7 @@ export default async function SearchPage(
               id={p.id}
               image={p.image_url || DefaultFoodImage.src}
               name={p.name}
-              vendor={p.profiles?.name ?? "Unknown Vendor"}
+              vendor={p.profiles?.name || "Unknown Vendor"}
               price={p.unit_price}
               description={p.description}
             />
@@ -87,7 +83,6 @@ export default async function SearchPage(
         <p className="text-gray-500">No products found.</p>
       )}
 
-      {/* Pagination */}
       <div className="flex justify-center items-center space-x-4 mt-6">
         <Link
           href={`/user/search?q=${encodeURIComponent(q)}&page=${Math.max(
@@ -102,11 +97,9 @@ export default async function SearchPage(
         >
           Previous
         </Link>
-
         <span>
           Page {pageNum} of {totalPages}
         </span>
-
         <Link
           href={`/user/search?q=${encodeURIComponent(q)}&page=${Math.min(
             totalPages,
