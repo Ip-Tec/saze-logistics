@@ -34,7 +34,7 @@ export default function SearchBar() {
         className="bg-orange-500 hover:bg-orange-600 text-white px-4 rounded-r"
       >
         {isPending ? (
-          "…"
+          "...Searching"
         ) : (
           <>
             <SearchIcon size={16} className="md:hidden" />

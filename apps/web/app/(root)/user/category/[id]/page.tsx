@@ -1,4 +1,5 @@
 // app/user/category/[id]/page.tsx
+
 import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@shared/supabase/types";
@@ -17,21 +18,21 @@ export default async function CategoryPage({
   searchParams,
 }: {
   params: { id: string };
-  searchParams: { page?: string };
+  searchParams?: { page?: string };
 }) {
   const categoryId = params.id;
-  const page = parseInt(searchParams.page || "1", 10);
-  const from = (page - 1) * PAGE_SIZE;
+  const pageNum = parseInt(searchParams?.page ?? "1", 10);
+  const from = (pageNum - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
-  // 1) Fetch total count
+  // 1) count total
   const { count } = await supabase
     .from("products")
-    .select("id", { count: "exact", head: true })
+    .select("id", { head: true, count: "exact" })
     .eq("category_id", categoryId)
     .eq("is_hidden", false);
 
-  // 2) Fetch one page of products + joins
+  // 2) fetch one page
   const { data, error } = await supabase
     .from("products")
     .select(
@@ -48,11 +49,14 @@ export default async function CategoryPage({
       </div>
     );
   }
-console.log({ data });
+  console.log({ data });
   const { data: profiles, error: profileError } = await supabase
     .from("profiles")
     .select(`id, name, logo_url`)
-    .in("id", data.map((p) => p.vendor_id));
+    .in(
+      "id",
+      data.map((p) => p.vendor_id)
+    );
 
   if (profileError) {
     return (
@@ -63,7 +67,9 @@ console.log({ data });
   }
 
   const products = data.map((product) => {
-    const profile = profiles.find((profile) => profile.id === product.vendor_id);
+    const profile = profiles.find(
+      (profile) => profile.id === product.vendor_id
+    );
     return { ...product, profile };
   });
   console.log({ products });
@@ -99,31 +105,29 @@ console.log({ data });
       <div className="flex justify-center items-center space-x-4 mt-6">
         {/* Previous button */}
         <Link
-          href={`/user/category/${categoryId}?page=${Math.max(1, page - 1)}`}
+          href={`/user/category/${categoryId}?page=${Math.max(1, pageNum - 1)}`}
           className={`px-3 py-1 rounded ${
-            page === 1
+            pageNum === 1
               ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-              : "bg-orange-500 text-white hover:bg-orange-600"
+              : "bg-orange-500 text-white"
           }`}
         >
           Previous
         </Link>
 
         {/* Page x of y */}
-        <span className="text-sm text-gray-600">
-          Page {page} of {totalPages}
+        <span>
+          Page {pageNum} of {totalPages}
         </span>
-
-        {/* Next button */}
         <Link
           href={`/user/category/${categoryId}?page=${Math.min(
             totalPages,
-            page + 1
+            pageNum + 1
           )}`}
           className={`px-3 py-1 rounded ${
-            page === totalPages
+            pageNum === totalPages
               ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-              : "bg-orange-500 text-white hover:bg-orange-600"
+              : "bg-orange-500 text-white"
           }`}
         >
           Next
