@@ -1,5 +1,4 @@
 // app/(root)/user/search/page.tsx
-
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@shared/supabase/types";
 import { ProductCard } from "@/components/user/ProductCard";
@@ -13,15 +12,11 @@ const supabase = createClient<Database>(
 
 const PAGE_SIZE = 12;
 
-export default async function SearchPage({
-  params,
-  searchParams,
-}: {
-  params: Record<string, string>;
-  searchParams: { q?: string; page?: string };
-}) {
-  const q = (searchParams.q ?? "").trim();
-  const pageNum = parseInt(searchParams.page ?? "1", 10);
+export default async function SearchPage(props: any) {
+  // Now destructure with no extra type annotation:
+  const { searchParams } = props;
+  const q = (searchParams?.q ?? "").trim();
+  const pageNum = parseInt(searchParams?.page ?? "1", 10);
 
   if (!q) {
     return (
@@ -34,21 +29,21 @@ export default async function SearchPage({
   const from = (pageNum - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
-  // Count
+  // 1) count
   const { count } = await supabase
     .from("products")
     .select("id", { head: true, count: "exact" })
     .ilike("name", `%${q}%`)
     .eq("is_hidden", false);
 
-  // Page of results
+  // 2) fetch a page
   const { data, error } = await supabase
     .from("products")
-    .select(
-      `*, 
-       profiles!products_vendor_id_fkey(id,name,logo_url),
-       categories!products_category_id_fkey(id,name,image_url)`
-    )
+    .select(`
+      *,
+      profiles!products_vendor_id_fkey(id,name,logo_url),
+      categories!products_category_id_fkey(id,name,image_url)
+    `)
     .ilike("name", `%${q}%`)
     .eq("is_hidden", false)
     .range(from, to);
@@ -103,15 +98,10 @@ export default async function SearchPage({
         >
           Previous
         </Link>
-
-        <span>
-          Page {pageNum} of {totalPages}
-        </span>
-
+        <span>Page {pageNum} of {totalPages}</span>
         <Link
           href={`/user/search?q=${encodeURIComponent(q)}&page=${Math.min(
-            totalPages,
-            pageNum + 1
+            totalPages, pageNum + 1
           )}`}
           className={`px-3 py-1 rounded ${
             pageNum === totalPages
