@@ -13,15 +13,17 @@ const supabase = createClient<Database>(
 
 const PAGE_SIZE = 12;
 
-export default async function CategoryPage(
-  props: Promise<{
-    params: { id: string };
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{
+    id: string;
     searchParams?: { page?: string };
-  }>
-) {
+  }>;
+}) {
   // Await the entire props object
-  const { params, searchParams } = await props;
-  const categoryId = params.id;
+  const { id, searchParams } = await params;
+  const categoryId = id;
   const pageNum = parseInt(searchParams?.page ?? "1", 10);
   const from = (pageNum - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
