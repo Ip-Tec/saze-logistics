@@ -15,10 +15,10 @@ const PAGE_SIZE = 12;
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { q?: string; page?: string };
+  searchParams?: { q?: string; page?: string };
 }) {
-  const q = (searchParams.q ?? "").trim();
-  const pageNum = parseInt(searchParams.page ?? "1", 10);
+  const q = (searchParams?.q ?? "").trim();
+  const pageNum = parseInt(searchParams?.page ?? "1", 10);
 
   if (!q) {
     return (
