@@ -5,6 +5,7 @@ import UserNavbar from "@/components/user/UserNavbar";
 import GlassComponent from "@/components/ui/glass";
 import { motion } from "framer-motion";
 import React from "react";
+import SearchBar from "@/components/reuse/SearchBar";
 
 export default function UserLayout({
   children,
@@ -62,8 +63,9 @@ export default function UserLayout({
       </div>
 
       {/* Main Glass Area */}
-      <GlassComponent className="!bg-green-600/10 z-10 w-full h-full">
+      <GlassComponent className="!bg-green-600/10 z-10 w-full flex flex-col h-full">
         <UserNavbar />
+        <SearchBar />
         <BellIcon />
         {children}
       </GlassComponent>

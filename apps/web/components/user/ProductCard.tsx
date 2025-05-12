@@ -1,14 +1,13 @@
-// components/user/FoodCard.tsx
+// components/user/ProductCard.tsx
 
 "use client";
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Default from "@/public/images/logo.png";
 import GlassDiv from "@/components/ui/GlassDiv";
 
-interface FoodCardProps {
+interface ProductCardProps {
   id: string;
   image: string;
   name: string;
@@ -17,7 +16,7 @@ interface FoodCardProps {
   description?: string | null;
 }
 
-export const FoodCard: React.FC<FoodCardProps> = ({
+export const ProductCard: React.FC<ProductCardProps> = ({
   id,
   image,
   name,
@@ -26,18 +25,17 @@ export const FoodCard: React.FC<FoodCardProps> = ({
   description,
 }) => {
   // Ensure description is treated as optional
-  const displayDescription = description ?? undefined; // Use ?? to handle null/undefined
-
+  const displayDescription = description ?? undefined;
+  console.log({ id, image, name, vendor, price, description });
   return (
     // Link to the specific food item detail page
-    <Link href={`/user/food/${id}`}>
+    <Link href={`/user/products/${id}`}>
       <GlassDiv className="rounded-2xl shadow-green-200 hover:shadow-lg transition hover:scale-[1.02] cursor-pointer !p-0 overflow-hidden">
         {/* Image Container for next/image fill */}
         <div className="relative w-full h-auto">
           {/* Maintain the card image size */}
-          <Image
-            src={image}
-            fill // Changed from layout="fill"
+          <img
+            src={image || Default.src}
             alt={name}
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className="object-cover"
@@ -53,7 +51,6 @@ export const FoodCard: React.FC<FoodCardProps> = ({
           {/* Add padding here */}
           <h3 className="font-medium text-base text-gray-800">{name}</h3>
           <p className="text-xs text-gray-500">{vendor}</p>
-          <p className="text-xs text-gray-500">{id}</p>
           <p className="text-orange-600 text-lg font-semibold">₦{price}</p>
           {displayDescription ? (
             <p className="text-sm text-gray-600 mt-2">{displayDescription}</p>

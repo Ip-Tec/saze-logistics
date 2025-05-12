@@ -25,14 +25,12 @@ export default async function CategoriesPage() {
     );
   }
 
-  console.log({ categories });
-
   return (
-    <div className="p-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 place-items-center place-content-center w-full md:mt-32">
+    <div className="p-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center place-content-center w-full">
       {categories?.map((cat) => (
         <Link key={cat.id} href={`/user/category/${cat.id}`}>
           <GlassDiv className="flex flex-col items-center p-4 hover:shadow-lg transition cursor-pointer">
-            <div className="w-full h-32 relative mb-2">
+            <div className="w-42 h-42 relative mb-2">
               <Image
                 src={cat.image_url || DefaultImage}
                 alt={cat.name}
