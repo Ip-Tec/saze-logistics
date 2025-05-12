@@ -12,13 +12,19 @@ const supabase = createClient<Database>(
 
 const PAGE_SIZE = 12;
 
+interface SearchPageProps {
+  searchParams: {
+    q?: string;
+    page?: string;
+  };
+}
+
 export default async function SearchPage({
   searchParams,
-}: {
-  searchParams?: { q?: string; page?: string };
-}) {
-  const q = (searchParams?.q ?? "").trim();
-  const pageNum = parseInt(searchParams?.page ?? "1", 10);
+}: SearchPageProps) {
+  // ‣ q and page are now always on searchParams
+  const q = (searchParams.q ?? "").trim();
+  const pageNum = parseInt(searchParams.page ?? "1", 10);
 
   if (!q) {
     return (
@@ -31,12 +37,14 @@ export default async function SearchPage({
   const from = (pageNum - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
+  // Total count
   const { count } = await supabase
     .from("products")
     .select("id", { head: true, count: "exact" })
     .ilike("name", `%${q}%`)
     .eq("is_hidden", false);
 
+  // One page of results
   const { data, error } = await supabase
     .from("products")
     .select(
@@ -83,6 +91,7 @@ export default async function SearchPage({
         <p className="text-gray-500">No products found.</p>
       )}
 
+      {/* Pagination */}
       <div className="flex justify-center items-center space-x-4 mt-6">
         <Link
           href={`/user/search?q=${encodeURIComponent(q)}&page=${Math.max(
@@ -97,9 +106,11 @@ export default async function SearchPage({
         >
           Previous
         </Link>
+
         <span>
           Page {pageNum} of {totalPages}
         </span>
+
         <Link
           href={`/user/search?q=${encodeURIComponent(q)}&page=${Math.min(
             totalPages,
