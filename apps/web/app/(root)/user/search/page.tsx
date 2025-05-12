@@ -1,4 +1,5 @@
 // app/(root)/user/search/page.tsx
+
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@shared/supabase/types";
 import { ProductCard } from "@/components/user/ProductCard";
@@ -13,16 +14,16 @@ const supabase = createClient<Database>(
 const PAGE_SIZE = 12;
 
 interface SearchPageProps {
-  searchParams: {
-    q?: string;
-    page?: string;
-  };
+  params: {}; // must include this, even if it's empty
+  searchParams: { q?: string; page?: string };
 }
 
 export default async function SearchPage({
+  // destructure both
+  params,
   searchParams,
 }: SearchPageProps) {
-  // ‣ q and page are now always on searchParams
+  // you can ignore `params` since it's always {}
   const q = (searchParams.q ?? "").trim();
   const pageNum = parseInt(searchParams.page ?? "1", 10);
 
@@ -37,14 +38,14 @@ export default async function SearchPage({
   const from = (pageNum - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
-  // Total count
+  // 1️⃣ Count matching items
   const { count } = await supabase
     .from("products")
     .select("id", { head: true, count: "exact" })
     .ilike("name", `%${q}%`)
     .eq("is_hidden", false);
 
-  // One page of results
+  // 2️⃣ Fetch one page
   const { data, error } = await supabase
     .from("products")
     .select(
