@@ -13,17 +13,13 @@ const supabase = createClient<Database>(
 
 const PAGE_SIZE = 12;
 
-interface SearchPageProps {
-  params: {}; // must include this, even if it's empty
-  searchParams: { q?: string; page?: string };
-}
-
 export default async function SearchPage({
-  // destructure both
   params,
   searchParams,
-}: SearchPageProps) {
-  // you can ignore `params` since it's always {}
+}: {
+  params: {};
+  searchParams: { q?: string; page?: string };
+}) {
   const q = (searchParams.q ?? "").trim();
   const pageNum = parseInt(searchParams.page ?? "1", 10);
 
@@ -38,14 +34,14 @@ export default async function SearchPage({
   const from = (pageNum - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
-  // 1️⃣ Count matching items
+  // Count
   const { count } = await supabase
     .from("products")
     .select("id", { head: true, count: "exact" })
     .ilike("name", `%${q}%`)
     .eq("is_hidden", false);
 
-  // 2️⃣ Fetch one page
+  // Page of results
   const { data, error } = await supabase
     .from("products")
     .select(
