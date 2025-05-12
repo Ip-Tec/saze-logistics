@@ -17,7 +17,7 @@ export default async function SearchPage({
   params,
   searchParams,
 }: {
-  params: {};
+  params: Record<string, string>;
   searchParams: { q?: string; page?: string };
 }) {
   const q = (searchParams.q ?? "").trim();
