@@ -18,7 +18,7 @@ export default async function CategoryPage({
 }: {
   params: Promise<{
     id: string;
-    searchParams?: { page?: string };
+    searchParams?: { page: string };
   }>;
 }) {
   // Await the entire props object
