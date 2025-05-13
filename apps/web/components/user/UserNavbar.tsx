@@ -8,7 +8,7 @@ export default function UserNavbar() {
   return (
     <>
         {/* Desktop Top Navbar */}  
-      <nav className="hidden md:flex w-full bg-white shadow-md -top-10 left-0 z-50 px-4 py-3 items-center justify-between">
+      <nav className="hidden md:flex w-full bg-white shadow-md fixed top-0 left-0 z-50 px-4 py-3 items-center justify-between">
         <Link
           href="/"
           className="hidden flex text-lg gap-2 font-bold text-orange-600 items-center"
@@ -39,7 +39,7 @@ export default function UserNavbar() {
       </nav>
       
         {/* Mobile Bottom Navbar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-md">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-[99] bg-white border-t shadow-md">
         <div className="flex justify-around text-xs text-center py-2">
           <Link
             href="/user"

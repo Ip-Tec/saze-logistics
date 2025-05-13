@@ -6,13 +6,21 @@ import { Loader2 } from "lucide-react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import GlassDiv from "@/components/ui/GlassDiv";
-import { MenuItem } from "@shared/types";
+import { Product } from "@shared/types";
 import DefaultImage from "@/public/images/logo.png";
 import { toast, ToastContainer } from "react-toastify";
 import Image from "next/image";
 
-interface ProductDetail extends MenuItem {
+interface ProductDetail extends Product {
   image_url: string | null;
+  vendor: {
+    id: string;
+    name: string;
+    logo_url: string | null;
+    phone: string;
+    address?: string;
+    second_phone?: string;
+  }
 }
 
 export default function ProductDetailClient({ id }: { id: string }) {
@@ -25,10 +33,10 @@ export default function ProductDetailClient({ id }: { id: string }) {
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
 
-  console.log({ product });
+  console.log("ProductDetailClient", { product });
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/menu-item?id=${id}`)
+    fetch(`/api/product?id=${id}`)
       .then((res) => res.json())
       .then((json) => {
         if (json.error) throw new Error(json.error);
@@ -39,6 +47,8 @@ export default function ProductDetailClient({ id }: { id: string }) {
       })
       .finally(() => setLoading(false));
   }, [id]);
+
+  console.log("ProductDetailClient", { product });
 
   const handleAdd = async () => {
     if (!user) return router.push("/auth/login");
@@ -51,11 +61,11 @@ export default function ProductDetailClient({ id }: { id: string }) {
           vendor: "",
           id: product.id,
           name: product.name,
-          price: product.price,
-          is_available: true,
+          price: product.unit_price,
           vendor_id: product.vendor_id,
           image: product.image_url ?? "",
-          description: product.description,
+          is_available: product?.is_hidden,
+          description: product.description ?? "",
           category_id: product.category_id ?? "",
           created_at: new Date().toISOString(),
         },
@@ -83,7 +93,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
     <GlassDiv className="max-w-md mx-auto p-4 space-y-4">
       <ToastContainer className={"z-[9999] absolute top-4 right-4"} />
       {product.image_url && (
-        <img
+        <Image
           width={100}
           height={100}
           alt={product.name}
@@ -93,7 +103,10 @@ export default function ProductDetailClient({ id }: { id: string }) {
       )}
       <h1 className="text-2xl font-bold">{product.name}</h1>
       <p className="text-gray-600">{product.description}</p>
-      <p className="text-orange-600 text-xl font-semibold">₦{product.price}</p>
+      <p className="text-gray-600">{product.vendor.name}</p>
+      <p className="text-orange-600 text-xl font-semibold">
+        ₦{product.unit_price}
+      </p>
 
       <div className="flex items-center gap-2">
         <label>Qty:</label>

@@ -16,27 +16,28 @@ export async function GET(request: NextRequest) {
 
   const { data, error } = await supabase
     .from("products")
-    .select("*, profiles:vendor_id(id, name, logo_url, phone, second_phone), category:category_id(name)"
+    .select(
+      "*, profiles:vendor_id(id, name, logo_url, phone, second_phone), category:category_id(id, name, description)"
     )
     .eq("id", id)
+    .eq("is_hidden", false)
     .maybeSingle();
-  console.log({ data });
+  console.log("productRoute:", { data });
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // Flatten the image_url
-  const image_url = data?.menu_item_image?.[0]?.image_url ?? null;
-
   return NextResponse.json({
-    image_url,
     name: data?.name,
-    price: data?.price,
+    image_url: data?.image_url,
+    unit_price: data?.unit_price,
     id: data?.id || null,
     vendor_id: data?.vendor_id,
     created_at: data?.created_at,
     description: data?.description,
     category_id: data?.category_id,
-    is_available: data?.is_available,
+    is_hidden: data?.is_hidden,
+    vendor: data?.profiles,
+    category: data?.category,
   });
 }
