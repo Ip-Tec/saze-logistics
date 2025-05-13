@@ -91,14 +91,14 @@ export default function VendorSidebar() {
       >
         <div>
           {/* Adjust heading size for smaller screens */}
-          <div className="mb-4 z-10">
+          <div className="z-10">
             <img
               src={Logo.src}
               alt="Sazee"
               title="Sazee logo"
               width={100}
               height={100}
-              className="scale-200"
+              className="sale-200"
             />
           </div>
 
