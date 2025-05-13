@@ -17,6 +17,7 @@ import ProductList from "@/components/vendor/product/ProductList";
 import ShipmentForm from "@/components/vendor/product/ShipmentForm";
 import ProductFormModal from "@/components/vendor/product/ProductFormModal";
 import { toast, ToastContainer } from "react-toastify";
+import BookRiderForm from "@/components/vendor/product/BookRiderForm";
 
 // --- Derive Types Directly from your Database type ---
 type Product = Database["public"]["Tables"]["products"]["Row"];
@@ -26,7 +27,7 @@ type Category = Database["public"]["Tables"]["categories"]["Row"];
 
 const VendorLogisticsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
-    "sending" | "receiving" | "selling" | "products"
+    "sending" | "receiving" | "selling" | "products" | "bookRider"
   >("products");
 
   // --- State for fetching data and handling loading/errors ---
@@ -115,7 +116,7 @@ const [productToDelete, setProductToDelete] = useState<Product | null>(null);
 
   // --- Handler for Tab Change ---
   const handleTabChange = (
-    tab: "sending" | "receiving" | "selling" | "products"
+    tab: "sending" | "receiving" | "selling" | "products" | "bookRider"
   ) => {
     setActiveTab(tab);
     setShowCreateShipmentForm(false);
@@ -582,6 +583,15 @@ const confirmDeleteProduct = async () => {
             >
               Simulate View Orders
             </button>
+          </div>
+        )}
+
+        {activeTab === "bookRider" && (
+          <div>
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+            Ship Products or Items
+          </h2>
+          <BookRiderForm vendorId={vendorProducts[0].vendor_id} />
           </div>
         )}
       </div>
