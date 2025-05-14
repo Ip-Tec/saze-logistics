@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 interface Vendor {
   id: number;
@@ -31,16 +32,46 @@ export default function UserOrderPage() {
 
   const menus: Record<number, MenuItem[]> = {
     1: [
-      { id: 1, name: "Margherita", description: "Classic cheese pizza", price: 9.99 },
-      { id: 2, name: "Pepperoni", description: "Pepperoni pizza", price: 11.99 },
+      {
+        id: 1,
+        name: "Margherita",
+        description: "Classic cheese pizza",
+        price: 9.99,
+      },
+      {
+        id: 2,
+        name: "Pepperoni",
+        description: "Pepperoni pizza",
+        price: 11.99,
+      },
     ],
     2: [
-      { id: 3, name: "California Roll", description: "Crab, avocado, cucumber", price: 7.99 },
-      { id: 4, name: "Spicy Tuna Roll", description: "Fresh tuna with a kick", price: 8.99 },
+      {
+        id: 3,
+        name: "California Roll",
+        description: "Crab, avocado, cucumber",
+        price: 7.99,
+      },
+      {
+        id: 4,
+        name: "Spicy Tuna Roll",
+        description: "Fresh tuna with a kick",
+        price: 8.99,
+      },
     ],
     3: [
-      { id: 5, name: "Cheeseburger", description: "Juicy beef patty with cheese", price: 6.99 },
-      { id: 6, name: "Veggie Burger", description: "Plant-based patty", price: 7.49 },
+      {
+        id: 5,
+        name: "Cheeseburger",
+        description: "Juicy beef patty with cheese",
+        price: 6.99,
+      },
+      {
+        id: 6,
+        name: "Veggie Burger",
+        description: "Plant-based patty",
+        price: 7.49,
+      },
     ],
   };
 
@@ -79,11 +110,12 @@ export default function UserOrderPage() {
           : selectedRider || "No rider selected",
     };
     console.log("Placing order:", orderDetails);
-    alert("Order placed! Check console for details.");
+    toast.info("Order placed! Check console for details.");
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
+      <ToastContainer />
       <h1 className="text-3xl font-bold text-center mb-6">Place Your Order</h1>
 
       {/* Step 1: Vendor Selection */}

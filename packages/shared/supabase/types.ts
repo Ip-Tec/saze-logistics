@@ -159,6 +159,60 @@ export type Database = {
         }
         Relationships: []
       }
+      config: {
+        Row: {
+          key: string
+          label: string
+          type: string
+          updated_at: string | null
+          value: string
+        }
+        Insert: {
+          key: string
+          label: string
+          type: string
+          updated_at?: string | null
+          value: string
+        }
+        Update: {
+          key?: string
+          label?: string
+          type?: string
+          updated_at?: string | null
+          value?: string
+        }
+        Relationships: []
+      }
+      content: {
+        Row: {
+          body: string
+          created_at: string | null
+          id: string
+          image_url: string | null
+          title: string
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          body: string
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          title: string
+          type: string
+          updated_at?: string | null
+        }
+        Update: {
+          body?: string
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          title?: string
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       conversation: {
         Row: {
           created_at: string | null
@@ -256,6 +310,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      logs: {
+        Row: {
+          category: string
+          id: string
+          level: string
+          message: string
+          metadata: Json | null
+          timestamp: string
+        }
+        Insert: {
+          category: string
+          id?: string
+          level: string
+          message: string
+          metadata?: Json | null
+          timestamp?: string
+        }
+        Update: {
+          category?: string
+          id?: string
+          level?: string
+          message?: string
+          metadata?: Json | null
+          timestamp?: string
+        }
+        Relationships: []
       }
       menu_category: {
         Row: {
@@ -742,6 +823,7 @@ export type Database = {
           rider_image_url: string | null
           role: string
           second_phone: string | null
+          status: string
           vehicle_image_url: string | null
           vehicleType: string | null
         }
@@ -761,6 +843,7 @@ export type Database = {
           rider_image_url?: string | null
           role?: string
           second_phone?: string | null
+          status?: string
           vehicle_image_url?: string | null
           vehicleType?: string | null
         }
@@ -780,6 +863,7 @@ export type Database = {
           rider_image_url?: string | null
           role?: string
           second_phone?: string | null
+          status?: string
           vehicle_image_url?: string | null
           vehicleType?: string | null
         }

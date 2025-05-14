@@ -1,0 +1,569 @@
+
+> saze-logistics-web@0.1.0 dev
+> cross-env NODE_OPTIONS=--max-old-space-size=4096 next dev --turbopack
+
+   ▲ Next.js 15.2.4 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.112:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+Slow filesystem detected. If C:\Users\Ip\Documents\saze-logistics\apps\web\.next is a network drive, consider moving it to a local folder. If you have an antivirus enabled, consider excluding your project directory.
+ ✓ Ready in 42.2s
+ ○ Compiling /vendor/products ...
+ ✓ Compiled /vendor/products in 95.6s
+ GET /vendor/products 200 in 100926ms
+ ○ Compiling /_not-found/page ...
+ GET /vendor/products 200 in 69201ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 12948ms
+ ✓ Compiled /_not-found/page in 27.7s
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 26207ms
+ ○ Compiling /api/cart-item ...
+ ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+ ✓ Compiled /api/cart-item in 3.1s
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 3523ms
+ ✓ Compiled in 5.2s
+ ○ Compiling /vendor/products ...
+ ✓ Compiled in 33.7s
+ ✓ Compiled /vendor/products in 10.5s
+ GET /vendor/products 200 in 21781ms
+ GET /vendor/products 200 in 23490ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2633ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 13460ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 537ms
+ GET /vendor/products 200 in 792ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3610ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2143ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 491ms
+ ○ Compiling /vendor/products ...
+ ✓ Compiled in 19.4s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /vendor/products in 6.6s
+An empty string ("") was passed to the src attribute. This may cause the browser to download the whole page again over the network. To fix this, either do not render the element at all or pass null to src instead of an empty string.
+An empty string ("") was passed to the src attribute. This may cause the browser to download the whole page again over the network. To fix this, either do not render the element at all or pass null to src instead of an empty string.
+ GET /vendor/products 200 in 10233ms
+ GET /vendor/products 200 in 4513ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3983ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2630ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 993ms
+ ○ Compiling /vendor/products ...
+ ✓ Compiled in 3s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /vendor/products in 1795ms
+ GET /vendor/products 200 in 3742ms
+ GET /vendor/products 200 in 3453ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 4095ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 3023ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 670ms
+ ✓ Compiled in 1769ms
+ GET /vendor/products 200 in 2673ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 4252ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2240ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 565ms
+ ✓ Compiled in 1259ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 47.5s
+ GET /admin 200 in 49037ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 6326ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 3733ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2336ms
+ ○ Compiling /admin ...
+ ✓ Compiled in 27.6s
+ ✓ Compiled /admin in 808ms
+ GET /admin 200 in 2993ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 320.6s
+ ⨯ [Error: Invalid <Link> with <a> child. Please remove <a> or use <Link legacyBehavior>.
+Learn more: https://nextjs.org/docs/messages/invalid-new-link-with-extra-anchor] {
+  digest: '3271657413'
+}
+ GET /admin 200 in 4822ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 5481ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 31.5s
+ GET /admin 200 in 2662ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 6547ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 5715ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2354ms
+ ⚠ Fast Refresh had to perform a full reload when ./packages/shared/supabaseClient.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /admin 200 in 2280ms
+ ✓ Compiled in 677.9s
+ GET /admin 200 in 2083ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 375ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 875ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 822ms
+ ⚠ Fast Refresh had to perform a full reload when ./packages/shared/supabaseClient.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /admin 200 in 1595ms
+ ✓ Compiled in 61.4s
+ GET /admin 200 in 2383ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 460ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1058ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1255ms
+ ✓ Compiled in 315.5s
+ ✓ Compiled in 889ms
+ GET /admin 200 in 429ms
+ GET /admin 200 in 216ms
+ ✓ Compiled in 1094ms
+ ✓ Compiled in 575ms
+ ✓ Compiled in 603ms
+ GET /admin 200 in 1104ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 4885ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 11253ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1327ms
+ ✓ Compiled in 833ms
+ GET /admin 200 in 1507ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3051ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2350ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1192ms
+ ✓ Compiled in 511ms
+ GET /admin 200 in 3988ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2828ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1707ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 476ms
+ ✓ Compiled in 675ms
+ ✓ Compiled in 806ms
+ ✓ Compiled in 396ms
+ GET /admin 200 in 1600ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1743ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 872ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 758ms
+ ✓ Compiled in 335ms
+ ✓ Compiled in 359ms
+ GET /admin 200 in 1063ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1852ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 775ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 514ms
+ ✓ Compiled in 14.2s
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 1458ms
+ GET /admin 200 in 3598ms
+ GET /admin 200 in 8379ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3771ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2818ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 967ms
+ ○ Compiling /admin ...
+ ✓ Compiled in 10.5s
+ ✓ Compiled /admin in 1005ms
+ GET /admin 200 in 2137ms
+ GET /admin 200 in 4725ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2140ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1587ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 616ms
+ ✓ Compiled in 16.3s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /admin 200 in 13851ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 610ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1198ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 716ms
+ ✓ Compiled in 1120ms
+ ✓ Compiled in 982ms
+ ○ Compiling /auth/login ...
+ GET /admin 200 in 3479ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2781ms
+ ✓ Compiled /auth/login in 124.4s
+ GET /auth/login 200 in 60428ms
+ GET /auth/login 200 in 49414ms
+ GET /auth/login 200 in 80587ms
+ GET /auth/login 200 in 720ms
+ GET /admin 200 in 989ms
+ GET /admin 200 in 1077ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1095ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 600ms
+ GET /admin 200 in 2971ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3457ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2745ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1216ms
+ ○ Compiling /admin ...
+ ✓ Compiled in 4.1s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /admin in 3.1s
+ GET /admin 200 in 5715ms
+ GET /admin 200 in 4132ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 4425ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2912ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1681ms
+ ✓ Compiled in 426ms
+ ✓ Compiled in 1147ms
+ GET /admin 200 in 5848ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1976ms
+ GET /admin 200 in 1024ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1079ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1437ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 589ms
+ ✓ Compiled in 11.6s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /admin 200 in 2650ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 5474ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 4668ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 974ms
+ ✓ Compiled in 1501ms
+ GET /admin 200 in 2579ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2463ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1878ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1062ms
+ ✓ Compiled in 610ms
+ ✓ Compiled in 601ms
+ ✓ Compiled in 588ms
+ ○ Compiling /admin/dashboard ...
+ ✓ Compiled /admin/dashboard in 108.3s
+ ○ Compiling /_error ...
+ ✓ Compiled in 189s
+ ⨯ ./apps/web/components/admin/dashboard/QuickActions.ts:14:10
+Parsing ecmascript source code failed
+[0m [90m 12 |[39m   [36mreturn[39m ([0m
+[0m [90m 13 |[39m     [33m<[39m[33m>[39m[0m
+[0m[31m[1m>[22m[39m[90m 14 |[39m     [33m<[39m[33mdiv[39m className[33m=[39m[32m"bg-white rounded-lg shadow p-4"[39m[33m>[39m[0m
+[0m [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 15 |[39m       [33m<[39m[33mh3[39m className[33m=[39m[32m"text-lg font-medium mb-2"[39m[33m>[39m[33mQuick[39m [33mActions[39m[33m<[39m[33m/[39m[33mh3[39m[33m>[39m[0m
+[0m [90m 16 |[39m       [33m<[39m[33mdiv[39m className[33m=[39m[32m"space-y-2"[39m[33m>[39m[0m
+[0m [90m 17 |[39m         {actions[33m.[39mmap(a [33m=>[39m ([0m
+
+Expected '>', got 'className'
+
+
+
+./apps/web/app/(root)/admin/page.tsx:6:1
+Export default doesn't exist in target module
+[0m [90m 4 |[39m [36mimport[39m [33mActionCard[39m  [36mfrom[39m [32m'@/components/admin/dashboard/ActionCard'[39m[0m
+[0m [90m 5 |[39m [36mimport[39m [33mChartPanel[39m  [36mfrom[39m [32m'@/components/admin/dashboard/ChartPanel'[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m [33mQuickActions[39m [36mfrom[39m [32m'@/components/admin/dashboard/QuickActions'[39m[0m
+[0m [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 7 |[39m [36mimport[39m { [33mUsers[39m[33m,[39m [33mClipboardList[39m[33m,[39m [33mTruck[39m[33m,[39m [33mCreditCard[39m } [36mfrom[39m [32m'lucide-react'[39m[0m
+[0m [90m 8 |[39m[0m
+[0m [90m 9 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mDashboardPage[39m() {[0m
+
+The export default was not found in module [project]/apps/web/components/admin/dashboard/QuickActions.ts [app-rsc] (ecmascript).
+The module has no exports at all.
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+ GET /admin/dashboard 404 in 30177ms
+ GET /admin/dashboard 404 in 377ms
+ GET /admin/dashboard 404 in 1918ms
+ ✓ Compiled /_error in 156.8s
+ GET /admin 500 in 92384ms
+ GET /admin/dashboard 500 in 290339ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2037ms
+ ⨯ ./apps/web/components/admin/dashboard/QuickActions.ts:14:10
+Parsing ecmascript source code failed
+[0m [90m 12 |[39m   [36mreturn[39m ([0m
+[0m [90m 13 |[39m     [33m<[39m[33m>[39m[0m
+[0m[31m[1m>[22m[39m[90m 14 |[39m     [33m<[39m[33mdiv[39m className[33m=[39m[32m"bg-white rounded-lg shadow p-4"[39m[33m>[39m[0m
+[0m [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 15 |[39m       [33m<[39m[33mh3[39m className[33m=[39m[32m"text-lg font-medium mb-2"[39m[33m>[39m[33mQuick[39m [33mActions[39m[33m<[39m[33m/[39m[33mh3[39m[33m>[39m[0m
+[0m [90m 16 |[39m       [33m<[39m[33mdiv[39m className[33m=[39m[32m"space-y-2"[39m[33m>[39m[0m
+[0m [90m 17 |[39m         {actions[33m.[39mmap(a [33m=>[39m ([0m
+
+Expected '>', got 'className'
+
+
+
+./apps/web/app/(root)/admin/page.tsx:6:1
+Export default doesn't exist in target module
+[0m [90m 4 |[39m [36mimport[39m [33mActionCard[39m  [36mfrom[39m [32m'@/components/admin/dashboard/ActionCard'[39m[0m
+[0m [90m 5 |[39m [36mimport[39m [33mChartPanel[39m  [36mfrom[39m [32m'@/components/admin/dashboard/ChartPanel'[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m [33mQuickActions[39m [36mfrom[39m [32m'@/components/admin/dashboard/QuickActions'[39m[0m
+[0m [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 7 |[39m [36mimport[39m { [33mUsers[39m[33m,[39m [33mClipboardList[39m[33m,[39m [33mTruck[39m[33m,[39m [33mCreditCard[39m } [36mfrom[39m [32m'lucide-react'[39m[0m
+[0m [90m 8 |[39m[0m
+[0m [90m 9 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mDashboardPage[39m() {[0m
+
+The export default was not found in module [project]/apps/web/components/admin/dashboard/QuickActions.ts [app-rsc] (ecmascript).
+The module has no exports at all.
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+
+ GET /admin 500 in 10554ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 6382ms
+ ✓ Compiled in 3108.4s
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 52.3s
+ GET /admin 200 in 466438ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 7186ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 16675ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 4573ms
+ GET /admin 200 in 1922ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1023ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1568ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 4324ms
+ GET /admin 200 in 15158ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 30595ms
+ GET /admin 200 in 1767ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1495ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 14081ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1522ms
+ ✓ Compiled in 32.4s
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /admin 200 in 32727ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2658ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1989ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 896ms
+ ✓ Compiled in 5.4s
+ ✓ Compiled in 1157ms
+ ✓ Compiled in 3.6s
+ ✓ Compiled /admin in 391ms
+ GET /admin 200 in 1462ms
+ ✓ Compiled in 739ms
+ ○ Compiling /admin ...
+ ✓ Compiled in 7.7s
+ ✓ Compiled /admin in 960ms
+ GET /admin 200 in 6639ms
+ GET /admin/users 404 in 2507ms
+ GET /admin/users 404 in 1243ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1113ms
+ GET /admin 200 in 1849ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1247ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2699ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 444ms
+ GET /admin 200 in 4053ms
+ GET /admin 200 in 2215ms
+ ✓ Compiled in 60.6s
+ ✓ Compiled in 25.4s
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /admin 200 in 14442ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3529ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 4204ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 2047ms
+ ✓ Compiled in 543ms
+ ✓ Compiled in 390ms
+ ✓ Compiled /admin in 152ms
+ GET /admin 200 in 579ms
+ ✓ Compiled in 505ms
+ ✓ Compiled /admin in 173ms
+ GET /admin 200 in 757ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 912ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1772ms
+ GET /admin 200 in 2789ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2236ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1363ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 698ms
+ GET /admin/orders 404 in 345ms
+ GET /admin/orders 404 in 536ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 960ms
+ GET /admin 200 in 595ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2889ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1486ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1262ms
+ ✓ Compiled in 1594ms
+ ○ Compiling /admin/people ...
+ ✓ Compiled in 78.7s
+ ✓ Compiled /admin/people in 79.2s
+ GET /admin/people 200 in 80382ms
+ GET /admin/people 200 in 314ms
+ ✓ Compiled in 1159ms
+ ✓ Compiled in 1391ms
+ ✓ Compiled in 1853ms
+ ✓ Compiled in 1354ms
+ ✓ Compiled in 671ms
+ ✓ Compiled in 1077ms
+ ✓ Compiled in 1791ms
+ ✓ Compiled in 960ms
+ ✓ Compiled in 718ms
+ ✓ Compiled in 408ms
+ ✓ Compiled in 665ms
+ GET /admin/people 200 in 2013ms
+ GET /admin/people 200 in 305ms
+ ○ Compiling /admin/people ...
+ ⚠ Fast Refresh had to perform a full reload when [turbopack]/browser/dev/hmr-client/hmr-client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled in 5.9s
+ ✓ Compiled /admin/people in 2.3s
+ GET /admin/people 200 in 5919ms
+ GET /admin/people 200 in 4584ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1250ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1265ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 834ms
+ GET /admin/people 200 in 1470ms
+ GET /admin/people 200 in 677ms
+ ✓ Compiled in 430ms
+ GET /admin/people 200 in 863ms
+ GET /admin/people 200 in 251ms
+ ○ Compiling /admin/users ...
+ ✓ Compiled /admin/users in 15.6s
+ GET /admin/users 200 in 15838ms
+ ✓ Compiled in 1498ms
+ GET /admin/users 200 in 1842ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2423ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 3930ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1120ms
+ ✓ Compiled in 482ms
+ ✓ Compiled in 458ms
+ GET /admin/users 200 in 525ms
+ GET /admin/users 200 in 1096ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1815ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1141ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 623ms
+ ✓ Compiled in 425ms
+ ✓ Compiled in 461ms
+ GET /admin/users 200 in 1011ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2343ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1382ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 552ms
+ ✓ Compiled in 419ms
+ ✓ Compiled in 520ms
+ GET /admin/users 200 in 1026ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2130ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1614ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 919ms
+ ✓ Compiled in 478ms
+ GET /admin/users 200 in 461ms
+ GET /admin/users 200 in 712ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1796ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1187ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 712ms
+ ✓ Compiled in 417ms
+ GET /admin/users 200 in 1174ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2251ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1318ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 461ms
+ ✓ Compiled in 472ms
+ GET /admin/users 200 in 1239ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1751ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 865ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 511ms
+ ✓ Compiled in 630ms
+ ✓ Compiled in 638ms
+ GET /admin/users 200 in 1387ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2114ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1416ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 742ms
+ ✓ Compiled in 480ms
+ GET /admin/users 200 in 1183ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2257ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1734ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 489ms
+ GET /admin/users 200 in 746ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1730ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 906ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 839ms
+ GET /admin/users 200 in 1845ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2992ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1692ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 636ms
+ GET /admin/users 200 in 958ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3908ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 3315ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1096ms
+ GET /admin/users 200 in 795ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1844ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1390ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 561ms
+ GET /admin/users 200 in 753ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2355ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1652ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 511ms
+ GET /admin/users 200 in 583ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2461ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1626ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 551ms
+ GET /admin/users 200 in 1957ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1066ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1415ms
+ ○ Compiling /admin/vendors ...
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1220ms
+ ✓ Compiled /admin/vendors in 194.3s
+ GET /admin/vendors 200 in 196631ms
+ GET /admin/vendors 200 in 170564ms
+ GET /admin/users 200 in 28487ms
+ GET /admin/users 200 in 11776ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 10707ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 10447ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1769ms
+ GET /admin/users 200 in 933ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1366ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1189ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1599ms
+ GET /admin/users 200 in 1469ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1546ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1783ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 755ms
+ GET /admin/users 200 in 835ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 11890ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 982ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 513ms
+ GET /admin/users 200 in 805ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 845ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 850ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 498ms
+ GET /admin/users 200 in 559ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 698ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 756ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 466ms
+ GET /admin/users 200 in 697ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 712ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 883ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 535ms
+ ✓ Compiled in 23.2s
+ GET /admin/users 200 in 25448ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2228ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1173ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 467ms
+ ✓ Compiled in 516ms
+ ✓ Compiled in 384ms
+ GET /admin/users 200 in 1610ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2815ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1817ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 835ms
+ ✓ Compiled in 452ms
+ ✓ Compiled /admin/users in 339ms
+ GET /admin/users 200 in 885ms
+ GET /admin/users 200 in 495ms
+ GET /admin/users 200 in 289ms
+ GET /admin/users 200 in 286ms
+ ✓ Compiled in 402ms
+ ✓ Compiled /admin/users in 246ms
+ GET /admin/users 200 in 878ms
+ GET /admin/users 200 in 368ms
+ GET /admin/users 200 in 330ms
+ GET /admin/users 200 in 348ms
+ ✓ Compiled in 592ms
+ ✓ Compiled /admin/users in 240ms
+ GET /admin/users 200 in 756ms
+ GET /admin/users 200 in 509ms
+ GET /admin/users 200 in 332ms
+ GET /admin/users 200 in 344ms
+ ✓ Compiled in 516ms
+ ✓ Compiled /admin/users in 411ms
+ GET /admin/users 200 in 1084ms
+ GET /admin/users 200 in 680ms
+ GET /admin/users 200 in 1420ms
+ GET /admin/users 200 in 1135ms
+ ✓ Compiled in 474ms
+ ✓ Compiled /admin/users in 205ms
+ GET /admin/users 200 in 949ms
+ GET /admin/users 200 in 438ms
+ GET /admin/users 200 in 839ms
+ GET /admin/users 200 in 443ms
+ ✓ Compiled in 758ms
+ ✓ Compiled /admin/users in 168ms
+ GET /admin/users 200 in 889ms
+ GET /admin/users 200 in 418ms
+ GET /admin/users 200 in 564ms
+ GET /admin/users 200 in 447ms
+ ✓ Compiled in 6.5s
+ ✓ Compiled in 744ms
+ ✓ Compiled in 454ms
+ ○ Compiling /admin/vendors ...
+ ✓ Compiled /admin/vendors in 5.1s
+ GET /admin/vendors 200 in 5758ms
+ GET /admin/users 200 in 1830ms
+ GET /admin/vendors 200 in 857ms
+ GET /admin/vendors/1211cefa-f480-4866-ba7c-f50ad4b619e3/catalog 404 in 1057ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2997ms
+ GET /admin/vendors 200 in 2706ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2413ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 1890ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 1115ms
+ GET /vendors/1211cefa-f480-4866-ba7c-f50ad4b619e3/catalog 404 in 838ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1717ms
+ GET /admin/vendors 200 in 1223ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2490ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2026ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 897ms
+ GET /admin/vendors 200 in 1121ms
+ GET /admin/vendors 200 in 741ms
+ GET /admin/vendors 200 in 707ms
+ GET /vendors/1211cefa-f480-4866-ba7c-f50ad4b619e3/catalog 404 in 1630ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1911ms
+ GET /vendors/1211cefa-f480-4866-ba7c-f50ad4b619e3 404 in 950ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2168ms
