@@ -22,7 +22,7 @@ export default function UsersPage() {
   const pageSize = 10;
   const [totalCount, setTotalCount] = useState(0);
 
-  const { user: currentUser } = useAuthContext();
+  const { user: currentUser, signOut, isCheckingAuth } = useAuthContext();
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -39,7 +39,11 @@ export default function UsersPage() {
       supabase.from("profiles").select("*", { count: "exact", head: true }),
     ]);
 
-    console.log("Admin User", { data, error, count });
+    console.log(
+      "Admin User",
+      { data, error, count },
+      { currentUser, countRes, isCheckingAuth }
+    );
 
     if (error) {
       console.error("Error loading users:", error.message);
@@ -100,15 +104,17 @@ export default function UsersPage() {
       accessor: (u: User) => (
         <div className="space-x-2">
           <ResetPasswordButton email={u.email} />
-          <ActionButton
-            label={u.status === "active" ? "Suspend" : "Activate"}
-            onClick={() => toggleStatus(u.id, u.status)}
-            colorClass={
-              u.status === "active"
-                ? "bg-red-600 text-white"
-                : "bg-green-600 text-white"
-            }
-          />
+          {currentUser?.role === "admin" && (
+            <ActionButton
+              label={u.status === "active" ? "Suspend" : "Activate"}
+              onClick={() => toggleStatus(u.id, u.status)}
+              colorClass={
+                u.status === "active"
+                  ? "bg-red-600 text-white"
+                  : "bg-green-600 text-white"
+              }
+            />
+          )}
         </div>
       ),
     },

@@ -197,11 +197,14 @@ useEffect(() => {
       throw new Error("Profile not found immediately after login");
     }
 
+    setUser(profile);
+
     console.log("AuthContext: Profile found immediately after login."); // Note: setUser(profile) might be called here *and* concurrently in the listener.
     // Rely on the listener as the primary source of truth for state updates and redirects.
     return profile;
-  }; /** SIGN OUT */
-
+  };
+  
+  /** SIGN OUT */
   const signOut = async () => {
     console.log("AuthContext: signOut called.");
     const { error } = await supabase.auth.signOut();
