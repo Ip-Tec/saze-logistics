@@ -514,3 +514,177 @@ There was an issue establishing a connection while requesting https://fonts.goog
 
  ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
 Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ GET /admin/users 200 in 1043ms
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2385ms
+ GET /api/cart?userId=a91d669f-48d3-48ad-9e86-215a3b0e92c4 200 in 2169ms
+ GET /api/cart-item?cartId=dbd9090d-a848-4f11-ba9a-78bdf28c582a 200 in 713ms
+ ○ Compiling /auth/login ...
+ ✓ Compiled /auth/login in 14.8s
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ GET /auth/login 200 in 15413ms
+ ○ Compiling /user ...
+ ✓ Compiled /user in 9.6s
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ GET /user 200 in 11202ms
+ ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+ ✓ Compiled in 313.8s
+ ○ Compiling /user ...
+ ✓ Compiled in 180ms
+ ✓ Compiled /user in 3.8s
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ GET /user 200 in 620712ms
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ GET /api/cart?userId=8d8004d3-4f54-4bee-ba3d-bb3432f6d29b 200 in 1049260ms
+ GET /user 200 in 20445ms
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 5984ms
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_mono_68a01160.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap.
+
+
+ ⚠ [next]/internal/font/google/geist_e531dabc.module.css
+Error while requesting resource
