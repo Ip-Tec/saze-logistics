@@ -7,6 +7,7 @@ import Logo from "@/public/favicon.ico";
 import LogoApple from "@/public/apple-touch-icon.png";
 import LogoAndroid from "@/public/android-chrome-512x512.png";
 import { NotificationProvider } from "@/context/NotificationContext";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,6 +52,7 @@ export default function RootLayout({
         <Providers>
           <NotificationProvider>{children}</NotificationProvider>
         </Providers>
+        <SpeedInsights />
       </body>
     </html>
   );

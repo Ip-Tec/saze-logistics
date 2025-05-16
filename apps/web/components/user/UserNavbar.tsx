@@ -11,23 +11,26 @@ export default function UserNavbar() {
       <nav className="hidden md:flex w-full bg-white shadow-md fixed top-0 left-0 z-50 px-4 py-3 items-center justify-between">
         <Link
           href="/"
-          className="hidden flex text-lg gap-2 font-bold text-orange-600 items-center"
+          className="hidden md:flex text-lg gap-2 font-bold text-orange-600 items-center"
         >
           <span className="mr-1">
               <Home size={16} />  
           </span>
-          Order Food
+          Sazee
         </Link>
 
         <div className="flex space-x-6 text-sm font-medium">
           <Link href="/user" className="hover:text-primary">
             Home
           </Link>
-          <Link href="/user/orders" className="hover:text-primary">
+          {/* <Link href="/user/orders" className="hover:text-primary">
             Orders
-          </Link>
-          <Link href="/user/cart" className="hover:text-primary">
+          </Link> */}
+          {/* <Link href="/user/cart" className="hover:text-primary">
             Cart
+          </Link> */}
+          <Link href="/user/category" className="hover:text-primary">
+            Category
           </Link>
           <Link href="/user/profile" className="hover:text-primary">
             Profile
