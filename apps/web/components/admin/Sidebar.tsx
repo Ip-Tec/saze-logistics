@@ -60,6 +60,12 @@ const ALL_NAV: NavItem[] = [
     roles: ["admin", "supporter"],
   },
   {
+    href: "/admin/products",
+    name: "Products & Categories",
+    icon: <FileText size={20} />,
+    roles: ["admin", "supporter"],
+  },
+  {
     href: "/admin/orders",
     name: "Orders & Deliveries",
     icon: <FileText size={20} />,

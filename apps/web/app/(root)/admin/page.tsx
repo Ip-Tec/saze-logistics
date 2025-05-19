@@ -119,7 +119,7 @@ export default function DashboardPage() {
   if (loading) return <div className="p-4 text-gray-600">Loading dashboard…</div>
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-4">
       {/* 1. Summary Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <SummaryCard title="Users"        value={stats.users}        icon={<Users />}        />
