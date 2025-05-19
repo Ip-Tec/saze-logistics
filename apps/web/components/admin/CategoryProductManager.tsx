@@ -94,7 +94,7 @@ export default function CategoryProductManager() {
   const currentList = tab === 'category' ? categories : products
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-4">
       {/* Tab buttons */}
       <div className="flex gap-2">
         {(['category','product'] as const).map((t) => (
