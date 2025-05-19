@@ -7,7 +7,9 @@ import DataTable from "@/components/admin/people/DataTable";
 import ActionButton from "@/components/admin/people/ActionButton";
 import { supabase } from "@shared/supabaseClient";
 import type { Database } from "@shared/supabase/types";
-
+import ChatManager from "@/components/chat/ChatManager";
+import { useAuthContext } from "@/context/AuthContext";
+import { AppUser } from "@shared/types";
 type NotificationRow = Database["public"]["Tables"]["notification"]["Row"];
 type ConversationRow = Database["public"]["Tables"]["conversation"]["Row"];
 type ParticipantRow =
@@ -21,7 +23,7 @@ interface Ticket extends ConversationRow {
 }
 
 export default function SupportPage() {
-  const [tab, setTab] = useState<"notifications" | "tickets">("notifications");
+  const [tab, setTab] = useState<"notifications" | "tickets" | "chat">("notifications");
   const [notifications, setNotifications] = useState<NotificationRow[]>([]);
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(false);
@@ -32,6 +34,9 @@ export default function SupportPage() {
   const [ticketCount, setTicketCount] = useState(0);
   const router = useRouter();
 
+  const { user: profile } = useAuthContext();
+  
+  
   // Fetch notifications
   const fetchNotifications = async () => {
     setLoading(true);
@@ -192,6 +197,16 @@ export default function SupportPage() {
         >
           Support Tickets
         </button>
+        <button
+          onClick={() => setTab("chat")}
+          className={
+            tab === "chat"
+              ? "border-b-2 border-blue-600 text-blue-600 pb-1"
+              : "text-gray-600 pb-1 hover:text-gray-800"
+          }
+        >
+          Chat
+        </button>
       </div>
 
       {loading ? (
@@ -227,7 +242,7 @@ export default function SupportPage() {
             </button>
           </div>
         </>
-      ) : (
+      ) : tab === "tickets" ? (
         <>
           <DataTable<Ticket> columns={ticketCols} data={tickets} />
 
@@ -255,7 +270,9 @@ export default function SupportPage() {
             </button>
           </div>
         </>
-      )}
+      ) : tab === "chat" ? (
+        <ChatManager currentUser={profile as AppUser} />
+      ) : null}
     </div>
   );
 }
