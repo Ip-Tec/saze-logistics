@@ -65,19 +65,64 @@ export default function UserHomePage() {
 
   // --- Load riders once we have userLoc ---
   useEffect(() => {
-    if (!userLoc) return
+    // 1) fetch all active riders
     supabase
-      .from('delivery_address')
-      .select('user_id, lat, lng, profiles(name)')
-      .eq('profiles.role','rider').eq('profiles.status','active')
-      .then(({ data, error }) => {
-        if (error) return toast.error(error.message)
-        const list: Rider[] = (data||[]).map((d:any) => ({
-          id: d.user_id, name: d.profiles[0]?.name, lat: d.lat, lng: d.lng
+      .from('profiles')
+      .select('id, name')
+      .eq('role', 'rider')
+      .eq('status', 'active')
+      .then(async ({ data: ridersData, error: ridersErr }) => {
+        if (ridersErr) return toast.error(ridersErr.message)
+        const ids = ridersData!.map((r) => r.id)
+        // 2) fetch latest location per rider_id
+        const { data: locs, error: locErr } = await supabase
+          .from('rider_location')
+          .select('rider_id: rider_id, latitude, longitude')
+          .in('rider_id', ids)
+          .order('recorded_at', { ascending: false })
+        if (locErr) return toast.error(locErr.message)
+        // reduce to one entry per rider_id
+        const latestMap = new Map<string, { lat: number; lng: number }>()
+        locs!.forEach((l: any) => {
+          if (!latestMap.has(l.rider_id)) {
+            latestMap.set(l.rider_id, { lat: l.latitude, lng: l.longitude })
+          }
+        })
+        const list: Rider[] = ridersData!.map((r) => ({
+          id: r.id,
+          name: r.name,
+          lat: latestMap.get(r.id)?.lat || 0,
+          lng: latestMap.get(r.id)?.lng || 0,
         }))
         setRiders(list)
       })
-  }, [userLoc])
+  }, [])  // only once on mount
+
+  //subscribe to real-time inserts on rider_location
+  useEffect(() => {
+    const channel = supabase
+      .channel('rider_live')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'rider_location' },
+        (payload) => {
+          const { rider_id, latitude, longitude } = payload.new as any
+          setRiders((rs) =>
+            rs.map((r) =>
+              r.id === rider_id
+                ? { ...r, lat: latitude, lng: longitude }
+                : r
+            )
+          )
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [])
+
 
   // --- Compute nearest rider whenever riders or userLoc change ---
   useEffect(() => {

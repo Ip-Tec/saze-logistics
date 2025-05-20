@@ -30,7 +30,7 @@ export default function UserNavbar() {
             Cart
           </Link> */}
           <Link href="/user/category" className="hover:text-primary">
-            Category
+            Vendors
           </Link>
           <Link href="/user/profile" className="hover:text-primary">
             Profile
@@ -51,11 +51,11 @@ export default function UserNavbar() {
             <Home size={20} />  <span>Home</span> 
           </Link>
           <Link
-            href="/user/orders"
+            href="/user/category"
             className="flex flex-col items-center text-gray-700 hover:text-orange-600"
           >
               <ClipboardList size={20} />
-            <span>Orders</span>
+            <span>Vendor</span>
           </Link>
           <Link
             href="/user/cart"
