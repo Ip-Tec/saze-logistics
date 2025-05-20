@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { GoogleMap, LoadScript, Autocomplete } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Autocomplete, Libraries } from "@react-google-maps/api";
 
 interface Restaurant {
   id: number;
@@ -9,7 +9,7 @@ interface Restaurant {
 
 const containerStyle = {
   width: "100%",
-  height: "0px", // We don’t need to display the map now
+  height: "0px", // We don't need to display the map now
 };
 
 const center = {
@@ -17,9 +17,7 @@ const center = {
   lng: 3.3792,
 };
 
-const libraries: ("places" | "drawing" | "geometry" | "visualization")[] = [
-  "places",
-];
+const libraries: Libraries = ["places"];
 
 const OrderPage: React.FC = () => {
   const [location, setLocation] = useState<string>("");
