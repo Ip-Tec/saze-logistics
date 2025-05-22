@@ -8,6 +8,7 @@ import { supabase } from "@shared/supabaseClient";
 import { useAuthContext } from "@/context/AuthContext";
 import { Database } from "@shared/supabase/types";
 import { toast, ToastContainer } from "react-toastify";
+import CreateUserForm from "@/components/admin/user/CreateUserForm";
 
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
@@ -151,6 +152,16 @@ export default function UsersPage() {
           </div>
         </>
       )}
+      <div>
+        {/* Admin can create users and give them roles */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Create User</h2>
+          <div className="space-y-2">
+            <CreateUserForm />
+        </div>
+      </div>
+      </div>
     </div>
   );
 }
+
