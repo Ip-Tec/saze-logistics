@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { supabase } from '@shared/supabaseClient';
+import { toast } from 'react-toastify';
 
 // Define the shape of the form data
 interface FormData {
@@ -69,10 +70,12 @@ export default function CreateUserForm({ onSuccess }: CreateUserFormProps) {
       if (roleError) throw roleError;
 
       setSuccess('User created successfully!');
+      toast.success('User created successfully!');
       reset();
       if (onSuccess) onSuccess();
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred');
+      toast.error(err.message || 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -89,7 +92,7 @@ export default function CreateUserForm({ onSuccess }: CreateUserFormProps) {
         <input
           type="text"
           {...register('name', { required: 'Name is required' })}
-          className="w-full px-3 py-2 border border-gray-300 rounded"
+          className="w-full px-3 py-2 border border-gray-300 rounded" required
         />
         {errors.name && <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>}
       </div>
@@ -106,7 +109,7 @@ export default function CreateUserForm({ onSuccess }: CreateUserFormProps) {
               message: 'Invalid email address',
             },
           })}
-          className="w-full px-3 py-2 border border-gray-300 rounded"
+          className="w-full px-3 py-2 border border-gray-300 rounded" required
         />
         {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
       </div>
@@ -119,7 +122,7 @@ export default function CreateUserForm({ onSuccess }: CreateUserFormProps) {
           {...register('phone', {
             required: 'Phone is required',
             pattern: {
-              value: /^[0-9]{10}$/,
+              value: /^[0-9]{11}$/,
               message: 'Phone must be 10 digits',
             },
           })}
@@ -133,11 +136,14 @@ export default function CreateUserForm({ onSuccess }: CreateUserFormProps) {
         <label className="block text-sm font-medium mb-1">Role</label>
         <select
           {...register('role', { required: 'Role is required' })}
-          className="w-full px-3 py-2 border border-gray-300 rounded"
+          className="w-full px-3 py-2 border border-gray-300 rounded" required
         >
           <option value="">Select a role</option>
           <option value="admin">Admin</option>
-          <option value="moderator">Moderator</option>
+          <option value="support">Support</option>
+          {/* <option value="moderator">Moderator</option> */}
+          <option value="vendor">Vendor</option>
+          <option value="rider">Rider</option>
           <option value="user">User</option>
         </select>
         {errors.role && <p className="text-red-600 text-sm mt-1">{errors.role.message}</p>}
@@ -148,7 +154,7 @@ export default function CreateUserForm({ onSuccess }: CreateUserFormProps) {
         <label className="block text-sm font-medium mb-1">Status</label>
         <select
           {...register('status', { required: 'Status is required' })}
-          className="w-full px-3 py-2 border border-gray-300 rounded"
+          className="w-full px-3 py-2 border border-gray-300 rounded" required
         >
           <option value="">Select status</option>
           <option value="active">Active</option>
@@ -166,7 +172,7 @@ export default function CreateUserForm({ onSuccess }: CreateUserFormProps) {
             required: 'Password is required',
             minLength: { value: 6, message: 'Minimum 6 characters' },
           })}
-          className="w-full px-3 py-2 border border-gray-300 rounded"
+          className="w-full px-3 py-2 border border-gray-300 rounded" required
         />
         {errors.password && <p className="text-red-600 text-sm mt-1">{errors.password.message}</p>}
       </div>

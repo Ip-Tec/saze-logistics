@@ -22,6 +22,7 @@ export default function UsersPage() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
   const [totalCount, setTotalCount] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false); // New state for modal
 
   const { user: currentUser, signOut, isCheckingAuth } = useAuthContext();
 
@@ -31,7 +32,7 @@ export default function UsersPage() {
     const from = (page - 1) * pageSize;
     const to = from + pageSize - 1;
 
-    const [{ data, error, count }, countRes] = await Promise.all([
+    const [{ data, error }, countRes] = await Promise.all([
       supabase
         .from("profiles")
         .select("*", { count: "exact" })
@@ -39,12 +40,6 @@ export default function UsersPage() {
         .range(from, to),
       supabase.from("profiles").select("*", { count: "exact", head: true }),
     ]);
-
-    console.log(
-      "Admin User",
-      { data, error, count },
-      { currentUser, countRes, isCheckingAuth }
-    );
 
     if (error) {
       console.error("Error loading users:", error.message);
@@ -76,14 +71,12 @@ export default function UsersPage() {
       .update({ status: nextStatus })
       .eq("id", id);
 
-    console.log("Admin User", { data, error });
-
     if (error) {
       toast.error("Failed to update user status.");
       return;
     }
 
-    fetchUsers(); // Refresh page
+    fetchUsers();
   };
 
   const columns = [
@@ -124,8 +117,20 @@ export default function UsersPage() {
   return (
     <div className="p-4 space-y-4 w-fit">
       <ToastContainer />
-      <h1 className="text-2xl font-semibold">User Management</h1>
-
+      <header className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-semibold">User Management</h1>
+        {/* Admin Create User Button */}
+        {currentUser?.role === "admin" && (
+          <div className="mt-6">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Create User
+            </button>
+          </div>
+        )}
+      </header>
       {loading ? (
         <div className="text-gray-600">Loading users…</div>
       ) : (
@@ -152,16 +157,29 @@ export default function UsersPage() {
           </div>
         </>
       )}
-      <div>
-        {/* Admin can create users and give them roles */}
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Create User</h2>
-          <div className="space-y-2">
-            <CreateUserForm />
+
+      {/* Modal for Create User Form */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 !bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Create New User</h2>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-gray-500 hover:text-gray-800 text-lg font-bold"
+              >
+                &times;
+              </button>
+            </div>
+            <CreateUserForm
+              onSuccess={() => {
+                setIsModalOpen(false);
+                fetchUsers();
+              }}
+            />
+          </div>
         </div>
-      </div>
-      </div>
+      )}
     </div>
   );
 }
-
