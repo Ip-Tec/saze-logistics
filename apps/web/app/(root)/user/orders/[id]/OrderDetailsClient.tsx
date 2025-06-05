@@ -206,7 +206,7 @@ const Polyline: React.FC<google.maps.PolylineOptions> = (options) => {
       polylineRef.current = new google.maps.Polyline(options);
     }
     polylineRef.current.setOptions(options);
-    polylineRef.current.setMap(options.map); // Ensure it's attached to the map
+    polylineRef.current.setMap(options.map ?? null); // Ensure it's attached to the map
 
     return () => {
       if (polylineRef.current) {

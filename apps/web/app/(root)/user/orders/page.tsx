@@ -136,7 +136,7 @@ export default async function UserOrdersPage() {
             }
 
             return (
-              <Link
+              <a
                 key={order.id}
                 href={`/user/orders/${order.id}`}
                 className="block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
@@ -185,7 +185,7 @@ export default async function UserOrdersPage() {
                     {order.rider?.name || "Unassigned"}
                   </p>
                 </div>
-              </Link>
+              </a>
             );
           })}
         </div>

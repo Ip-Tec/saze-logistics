@@ -8,6 +8,11 @@ import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import { type Database } from "@shared/supabase/types";
 import RiderTrackingMapClient from "@/app/(root)/user/orders/[id]/track/RiderTrackingMapClient"; // New client component for map
 
+export interface LatLng {
+  lat: number;
+  lng: number;
+}
+
 export const dynamic = "force-dynamic"; // Ensure this page is always dynamic
 
 export default async function RiderTrackingPage({
@@ -32,9 +37,9 @@ export default async function RiderTrackingPage({
       `
       id,
       status,
-      rider:rider_id(id, name),
-      delivery_address:delivery_address_id(lat, lng),
-      order_item(notes)
+      rider:profiles!order_rider_id_fkey(id, name, email, phone, rider_image_url),
+      delivery_address(street, city, state, country, lat, lng),
+      order_item(quantity, notes)
     `
     )
     .eq("id", trackingId.orderId)
@@ -66,8 +71,9 @@ export default async function RiderTrackingPage({
           Rider tracking is currently not available for this order.
         </p>
         <p className="text-gray-600">
-          The order status is "{order.status.replace(/_/g, " ")}" or a rider has
-          not been assigned yet.
+          The order status is "
+          {(order.status ?? "").toUpperCase().replace(/_/g, " ")}" or a rider
+          has not been assigned yet.
         </p>
         <Link
           href={`/user/orders/${trackingId.orderId}`}
@@ -92,7 +98,10 @@ export default async function RiderTrackingPage({
   }
 
   const dropoffCoords = order.delivery_address
-    ? { lat: order.delivery_address.lat, lng: order.delivery_address.lng }
+    ? ({
+        lat: order.delivery_address.lat,
+        lng: order.delivery_address.lng,
+      } as LatLng)
     : null;
 
   // Render the client component for the actual map and real-time logic

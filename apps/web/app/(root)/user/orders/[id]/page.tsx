@@ -12,14 +12,12 @@ import {
   ChatBubbleLeftIcon,
   TruckIcon,
   ArrowLongRightIcon,
-} from "@heroicons/react/24/outline"; // Import icons
-// import { MapContainer as OrderMapContainer } from "@/components/user/MapContainer";
+} from "@heroicons/react/24/outline";
 
-import { createServerClient } from "@supabase/ssr"; // <--- Correct import
+import { createServerClient } from "@supabase/ssr";
 import { type Database } from "@shared/supabase/types";
 import OrderDetailsClient from "@/app/(root)/user/orders/[id]/OrderDetailsClient";
 
-// Define a detailed Order type for this page
 interface OrderDetail {
   id: string;
   created_at: string;
@@ -29,32 +27,44 @@ interface OrderDetail {
   rider: {
     id: string;
     name: string;
-    phone_number: string;
+    phone: string;
     email: string;
-    avatar_url: string;
+    rider_image_url: string | null;
+  } | null;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+  } | null;
+  vendor: {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    logo_url: string | null;
   } | null;
   delivery_address: {
     street: string;
     city: string;
     state: string;
     country: string;
-    lat: number;
-    lng: number;
+    lat: number | null;
+    lng: number | null;
   } | null;
   order_item: Array<{
     quantity: number;
-    notes: string; // JSON string with pickup/dropoff addresses and description
+    notes: string | null;
   }>;
 }
 
-export const dynamic = "force-dynamic"; // Ensure this page is always dynamic
+export const dynamic = "force-dynamic";
 
 export default async function OrderDetailPage({
   params,
 }: {
   params: Promise<{ orderId: string }>;
 }) {
-  // const orderId = params.orderId;
   const orderIdParams = await params;
   const cookieStore = await cookies();
   const supabase = createServerClient<Database>(
@@ -62,19 +72,16 @@ export default async function OrderDetailPage({
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        // Provide async getAll method as cookieStore is awaited
         async getAll() {
           return cookieStore.getAll();
         },
-        // Provide async setAll method
         async setAll(cookiesToSet) {
           try {
             for (const { name, value, options } of cookiesToSet) {
-              cookieStore.set(name, value, options); // cookieStore.set is synchronous
+              cookieStore.set(name, value, options);
             }
           } catch (error) {
             console.error("Error setting cookies in API route:", error);
-            // In a Route Handler, setting cookies directly is generally expected to work.
           }
         },
       },
@@ -85,9 +92,6 @@ export default async function OrderDetailPage({
     data: { session },
   } = await supabase.auth.getSession();
 
-  // You can keep this console.log for debugging
-  console.log("Session in UserOrdersPage:", session);
-
   if (!session) {
     redirect("/auth/login");
   }
@@ -96,26 +100,23 @@ export default async function OrderDetailPage({
     .from("order")
     .select(
       `
-      id,
-      created_at,
-      status,
-      total_amount,
-      special_instructions,
-      rider:rider_id(id, name, phone_number, email, profiles!avatar_url)
-      delivery_address:delivery_address_id(street, city, state, country, lat, lng),
+      *,
+      user:profiles!order_user_id_fkey(id, name, email, phone),
+      vendor:profiles!order_vendor_id_fkey(id, name, email, phone, logo_url),
+      rider:profiles!order_rider_id_fkey(id, name, phone, email, rider_image_url),
+      delivery_address(street, city, state, country, lat, lng),
       order_item(quantity, notes)
-    `
+      `
     )
     .eq("id", orderIdParams.orderId)
-    .eq("user_id", session.user.id) // Ensure only owner can view
+    .eq("user_id", session.user.id)
     .single();
 
   if (error || !order) {
     console.error("Error fetching order details:", error);
-    // You might want a custom 404 page or error message
     return (
-      <div className="container mx-auto p-4 text-center text-gray-600">
-        <p>Order not found or you do not have permission to view it.</p>
+      <div className="container m-auto p-4 text-center text-gray-600 h-screen">
+        <h1>Order not found or you do not have permission to view it.</h1>
         <Link
           href="/user/orders"
           className="mt-4 inline-block bg-orange-600 shadown-md px-4 rounded-2xl py-2 text-white hover:underline"
@@ -125,8 +126,26 @@ export default async function OrderDetailPage({
       </div>
     );
   }
+
+  let riderLocation = null;
+  if (order.rider?.id) {
+    // Use optional chaining to safely check if rider and id exist
+    const { data: latestLocation, error: locationError } = await supabase
+      .from("rider_location")
+      .select("latitude, longitude")
+      .eq("rider_id", order.rider.id) // Correctly access order.rider.id
+      .order("recorded_at", { ascending: false })
+      .limit(1)
+      .single();
+
+    if (locationError) {
+      console.error("Error fetching rider location:", locationError);
+    } else if (latestLocation) {
+      riderLocation = latestLocation;
+    }
+  }
+
   console.log({ order });
-  // Parse order items to extract addresses and descriptions
   const parsedPackages = order.order_item.map((item) => {
     try {
       const notes = JSON.parse(item.notes || "{}");
@@ -153,7 +172,7 @@ export default async function OrderDetailPage({
 
   const isActiveOrder =
     order.status === "processing" || order.status === "out_for_delivery";
-  const canMonitorRider = isActiveOrder && order && order.rider?.id;
+  const canMonitorRider = isActiveOrder && order.rider?.id !== undefined; // Corrected check
 
   return (
     <div className="container mx-auto p-4 md:p-8">
@@ -164,11 +183,9 @@ export default async function OrderDetailPage({
         <ArrowLongRightIcon className="w-5 h-5 rotate-180 mr-2" /> Back to
         Orders
       </Link>
-
       <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 text-center">
         Order Details
       </h1>
-
       <div className="bg-white rounded-lg shadow-xl p-6 mb-8">
         <div className="flex items-center justify-between mb-4 border-b pb-4">
           <h2 className="text-2xl font-semibold text-gray-700">
@@ -186,7 +203,7 @@ export default async function OrderDetailPage({
                     : "bg-gray-100 text-gray-600"
             }`}
           >
-            {order.status.replace(/_/g, " ")}
+            {(order.status ?? "").replace(/_/g, " ")}
           </span>
         </div>
 
@@ -198,7 +215,7 @@ export default async function OrderDetailPage({
             <p className="text-gray-600 flex items-center mb-1">
               <ClockIcon className="w-5 h-5 text-gray-500 mr-2" />
               <span className="font-medium">Placed On:</span>{" "}
-              {format(new Date(order.created_at), "MMM dd, yyyy HH:mm")}
+              {format(new Date(order.created_at ?? ""), "MMM dd, yyyy HH:mm")}
             </p>
             <p className="text-gray-600 flex items-center mb-1">
               <CurrencyDollarIcon className="w-5 h-5 text-gray-500 mr-2" />
@@ -273,26 +290,24 @@ export default async function OrderDetailPage({
           </h3>
           {order.rider ? (
             <div className="flex items-center space-x-4">
-              {order.rider.avatar_url ? (
+              {order.rider.rider_image_url ? (
                 <img
-                  src={order.rider.avatar_url}
+                  src={order.rider.rider_image_url}
                   alt={order.rider.name || "Rider"}
                   className="w-16 h-16 rounded-full object-cover border border-gray-200"
                 />
               ) : (
                 <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-lg font-semibold">
-                  {order.rider.name?.charAt(0).toUpperCase() || "R"}
+                  {order?.rider?.name?.charAt(0).toUpperCase() || "R"}
                 </div>
               )}
               <div>
                 <p className="text-gray-700 font-semibold text-lg">
-                  {order.rider.name}
+                  {order?.rider?.name || "Rider"}
                 </p>
-                <p className="text-gray-500 text-sm">{order.rider.email}</p>
-                {order.rider.phone_number && (
-                  <p className="text-gray-500 text-sm">
-                    {order.rider.phone_number}
-                  </p>
+                <p className="text-gray-500 text-sm">{order?.rider?.email}</p>
+                {order.rider?.phone && (
+                  <p className="text-gray-500 text-sm">{order?.rider?.phone}</p>
                 )}
               </div>
             </div>
@@ -304,12 +319,11 @@ export default async function OrderDetailPage({
         {isActiveOrder && order.rider?.id && (
           <div className="mt-8 pt-6 border-t border-gray-200 flex flex-wrap gap-4 justify-center md:justify-start">
             <a
-              href={`tel:${order.rider.phone_number}`}
+              href={`tel:${order?.rider?.phone}`}
               className="flex items-center bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md"
             >
               <PhoneIcon className="w-5 h-5 mr-2" /> Call Rider
             </a>
-            {/* For chat, you'd integrate a messaging service or a simple internal chat */}
             <button className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md">
               <ChatBubbleLeftIcon className="w-5 h-5 mr-2" /> Chat with Rider
             </button>
@@ -324,22 +338,20 @@ export default async function OrderDetailPage({
           </div>
         )}
       </div>
-
-      {/* Render the client component for real-time rider tracking map */}
       {canMonitorRider && (
         <OrderDetailsClient
-          riderId={order.rider.id}
-          initialRiderLat={order.rider.lat} // Assuming you fetch current rider location
-          initialRiderLng={order.rider.lng} // on initial load if available
+          riderId={order.rider?.id || ""}
+          initialRiderLat={riderLocation?.latitude || null}
+          initialRiderLng={riderLocation?.longitude || null}
           dropoffCoords={
             order.delivery_address
               ? {
-                  lat: order.delivery_address.lat,
-                  lng: order.delivery_address.lng,
+                  lat: order.delivery_address.lat ?? 0,
+                  lng: order.delivery_address.lng ?? 0,
                 }
               : null
           }
-          pickupCoords={parsedPackages[0]?.pickup_coords} // Pass first package's pickup
+          pickupCoords={parsedPackages[0]?.pickup_coords}
         />
       )}
     </div>
