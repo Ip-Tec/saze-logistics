@@ -118,7 +118,7 @@ export default async function OrderDetailPage({
         <p>Order not found or you do not have permission to view it.</p>
         <Link
           href="/user/orders"
-          className="mt-4 inline-block bg-orange-600 shadown-md px-4 py-2 text-white hover:underline"
+          className="mt-4 inline-block bg-orange-600 shadown-md px-4 rounded-2xl py-2 text-white hover:underline"
         >
           Back to all orders
         </Link>
