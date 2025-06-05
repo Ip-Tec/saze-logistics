@@ -58,7 +58,7 @@ export default async function OrderDetailPage({
   // This tells Supabase client to read the cookies from the incoming request
 
   const cookieStore = await cookies();
-
+ const orderIdParams = await params;
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -108,7 +108,7 @@ export default async function OrderDetailPage({
       order_item(quantity, notes)
     `
     )
-    .eq("id", params.orderId)
+    .eq("id", orderIdParams.orderId)
     .eq("user_id", session.user.id) // Ensure only owner can view
     .single();
 
@@ -116,11 +116,11 @@ export default async function OrderDetailPage({
     console.error("Error fetching order details:", error);
     // You might want a custom 404 page or error message
     return (
-      <div className="container mx-auto p-4 text-center text-red-600">
+      <div className="container mx-auto p-4 text-center text-gray-600">
         <p>Order not found or you do not have permission to view it.</p>
         <Link
           href="/user/orders"
-          className="mt-4 inline-block text-orange-600 hover:underline"
+          className="mt-4 inline-block bg-orange-600 shadown-md px-4 py-2 text-white hover:underline"
         >
           Back to all orders
         </Link>
