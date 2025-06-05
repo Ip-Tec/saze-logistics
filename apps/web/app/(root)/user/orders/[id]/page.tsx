@@ -52,13 +52,11 @@ export const dynamic = "force-dynamic"; // Ensure this page is always dynamic
 export default async function OrderDetailPage({
   params,
 }: {
-  params: { orderId: string };
+  params: Promise<{ orderId: string }>;
 }) {
-  // Pass the cookies instance from Next.js headers to createServerClient
-  // This tells Supabase client to read the cookies from the incoming request
-
+  // const orderId = params.orderId;
+  const orderIdParams = await params;
   const cookieStore = await cookies();
- const orderIdParams = await params;
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
