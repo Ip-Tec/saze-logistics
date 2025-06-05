@@ -74,6 +74,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
  // Fetch profile from Supabase
  async function getUserProfile(): Promise<AppUser | null> {
   const { data: userData, error: authError } = await supabase.auth.getUser();
+  console.log({ userData, authError });
   if (authError || !userData?.user) return null;
   const { data, error } = await supabase
     .from("profiles")
@@ -194,6 +195,7 @@ useEffect(() => {
         "AuthContext: Profile not found immediately after login. Onboarding redirect handled by listener."
       ); // Even though listener handles onboarding redirect, we still throw
       // for the function's contract if profile is expected immediately.
+      router.replace("/onboarding");
       throw new Error("Profile not found immediately after login");
     }
 

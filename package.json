@@ -30,14 +30,17 @@
   "homepage": "https://github.com/Ip-Tec/saze-logistics#readme",
   "dependencies": {
     "@react-google-maps/api": "^2.20.6",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.49.4",
     "@vercel/speed-insights": "^1.2.0",
+    "date-fns": "^4.1.0",
     "framer-motion": "^12.6.2",
     "geolib": "^3.3.4",
     "rate-limiter-flexible": "^7.0.0",
     "react-native-heroicons": "^4.0.0"
   },
   "devDependencies": {
+    "@types/date-fns": "^2.5.3",
     "cross-env": "^7.0.3",
     "eslint": "^9.23.0",
     "prettier": "^3.5.3",

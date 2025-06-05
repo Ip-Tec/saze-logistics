@@ -1,3 +1,4 @@
+// apps/web/app/auth/onboarding/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -104,13 +105,13 @@ export default function OnboardingPage() {
 
     handleProfileCheck();
   }, [user, isCheckingAuth, router, getUserProfile]);
-
+console.log({isCheckingAuth})
   // Loading UI
   if (isCheckingAuth || profileFetchStatus === "loading") {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <Loader2 size={48} className="animate-spin text-orange-500" />
-        <p className="ml-4 text-lg text-gray-700">Checking profile status... {isCheckingAuth}</p>
+        <p className="ml-4 text-lg text-gray-700">Checking profile status...</p>
       </div>
     );
   }
