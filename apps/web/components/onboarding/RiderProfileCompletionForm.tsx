@@ -291,6 +291,7 @@ export default function RiderProfileCompletionForm({
           </div>
         )}
 
+          <div className="flex justify-evenly flex-wrap items-center w-full">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Info (Display from Auth User) */}
           <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
@@ -310,7 +311,6 @@ export default function RiderProfileCompletionForm({
             </p>
           </div>
 
-          <div className="flex justify-evenly flex-wrap items-center w-full">
             {/* Rider Image Upload Section */}
             <div className="border border-gray-200 p-5 rounded-md bg-gray-50">
               <label className="block text-base font-semibold text-gray-800 mb-3">
@@ -467,7 +467,6 @@ export default function RiderProfileCompletionForm({
                 </p>
               </div>
             </div>
-          </div>
 
           {/* Submit Button */}
           <GlassButton
@@ -494,6 +493,7 @@ export default function RiderProfileCompletionForm({
           </GlassButton>
         </form>
       </div>
-    </div>
+      </div>
+      </div>
   );
 }
