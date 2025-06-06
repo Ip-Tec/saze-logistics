@@ -1,4 +1,4 @@
-// app/(root)/user/orders/[orderId]/page.tsx
+// app/(root)/user/orders/[id]/page.tsx
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
@@ -63,13 +63,14 @@ export const dynamic = "force-dynamic";
 export default async function OrderDetailPage({
   params,
 }: {
-  params: Promise<{ orderId: string }>;
+  params: Promise<{ id: string }>;
 }) {
   const orderIdParams = await params;
+  const orderId = orderIdParams.id;
   const cookieStore = await cookies();
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         async getAll() {
@@ -99,16 +100,15 @@ export default async function OrderDetailPage({
   const { data: order, error } = await supabase
     .from("order")
     .select(
-      `
-      *,
+      `*,
       user:profiles!order_user_id_fkey(id, name, email, phone),
       vendor:profiles!order_vendor_id_fkey(id, name, email, phone, logo_url),
       rider:profiles!order_rider_id_fkey(id, name, phone, email, rider_image_url),
       delivery_address(street, city, state, country, lat, lng),
       order_item(quantity, notes)
-      `
+    `
     )
-    .eq("id", orderIdParams.orderId)
+    .eq("id", orderId)
     .eq("user_id", session.user.id)
     .single();
 
@@ -128,24 +128,42 @@ export default async function OrderDetailPage({
   }
 
   let riderLocation = null;
+  // Only attempt to fetch rider location if a rider is assigned and has an ID
   if (order.rider?.id) {
-    // Use optional chaining to safely check if rider and id exist
+    console.log(
+      `Attempting to fetch rider location for rider ID: ${order.rider.id}`
+    ); // Debugging line
+
     const { data: latestLocation, error: locationError } = await supabase
       .from("rider_location")
       .select("latitude, longitude")
-      .eq("rider_id", order.rider.id) // Correctly access order.rider.id
+      .eq("rider_id", order.rider.id)
       .order("recorded_at", { ascending: false })
       .limit(1)
-      .single();
+      .maybeSingle(); // Using .single() is good for getting one row
 
     if (locationError) {
-      console.error("Error fetching rider location:", locationError);
+      // This means there was an actual database error, not just no data
+      console.error(
+        "Error fetching rider location from Supabase:",
+        locationError
+      );
     } else if (latestLocation) {
+      // If latestLocation is not null, it means data was found
       riderLocation = latestLocation;
+      console.log("Rider location fetched:", riderLocation); // Debugging line
+    } else {
+      // This block runs if data is null (no rows found for .single()), and no explicit error
+      console.log(
+        `No location data found for rider ID: ${order.rider.id}. This is expected if the rider hasn't recorded location yet.`
+      );
     }
+  } else {
+    console.log(
+      "No rider assigned to this order, skipping rider location fetch."
+    );
   }
 
-  console.log({ order });
   const parsedPackages = order.order_item.map((item) => {
     try {
       const notes = JSON.parse(item.notes || "{}");
