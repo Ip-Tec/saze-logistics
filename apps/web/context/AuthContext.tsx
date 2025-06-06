@@ -196,7 +196,7 @@ useEffect(() => {
       ); // Even though listener handles onboarding redirect, we still throw
       // for the function's contract if profile is expected immediately.
       router.replace("/onboarding");
-      throw new Error("Profile not found immediately after login");
+      throw new Error("Profile not found immediately after login. \n Redirecting to onboarding page.");
     }
 
     setUser(profile);

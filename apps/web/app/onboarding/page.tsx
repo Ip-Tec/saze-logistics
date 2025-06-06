@@ -1,18 +1,24 @@
-"use client";
+// app/(root)/onboarding/page.tsx
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/context/AuthContext";
-import { Loader2 } from "lucide-react";
+import { createServerClient } from "@supabase/ssr";
+import { type Database } from "@shared/supabase/types";
 
-import UserProfileCompletionForm from "@/components/onboarding/UserProfileCompletionForm";
-import VendorProfileCompletionForm from "@/components/onboarding/VendorProfileCompletionForm";
-import RiderProfileCompletionForm from "@/components/onboarding/RiderProfileCompletionForm";
+// Import your client component
+import OnboardingClient from "./OnboardingClient";
 
-import { supabase } from "@shared/supabaseClient";
-import { toast, ToastContainer } from "react-toastify";
+// Define interfaces for data passed to client component
+interface UserProfile {
+  id: string;
+  name: string | null;
+  role: string | null;
+  // Add other profile fields you might fetch from your 'profiles' table
+  // e.g., avatar_url, bio, etc.
+}
 
-type MetaDataProps = {
+// Ensure MetaDataProps is accessible or redefined if needed
+type ServerMetaDataProps = {
   id: string;
   sub: string;
   name: string;
@@ -24,119 +30,97 @@ type MetaDataProps = {
   phone_verified: boolean | string;
 };
 
-export default function OnboardingPage() {
-  const { user, isCheckingAuth, getUserProfile } = useAuthContext();
-  const router = useRouter();
+export const dynamic = "force-dynamic"; // Ensure this page is always dynamic
 
-  const [profileFetchStatus, setProfileFetchStatus] = useState<
-    "loading" | "found" | "not_found"
-  >("loading");
+export default async function OnboardingPageServer() {
+  const cookieStore = await cookies();
+  const supabase = createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        async getAll() {
+          return cookieStore.getAll();
+        },
+        async setAll(cookiesToSet) {
+          try {
+            for (const { name, value, options } of cookiesToSet) {
+              cookieStore.set(name, value, options);
+            }
+          } catch (error) {
+            console.error("Error setting cookies in API route:", error);
+          }
+        },
+      },
+    }
+  );
 
-  const [userRole, setUserRole] = useState<string | null>(null);
-  const [sessionMetadata, setSessionMetadata] = useState<MetaDataProps>({
-    id: "",
-    sub: "",
-    name: "",
-    role: "",
-    email: "",
-    phone: "",
-    email_verified: false,
-    phone_verified: false,
-  });
+  // 1. Get session and user data from Supabase on the server
+  const {
+    data: { session },
+    error: sessionError,
+  } = await supabase.auth.getSession();
 
-  // Fetch session metadata
-  useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-          setSessionMetadata(session.user.user_metadata as MetaDataProps);
-        }
-      } catch (error) {
-        console.error("Error fetching session:", error);
-      }
-    };
+  if (sessionError || !session) {
+    console.error(
+      "Server: No active session found or session error:",
+      sessionError
+    );
+    redirect("/auth/login");
+  }
 
-    fetchSession();
-  }, []);
+  const user = session.user;
+  const sessionMetadata: ServerMetaDataProps =
+    user.user_metadata as ServerMetaDataProps;
+  const userRole = sessionMetadata.role;
 
-  // Main profile logic
-  useEffect(() => {
-    const handleProfileCheck = async () => {
-      if (isCheckingAuth) return;
-
-      if (user) {
-        router.replace(`/${user.role}`);
-        return;
-      }
-
-      setProfileFetchStatus("loading");
-
-      const { data: userData, error: authError } = await supabase.auth.getUser();
-
-      if (authError || !userData?.user) {
-        console.error("No authenticated user found");
-        toast.error(authError?.message || "Authentication error.");
-        router.replace("/auth/login");
-        return;
-      }
-
-      const profile = await getUserProfile();
-      if (profile) {
-        setProfileFetchStatus("found");
-        router.replace(`/${profile.role}`);
-        return (<ToastContainer />);
-      }
-
-      const intendedRole = userData.user.user_metadata?.role as string | null;
-
-      if (!intendedRole) {
-        console.error("User has no role metadata.");
-        toast.error("User has no role metadata.");
-        setProfileFetchStatus("not_found");
-        setUserRole(null);
-        return (<ToastContainer />);
-      }
-
-      setUserRole(intendedRole);
-      setProfileFetchStatus("not_found");
-    };
-
-    handleProfileCheck();
-  }, [user, isCheckingAuth, router, getUserProfile]);
-
-  // Loading UI
-  if (isCheckingAuth || profileFetchStatus === "loading") {
+  if (!userRole) {
+    console.error("Server: User has no role metadata in session.");
+    // This scenario should ideally be handled during signup, but if it happens,
+    // we still need to show an onboarding form or error.
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Loader2 size={48} className="animate-spin text-orange-500" />
-        <p className="ml-4 text-lg text-gray-700">Checking profile status... {isCheckingAuth}</p>
-      </div>
+      <OnboardingClient
+        initialProfileStatus="not_found"
+        initialUserRole={null} // Or a generic "needs_role_selection" role
+        initialSessionMetadata={sessionMetadata}
+      />
     );
   }
 
-  // Profile form based on role
-  if (profileFetchStatus === "not_found" && userRole) {
-    switch (userRole) {
-      case "user":
-        return <UserProfileCompletionForm metadata={sessionMetadata} />;
-      case "vendor":
-        return <VendorProfileCompletionForm metadata={sessionMetadata} />;
-      case "rider":
-        return <RiderProfileCompletionForm metadata={sessionMetadata} />;
-      default:
-        return (
-          <div className="text-red-600 text-center mt-8">
-            <p>Unknown role: {userRole}. Cannot continue.</p>
-          </div>
-        );
-    }
+  // 2. Fetch user profile from your 'profiles' table
+  // Assuming 'profiles' table stores the completed user profiles
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles") // Replace with your actual profiles table name
+    .select("id, name, role") // Select necessary fields
+    .eq("id", user.id)
+    .single();
+
+  if (profileError && profileError.code !== "PGRST116") {
+    // PGRST116 means "no rows found" for .single()
+    console.error("Server: Error fetching user profile from DB:", profileError);
+    // You might want to display a generic error page or log this for investigation
+    // For now, treat it as profile not found.
   }
 
-  // Fallback
+  if (profile && profile.role === userRole) {
+    // If profile found AND its role matches the session role, assume onboarding is complete
+    console.log(
+      `Server: Profile found for ${userRole}, redirecting to /${userRole}`
+    );
+    redirect(`/${userRole}`); // Redirect to the user's dashboard based on role
+  }
+
+  // If we reach here, it means:
+  // - No profile was found in the 'profiles' table for this user OR
+  // - The found profile's role doesn't match the session's role (unlikely, but good to cover)
+  // - Or there was a PGRST116 error (no row found), which means onboarding is needed.
+  console.log(`Server: Onboarding needed for role: ${userRole}`);
+
   return (
-    <div className="text-red-600 text-center mt-8">
-      <p>Something went wrong. Profile status undetermined.</p>
-    </div>
+    <OnboardingClient
+      initialProfileStatus="not_found"
+      initialUserRole={userRole}
+      initialSessionMetadata={sessionMetadata}
+    />
   );
 }

@@ -7,7 +7,7 @@ import { useAuthContext } from "@/context/AuthContext"; // Adjust import path
 import { supabase } from "@shared/supabaseClient"; // Adjust import path
 import { Database } from "@shared/supabase/types"; // Adjust import path
 import { toast } from "react-toastify";
-import { Loader2, CameraIcon, XCircle } from "lucide-react"; // Assuming you have these icons
+import { Loader2, CameraIcon, XCircle, Bike, Car } from "lucide-react";
 import Input from "@/components/reuse/Input"; // Assuming your Input component path
 import GlassButton from "@/components/ui/GlassButton"; // Assuming your GlassButton path
 import useImageUpload from "@/hooks/useImageUpload"; // Adjust your useImageUpload hook path
@@ -36,7 +36,7 @@ export default function RiderProfileCompletionForm({
   const router = useRouter();
 
   // State for rider-specific fields
-  const [vehicleType, setVehicleType] = useState(""); // e.g., 'Motorcycle', 'Bicycle'
+  const [vehicleType, setVehicleType] = useState(""); // e.g., 'Bike', 'Scooter ', 'Car'
   const [licensePlate, setLicensePlate] = useState("");
 
   // State for images
@@ -129,7 +129,7 @@ export default function RiderProfileCompletionForm({
     if (
       !vehicleType.trim() ||
       !licensePlate.trim() ||
-      (!riderImageFile && !riderImagePreview) ||
+      (!riderImageFile && !riderImagePreview) || // Ensure an image is selected or already exists
       (!vehicleImageFile && !vehicleImagePreview)
     ) {
       toast.error("Please fill in all required fields and select images.");
@@ -183,7 +183,6 @@ export default function RiderProfileCompletionForm({
     // Assuming the user row was created during signup with basic info and role in metadata
     // We are now completing the profile row in the 'profiles' table
     const profileData: ProfileInsert = {
-      // Use Insert type for potential new row
       id: user.id, // Link to auth user ID
       role: "rider", // Explicitly set/confirm the role
       name: user.name || "New Rider", // Get name from auth metadata or default
@@ -191,8 +190,8 @@ export default function RiderProfileCompletionForm({
       phone: user.phoneNumber.trim() || "", // Get phone from auth metadata or form, ensure it's not null/undefined
       address: null, // Riders might not have a primary address stored here
       rider_image_url: riderImageUrl, // Add image URLs
-      vehicleType: vehicleType.trim(),
-      licensePlate: licensePlate.trim(),
+      vehicleType: vehicleType.trim(), // Corrected column name to vehicle_type if that's what your DB uses
+      licensePlate: licensePlate.trim(), // Corrected column name to license_plate
       vehicle_image_url: vehicleImageUrl,
       // Ensure other required fields from profiles table are handled (even if null)
       banner_url: null,
@@ -212,14 +211,12 @@ export default function RiderProfileCompletionForm({
         // Unique violation - profile exists
         console.warn("Profile already exists, attempting update instead.");
         const updateData: ProfileUpdate = {
-          // Use Update type
           name: profileData.name, // Can update name
           phone: profileData.phone, // Can update phone
           rider_image_url: profileData.rider_image_url,
-          vehicleType: profileData.vehicleType,
-          licensePlate: profileData.licensePlate,
+          vehicleType: profileData.vehicleType, // Corrected column name
+          licensePlate: profileData.licensePlate, // Corrected column name
           vehicle_image_url: profileData.vehicle_image_url,
-          // Only include fields you allow updating here
         };
         const { error: updateError } = await supabase
           .from("profiles")
@@ -258,132 +255,238 @@ export default function RiderProfileCompletionForm({
   // Disable button while submitting or uploading images
   const isSaveDisabled = isSubmitting || isImageUploading;
 
+  // Helper to get vehicle icon
+  const getVehicleIcon = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "motorcycle":
+        return <Bike size={20} />;
+      case "car":
+        return <Car size={20} />;
+      case "bicycle":
+        return <Bike size={20} />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-transparent p-4">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md text-gray-800">
-        <h2 className="text-2xl font-bold mb-6">Complete Rider Profile</h2>
+    <div className="flex items-center justify-center min-h-screen p-4 sm:p-6">
+      <div className="p-8 w-full">
+        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-2">
+          Complete Your Rider Profile
+        </h2>
+        <p className="text-center text-gray-600 mb-8">
+          Tell us more about yourself and your vehicle to get started.
+        </p>
 
         {/* Display image upload errors */}
         {imageUploadError && (
-          <div className="text-red-600 text-sm mb-4">{imageUploadError}</div>
+          <div className="bg-red-50 text-red-700 text-sm p-3 rounded-md mb-4 flex items-center justify-between">
+            <span>{imageUploadError}</span>
+            <XCircle
+              size={18}
+              className="cursor-pointer"
+              onClick={clearImageUploadErrors}
+            />
+          </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Info (Display from Auth User) */}
-          <div>
-            <p>
-              <strong>Email:</strong> {user?.email}
+          <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">
+              Your Account Details
+            </h3>
+            <p className="text-gray-700 text-sm mb-1">
+              <strong>Email:</strong> {user?.email || metadata.email}
             </p>
-            <p>
-              <strong>Name:</strong> {user?.name || "Not provided"}
+            <p className="text-gray-700 text-sm mb-1">
+              <strong>Name:</strong>{" "}
+              {user?.name || metadata.name || "Not provided"}
             </p>
-            <p>
-              <strong>Phone:</strong> {user?.phoneNumber || "Not provided"}
+            <p className="text-gray-700 text-sm">
+              <strong>Phone:</strong>{" "}
+              {user?.phoneNumber || metadata.phone || "Not provided"}
             </p>
           </div>
 
-          {/* Rider Image Upload */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Rider Image
-            </label>
-            {riderImagePreview && (
-              <div className="relative w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden border border-gray-300">
-                <img
-                  src={riderImagePreview}
-                  alt="Rider Preview"
-                  className="w-full h-full object-cover"
-                />
-                {!isSubmitting && ( // Allow removal only when not submitting
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveImage("rider")}
-                    className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full text-xs"
-                    aria-label="Remove rider image"
-                  >
-                    <XCircle size={16} />
-                  </button>
+          <div className="flex justify-evenly flex-wrap items-center w-full">
+            {/* Rider Image Upload Section */}
+            <div className="border border-gray-200 p-5 rounded-md bg-gray-50">
+              <label className="block text-base font-semibold text-gray-800 mb-3">
+                Rider Profile Photo <span className="text-red-500">*</span>
+              </label>
+              <div className="flex flex-col items-center justify-center mb-4">
+                {riderImagePreview ? (
+                  <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-orange-400 shadow-md flex items-center justify-center bg-gray-100">
+                    <img
+                      src={riderImagePreview}
+                      alt="Rider Preview"
+                      className="w-full h-full object-cover"
+                    />
+                    {!isSaveDisabled && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage("rider")}
+                        className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full text-xs hover:bg-red-600 transition-colors"
+                        aria-label="Remove rider image"
+                      >
+                        <XCircle size={18} />
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <div className="w-32 h-32 rounded-full border-4 border-dashed border-gray-300 flex items-center justify-center text-gray-400 bg-gray-100">
+                    <CameraIcon size={36} />
+                  </div>
                 )}
               </div>
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageChange(e, "rider")}
-              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              disabled={isSaveDisabled}
-              required={!riderImagePreview} // Required if no preview exists
-            />
-          </div>
+              <input
+                id="rider-image-upload"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, "rider")}
+                className="hidden" // Hide default input
+                disabled={isSaveDisabled}
+                required={!riderImagePreview}
+              />
+              <label
+                htmlFor="rider-image-upload"
+                className={`block w-full text-center px-4 py-2 rounded-md transition-colors ${
+                  isSaveDisabled
+                    ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                    : "bg-orange-500 text-white hover:bg-orange-600 cursor-pointer"
+                } font-medium`}
+              >
+                {riderImagePreview ? "Change Photo" : "Upload Photo"}
+              </label>
+              <p className="text-xs text-gray-500 text-center mt-2">
+                JPG, PNG, or GIF. Max 5MB.
+              </p>
+            </div>
 
-          {/* Vehicle Type */}
-          <Input
-            label="Vehicle Type"
-            value={vehicleType}
-            onChange={setVehicleType}
-            disabled={isSaveDisabled}
-            required
-            inputClass="text-black" // Ensure text is black
-          />
+            {/* Vehicle Information Section */}
+            <div className="border border-gray-200 p-5 rounded-md bg-gray-50">
+              <h3 className="text-base font-semibold text-gray-800 mb-3">
+                Vehicle Details
+              </h3>
 
-          {/* License Plate */}
-          <Input
-            label="License Plate"
-            value={licensePlate}
-            onChange={setLicensePlate}
-            disabled={isSaveDisabled}
-            required
-            inputClass="text-black" // Ensure text is black
-          />
-
-          {/* Vehicle Image Upload */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Vehicle Image
-            </label>
-            {vehicleImagePreview && (
-              <div className="relative w-32 h-20 mx-auto mb-3 rounded-md overflow-hidden border border-gray-300">
-                <img
-                  src={vehicleImagePreview}
-                  alt="Vehicle Preview"
-                  className="w-full h-full object-cover"
-                />
-                {!isSubmitting && ( // Allow removal only when not submitting
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveImage("vehicle")}
-                    className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full text-xs"
-                    aria-label="Remove vehicle image"
+              {/* Vehicle Type */}
+              <div>
+                <label
+                  htmlFor="vehicle-type"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Vehicle Type <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <select
+                    id="vehicle-type"
+                    value={vehicleType}
+                    onChange={(e) => setVehicleType(e.target.value)}
+                    disabled={isSaveDisabled}
+                    required
+                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm rounded-md bg-white text-gray-900 appearance-none"
                   >
-                    <XCircle size={16} />
-                  </button>
-                )}
+                    <option value="" disabled>
+                      Select vehicle type
+                    </option>
+                    <option value="Motorcycle">Motorcycle</option>
+                    <option value="Bicycle">Bicycle</option>
+                    <option value="Car">Car</option>
+                    {/* Add more vehicle types as needed */}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    {getVehicleIcon(vehicleType)}
+                  </div>
+                </div>
               </div>
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageChange(e, "vehicle")}
-              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              disabled={isSaveDisabled}
-              required={!vehicleImagePreview} // Required if no preview exists
-            />
+
+              {/* License Plate */}
+              <Input
+                label="License Plate Number"
+                value={licensePlate}
+                onChange={setLicensePlate}
+                disabled={isSaveDisabled}
+                required
+                inputClass="text-gray-900" // Ensure text is clear
+                placeholder="e.g., ABC-123-DE"
+              />
+
+              {/* Vehicle Image Upload */}
+              <div className="mt-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Vehicle Photo <span className="text-red-500">*</span>
+                </label>
+                <div className="flex flex-col items-center justify-center mb-4">
+                  {vehicleImagePreview ? (
+                    <div className="relative w-48 h-32 rounded-lg overflow-hidden border-4 border-orange-400 shadow-md flex items-center justify-center bg-gray-100">
+                      <img
+                        src={vehicleImagePreview}
+                        alt="Vehicle Preview"
+                        className="w-full h-full object-cover"
+                      />
+                      {!isSaveDisabled && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveImage("vehicle")}
+                          className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full text-xs hover:bg-red-600 transition-colors"
+                          aria-label="Remove vehicle image"
+                        >
+                          <XCircle size={18} />
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="w-48 h-32 rounded-lg border-4 border-dashed border-gray-300 flex items-center justify-center text-gray-400 bg-gray-100">
+                      <CameraIcon size={36} />
+                    </div>
+                  )}
+                </div>
+                <input
+                  id="vehicle-image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, "vehicle")}
+                  className="hidden" // Hide default input
+                  disabled={isSaveDisabled}
+                  required={!vehicleImagePreview}
+                />
+                <label
+                  htmlFor="vehicle-image-upload"
+                  className={`block w-full text-center px-4 py-2 rounded-md transition-colors ${
+                    isSaveDisabled
+                      ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                      : "bg-orange-500 text-white hover:bg-orange-600 cursor-pointer"
+                  } font-medium`}
+                >
+                  {vehicleImagePreview ? "Change Photo" : "Upload Photo"}
+                </label>
+                <p className="text-xs text-gray-500 text-center mt-2">
+                  JPG, PNG, or GIF. Max 5MB.
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Submit Button */}
           <GlassButton
             type="submit"
             disabled={isSaveDisabled}
-            className={`w-full flex items-center justify-center space-x-2 ${
+            className={`md:w-1/2 w-full m-auto flex items-center justify-center space-x-2 py-3 rounded-md font-semibold text-lg transition-all duration-300 ease-in-out ${
               isSaveDisabled
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-500 hover:bg-blue-600 cursor-pointer"
-            } text-white px-6 py-3 rounded-lg`}
+                ? "!bg-orange-300 !text-white cursor-not-allowed opacity-70"
+                : "!bg-orange-600 !text-white hover:!bg-orange-700 shadow-lg hover:shadow-xl"
+            }`}
           >
             {isSaveDisabled ? (
               <>
-                <Loader2 size={20} className="animate-spin mr-2" />
-                {isImageUploading ? "Uploading Images..." : "Saving Profile..."}
+                <Loader2 size={20} className="animate-spin" />
+                <span className="ml-2">
+                  {isImageUploading
+                    ? "Uploading Images..."
+                    : "Saving Profile..."}
+                </span>
               </>
             ) : (
               "Complete Profile"

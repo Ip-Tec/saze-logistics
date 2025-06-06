@@ -194,13 +194,13 @@ export default async function OrderDetailPage({
 
   return (
     <div className="container mx-auto p-4 md:p-8">
-      <Link
+      <a
         href="/user/orders"
         className="inline-flex items-center text-orange-600 hover:underline mb-6"
       >
         <ArrowLongRightIcon className="w-5 h-5 rotate-180 mr-2" /> Back to
         Orders
-      </Link>
+      </a>
       <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 text-center">
         Order Details
       </h1>
