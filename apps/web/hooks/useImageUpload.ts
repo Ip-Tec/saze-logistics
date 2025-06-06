@@ -49,7 +49,7 @@ const useImageUpload = (
 
     const formData = new FormData();
     // Changed field name to 'file' to match the API example discussed earlier
-    formData.append("file", file);
+    formData.append("image", file);
     // Added: Append the type identifier to FormData
     formData.append("type", type);
 

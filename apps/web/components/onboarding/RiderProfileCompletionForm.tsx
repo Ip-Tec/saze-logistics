@@ -3,17 +3,24 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/context/AuthContext"; // Adjust import path
-import { supabase } from "@shared/supabaseClient"; // Adjust import path
-import { Database } from "@shared/supabase/types"; // Adjust import path
+import { useAuthContext } from "@/context/AuthContext";
+import { supabase } from "@shared/supabaseClient";
+import { Database } from "@shared/supabase/types";
 import { toast } from "react-toastify";
-import { Loader2, CameraIcon, XCircle, Bike, Car } from "lucide-react";
-import Input from "@/components/reuse/Input"; // Assuming your Input component path
-import GlassButton from "@/components/ui/GlassButton"; // Assuming your GlassButton path
-import useImageUpload from "@/hooks/useImageUpload"; // Adjust your useImageUpload hook path
+import { Loader2, CameraIcon, XCircle, Bike, Car, IdCard } from "lucide-react";
+import Input from "@/components/reuse/Input";
+import GlassButton from "@/components/ui/GlassButton";
+import useImageUpload from "@/hooks/useImageUpload";
 
-type ProfileUpdate = Database["public"]["Tables"]["profiles"]["Update"];
-type ProfileInsert = Database["public"]["Tables"]["profiles"]["Insert"];
+// Extend your Database types if 'nin' is not yet in the profiles table
+// For this example, I'll assume you'll add it to your Supabase `profiles` table.
+// Make sure your Supabase `profiles` table has a column named `nin` of type `text`.
+type ProfileUpdate = Database["public"]["Tables"]["profiles"]["Update"] & {
+  nin?: string | null;
+};
+type ProfileInsert = Database["public"]["Tables"]["profiles"]["Insert"] & {
+  nin?: string | null;
+};
 
 type MetaDataProps = {
   sub: string;
@@ -36,8 +43,9 @@ export default function RiderProfileCompletionForm({
   const router = useRouter();
 
   // State for rider-specific fields
-  const [vehicleType, setVehicleType] = useState(""); // e.g., 'Bike', 'Scooter ', 'Car'
+  const [vehicleType, setVehicleType] = useState("");
   const [licensePlate, setLicensePlate] = useState("");
+  const [nin, setNin] = useState("");
 
   // State for images
   const [riderImageFile, setRiderImageFile] = useState<File | null>(null);
@@ -58,7 +66,7 @@ export default function RiderProfileCompletionForm({
     uploadError: riderImageUploadError,
     setUploadError: setRiderImageUploadError,
     clearError: clearRiderImageUploadError,
-  } = useImageUpload("/api/upload-image"); // Assuming generic upload endpoint
+  } = useImageUpload("/api/upload-image");
 
   // Use useImageUpload for vehicle image
   const {
@@ -67,7 +75,7 @@ export default function RiderProfileCompletionForm({
     uploadError: vehicleImageUploadError,
     setUploadError: setVehicleImageUploadError,
     clearError: clearVehicleImageUploadError,
-  } = useImageUpload("/api/upload-image"); // Same endpoint, different state
+  } = useImageUpload("/api/upload-image"); 
 
   const isImageUploading = isRiderImageUploading || isVehicleImageUploading;
   const imageUploadError = riderImageUploadError || vehicleImageUploadError;
@@ -99,9 +107,9 @@ export default function RiderProfileCompletionForm({
         URL.revokeObjectURL(currentPreview);
       }
       setFile(null);
-      setPreview(null); // Clear preview on file deselection
+      setPreview(null);
     }
-    clearImageUploadErrors(); // Clear errors when changing files
+    clearImageUploadErrors();
   };
 
   // Handle removing a selected image file preview
@@ -122,17 +130,28 @@ export default function RiderProfileCompletionForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) {
+    if (!metadata) {
       toast.error("User not logged in.");
       return;
     }
+
+    // Added NIN validation
     if (
       !vehicleType.trim() ||
       !licensePlate.trim() ||
-      (!riderImageFile && !riderImagePreview) || // Ensure an image is selected or already exists
+      !nin.trim() || // Validate NIN
+      (!riderImageFile && !riderImagePreview) ||
       (!vehicleImageFile && !vehicleImagePreview)
     ) {
       toast.error("Please fill in all required fields and select images.");
+      return;
+    }
+
+    // Basic NIN format validation (e.g., 11 digits for Nigeria)
+    if (!/^\d{11}$/.test(nin.trim())) {
+      toast.error(
+        "Please enter a valid 11-digit National Identity Number (NIN)."
+      );
       return;
     }
 
@@ -156,8 +175,6 @@ export default function RiderProfileCompletionForm({
         riderImageUrl = result.url;
       } else {
         uploadFailed = true;
-        // Toast handled by hook or add here
-        // toast.error("Failed to upload rider image.");
       }
     }
     if (!uploadFailed && vehicleImageFile) {
@@ -169,8 +186,6 @@ export default function RiderProfileCompletionForm({
         vehicleImageUrl = result.url;
       } else {
         uploadFailed = true;
-        // Toast handled by hook or add here
-        // toast.error("Failed to upload vehicle image.");
       }
     }
 
@@ -180,48 +195,45 @@ export default function RiderProfileCompletionForm({
     }
 
     // --- Prepare Profile Data ---
-    // Assuming the user row was created during signup with basic info and role in metadata
-    // We are now completing the profile row in the 'profiles' table
     const profileData: ProfileInsert = {
-      id: user.id, // Link to auth user ID
+      id: metadata.sub, // Link to auth user ID
       role: "rider", // Explicitly set/confirm the role
-      name: user.name || "New Rider", // Get name from auth metadata or default
-      email: user.email, // Get email from auth
-      phone: user.phoneNumber.trim() || "", // Get phone from auth metadata or form, ensure it's not null/undefined
-      address: null, // Riders might not have a primary address stored here
-      rider_image_url: riderImageUrl, // Add image URLs
-      vehicleType: vehicleType.trim(), // Corrected column name to vehicle_type if that's what your DB uses
-      licensePlate: licensePlate.trim(), // Corrected column name to license_plate
+      name: metadata.name || "New Rider", // Get name from auth metadata or default
+      email: metadata.email, // Get email from auth
+      phone: metadata.phone.trim() || "", // Get phone from auth metadata or form
+      address: null,
+      rider_image_url: riderImageUrl,
+      vehicleType: vehicleType.trim(),
+      licensePlate: licensePlate.trim(),
       vehicle_image_url: vehicleImageUrl,
-      // Ensure other required fields from profiles table are handled (even if null)
+      nin: nin.trim(),
       banner_url: null,
       description: null,
       logo_url: null,
       second_phone: null,
-      created_at: new Date().toISOString(), // Set creation timestamp
+      created_at: new Date().toISOString(),
     };
 
     try {
-      // Attempt to insert the profile. If it already exists (e.g., partial creation during signup), update instead.
       const { error: insertError } = await supabase
         .from("profiles")
         .insert([profileData]);
 
       if (insertError && insertError.code === "23505") {
-        // Unique violation - profile exists
         console.warn("Profile already exists, attempting update instead.");
         const updateData: ProfileUpdate = {
-          name: profileData.name, // Can update name
-          phone: profileData.phone, // Can update phone
+          name: profileData.name,
+          phone: profileData.phone,
           rider_image_url: profileData.rider_image_url,
-          vehicleType: profileData.vehicleType, // Corrected column name
-          licensePlate: profileData.licensePlate, // Corrected column name
+          vehicleType: profileData.vehicleType,
+          licensePlate: profileData.licensePlate,
           vehicle_image_url: profileData.vehicle_image_url,
+          nin: profileData.nin,
         };
         const { error: updateError } = await supabase
           .from("profiles")
           .update(updateData)
-          .eq("id", user.id); // Ensure updating the correct row
+          .eq("id", metadata.sub);
 
         if (updateError) {
           console.error("Error updating rider profile:", updateError);
@@ -230,6 +242,7 @@ export default function RiderProfileCompletionForm({
           return;
         }
         console.log("Rider profile updated successfully.");
+        router.replace("/rider");
       } else if (insertError) {
         console.error("Error creating rider profile:", insertError);
         toast.error(`Failed to create profile: ${insertError.message}`);
@@ -239,11 +252,10 @@ export default function RiderProfileCompletionForm({
         console.log("Rider profile created successfully.");
       }
 
-      // Refresh user state in AuthContext
-      await getUserProfile(); // This fetches the updated profile row
+      await getUserProfile();
 
       toast.success("Rider profile completed successfully!");
-      router.replace("/rider"); // Redirect to rider dashboard
+      router.replace("/rider");
     } catch (error: any) {
       console.error("Unexpected error completing rider profile:", error);
       toast.error("An unexpected error occurred.");
@@ -252,14 +264,13 @@ export default function RiderProfileCompletionForm({
     }
   };
 
-  // Disable button while submitting or uploading images
   const isSaveDisabled = isSubmitting || isImageUploading;
 
   // Helper to get vehicle icon
   const getVehicleIcon = (type: string) => {
     switch (type.toLowerCase()) {
       case "motorcycle":
-        return <Bike size={20} />;
+        return <Bike size={20} />; // Using Bike for motorcycle
       case "car":
         return <Car size={20} />;
       case "bicycle":
@@ -270,15 +281,15 @@ export default function RiderProfileCompletionForm({
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 sm:p-6">
-      <div className="p-8 w-full">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4 sm:p-6">
+      <div className="conta p-8 w-full">
+        {/* Increased max-w-4xl */}
         <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-2">
           Complete Your Rider Profile
         </h2>
         <p className="text-center text-gray-600 mb-8">
           Tell us more about yourself and your vehicle to get started.
         </p>
-
         {/* Display image upload errors */}
         {imageUploadError && (
           <div className="bg-red-50 text-red-700 text-sm p-3 rounded-md mb-4 flex items-center justify-between">
@@ -290,29 +301,31 @@ export default function RiderProfileCompletionForm({
             />
           </div>
         )}
-
-          <div className="flex justify-evenly flex-wrap items-center w-full">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Basic Info (Display from Auth User) */}
-          <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              Your Account Details
-            </h3>
-            <p className="text-gray-700 text-sm mb-1">
-              <strong>Email:</strong> {user?.email || metadata.email}
-            </p>
-            <p className="text-gray-700 text-sm mb-1">
-              <strong>Name:</strong>{" "}
-              {user?.name || metadata.name || "Not provided"}
-            </p>
-            <p className="text-gray-700 text-sm">
-              <strong>Phone:</strong>{" "}
-              {user?.phoneNumber || metadata.phone || "Not provided"}
-            </p>
-          </div>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {/* Added lg:grid-cols-3 */}
+            {/* Basic Info (Display from Auth User) */}
+            <div className="p-4 border-2 border-green-300 bg-bgeen-200 rounded-lg shadow-xl">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                Your Account Details
+              </h3>
+              <p className="text-gray-700 text-sm mb-1">
+                <strong>ID:</strong> {user?.id || metadata.sub}
+              </p>
+              <p className="text-gray-700 text-sm mb-1">
+                <strong>Email:</strong> {user?.email || metadata.email}
+              </p>
+              <p className="text-gray-700 text-sm mb-1">
+                <strong>Name:</strong>{" "}
+                {user?.name || metadata.name || "Not provided"}
+              </p>
+              <p className="text-gray-700 text-sm">
+                <strong>Phone:</strong>{" "}
+                {user?.phoneNumber || metadata.phone || "Not provided"}
+              </p>
+            </div>
             {/* Rider Image Upload Section */}
-            <div className="border border-gray-200 p-5 rounded-md bg-gray-50">
+            <div className="border border-gray-200 bg-white/60 rounded-lg shadow-xl p-5 flex flex-col items-center justify-center">
               <label className="block text-base font-semibold text-gray-800 mb-3">
                 Rider Profile Photo <span className="text-red-500">*</span>
               </label>
@@ -346,7 +359,7 @@ export default function RiderProfileCompletionForm({
                 type="file"
                 accept="image/*"
                 onChange={(e) => handleImageChange(e, "rider")}
-                className="hidden" // Hide default input
+                className="hidden"
                 disabled={isSaveDisabled}
                 required={!riderImagePreview}
               />
@@ -364,9 +377,37 @@ export default function RiderProfileCompletionForm({
                 JPG, PNG, or GIF. Max 5MB.
               </p>
             </div>
+            {/* NIN Input Field */}
+            <div className="border border-gray-200 bg-white/60 rounded-lg shadow-xl p-5 flex flex-col justify-center">
+              <label
+                htmlFor="nin"
+                className="block text-base font-semibold text-gray-800 mb-3"
+              >
+                National Identity Number (NIN){" "}
+                <span className="text-red-500">*</span>
+              </label>
+              <div className="relative flex items-center">
+                <IdCard size={20} className="absolute left-3 text-gray-400" />
+                <Input
+                  required
+                  label=""
+                  value={nin}
+                  maxLength={11}
+                  onChange={setNin}
+                  disabled={isSaveDisabled}
+                  placeholder="e.g., 12345678901"
+                  inputClass="!text-gray-900 pl-10 pr-3 py-2 placeholder:!text-gray-400 border rounded-md w-full focus:ring-orange-500 focus:border-orange-500"
+                />
+              </div>
+              <p className="text-xs text-gray-500 mt-2">
+                Please enter your 11-digit NIN.
+              </p>
+            </div>
+          </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Vehicle Information Section */}
-            <div className="border border-gray-200 p-5 rounded-md bg-gray-50">
+            <div className="p-5 border border-gray-200 bg-white/60 rounded-lg shadow-xl">
               <h3 className="text-base font-semibold text-gray-800 mb-3">
                 Vehicle Details
               </h3>
@@ -409,70 +450,71 @@ export default function RiderProfileCompletionForm({
                 onChange={setLicensePlate}
                 disabled={isSaveDisabled}
                 required
-                inputClass="text-gray-900" // Ensure text is clear
+                inputClass="!text-gray-900 placeholder:!text-gray-400"
                 placeholder="e.g., ABC-123-DE"
               />
-
-              {/* Vehicle Image Upload */}
-              <div className="mt-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Vehicle Photo <span className="text-red-500">*</span>
-                </label>
-                <div className="flex flex-col items-center justify-center mb-4">
-                  {vehicleImagePreview ? (
-                    <div className="relative w-48 h-32 rounded-lg overflow-hidden border-4 border-orange-400 shadow-md flex items-center justify-center bg-gray-100">
-                      <img
-                        src={vehicleImagePreview}
-                        alt="Vehicle Preview"
-                        className="w-full h-full object-cover"
-                      />
-                      {!isSaveDisabled && (
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveImage("vehicle")}
-                          className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full text-xs hover:bg-red-600 transition-colors"
-                          aria-label="Remove vehicle image"
-                        >
-                          <XCircle size={18} />
-                        </button>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="w-48 h-32 rounded-lg border-4 border-dashed border-gray-300 flex items-center justify-center text-gray-400 bg-gray-100">
-                      <CameraIcon size={36} />
-                    </div>
-                  )}
-                </div>
-                <input
-                  id="vehicle-image-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageChange(e, "vehicle")}
-                  className="hidden" // Hide default input
-                  disabled={isSaveDisabled}
-                  required={!vehicleImagePreview}
-                />
-                <label
-                  htmlFor="vehicle-image-upload"
-                  className={`block w-full text-center px-4 py-2 rounded-md transition-colors ${
-                    isSaveDisabled
-                      ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                      : "bg-orange-500 text-white hover:bg-orange-600 cursor-pointer"
-                  } font-medium`}
-                >
-                  {vehicleImagePreview ? "Change Photo" : "Upload Photo"}
-                </label>
-                <p className="text-xs text-gray-500 text-center mt-2">
-                  JPG, PNG, or GIF. Max 5MB.
-                </p>
-              </div>
             </div>
+
+            {/* Vehicle Image Upload */}
+            <div className="p-5 border border-gray-200 bg-white/60 rounded-lg shadow-xl flex flex-col items-center justify-center">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Vehicle Photo <span className="text-red-500">*</span>
+              </label>
+              <div className="flex flex-col items-center justify-center mb-4">
+                {vehicleImagePreview ? (
+                  <div className="relative w-48 h-32 rounded-lg overflow-hidden border-4 border-orange-400 shadow-md flex items-center justify-center bg-gray-100">
+                    <img
+                      src={vehicleImagePreview}
+                      alt="Vehicle Preview"
+                      className="w-full h-full object-cover"
+                    />
+                    {!isSaveDisabled && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage("vehicle")}
+                        className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full text-xs hover:bg-red-600 transition-colors"
+                        aria-label="Remove vehicle image"
+                      >
+                        <XCircle size={18} />
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <div className="w-48 h-32 rounded-lg border-4 border-dashed border-gray-300 flex items-center justify-center text-gray-400 bg-gray-100">
+                    <CameraIcon size={36} />
+                  </div>
+                )}
+              </div>
+              <input
+                id="vehicle-image-upload"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, "vehicle")}
+                className="hidden"
+                disabled={isSaveDisabled}
+                required={!vehicleImagePreview}
+              />
+              <label
+                htmlFor="vehicle-image-upload"
+                className={`block w-full text-center px-4 py-2 rounded-md transition-colors ${
+                  isSaveDisabled
+                    ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                    : "bg-orange-500 text-white hover:bg-orange-600 cursor-pointer"
+                } font-medium`}
+              >
+                {vehicleImagePreview ? "Change Photo" : "Upload Photo"}
+              </label>
+              <p className="text-xs text-gray-500 text-center mt-2">
+                JPG, PNG, or GIF. Max 5MB.
+              </p>
+            </div>
+          </div>
 
           {/* Submit Button */}
           <GlassButton
             type="submit"
             disabled={isSaveDisabled}
-            className={`md:w-1/2 w-full m-auto flex items-center justify-center space-x-2 py-3 rounded-md font-semibold text-lg transition-all duration-300 ease-in-out ${
+            className={`md:w-1/2 my-2 w-full m-auto flex items-center justify-center space-x-2 py-3 rounded-md font-semibold text-lg transition-all duration-300 ease-in-out ${
               isSaveDisabled
                 ? "!bg-orange-300 !text-white cursor-not-allowed opacity-70"
                 : "!bg-orange-600 !text-white hover:!bg-orange-700 shadow-lg hover:shadow-xl"
@@ -493,7 +535,6 @@ export default function RiderProfileCompletionForm({
           </GlassButton>
         </form>
       </div>
-      </div>
-      </div>
+    </div>
   );
 }

@@ -9,6 +9,7 @@ export default function Input({
     readOnly,
     inputClass,
     required,
+    maxLength,
     placeholder
   }: {
     label: string;
@@ -18,6 +19,7 @@ export default function Input({
     disabled?: boolean;
     readOnly?: boolean;
     required?: boolean;
+    maxLength?: number;
     placeholder?: string;
     onChange: (v: string) => void;
   }) {
@@ -28,7 +30,7 @@ export default function Input({
           type="text"
           className={`w-full border p-2 rounded bg-white/5 text-white ${inputClass}`}
           value={value}
-          onChange={(e) => onChange(e.target.value)} disabled={disabled} readOnly={readOnly} required={required} placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)} disabled={disabled} readOnly={readOnly} required={required} placeholder={placeholder} maxLength={maxLength}
         />
       </div>
     );
