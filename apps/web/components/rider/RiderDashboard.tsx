@@ -157,7 +157,7 @@ export default function RiderDashboard() {
         while (currentDate <= new Date()) {
           const dateString = currentDate.toISOString().split("T")[0];
           // Format date for display (e.g., "Apr 1")
-          const displayDate = currentDate.toLocaleDateString("en-US", {
+          const displayDate = currentDate.toLocaleDateString("en-NG", {
             month: "short",
             day: "numeric",
           });
@@ -197,7 +197,7 @@ export default function RiderDashboard() {
           )
           .eq("rider_id", riderId) // Filter by the logged-in rider's ID
           .order("created_at", { ascending: false }) // Order by newest first
-          .limit(5); // Limit to the 5 most recent orders
+          .limit(15); // Limit to the 5 most recent orders
 
         if (fetchError) throw fetchError;
 
@@ -388,7 +388,6 @@ export default function RiderDashboard() {
       {/* Right Column (Recent Deliveries List) */}
       {/* Pass recentOrders data and loading/error states as props */}
       <div className="lg:col-span-1 w-full">
-        {" "}
         {/* Take 1 column on large screens */}
         <RiderOrderList
           orders={recentOrders}
