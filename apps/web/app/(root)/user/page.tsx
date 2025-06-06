@@ -477,7 +477,7 @@ export default function UserHomePage() {
     );
 
   return (
-    <div className="relative flex flex-col md:flex-row h-screen w-full font-sans">
+    <div className="mb-24 md:mb-0 relative flex flex-col md:flex-row h-screen w-full font-sans">
       <ToastContainer position="top-right" autoClose={5000} />
 
       <MapContainer
