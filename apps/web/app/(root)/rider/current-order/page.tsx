@@ -1,10 +1,11 @@
 // apps/web/components/rider/RiderCurrentOrderPage.tsx
 "use client";
 
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Ensure toast styles are imported
 import { Database } from "@shared/supabase/types";
 import { supabase } from "@shared/supabaseClient";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import GlassButton from "@/components/ui/GlassButton";
 import { useAuthContext } from "@/context/AuthContext";
 import {
@@ -12,325 +13,336 @@ import {
   User,
   Phone,
   Package,
-  Clock3,
   CheckCircle,
   XCircle,
   Loader2,
-  Store,
 } from "lucide-react";
 import Link from "next/link";
+import { AddressDetail, LatLng } from "@/app/(root)/user/page"; // Import necessary types
 
-// Define the type for an Order object *directly* from the Supabase query result (before processing)
-// Relationships selected as `name (...)` or `*` return arrays of objects/rows.
-type OrderQueryResult = {
+// Import the new map component
+import RiderMap from "@/components/rider/RiderMap";
+
+// --- Type Definitions for Logistics ---
+
+// Define the structure of the `notes` JSON for an order_item (package)
+interface PackageNotes {
+  pickup_address: string;
+  pickup_coords: LatLng;
+  dropoff_address: string;
+  dropoff_coords: LatLng;
+  item_description: string;
+}
+
+// Define the type for an OrderItem object *after* parsing its notes
+type LogisticsOrderItem = Omit<
+  Database["public"]["Tables"]["order_item"]["Row"],
+  "menu_item_id" | "notes"
+> & {
+  package_details: PackageNotes | null; // Parsed notes
+};
+
+// Define the type for the Order object *after* processing (flattening arrays and extracting nested data)
+// Explicitly listing only the fields fetched from the 'order' table directly.
+type ProcessedOrder = {
   id: string;
   total_amount: number;
   status: string | null;
   special_instructions: string | null;
   created_at: string | null;
 
-  // Relationships selected as arrays by Supabase/PostgREST
-  user_id: { name: string | null; phone: string | null }[] | null;
-  vendor_id:
-    | {
-        name: string | null;
-        phone: string | null;
-        address: string | null;
-        logo_url: string | null;
-      }[]
-    | null;
-  delivery_address_id:
-    | Database["public"]["Tables"]["delivery_address"]["Row"][]
-    | null;
-
-  // order_item is an array, and its nested menu_item_id is an object or null
-  order_item:
-    | (Database["public"]["Tables"]["order_item"]["Row"] & {
-        menu_item_id: { name: string | null } | null; // Nested object or null from select('name')
-      })[]
-    | null;
-
-  // Add other columns if you select them directly on the 'order' table
-};
-
-// Define the type for the Order object *after* processing (flattening arrays and extracting nested data)
-// This shape matches the state you want to use in the component.
-type ProcessedOrderItem = Omit<Database["public"]["Tables"]["order_item"]["Row"], 'menu_item_id'> & {
-    menu_item_id: string | null; // Flattened to just the name string or null
-};
-
-
-type ProcessedOrder = Omit<
-  OrderQueryResult, // Use the query result type as the base
-  "user_id" | "vendor_id" | "delivery_address_id" | "order_item" // Omit original relationship array properties
-> & {
-  // Flattened relationships (assuming one-to-one or many-to-one conceptually for display)
-  user_id: { name: string | null; phone: string | null } | null;
-  vendor_id: {
-    name: string | null;
-    phone: string | null;
-    address: string | null;
-    logo_url: string | null;
-  } | null;
+  // Relationships from other tables, which are flattened
+  user_id: { name: string | null; phone: string | null } | null; // Customer info (from profiles table)
   delivery_address_id:
     | Database["public"]["Tables"]["delivery_address"]["Row"]
-    | null;
-  // Processed order_item array with flattened menu_item_id
-  order_item: ProcessedOrderItem[] | null;
+    | null; // Primary dropoff address (from delivery_address table)
+
+  // Processed order_item array with parsed notes
+  order_item: LogisticsOrderItem[] | null;
 };
 
 // Define possible order statuses for a rider's active order
-const ACTIVE_RIDER_STATUSES = ["assigned", "picked_up", "delivering"];
+const ACTIVE_RIDER_STATUSES = [
+  "pending_confirmation",
+  "assigned",
+  "picked_up",
+  "delivering",
+];
 const FINAL_RIDER_STATUS = "delivered"; // Status after rider completes delivery
 
 export default function RiderCurrentOrderPage() {
   const { user } = useAuthContext();
 
-  // Use the ProcessedOrder type for the state
   const [currentOrder, setCurrentOrder] = useState<ProcessedOrder | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
 
+  // New states for rider's current location and route display preference
+  const [riderCurrentLocation, setRiderCurrentLocation] =
+    useState<LatLng | null>(null);
+  const [showRouteFromRider, setShowRouteFromRider] = useState(false); // Controls map origin
+
   // --- Data Fetching ---
-  useEffect(() => {
-    const fetchCurrentOrder = async () => {
-      if (!user) {
-        setError("User not logged in.");
-        setIsLoading(false);
-        return;
-      }
+  const fetchCurrentOrder = useCallback(async () => {
+    if (!user) {
+      setError("User not logged in.");
+      setIsLoading(false);
+      return;
+    }
 
-      setIsLoading(true);
-      setError(null); // Clear previous errors
+    setIsLoading(true);
+    setError(null);
 
-      // Fetch orders assigned to the current rider with an active status.
-      // Removing .single() allows for 0 or more results without throwing an error.
-      const { data, error: fetchError } = await supabase
-        .from("order")
-        .select(
-          `
+    // Fetch order details including related data for customer, delivery address, and order items.
+    // Explicitly selecting necessary fields.
+    const { data, error: fetchError } = await supabase
+      .from("order")
+      .select(
+        `
           id,
           total_amount,
           status,
           special_instructions,
           created_at,
           user_id (name, phone),
-          vendor_id (name, phone, address, logo_url),
           delivery_address_id (*),
-          order_item (id, quantity, price, notes, order_id, menu_item_id (name))
-          `
-        )
-        .eq("rider_id", user.id) // Filter by the logged-in rider's ID
-        .in("status", ACTIVE_RIDER_STATUSES); // Filter by active rider statuses
-        // REMOVED .single(); // <-- This was causing the errors
+          order_item (id, quantity, price, notes, order_id)
+        `
+      )
+      .eq("rider_id", user.id)
+      .in("status", ACTIVE_RIDER_STATUSES)
+      .limit(1); // Assuming a rider should only have one active order
 
-      if (fetchError) {
-        // If .single() was removed, this block will only be hit for actual API/DB errors,
-        // not for the expected "0 rows found" case.
-        console.error("Error fetching current order:", fetchError);
-        setError("Failed to load current order."); // Set a general error for unexpected fetch errors
-        setCurrentOrder(null); // Ensure state is null on error
-      } else {
-        // Data is now an array (OrderQueryResult[] | null) or [] if no results
-        if (data && data.length > 0) {
-           // Assuming a rider should only have *one* current order based on app logic.
-           // Take the first order from the array.
-           const order = data[0];
-
-           // Optional: Log a warning if multiple active orders are found,
-           // as this might indicate a data integrity issue in your app.
-           if (data.length > 1) {
-             console.warn(
-               `Warning: Multiple active orders (${data.length}) found for rider ${user.id}. Displaying the first one.`,
-               data
-             );
-             // Optionally, display a user-facing warning or error if multiple is strictly forbidden.
-             // setError("Multiple active orders detected. Please contact support.");
-           }
-
-          // Process the single order object (the first one found)
-          // to flatten the relationship arrays into single objects/values
-          const processedData: ProcessedOrder = {
-            ...order,
-            // Extract the first element from the relationship arrays returned by Supabase
-            user_id: order.user_id?.[0] ?? null,
-            vendor_id: order.vendor_id?.[0] ?? null,
-            delivery_address_id: order.delivery_address_id?.[0] ?? null,
-             // Map through order_item array and flatten the nested menu_item_id object
-            order_item: order.order_item?.map((item) => ({
-              ...item,
-              order_id: item.order_id,
-              // Extract just the name string from the nested menu_item_id object or use null
-              menu_item_id: item.order_id ?? null,
-            })) ?? null, // Use null if order_item array itself is null
-          };
-
-          setCurrentOrder(processedData);
-          setError(null); // Clear any previous errors if data was successfully fetched
-        } else {
-          // Data is null or an empty array -> No current order found
-          setCurrentOrder(null);
-          setError(null); // Clear error state - this is the expected outcome when no order is assigned
-        }
-      }
-
-      setIsLoading(false); // Stop loading regardless of outcome (success or no data)
-    };
-
-    // Only fetch if user is available
-    if (user) {
-      fetchCurrentOrder();
+    if (fetchError) {
+      console.error("Error fetching current order:", fetchError);
+      setError("Failed to load current order.");
+      setCurrentOrder(null);
     } else {
-      setIsLoading(false); // Stop loading if no user
+      if (data && data.length > 0) {
+        const order = data[0];
+
+        // Process relationships and parse JSON notes for order items
+        const processedOrder: ProcessedOrder = {
+          id: order.id,
+          total_amount: order.total_amount,
+          status: order.status,
+          special_instructions: order.special_instructions,
+          created_at: order.created_at,
+          user_id: Array.isArray(order.user_id)
+            ? order.user_id[0] || null
+            : order.user_id || null,
+          delivery_address_id: Array.isArray(order.delivery_address_id)
+            ? order.delivery_address_id[0] || null
+            : order.delivery_address_id || null,
+          order_item:
+            order.order_item?.map((item: any) => {
+              let package_details: PackageNotes | null = null;
+              if (item.notes && typeof item.notes === "string") {
+                try {
+                  package_details = JSON.parse(item.notes) as PackageNotes;
+                } catch (e) {
+                  console.error("Failed to parse order_item notes:", e);
+                }
+              }
+              return {
+                ...item, // Keep other order_item fields like id, quantity, price, order_id
+                package_details,
+              };
+            }) || null,
+        };
+        setCurrentOrder(processedOrder);
+      } else {
+        setCurrentOrder(null); // No active order found
+      }
+    }
+    setIsLoading(false);
+  }, [user]);
+
+  useEffect(() => {
+    fetchCurrentOrder();
+
+    // Get rider's initial live location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setRiderCurrentLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (err) => {
+          console.warn("Error getting rider's location:", err);
+          toast.warn("Could not get your current location for routing.");
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+      );
     }
 
-    // Optional: Set up real-time subscription here if desired,
-    // targeting orders assigned to this rider ID and in the active statuses.
-    // See Supabase documentation for real-time subscriptions.
-    // Example structure (you would need to implement the handleNewOrder function):
-    
+    // Set up real-time subscription for the rider's orders
     const activeOrdersChannel = supabase
       .channel(`rider_orders_${user?.id}`)
       .on(
-        'postgres_changes',
+        "postgres_changes",
         {
-          event: '*',
-          schema: 'public',
-          table: 'order',
-          filter: `rider_id=eq.${user?.id},status=in.(${ACTIVE_RIDER_STATUSES.join(',')})` // Add filter
+          event: "*", // Listen for all events (INSERT, UPDATE, DELETE)
+          schema: "public",
+          table: "order",
+          // Filter to only changes relevant to this rider and active orders
+          filter: `rider_id=eq.${user?.id},status=in.(${ACTIVE_RIDER_STATUSES.join(",")})`,
         },
         (payload) => {
-          console.log('Change received!', payload);
-          // Implement logic to update state based on changes (e.g., new order assigned, status update by vendor)
-          // You might refetch the order or update the state directly based on payload.
-          // Be careful with complex updates; refetching might be simpler initially.
-          fetchCurrentOrder(); // Simple approach: just refetch
+          console.log("Real-time change received for rider order:", payload);
+          // Refetch to get the latest state of the order, including any new assignments or status changes
+          fetchCurrentOrder();
         }
       )
       .subscribe();
 
+    // Cleanup the channel when the component unmounts or user changes
     return () => {
       supabase.removeChannel(activeOrdersChannel);
     };
-    
+  }, [user, fetchCurrentOrder]);
 
-  }, [user]); // Re-run effect if user changes  // --- Status Update Logic ---
+  // --- Status Update Logic ---
   const handleStatusUpdate = async (newStatus: string) => {
     if (!currentOrder) return;
 
     setIsUpdatingStatus(true);
-    setError(null); // Clear previous errors
+    setError(null);
 
-    // Call an API route to update the order status securely on the server
-    // This is recommended to enforce business logic and RLS
-    // You MUST implement the /api/rider/update-order-status route
     try {
-      const response = await fetch("/api/rider/update-order-status", {
-        method: "POST", // Or PATCH depending on your API design
-        headers: {
-          "Content-Type": "application/json",
-          // Add Authorization header if your API route requires it
-          // e.g., 'Authorization': `Bearer ${await supabase.auth.getSession()?.then(s => s?.data.session?.access_token)}`
-        },
-        body: JSON.stringify({
-          orderId: currentOrder.id,
-          status: newStatus,
-          riderId: user?.id // Pass riderId to verify on the server
-        }),
-      });
+      // Update the order status in Supabase directly
+      const { data, error: updateError } = await supabase
+        .from("order")
+        .update({ status: newStatus })
+        .eq("id", currentOrder.id)
+        .eq("rider_id", user?.id) // Crucial for RLS: ensure only this rider can update their assigned order
+        .select() // Select the updated row to get fresh data
+        .single(); // Expecting a single row to be updated
 
-      const result = await response.json();
-
-      if (response.ok) {
-        toast.success(
-          result.message || `Order status updated to ${newStatus}.`
-        );
-        // Update the local state with the new status
-        setCurrentOrder((prev) =>
-          prev ? { ...prev, status: newStatus } : null
-        );
-
-        // If the order is delivered, clear the current order state
-        if (newStatus === FINAL_RIDER_STATUS) {
-          setCurrentOrder(null);
-          toast.info("Order completed!");
-        }
-      } else {
-        console.error("Failed to update order status:", result.error);
-        // Set a user-friendly error message
-        setError(result.error || "Failed to update order status.");
-        toast.error(result.error || "Failed to update order status.");
+      if (updateError) {
+        throw new Error(updateError.message);
       }
-    } catch (err) {
-      console.error("Error calling status update API:", err);
-      // Set a user-friendly error message for network or unexpected issues
-      setError("An unexpected error occurred while updating status.");
-      toast.error("An unexpected error occurred while updating status.");
+
+      toast.success(`Order status updated to ${newStatus.replace(/_/g, " ")}.`);
+      // Optimistically update the local state with the new status
+      setCurrentOrder((prev) => (prev ? { ...prev, status: newStatus } : null));
+
+      // If the order is delivered, clear the current order state from UI
+      if (newStatus === FINAL_RIDER_STATUS) {
+        setCurrentOrder(null);
+        toast.info("Order completed!");
+      }
+    } catch (err: any) {
+      console.error("Failed to update order status:", err);
+      toast.error(err.message || "Failed to update order status.");
+      setError("Failed to update order status.");
     } finally {
       setIsUpdatingStatus(false);
     }
   };
 
-  // Construct the full delivery address string
-  const fullAddress = currentOrder?.delivery_address_id
-    ? `${currentOrder.delivery_address_id.street}${currentOrder.delivery_address_id.city ? ', ' + currentOrder.delivery_address_id.city : ''}${currentOrder.delivery_address_id.state ? ', ' + currentOrder.delivery_address_id.state : ''}${currentOrder.delivery_address_id.country ? ', ' + currentOrder.delivery_address_id.country : ''}`
-    : "N/A";
+  // Extract primary pickup and dropoff coordinates for the map
+  // Assumes the first order_item (package) defines the primary route
+  const primaryPickupCoords: LatLng | null = useMemo(() => {
+    return (
+      currentOrder?.order_item?.[0]?.package_details?.pickup_coords || null
+    );
+  }, [currentOrder]);
 
-  // Construct the map query using lat/lng if available, fallback to address string
-   const mapQuery =
-    currentOrder?.delivery_address_id?.lat &&
-    currentOrder?.delivery_address_id?.lng
-      ? `${currentOrder.delivery_address_id.lat},${currentOrder.delivery_address_id.lng}`
-      : encodeURIComponent(fullAddress); // Encode address string for URL
-
-  // Base URL for Google Maps search link
-  // This will open the location in Google Maps app or website
-  const mapSearchUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
-
+  const primaryDropoffCoords: LatLng | null = useMemo(() => {
+    return (
+      currentOrder?.order_item?.[0]?.package_details?.dropoff_coords || null
+    );
+  }, [currentOrder]);
 
   // --- Render ---
   if (isLoading) {
     return (
-      <div className="flex w-full justify-center items-center h-screen"> {/* Use h-screen for full page loader */}
+      <div className="flex w-full justify-center items-center h-screen">
         <Loader2 size={32} className="animate-spin text-orange-500" />
         <p className="ml-2 text-gray-700">Loading current order...</p>
       </div>
     );
   }
 
-  // Show a general error message if there's an error that isn't just "no order"
   if (error && !currentOrder) {
     return (
-      <div className="text-orange-500 text-center mt-8">
+      <div className="text-orange-500 text-center mt-8 p-4">
         <p>{error}</p>
-        <p>Please try again later.</p>
+        <p>Please try again later or ensure you are logged in.</p>
+        <Link
+          href="/auth/login"
+          className="text-blue-600 hover:underline mt-4 block"
+        >
+          Go to Login
+        </Link>
       </div>
     );
   }
 
-  // Show the "no current order" message if not loading and no order is found
   if (!currentOrder) {
     return (
-      <div className="text-gray-700 text-center flex w-full h-screen justify-center items-center m-auto">
-        <p className="text-2xl">You do not have a current order assigned.</p>
-        {/* Optional: Link to available orders page if applicable */}
-        {/* <Link href="/rider/available-orders">View available orders</Link> */}
+      <div className="text-gray-700 text-center flex w-full h-screen justify-center items-center p-4">
+        <p className="text-2xl font-semibold">
+          You do not have a current order assigned.
+        </p>
+        <p className="text-md mt-2">
+          Stay tuned! New delivery requests will appear here.
+        </p>
       </div>
     );
   }
 
-  // Render the current order details
   return (
-    <div className="w-full h-full p-4 md:p-8 text-gray-800 overflow-y-auto glass-scrollbar">
-      <h1 className="text-2xl font-bold mb-6">Current Order</h1>
-      <div className="flex flex-col lg:flex-row gap-6">
-        {/* Order Details */}
-        <div className="flex-1 backdrop-blur bg-white/30 rounded-2xl p-6 border border-white/20 shadow-lg">
+    <div className="w-full h-full p-4 md:p-8 text-gray-800 overflow-y-auto glass-scrollbar flex flex-col">
+      <ToastContainer position="top-right" autoClose={5000} />
+
+      <h1 className="text-2xl font-bold mb-6">Current Delivery</h1>
+
+      <div className="flex flex-col lg:flex-row gap-6 flex-grow">
+        {/* Map Section (Mobile first: placed before order details) */}
+        <div className="flex-1 flex flex-col rounded-2xl overflow-hidden border border-white/20 shadow-lg backdrop-blur bg-white/30 h-[400px] lg:h-auto">
+          {primaryPickupCoords && primaryDropoffCoords ? (
+            <>
+              {/* Button to toggle route origin */}
+              {riderCurrentLocation && (
+                <div className="p-4 bg-white/40 border-b border-white/20">
+                  <GlassButton
+                    onClick={() => setShowRouteFromRider((prev) => !prev)}
+                    disabled={isUpdatingStatus}
+                    className="w-full !bg-blue-600 hover:!bg-blue-700 text-white font-semibold flex items-center justify-center gap-2"
+                  >
+                    <MapPin size={18} />
+                    {showRouteFromRider
+                      ? "Show Route: Pickup to Drop-off"
+                      : "Show Route: From My Location"}
+                  </GlassButton>
+                </div>
+              )}
+              <div className="flex-1 min-h-[300px]">
+                <RiderMap
+                  pickupCoords={primaryPickupCoords}
+                  dropoffCoords={primaryDropoffCoords}
+                  riderLocation={riderCurrentLocation}
+                  showRouteFromRider={showRouteFromRider}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center text-gray-600 p-4">
+              No full route information available for the map.
+            </div>
+          )}
+        </div>
+
+        {/* Order Details (Mobile second, Desktop first due to flex-row and inherent order) */}
+        <div className="flex-1 backdrop-blur bg-white/30 rounded-2xl p-6 border border-white/20 shadow-lg min-w-[300px]">
           <div className="mb-4">
             <h2 className="text-lg font-semibold flex items-center gap-2 mb-1">
-              <Package size={18} /> Order ID: #{currentOrder.id.substring(0, 8)}{" "}
-              {/* Display truncated ID */}
+              <Package size={18} /> Order ID: #{currentOrder.id.substring(0, 8)}
             </h2>
             <p
               className={`text-sm capitalize ${
@@ -340,15 +352,14 @@ export default function RiderCurrentOrderPage() {
                     ? "text-yellow-800"
                     : currentOrder.status === "delivering"
                       ? "text-green-800"
-                      : "text-gray-600" // Fallback
+                      : "text-gray-600"
               }`}
             >
-              Status: {currentOrder.status?.replace("_", " ") || "N/A"}{" "}
-              {/* Handle null status */}
+              Status: {currentOrder.status?.replace(/_/g, " ") || "N/A"}
             </p>
-             {currentOrder.created_at && (
+            {currentOrder.created_at && (
               <p className="text-xs text-gray-600 mt-1">
-                 Ordered: {new Date(currentOrder.created_at).toLocaleString()} {/* Format date */}
+                Ordered: {new Date(currentOrder.created_at).toLocaleString()}
               </p>
             )}
           </div>
@@ -358,7 +369,6 @@ export default function RiderCurrentOrderPage() {
             <div className="flex items-center gap-3">
               <User size={18} />
               <span>{currentOrder.user_id?.name || "N/A"}</span>
-              {/* Optional: Call Customer Button */}
               {currentOrder.user_id?.phone && (
                 <a
                   href={`tel:${currentOrder.user_id.phone}`}
@@ -371,83 +381,48 @@ export default function RiderCurrentOrderPage() {
               )}
             </div>
 
-            {/* Vendor Info */}
-            <div className="flex items-center gap-3">
-              <Store size={18} />
-              <span>{currentOrder.vendor_id?.name || "N/A"}</span>
-              {/* Optional: Call Vendor Button */}
-              {currentOrder.vendor_id?.phone && (
-                <a
-                  href={`tel:${currentOrder.vendor_id.phone}`}
-                  className="ml-auto"
-                >
-                  <GlassButton className="!text-blue-500 hover:!bg-blue-100/60 hover:border-blue-500 cursor-pointer rounded-md p-1">
-                    <Phone size={16} />
-                  </GlassButton>
-                </a>
-              )}
-            </div>
-
-            {/* Delivery Address */}
-            <div className="flex items-start gap-3">
-              <MapPin size={18} />
-              <span className="flex-1">{fullAddress}</span> {/* Use flex-1 to allow text wrap */}
-              {/* Optional: View on Map Button */}
-               {fullAddress !== "N/A" && (
-                <a
-                  href={mapSearchUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-auto" // ml-auto pushes button to the right
-                >
-                  <GlassButton className="!text-green-500 hover:!bg-green-100/60 hover:border-green-500 cursor-pointer rounded-md p-1">
-                    <MapPin size={16} />
-                  </GlassButton>
-                </a>
-              )}
-            </div>
-
-            {/* Package Details (List of Items) */}
+            {/* Package Details (List of Items with their pickup/dropoff) */}
             <div className="flex items-start gap-3">
               <Package size={18} />
-              <div className="flex flex-col flex-1"> {/* Use flex-1 here too */}
-                <span className="font-semibold">Items:</span>
+              <div className="flex flex-col flex-1">
+                <span className="font-semibold">Packages:</span>
                 {currentOrder.order_item &&
                 currentOrder.order_item.length > 0 ? (
                   <ul className="list-disc pl-5 text-gray-700">
-                    {currentOrder.order_item.map((item) => (
-                      <li key={item.id}>
-                        <span className="font-semibold">{item.quantity}x</span>{" "}
-                        {item.menu_item_id || "Unknown Item"} - ₦{item.price?.toFixed(2) || '0.00'} each {/* Use ₦ for Naira, handle null price */}
-                        {item.notes && (
-                          <span className="text-xs text-gray-500 ml-1">
-                            ({item.notes})
-                          </span>
-                        )}
+                    {currentOrder.order_item.map((item, idx) => (
+                      <li key={item.id || idx} className="mb-2">
+                        <p className="font-medium">
+                          Package #{idx + 1}:{" "}
+                          {item.package_details?.item_description ||
+                            "Generic Item"}
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          <span className="font-semibold">From:</span>{" "}
+                          {item.package_details?.pickup_address || "N/A"}
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          <span className="font-semibold">To:</span>{" "}
+                          {item.package_details?.dropoff_address || "N/A"}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Qty: {item.quantity}
+                        </p>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <span className="text-gray-600">No items listed.</span>
+                  <span className="text-gray-600">
+                    No package details available.
+                  </span>
                 )}
               </div>
             </div>
 
-            {/* Estimated Time - NOTE: This is not in your DB schema, hardcoded in demo */}
-            {/* You would need to calculate or fetch this from a logistics service */}
-            {/* Keeping the placeholder */}
-            <div className="flex items-center gap-3">
-              <Clock3 size={18} />
-              <span>
-                 ETA: {currentOrder.status === "assigned" ? "Calculating..." : "N/A"} {/* Placeholder */}
-              </span>
-            </div>
-
-            {/* Amount */}
+            {/* Total Amount */}
             <div className="flex items-center gap-3">
               <span className="font-semibold">Amount:</span>
               <span className="text-green-700 font-bold text-lg">
-                ₦{currentOrder.total_amount?.toFixed(2) || '0.00'} {/* Format amount, handle null */}
+                ₦{currentOrder.total_amount?.toFixed(2) || "0.00"}
               </span>
             </div>
 
@@ -455,7 +430,7 @@ export default function RiderCurrentOrderPage() {
             {currentOrder.special_instructions && (
               <div className="flex items-start gap-3">
                 <span className="font-semibold">Instructions:</span>
-                <span className="text-gray-600 italic flex-1"> {/* Use flex-1 */}
+                <span className="text-gray-600 italic flex-1">
                   {currentOrder.special_instructions}
                 </span>
               </div>
@@ -464,7 +439,21 @@ export default function RiderCurrentOrderPage() {
 
           {/* Rider Actions (Status Update Buttons) */}
           <div className="flex flex-col md:flex-row gap-4 mt-6">
-            {/* Buttons are conditionally rendered based on current status */}
+            {currentOrder.status === "pending_confirmation" && (
+              <GlassButton
+                onClick={() => handleStatusUpdate("assigned")} // Rider accepts the order
+                disabled={isUpdatingStatus}
+                className="flex-1 !bg-green-500 hover:!bg-green-600 text-white font-semibold flex items-center justify-center gap-2"
+              >
+                {isUpdatingStatus ? (
+                  <Loader2 size={18} className="animate-spin" />
+                ) : (
+                  <CheckCircle size={18} />
+                )}
+                Accept Order
+              </GlassButton>
+            )}
+
             {currentOrder.status === "assigned" && (
               <GlassButton
                 onClick={() => handleStatusUpdate("picked_up")}
@@ -510,39 +499,22 @@ export default function RiderCurrentOrderPage() {
               </GlassButton>
             )}
 
-             {/* Report Issue Button */}
-            <GlassButton
-              onClick={() => alert("Implement Report Issue functionality")} // Replace with actual handler
-              disabled={isUpdatingStatus}
-              className="flex-1 !bg-red-500 hover:!bg-red-600 text-white font-semibold flex items-center justify-center gap-2"
-            >
-              <XCircle size={18} /> Report Issue
-            </GlassButton>
+            {/* Report Issue Button - Always available for active orders */}
+            {currentOrder.status !== FINAL_RIDER_STATUS && (
+              <GlassButton
+                onClick={() =>
+                  toast.info(
+                    "Report Issue functionality needs to be implemented."
+                  )
+                }
+                disabled={isUpdatingStatus}
+                className="flex-1 !bg-red-500 hover:!bg-red-600 text-white font-semibold flex items-center justify-center gap-2"
+              >
+                <XCircle size={18} /> Report Issue
+              </GlassButton>
+            )}
           </div>
         </div>
-
-        {/* Map Section */}
-        {/* Only render map link if delivery address has lat/lng or a parsable address string */}
-        {fullAddress !== "N/A" && (
-          <div className="flex-1 h-[400px] lg:h-auto rounded-2xl overflow-hidden border border-white/20 shadow-lg backdrop-blur bg-white/30">
-            {/* You could embed a map iframe here if you have an API key */}
-            {/* For a simple link to open in a new tab: */}
-            <a
-              href={mapSearchUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full h-full flex items-center justify-center text-blue-600 hover:underline p-4" // Added padding
-            >
-              View Delivery Location on Map
-            </a>
-          </div>
-        )}
-        {/* Show message if no location data for map */}
-        {fullAddress === "N/A" && (
-          <div className="flex-1 h-[400px] lg:h-auto rounded-2xl flex items-center justify-center border border-white/20 shadow-lg backdrop-blur bg-white/30 text-gray-600 p-4"> {/* Added padding */}
-            No delivery address available for map.
-          </div>
-        )}
       </div>
     </div>
   );
