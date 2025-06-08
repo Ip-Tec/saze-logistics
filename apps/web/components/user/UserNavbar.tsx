@@ -1,5 +1,8 @@
+// components/user/UserNavbar.tsx
+"use client";
+
 import Link from "next/link";
-import { Home, ShoppingCart, ClipboardList, User } from "lucide-react";
+import { Home, ShoppingCart, ClipboardList, User, ListOrdered } from "lucide-react"; // Import ListOrdered for Orders icon
 import { useAuthContext } from "@/context/AuthContext";
 
 export default function UserNavbar() {
@@ -7,15 +10,13 @@ export default function UserNavbar() {
 
   return (
     <>
-        {/* Desktop Top Navbar */}  
+      {/* Desktop Top Navbar */}
       <nav className="hidden md:flex w-full bg-white shadow-md fixed top-0 left-0 z-50 px-4 py-3 items-center justify-between">
         <Link
           href="/"
           className="hidden md:flex text-md gap-2 font-bold text-orange-600 items-center"
         >
-          <span className="mr-1">
-              <Home size={16} />  
-          </span>
+          <Home size={16} /> {/* Icon directly, no span needed */}
           Sazee
         </Link>
 
@@ -23,9 +24,9 @@ export default function UserNavbar() {
           <Link href="/user" className="hover:text-primary">
             Home
           </Link>
-          {/* <Link href="/user/orders" className="hover:text-primary">
+          <Link href="/user/orders" className="hover:text-primary"> {/* Added Orders link */}
             Orders
-          </Link> */}
+          </Link>
           {/* <Link href="/user/cart" className="hover:text-primary">
             Cart
           </Link> */}
@@ -40,34 +41,44 @@ export default function UserNavbar() {
           </button>
         </div>
       </nav>
-      
-        {/* Mobile Bottom Navbar */}
+
+      {/* Mobile Bottom Navbar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-[99] bg-white border-t shadow-md">
         <div className="flex justify-around text-xs text-center py-2">
           <Link
             href="/user"
             className="flex flex-col items-center text-gray-700 hover:text-orange-600"
           >
-            <Home size={20} />  <span>Home</span> 
+            <Home size={20} />
+            <span>Home</span>
+          </Link>
+          <Link
+            href="/user/orders" // Added Orders link for mobile
+            className="flex flex-col items-center text-gray-700 hover:text-orange-600"
+          >
+            <ListOrdered size={20} /> {/* Using ListOrdered icon for orders */}
+            <span>Orders</span>
           </Link>
           <Link
             href="/user/category"
             className="flex flex-col items-center text-gray-700 hover:text-orange-600"
           >
-              <ClipboardList size={20} />
+            <ClipboardList size={20} />
             <span>Vendor</span>
           </Link>
-          <Link
+          {/* <Link
             href="/user/cart"
             className="flex flex-col items-center text-gray-700 hover:text-orange-600"
           >
-            <ShoppingCart size={20} />  <span>Cart</span> 
-          </Link>
+            <ShoppingCart size={20} />
+            <span>Cart</span>
+          </Link> */}
           <Link
             href="/user/profile"
             className="flex flex-col items-center text-gray-700 hover:text-orange-600"
           >
-              <User size={20} />  <span>Profile</span>  
+            <User size={20} />
+            <span>Profile</span>
           </Link>
         </div>
       </div>

@@ -1,3 +1,4 @@
+// app/(root)/user/layout.tsx
 "use client";
 
 import { BellIcon } from "@/components/reuse/BellIcon";
@@ -62,13 +63,13 @@ export default function UserLayout({
         />
       </div>
 
-      {/* Main Glass Area */}
-      <GlassComponent className="!bg-green-600/10 z-10 w-full flex flex-col h-full !mt-0">
-        <UserNavbar />
+      {/* Main Glass Area - Adjusted for top padding for desktop navbar */}
+      <GlassComponent className="!bg-green-600/10 z-10 w-full flex flex-col h-full !mt-0 pt-16 mb-16 md:mb-0"> {/* Added pt-16 here */}
         <SearchBar />
         <BellIcon />
         {children}
       </GlassComponent>
+      <UserNavbar />
     </div>
   );
 }

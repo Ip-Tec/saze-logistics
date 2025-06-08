@@ -20,7 +20,7 @@ export default function SearchBar() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex w-auto max-w-md mx-auto">
+    <form onSubmit={onSubmit} className="flex w-[90vw] max-w-lg mx-auto">
       <input
         type="text"
         value={query}

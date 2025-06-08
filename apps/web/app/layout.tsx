@@ -25,10 +25,7 @@ export const metadata: Metadata = {
   // Add the 'icons' property
   icons: {
     icon: Logo.src,
-    // Or use an absolute URL:
-    // icon: 'https://example.com/favicon.png',
-    // You can also specify shortcut, apple, and other icons here:
-    shortcut: LogoAndroid.src, // Example for .ico
+    shortcut: LogoAndroid.src,
     apple: LogoApple.src,
     other: {
       rel: "apple-touch-icon-precomposed",
