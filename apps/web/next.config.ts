@@ -30,6 +30,14 @@ if (!supabaseHostname) {
   supabaseHostname = "vxcjmhopnllannvtfwze.supabase.co";
 }
 
+const withPWA = require('next-pwa')({
+  dest: 'public', // Output directory for the service worker files
+  disable: process.env.NODE_ENV === 'development', // Disable PWA in development mode
+  // register: true, // Auto-register the service worker (default is true)
+  // scope: '/', // Service worker scope (default is '/')
+  // sw: 'sw.js', // Name of the service worker file (default is 'sw.js')
+});
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [

@@ -92,7 +92,7 @@ export default function RiderHistoryPage() {
           `
           )
           .eq("rider_id", user.id)
-          // .in("status", ["delivered", "cancelled", "failed", "processing", "accepted"]) // Fetch completed or cancelled orders
+          .in("status", ["delivering", "delivered", "cancelled", "failed", "processing", "accepted"]) // Fetch completed or cancelled orders
           .order("created_at", { ascending: false }) // Newest first
           .range(from, to); // Apply pagination range
 

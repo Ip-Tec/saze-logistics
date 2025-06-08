@@ -1,0 +1,22 @@
+{
+  "name": "Saze Logistics",
+  "short_name": "Sazee",
+  "description": "Your reliable logistics and package delivery service.",
+  "start_url": "/auth/login",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF6347",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "portrait"
+}

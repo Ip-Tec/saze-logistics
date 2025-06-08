@@ -7,7 +7,7 @@ import Logo from "@/public/favicon.ico";
 import LogoApple from "@/public/apple-touch-icon.png";
 import LogoAndroid from "@/public/android-chrome-512x512.png";
 import { NotificationProvider } from "@/context/NotificationContext";
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,8 +19,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Create Next App",
-  description: "SAZE Logistic, we redefine convenience by connecting Users, Riders, and Vendors through a seamless, easy-to-use delivery platform designed for speed, safety, and satisfaction.",
+  title: "Sazee Logistic",
+  description:
+    "SAZE Logistic, we redefine convenience by connecting Users, Riders, and Vendors through a seamless, easy-to-use delivery platform designed for speed, safety, and satisfaction.",
   // Add the 'icons' property
   icons: {
     icon: Logo.src,
@@ -33,6 +34,26 @@ export const metadata: Metadata = {
       rel: "apple-touch-icon-precomposed",
       url: LogoApple.src,
     },
+  },
+
+  // PWA Meta Tags
+  manifest: "/manifest.json", // Link to your manifest file
+  themeColor: "#FF6347", // Theme color for the browser UI
+  // Other PWA related meta tags for Apple devices (non-standard but common)
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Sazee Logistic", // Short name for Apple devices
+  },
+  formatDetection: {
+    telephone: false, // Prevent phone numbers from being clickable
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: "cover", // For iPhones with notches
   },
 };
 
