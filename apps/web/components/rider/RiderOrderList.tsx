@@ -38,9 +38,9 @@ export default function RiderOrderList({ orders, isLoading, error }: RiderOrderL
             case 'delivering':
                  return 'bg-indigo-600 text-indigo-300'; // Assuming 'delivering' might appear
             case 'cancelled':
-                 return 'bg-red-600 text-red-300';
+                 return 'bg-red-600 text-red-300'; // Assuming 'cancelled' might appear
             case 'failed':
-                 return 'bg-red-600 text-red-300';
+                 return 'bg-red-600 text-red-300'; // Assuming 'failed' might appear
             default:
                 return 'bg-gray-600 text-gray-300';
         }

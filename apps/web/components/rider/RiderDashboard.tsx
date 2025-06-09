@@ -49,7 +49,9 @@ export default function RiderDashboard() {
     ChartDataPoint[]
   >([]);
   // We'll focus on deliveries chart based on available data
-  const [activeChart, setActiveChart] = useState<"deliveries" | "distance">("deliveries"); // Only deliveries chart for now
+  const [activeChart, setActiveChart] = useState<"deliveries" | "distance">(
+    "deliveries"
+  ); // Only deliveries chart for now
 
   // State for recent orders list
   const [recentOrders, setRecentOrders] = useState<RecentOrder[]>([]);
@@ -186,17 +188,16 @@ export default function RiderDashboard() {
         const { data, error: fetchError } = await supabase
           .from("order")
           .select(
+            `id,
+            total_amount,
+            status,
+            created_at,
+            user_id (name),
+            delivery_address_id (street, city)
             `
-                    id,
-                    total_amount,
-                    status,
-                    created_at,
-                    user_id (name),
-                    delivery_address_id (street, city)
-                    `
           )
           .eq("rider_id", riderId) // Filter by the logged-in rider's ID
-          .order("created_at", { ascending: false }) // Order by newest first
+          .order("created_at", { ascending: true }) // Order by newest first
           .limit(15); // Limit to the 5 most recent orders
 
         if (fetchError) throw fetchError;
