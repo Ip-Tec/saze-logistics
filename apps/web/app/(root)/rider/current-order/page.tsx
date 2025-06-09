@@ -18,7 +18,8 @@ import {
   Loader2,
 } from "lucide-react";
 import Link from "next/link";
-import { AddressDetail, LatLng } from "@/app/(root)/user/page"; // Import necessary types
+import { AddressDetail, LatLng } from "@/app/(root)/user/page";
+import { formatNaira } from "@/hooks/useNairaFormatter";
 
 // Import the new map component
 import RiderMap from "@/components/rider/RiderMap";
@@ -422,7 +423,7 @@ export default function RiderCurrentOrderPage() {
             <div className="flex items-center gap-3">
               <span className="font-semibold">Amount:</span>
               <span className="text-green-700 font-bold text-lg">
-                ₦{currentOrder.total_amount?.toFixed(2) || "0.00"}
+                {formatNaira(currentOrder.total_amount) || "0.00"}
               </span>
             </div>
 
