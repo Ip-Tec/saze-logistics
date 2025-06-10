@@ -2,7 +2,6 @@
 "use client";
 
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Ensure toast styles are imported
 import { Database } from "@shared/supabase/types";
 import { supabase } from "@shared/supabaseClient";
 import React, { useEffect, useState, useCallback, useMemo } from "react";
@@ -299,7 +298,7 @@ export default function RiderCurrentOrderPage() {
 
   return (
     <div className="w-full h-full p-4 md:p-8 text-gray-800 overflow-y-auto glass-scrollbar flex flex-col">
-      <ToastContainer position="top-right" autoClose={5000} />
+      <ToastContainer position="top-right" className={"!z-[999]"}  />
 
       <h1 className="text-2xl font-bold mb-6">Current Delivery</h1>
 

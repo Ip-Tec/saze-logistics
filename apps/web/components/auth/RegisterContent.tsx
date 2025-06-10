@@ -71,13 +71,16 @@ export default function RegisterContent() {
         data.password,
         role
       );
+      // toast.success(
+      //   "Registration successful! Please check your email to confirm your account."
+      // );
       toast.success(
-        "Registration successful! Please check your email to confirm your account."
+        "Registration successful!. \n \n Welcome to our platform. You can now log in to your account."
       );
 
       // Instead of sending the user to a dashboard immediately,
       // redirect them to a confirmation page.
-      setTimeout(() => router.push("/auth/confirm-email"), 2000);
+      setTimeout(() => router.push("/auth/login"), 2000);
     } catch (error: any) {
       console.log({ error });
       toast.error(error.message || "Registration failed. Please try again.");
