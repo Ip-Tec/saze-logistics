@@ -107,6 +107,7 @@ export default function UserHomePage() {
 
   // Effect to manage rider selection dropdown visibility based on nearestRiderInfo
   useEffect(() => {
+    console.log("Rider selection effect running. Riders:", riders.length, "Nearest:", nearestRiderInfo.rider);
     if (!riders.length || !packages[0]?.pickup?.coords) {
       setNearestRiderInfo({ rider: null, distanceKm: null });
       setShowRiderSelectionDropdown(false);
@@ -133,10 +134,12 @@ export default function UserHomePage() {
     packages[0]?.pickup?.coords,
     nearestRiderInfo.rider,
     nearestRiderInfo.distanceKm,
+    setNearestRiderInfo
   ]);
 
   // --- Geocoding and Map Interaction Callbacks ---
   useEffect(() => {
+    console.log("Geocoder initialization effect. isLoaded:", isLoaded);
     if (
       isLoaded &&
       typeof window.google !== "undefined" &&
@@ -144,12 +147,28 @@ export default function UserHomePage() {
       !geocoderRef.current
     ) {
       geocoderRef.current = new window.google.maps.Geocoder();
+      console.log("Geocoder initialized:", geocoderRef.current);
     }
   }, [isLoaded]);
 
+  // Diagnostic log for isLoaded state
   useEffect(() => {
+    console.log(`useLoadScript: isLoaded changed to ${isLoaded}, loadError: ${loadError?.message}`);
+    if (loadError) {
+      toast.error(`Map loading error: ${loadError.message}. Check API key and network.`);
+    }
+  }, [isLoaded, loadError]);
+
+
+  useEffect(() => {
+    console.log("Fetching user and geolocation.");
     supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) setUserId(user.id);
+      if (user) {
+        setUserId(user.id);
+        console.log("User ID set:", user.id);
+      } else {
+        console.log("No user logged in.");
+      }
     });
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -157,13 +176,17 @@ export default function UserHomePage() {
           const currentLoc = { lat: coords.latitude, lng: coords.longitude };
           setUserLoc(currentLoc);
           setMapCenter(currentLoc);
+          console.log("User geolocation obtained:", currentLoc);
         },
-        () =>
-          toast.info("Could not get your location. Set it manually or search."),
+        (error) => {
+          console.warn("Geolocation error:", error);
+          toast.info("Could not get your location. Set it manually or search.");
+        },
         { enableHighAccuracy: true }
       );
     } else {
-      toast.error("Geolocation not supported.");
+      toast.error("Geolocation not supported by your browser.");
+      console.warn("Geolocation not supported.");
     }
   }, []);
 
@@ -171,6 +194,7 @@ export default function UserHomePage() {
     async (coords: LatLng): Promise<AddressDetail | null> => {
       if (!geocoderRef.current) {
         toast.error("Geocoder not ready.");
+        console.error("Attempted reverseGeocode but geocoderRef.current is null.");
         return null;
       }
       try {
@@ -197,6 +221,7 @@ export default function UserHomePage() {
           };
         } else {
           toast.warn("Could not find address for location.");
+          console.warn("No address found for coords:", coords);
           return {
             text: `Lat: ${coords.lat.toFixed(5)}, Lng: ${coords.lng.toFixed(
               5
@@ -204,8 +229,8 @@ export default function UserHomePage() {
             coords,
           };
         }
-      } catch (e) {
-        console.error("Reverse geocode error:", e);
+      } catch (e: any) {
+        console.error("Reverse geocode error:", e.message, e);
         toast.error("Error finding address.");
         return null;
       }
@@ -221,6 +246,8 @@ export default function UserHomePage() {
         lng: event.latLng.lng(),
       };
       setTempMarkerPos(clickedCoords);
+      console.log("Map clicked at:", clickedCoords);
+
       if (isManuallySettingUserLoc) {
         setUserLoc(clickedCoords);
         setMapCenter(clickedCoords);
@@ -230,6 +257,7 @@ export default function UserHomePage() {
         );
         setIsManuallySettingUserLoc(false);
         setTempMarkerPos(null);
+        console.log("User location set manually:", ad);
       } else if (pickingLocationFor) {
         const { packageIndex, field } = pickingLocationFor;
         const ad = await reverseGeocode(clickedCoords);
@@ -242,18 +270,11 @@ export default function UserHomePage() {
                 ? pickupRefs?.current[packageIndex]
                 : dropoffRefs?.current[packageIndex];
 
-            if (
-              inputRef &&
-              (inputRef as any).i &&
-              (inputRef as any).i.value !== undefined
-            ) {
-              (inputRef as any).i.value = ad.text;
-            } else if (
-              inputRef &&
-              (inputRef as any).A &&
-              (inputRef as any).A.value !== undefined
-            ) {
-              (inputRef as any).A.value = ad.text;
+            if (inputRef) {
+                const inputElement = (inputRef as any).i || (inputRef as any).A;
+                if (inputElement && inputElement.value !== undefined) {
+                    inputElement.value = ad.text;
+                }
             }
             return newPkgs;
           });
@@ -261,6 +282,7 @@ export default function UserHomePage() {
         setPickingLocationFor(null);
         setTempMarkerPos(null);
         toast.success(`${field} for Package #${packageIndex + 1} set.`);
+        console.log(`Package ${field} for #${packageIndex + 1} set to:`, ad);
       } else {
         setTempMarkerPos(null);
       }
@@ -272,6 +294,7 @@ export default function UserHomePage() {
     setIsManuallySettingUserLoc(true);
     setPickingLocationFor(null);
     toast.info("Click map to set your location.");
+    console.log("Manual user location setting activated.");
   }, []);
 
   const handlePickLocationOnMap = useCallback(
@@ -279,21 +302,27 @@ export default function UserHomePage() {
       setPickingLocationFor({ packageIndex, field });
       setIsManuallySettingUserLoc(false);
       toast.info(`Click map for ${field} of Package #${packageIndex + 1}.`);
+      console.log(`Picking location for Package #${packageIndex + 1}, field: ${field}`);
     },
     []
   );
 
   const addPackage = useCallback(
-    () =>
+    () => {
       setPackages((pkgs) => [
         ...pkgs,
         { pickup: null, dropoff: null, quantity: 1, description: "" },
-      ]),
+      ]);
+      toast.info("Added a new package slot.");
+    },
     []
   );
 
   const removePackage = useCallback(
-    (i: number) => setPackages((pkgs) => pkgs.filter((_, j) => j !== i)),
+    (i: number) => {
+      setPackages((pkgs) => pkgs.filter((_, j) => j !== i));
+      toast.info(`Removed Package #${i + 1}.`);
+    },
     []
   );
 
@@ -314,6 +343,7 @@ export default function UserHomePage() {
 
   // Calculate order details based on the first package
   const calculatedOrderDetails: CalculatedOrderDetails = useMemo(() => {
+    console.log("Calculating order details...");
     if (
       packages.length > 0 &&
       packages[0].pickup &&
@@ -333,11 +363,13 @@ export default function UserHomePage() {
         );
       const distanceInKm = distanceInMeters / 1000;
       const totalPrice = distanceInKm * pricePerKm;
+      console.log(`Distance: ${distanceInKm.toFixed(2)} km, Price: ${totalPrice.toFixed(2)}`);
       return {
         distanceKm: parseFloat(distanceInKm.toFixed(2)),
         totalPrice: parseFloat(totalPrice.toFixed(2)),
       };
     }
+    console.log("Order details not fully calculated yet.");
     return { distanceKm: null, totalPrice: null };
   }, [packages, pricePerKm, isLoaded]);
 
@@ -369,22 +401,20 @@ export default function UserHomePage() {
     [riders, nearestRiderInfo.rider, nearestRiderInfo.distanceKm]
   );
 
-  // MODIFIED confirmBooking function
   const confirmBooking = async () => {
     if (!userId) {
-      toast.error("Not signed in.");
+      toast.error("Not signed in. Please log in to book a delivery.");
       return;
     }
     if (!packages.length || packages.some((p) => !p.pickup || !p.dropoff)) {
-      toast.error("Ensure all packages have pickup/dropoff.");
+      toast.error("Ensure all packages have pickup/dropoff locations set.");
       return;
     }
     if (pricePerKm === null || calculatedOrderDetails.totalPrice === null) {
-      toast.error("Price calculation error. Cannot book. Check price config.");
+      toast.error("Price calculation error. Cannot book. Please try again later.");
       return;
     }
 
-    // Determine the rider to be assigned
     let finalRiderId = nearestRiderInfo.rider?.id || null;
     if (showRiderSelectionDropdown && manuallySelectedRider) {
       finalRiderId = manuallySelectedRider.id;
@@ -413,7 +443,6 @@ export default function UserHomePage() {
     setIsBooking(true);
     setShowSummary(false); // Close the summary modal immediately
 
-    // Prepare package and order data to pass to checkout
     const orderData = {
       userId,
       riderId: finalRiderId,
@@ -425,15 +454,13 @@ export default function UserHomePage() {
         quantity: pkg.quantity,
         description: pkg.description,
       })),
-      // Important: Add a unique ID or timestamp to prevent replay attacks if passed via query params
       timestamp: Date.now(),
     };
 
-    // Use localStorage or sessionStorage for more robust data passing
-    // This is safer than query params for complex objects or sensitive data
     try {
       localStorage.setItem("pendingOrderDetails", JSON.stringify(orderData));
       router.push("/user/checkout");
+      console.log("Order details stored, redirecting to checkout.");
     } catch (error) {
       console.error("Error storing order details for checkout:", error);
       toast.error("Could not proceed to checkout. Please try again.");
@@ -441,20 +468,27 @@ export default function UserHomePage() {
     }
   };
 
+  console.log("Rendering UserHomePage. isLoaded:", isLoaded, "loadError:", loadError?.message, "geocoderRef.current:", geocoderRef.current);
+
+  // If API key is explicitly missing from the environment
   if (!apiKey)
     return (
       <div className="flex items-center justify-center h-screen p-4 text-orange-600 bg-orange-50 text-center">
         Map API key is missing. Please configure{" "}
-        <code>NEXT_PUBLIC_Maps_API_KEY</code>.
+        <code className="font-mono">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code>.
       </div>
     );
+  
+  // If useLoadScript reports a loading error
   if (loadError)
     return (
       <div className="flex items-center justify-center h-screen p-4 text-red-600 bg-red-50 text-center">
         Error loading Google Maps: {loadError.message}.<br />
-        Check API key, internet, and Google Cloud Console.
+        Please check your API key, internet connection, and Google Cloud Console settings (enabled APIs, restrictions).
       </div>
     );
+
+  // If useLoadScript is still loading
   if (
     !isLoaded ||
     typeof window.google === "undefined" ||
@@ -462,27 +496,30 @@ export default function UserHomePage() {
   )
     return (
       <div className="flex items-center justify-center h-screen">
-        <p className="text-xl animate-pulse">
+        <p className="text-xl animate-pulse text-gray-700">
           Loading Map Interface & Services…
         </p>
       </div>
     );
+
+  // If Geocoder is still initializing (should happen right after isLoaded)
   if (!geocoderRef.current && isLoaded)
     return (
       <div className="flex items-center justify-center h-screen">
-        <p className="text-xl animate-pulse">
+        <p className="text-xl animate-pulse text-gray-700">
           Initializing Geocoding Service...
         </p>
       </div>
     );
 
+  // If all checks pass, render the main UI
   return (
-    <div className="mb-24 md:mb-0 relative flex flex-col md:flex-row h-screen w-full font-sans">
+    <div className="mb-24 md:mb-0 relative flex flex-col md:flex-row h-screen w-full font-sans"> {/* Added pb-[72px] for mobile bottom navbar previously, now using mb-24 */}
       <ToastContainer position="top-right" autoClose={5000} />
 
       <MapContainer
         mapCenter={mapCenter}
-        onMapLoad={(map) => (mapRef.current = map)} // Pass mapRef here
+        onMapLoad={(map) => { mapRef.current = map; console.log("GoogleMap instance loaded into ref."); }}
         userLoc={userLoc}
         riders={riders}
         nearestRiderInfo={nearestRiderInfo}
@@ -530,7 +567,6 @@ export default function UserHomePage() {
           {" "}
           + Add Package{" "}
         </button>
-        {/* Using a custom GlassButton for styling consistency */}
         <GlassButton
           onClick={() => setShowSummary(true)}
           disabled={
@@ -539,7 +575,7 @@ export default function UserHomePage() {
             pricePerKm === null ||
             isPriceConfigLoading
           }
-          className="w-full !bg-orange-600 hover:!bg-orange-700 !py-3 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full !bg-orange-600 hover:!bg-orange-700 !py-3 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-4"
         >
           {isPriceConfigLoading
             ? "Loading Rate..."
@@ -561,7 +597,7 @@ export default function UserHomePage() {
           showRiderSelectionDropdown={showRiderSelectionDropdown}
           manuallySelectedRider={manuallySelectedRider}
           handleRiderSelectionChange={handleRiderSelectionChange}
-          confirmBooking={confirmBooking} // This now triggers redirection
+          confirmBooking={confirmBooking}
           setShowSummary={setShowSummary}
           isBooking={isBooking}
           isPriceConfigLoading={isPriceConfigLoading}

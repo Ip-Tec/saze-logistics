@@ -16,7 +16,8 @@ import {
 
 import { createServerClient } from "@supabase/ssr";
 import { type Database } from "@shared/supabase/types";
-import OrderDetailsClient from "@/app/(root)/user/orders/[id]/OrderDetailsClient";
+import OrderDetailsClient from "./OrderDetailsClient";
+import { formatNaira } from "@/hooks/useNairaFormatter";
 
 interface OrderDetail {
   id: string;
@@ -189,8 +190,12 @@ export default async function OrderDetailPage({
   });
 
   const isActiveOrder =
-    order.status === "processing" || order.status === "out_for_delivery";
-  const canMonitorRider = isActiveOrder && order.rider?.id !== undefined; // Corrected check
+    order.status === "pending" ||
+    order.status === "processing" ||
+    order.status === "assigned" ||
+    order.status === "picked_up" ||
+    order.status === "delivered";
+  const canMonitorRider = isActiveOrder && order.rider?.id !== undefined;
 
   return (
     <div className="container mx-auto p-4 md:p-8">
@@ -198,8 +203,7 @@ export default async function OrderDetailPage({
         href="/user/orders"
         className="inline-flex items-center text-orange-600 hover:underline mb-6"
       >
-        <ArrowLongRightIcon className="w-5 h-5 rotate-180 mr-2" /> Back to
-        Orders
+        <ArrowLongRightIcon className="w-5 h-5 rotate-180 mr-2" /> Back to Orders
       </a>
       <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 text-center">
         Order Details
@@ -211,14 +215,16 @@ export default async function OrderDetailPage({
           </h2>
           <span
             className={`px-4 py-2 rounded-full text-sm font-semibold ${
-              order.status === "completed"
+              order.status === "delivered"
                 ? "bg-green-100 text-green-700"
                 : order.status === "cancelled"
                   ? "bg-red-100 text-red-700"
-                  : order.status === "pending_confirmation" ||
-                      order.status === "processing"
-                    ? "bg-blue-100 text-blue-700 animate-pulse"
-                    : "bg-gray-100 text-gray-600"
+                  : order.status === "picked_up"
+                    ? "bg-orange-100 text-orange-700"
+                    : order.status === "pending_confirmation" ||
+                        order.status === "processing"
+                      ? "bg-blue-100 text-blue-700 animate-pulse"
+                      : "bg-gray-100 text-gray-600"
             }`}
           >
             {(order.status ?? "").replace(/_/g, " ")}
@@ -232,19 +238,19 @@ export default async function OrderDetailPage({
             </h3>
             <p className="text-gray-600 flex items-center mb-1">
               <ClockIcon className="w-5 h-5 text-gray-500 mr-2" />
-              <span className="font-medium">Placed On:</span>{" "}
-              {format(new Date(order.created_at ?? ""), "MMM dd, yyyy HH:mm")}
+              <span className="font-medium">Placed On:</span>
+              {format(new Date(order.created_at ?? ""), "dd, mm, yyyy HH:mm")}
             </p>
             <p className="text-gray-600 flex items-center mb-1">
               <CurrencyDollarIcon className="w-5 h-5 text-gray-500 mr-2" />
-              <span className="font-medium">Total Amount:</span> ₦
-              {order.total_amount.toFixed(2)}
+              <span className="font-medium">Total Amount:</span>
+              {formatNaira(order.total_amount)}
             </p>
             {order.special_instructions && (
               <p className="text-gray-600 flex items-start mb-1">
                 <span className="font-medium flex-shrink-0 mr-2">
                   Instructions:
-                </span>{" "}
+                </span>
                 {order.special_instructions}
               </p>
             )}
@@ -260,7 +266,7 @@ export default async function OrderDetailPage({
                 <span>
                   {order.delivery_address.street}
                   <br />
-                  {order.delivery_address.city}, {order.delivery_address.state},{" "}
+                  {order.delivery_address.city}, {order.delivery_address.state},
                   {order.delivery_address.country}
                 </span>
               </p>
@@ -284,16 +290,16 @@ export default async function OrderDetailPage({
                   Package {index + 1} ({pkg.quantity} item(s))
                 </p>
                 <p className="text-sm text-gray-600 pl-2">
-                  <span className="font-medium">Pickup:</span>{" "}
+                  <span className="font-medium">Pickup:</span>
                   {pkg.pickup_address}
                 </p>
                 <p className="text-sm text-gray-600 pl-2">
-                  <span className="font-medium">Drop-off:</span>{" "}
+                  <span className="font-medium">Drop-off:</span>
                   {pkg.dropoff_address}
                 </p>
                 {pkg.description && (
                   <p className="text-sm text-gray-600 pl-2">
-                    <span className="font-medium">Description:</span>{" "}
+                    <span className="font-medium">Description:</span>
                     {pkg.description}
                   </p>
                 )}
@@ -334,7 +340,7 @@ export default async function OrderDetailPage({
           )}
         </div>
 
-        {isActiveOrder && order.rider?.id && (
+        {isActiveOrder && (
           <div className="mt-8 pt-6 border-t border-gray-200 flex flex-wrap gap-4 justify-center md:justify-start">
             <a
               href={`tel:${order?.rider?.phone}`}

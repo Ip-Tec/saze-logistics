@@ -87,7 +87,7 @@ export default function RiderLayout({
       </div>
 
       {/* Health/Safety elements */}
-      <div className="absolute top-4 right-4 flex gap-2 z-20">
+      <div className="absolute top-4 right-4 flex gap-2 z-10">
         <div className="p-2 bg-green-500 rounded-full shadow-lg text-white">
           <ShieldCheck size={20} />
         </div>

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { format } from "date-fns";
+import { formatNaira } from "@/hooks/useNairaFormatter"; 
 import {
   ClockIcon,
   MapPinIcon,
@@ -11,7 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 // Import createServerClient from @supabase/ssr for server components
-import { createServerClient } from "@supabase/ssr"; // <--- Correct import
+import { createServerClient } from "@supabase/ssr";
 import { type Database } from "@shared/supabase/types";
 
 // Define Order type (rest of your type definition is fine)
@@ -70,7 +71,7 @@ export default async function UserOrdersPage() {
   } = await supabase.auth.getSession();
 
   // You can keep this console.log for debugging
-  console.log("Session in UserOrdersPage:", session);
+  // console.log("Session in UserOrdersPage:", session);
 
   if (!session) {
     redirect("/auth/login");
@@ -148,10 +149,12 @@ export default async function UserOrdersPage() {
                     </h2>
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        order?.status === "completed"
-                          ? "bg-green-100 text-green-700"
+                        order?.status === "delivered"
+                          ? "bg-green-300 text-green-700"
                           : order?.status === "cancelled"
                             ? "bg-red-100 text-red-700"
+                            : order?.status === "picked"
+                              ? "bg-yellow-100 text-yellow-700"
                             : order?.status === "pending_confirmation" ||
                                 order?.status === "processing"
                               ? "bg-blue-100 text-blue-700 animate-pulse"
@@ -176,8 +179,8 @@ export default async function UserOrdersPage() {
                   </p>
                   <p className="text-gray-600 flex items-center mb-2">
                     <CurrencyDollarIcon className="w-5 h-5 text-gray-500 mr-2" />
-                    <span className="font-medium">Total:</span> ₦
-                    {order.total_amount.toFixed(2)}
+                    <span className="font-medium">Total:</span>
+                    {formatNaira(order.total_amount)}
                   </p>
                   <p className="text-gray-600 flex items-center mb-2">
                     <ShoppingBagIcon className="w-5 h-5 text-gray-500 mr-2" />

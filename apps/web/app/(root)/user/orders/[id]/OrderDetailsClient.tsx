@@ -1,20 +1,26 @@
-// app/(root)/user/orders/[orderId]/OrderDetailsClient.tsx
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+// ⬇️ STEP 1: Import Polyline directly from the library
+import {
+  GoogleMap,
+  Marker,
+  Polyline, // Import Polyline here
+  useLoadScript,
+} from "@react-google-maps/api";
 import { toast } from "react-toastify";
-import { LatLng } from "@/app/(root)/user/page"; // Re-use LatLng type
+import { LatLng } from "@/app/(root)/user/page";
 import { supabase } from "@shared/supabaseClient";
 
 const MAP_LIBS: Array<"places" | "geocoding" | "geometry"> = ["geometry"];
-const Maps_API_KEY = process.env.NEXT_PUBLIC_Maps_API_KEY!;
-const MAP_STYLE = { width: "100%", height: "400px", borderRadius: "8px" }; // Adjusted height for embedding
-const DEFAULT_CENTER = { lat: 6.74, lng: 6.1381 }; // Ekpoma center
+// ⬇️ STEP 2: Make sure this variable name is correct and matches your .env.local file
+const MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!; 
+const MAP_STYLE = { width: "100%", height: "400px", borderRadius: "8px" };
+const DEFAULT_CENTER = { lat: 6.74, lng: 6.1381 }; // Ekpoma, Nigeria
 
 interface OrderDetailsClientProps {
-  riderId: string | null; // Rider ID can be null if unassigned
-  initialRiderLat?: number | null; // Initial rider location if available
+  riderId: string | null;
+  initialRiderLat?: number | null;
   initialRiderLng?: number | null;
   dropoffCoords: LatLng | null;
   pickupCoords: LatLng | null;
@@ -28,39 +34,27 @@ const OrderDetailsClient: React.FC<OrderDetailsClientProps> = ({
   pickupCoords,
 }) => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: Maps_API_KEY,
+    googleMapsApiKey: MAPS_API_KEY, // Use the corrected variable
     libraries: MAP_LIBS,
   });
 
   const [riderLocation, setRiderLocation] = useState<LatLng | null>(null);
   const mapRef = useRef<google.maps.Map | null>(null);
 
-  // Determine initial map center: prioritize rider, then pickup, then dropoff, then default
   const mapCenter =
     riderLocation || pickupCoords || dropoffCoords || DEFAULT_CENTER;
 
   useEffect(() => {
-    // Set initial rider location if provided from server props
     if (
-      initialRiderLat !== null &&
-      initialRiderLng !== null &&
-      initialRiderLat !== undefined &&
-      initialRiderLng !== undefined
+      initialRiderLat != null && // Use != null to check for both null and undefined
+      initialRiderLng != null
     ) {
       setRiderLocation({ lat: initialRiderLat, lng: initialRiderLng });
     }
 
-    // Subscribe to real-time rider location updates ONLY IF riderId is present
-    // and the order is active. For this `OrderDetailsClient`, we'll keep it simple
-    // and only fetch initial if riderId is there. Real-time subscription is mainly for the dedicated /track page.
-    // However, if you want real-time here too, you'd add the same supabase.channel logic as in RiderTrackingMapClient.
     if (riderId) {
-      // Here, you could technically add the real-time subscription for rider_location,
-      // but for a summary map, often a snapshot is enough.
-      // If you want real-time, uncomment and adapt the code from RiderTrackingMapClient
-
       const channel = supabase
-        .channel(`rider_location_snapshot_${riderId}`)
+        .channel(`rider_location_update_${riderId}`)
         .on(
           "postgres_changes",
           {
@@ -71,12 +65,10 @@ const OrderDetailsClient: React.FC<OrderDetailsClientProps> = ({
           },
           (payload: any) => {
             const { latitude, longitude } = payload.new;
-            if (latitude !== null && longitude !== null) {
-              setRiderLocation({ lat: latitude, lng: longitude });
-              if (mapRef.current) {
-                // Optionally pan if rider moves significantly
-                // mapRef.current.panTo({ lat: latitude, lng: longitude });
-              }
+            if (latitude != null && longitude != null) {
+              const newPos = { lat: latitude, lng: longitude };
+              setRiderLocation(newPos);
+              mapRef.current?.panTo(newPos); // Gently pan the map to the new location
             }
           }
         )
@@ -86,44 +78,36 @@ const OrderDetailsClient: React.FC<OrderDetailsClientProps> = ({
         supabase.removeChannel(channel);
       };
     }
-  }, [riderId, initialRiderLat, initialRiderLng, isLoaded]);
+  }, [riderId, initialRiderLat, initialRiderLng]);
+  
+  // Fit map to bounds effect
+  useEffect(() => {
+    if (isLoaded && mapRef.current) {
+        const bounds = new window.google.maps.LatLngBounds();
+        if (pickupCoords) bounds.extend(pickupCoords);
+        if (dropoffCoords) bounds.extend(dropoffCoords);
+        if (riderLocation) bounds.extend(riderLocation);
 
-  if (loadError)
-    return (
-      <div className="flex items-center justify-center h-96 p-4 text-red-600 bg-red-50 rounded-lg text-center shadow-md">
-        Error loading Google Maps: {loadError.message}.
-      </div>
-    );
-  if (!isLoaded)
-    return (
-      <div className="flex items-center justify-center h-96 rounded-lg bg-gray-100 shadow-md">
-        <p className="text-xl animate-pulse text-gray-600">Loading Map…</p>
-      </div>
-    );
+        if (!bounds.isEmpty()) {
+            mapRef.current.fitBounds(bounds, 100); // 100px padding
+        }
+    }
+  }, [isLoaded, pickupCoords, dropoffCoords, riderLocation]);
 
-  // Calculate bounds to fit all markers if available
-  const bounds = new window.google.maps.LatLngBounds();
-  if (pickupCoords) bounds.extend(pickupCoords);
-  if (dropoffCoords) bounds.extend(dropoffCoords);
-  if (riderLocation) bounds.extend(riderLocation);
+
+  if (loadError) return <div>Error loading map: {loadError.message}</div>;
+  if (!isLoaded) return <div>Loading Map…</div>;
 
   return (
     <div className="mt-8">
       <h2 className="text-xl font-semibold text-gray-700 mb-4 text-center">
-        Order Map Overview
+        Live Order Map
       </h2>
       <GoogleMap
         mapContainerStyle={MAP_STYLE}
         center={mapCenter}
-        zoom={13} // Default zoom, will be overridden if bounds are set
-        onLoad={(map) => {
-          mapRef.current = map;
-          if (!bounds.isEmpty()) {
-            map.fitBounds(bounds);
-            // Optionally add padding if markers are too close to edge
-            map.panBy(0, -50); // Adjust map slightly up if needed
-          }
-        }}
+        zoom={12}
+        onLoad={map => { mapRef.current = map; }}
         options={{
           zoomControl: true,
           streetViewControl: false,
@@ -131,65 +115,20 @@ const OrderDetailsClient: React.FC<OrderDetailsClientProps> = ({
           fullscreenControl: false,
         }}
       >
-        {pickupCoords && (
-          <Marker
-            position={pickupCoords}
-            icon={{
-              url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
-              scaledSize: new window.google.maps.Size(40, 40),
-            }}
-            title="Pickup Location"
-            label={{
-              text: "Pickup",
-              className: "text-xs font-semibold text-gray-800",
-              color: "#333",
-            }}
-          />
-        )}
-        {dropoffCoords && (
-          <Marker
-            position={dropoffCoords}
-            icon={{
-              url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-              scaledSize: new window.google.maps.Size(40, 40),
-            }}
-            title="Drop-off Location"
-            label={{
-              text: "Drop-off",
-              className: "text-xs font-semibold text-gray-800",
-              color: "#333",
-            }}
-          />
-        )}
-        {riderLocation && (
-          <Marker
-            position={riderLocation}
-            icon={{
-              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // A general blue dot for rider on this overview map
-              scaledSize: new window.google.maps.Size(40, 40),
-            }}
-            title="Rider's Current Location"
-            label={{
-              text: "Rider",
-              fontWeight: "bold",
-              color: "white",
-              className: "bg-blue-600 px-2 py-1 rounded-md text-xs",
-            }}
-          />
-        )}
-        {/* Optional: Polyline between pickup and dropoff */}
-        {pickupCoords && dropoffCoords && isLoaded && (
+        {/* Markers for pickup, dropoff, and rider */}
+        {pickupCoords && <Marker position={pickupCoords} title="Pickup" />}
+        {dropoffCoords && <Marker position={dropoffCoords} title="Drop-off" />}
+        {riderLocation && <Marker position={riderLocation} title="Rider" icon={{ url: "/icons/motorcycle.png", scaledSize: new window.google.maps.Size(40, 40) }} />}
+        
+        {/* ⬇️ STEP 3: Use the imported Polyline component directly */}
+        {pickupCoords && dropoffCoords && (
           <Polyline
-            path={[
-              new window.google.maps.LatLng(pickupCoords.lat, pickupCoords.lng),
-              new window.google.maps.LatLng(
-                dropoffCoords.lat,
-                dropoffCoords.lng
-              ),
-            ]}
-            strokeColor="#0000FF"
-            strokeOpacity={0.6}
-            strokeWeight={3}
+            path={[pickupCoords, dropoffCoords]}
+            options={{
+              strokeColor: "#FF0000",
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+            }}
           />
         )}
       </GoogleMap>
@@ -197,26 +136,6 @@ const OrderDetailsClient: React.FC<OrderDetailsClientProps> = ({
   );
 };
 
-// Re-usable Polyline component for Google Maps API
-const Polyline: React.FC<google.maps.PolylineOptions> = (options) => {
-  const polylineRef = useRef<google.maps.Polyline | null>(null);
-
-  useEffect(() => {
-    if (!polylineRef.current) {
-      polylineRef.current = new google.maps.Polyline(options);
-    }
-    polylineRef.current.setOptions(options);
-    polylineRef.current.setMap(options.map ?? null); // Ensure it's attached to the map
-
-    return () => {
-      if (polylineRef.current) {
-        polylineRef.current.setMap(null); // Remove polyline from map on unmount
-        polylineRef.current = null;
-      }
-    };
-  }, [options]);
-
-  return null;
-};
+// ⬇️ STEP 4: Remove the custom Polyline component from here
 
 export default OrderDetailsClient;
