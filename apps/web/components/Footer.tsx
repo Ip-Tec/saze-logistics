@@ -19,16 +19,16 @@ const Footer = () => {
           <h4 className="text-lg font-semibold mb-3">Services</h4>
           <ul className="space-y-2 text-sm text-gray-300">
             <li>
-              <Link href="/services">Courier & Express</Link>
+              <Link href="/#services">Courier & Express</Link>
             </li>
             <li>
-              <Link href="/services">Freight Delivery</Link>
+              <Link href="/#services">Freight Delivery</Link>
             </li>
             <li>
-              <Link href="/services">Same-Day Dispatch</Link>
+              <Link href="/#services">Same-Day Dispatch</Link>
             </li>
             <li>
-              <Link href="/services">Warehousing</Link>
+              <Link href="/#services">Warehousing</Link>
             </li>
           </ul>
         </div>
@@ -37,16 +37,16 @@ const Footer = () => {
           <h4 className="text-lg font-semibold mb-3">Company</h4>
           <ul className="space-y-2 text-sm text-gray-300">
             <li>
-              <Link href="/about">About Us</Link>
+              <Link href="#">About Us</Link>
             </li>
             <li>
-              <Link href="/partner">Partner With Us</Link>
+              <Link href="/auth">Partner With Us</Link>
             </li>
             <li>
-              <Link href="/careers">Careers</Link>
+              <Link href="#careers">Careers</Link>
             </li>
             <li>
-              <Link href="/contact">Contact</Link>
+              <Link href="#contact">Contact</Link>
             </li>
           </ul>
         </div>
@@ -55,16 +55,16 @@ const Footer = () => {
           <h4 className="text-lg font-semibold mb-3">Support</h4>
           <ul className="space-y-2 text-sm text-gray-300">
             <li>
-              <Link href="/track">Track Your Package</Link>
+              <Link href="#track">Track Your Package</Link>
             </li>
             <li>
-              <Link href="/help">Help Center</Link>
+              <Link href="#help">Help Center</Link>
             </li>
             <li>
-              <Link href="/terms">Terms of Service</Link>
+              <Link href="#terms">Terms of Service</Link>
             </li>
             <li>
-              <Link href="/privacy">Privacy Policy</Link>
+              <Link href="#privacy">Privacy Policy</Link>
             </li>
           </ul>
         </div>
