@@ -23,7 +23,7 @@ const Header = () => {
           Services
         </Link>
         <Link
-          href="/partner"
+          href="/auth"
           className="text-white hover:text-gray-100 font-medium"
         >
           Become a Partner

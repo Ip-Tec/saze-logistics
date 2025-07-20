@@ -4,3 +4,11 @@
 
 # Folders
 node_modules/
+apps/web/.turbo
+
+.turbo/cache/3b202a9a7d9a675a-meta.json
+.turbo/daemon/e96b1bdc54f7b0b2-turbo.log.2025-06-11
+.turbo/daemon/e96b1bdc54f7b0b2-turbo.log.2025-07-02
+.turbo/daemon/e96b1bdc54f7b0b2-turbo.log.2025-07-03
+.turbo/daemon/e96b1bdc54f7b0b2-turbo.log.2025-07-17
+.turbo/daemon/e96b1bdc54f7b0b2-turbo.log.2025-07-20
