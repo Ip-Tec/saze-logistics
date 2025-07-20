@@ -16,27 +16,26 @@ const HeroSection = () => {
             Sazee
           </div>
           <h1 className="text-5xl font-extrabold text-primary mt-4">
-            Your Delivery Partner
+            Your Trusted Logistics Partner
           </h1>
           <h2 className="text-2xl font-medium text-gray-700">
-            Delivering More Than Just Food
+            Reliable Parcel & Freight Delivery Nationwide
           </h2>
           <h4 className="text-xl font-medium text-gray-500">
-            Your Food & Goods, Delivered Fast
+            Fast, Safe & Affordable Shipping
           </h4>
           <p className="text-gray-400 md:px-4 max-w-md">
-            Sazee Logistics is your all-in-one delivery solution. Easily order
-            delicious food from a variety of registered local vendors, or
-            request us to pick up and deliver your goods right to your doorstep.
-            From your favorite meals to important parcels, we've got your
-            delivery needs covered!
+            Sazee Logistics is your all-in-one shipping solution. From small
+            packages to large freight, we ensure your deliveries arrive safely
+            and on time. Whether you're sending documents across town or cargo
+            across the country, we've got you covered.
           </p>
           <div className="flex">
             <Link
               href={"/order/"}
-              className="mt-10 px-6 py-3 bg-yellow-400 text-white rounded-lg shadow-md hover:bg-yellow-500 font-semibold"
+              className="mt-10 px-6 py-3 bg-orange-400 text-white rounded-lg shadow-md hover:bg-orange-500 font-semibold"
             >
-              ORDER NOW
+              SHIP NOW
             </Link>
           </div>
         </div>
@@ -52,20 +51,6 @@ const HeroSection = () => {
           />
         </div>
       </div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className={
-          "transform rotate-180 bg-gradient-to-bl from-yellow-400 to-blue-500"
-        }
-        viewBox="0 0 1440 320"
-      >
-        <path
-          fill="#FFF"
-          className="fill-white border-none"
-          fillOpacity="1"
-          d="M0,192L48,213.3C96,235,192,277,288,277.3C384,277,480,235,576,186.7C672,139,768,85,864,90.7C960,96,1056,160,1152,160C1248,160,1344,96,1392,64L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-        ></path>
-      </svg>
     </section>
   );
 };

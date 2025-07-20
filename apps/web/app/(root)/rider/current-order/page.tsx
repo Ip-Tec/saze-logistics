@@ -285,7 +285,7 @@ export default function RiderCurrentOrderPage() {
 
   if (!currentOrder) {
     return (
-      <div className="text-gray-700 text-center flex w-full h-screen justify-center items-center p-4">
+      <div className="text-gray-700 text-center flex flex-col w-full h-screen justify-center items-center p-4">
         <p className="text-2xl font-semibold">
           You do not have a current order assigned.
         </p>

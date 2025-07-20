@@ -187,7 +187,7 @@ export default function RiderHistoryPage() {
   if (orders.length === 0 && !isLoading) {
     // Show empty state if no orders found after loading
     return (
-      <div className="text-gray-700 text-center flex w-full h-screen justify-center items-center p-4">
+      <div className="text-gray-700 text-center flex flex-col w-full h-screen justify-center items-center p-4">
         <p className="text-2xl font-semibold">No past deliveries found.</p>
         <p className="text-md mt-2">
           Start accepting new orders to build your history!

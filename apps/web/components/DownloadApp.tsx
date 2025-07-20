@@ -1,39 +1,30 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-import MockUp from "@/public/images/mockup.png";
+import playstore from "@/public/images/mockup.png";
+import appstore from "@/public/images/mockup.png";
 
-/*
- * Download App
- *
- * TODO: add the mockup image off the add
- *  add a Google and Apple download button
- *  make the mockup look like a 3D image
- *  when user click on the download it take the to the store to install the app
- *
- */
 const DownloadApp = () => {
   return (
-    <div
-      className={`w-full h-full flex items-center justify-evenly py-12 text-white bg-gradient-to-br from-yellow-400 to-blue-500`}
-    >
-      <div className="rounded-lg p-8 text-center">
-        <h3 className="text-3xl font-bold mb-4">Download the app</h3>
-        <p className="text-lg mb-8">
-          Order anything and track it in real time with the Sazee app.
-        </p>
-        <div className="flex items-center justify-center space-x-4">
-          <button className="bg-gradient-to-br from-yellow-200 to-blue-500 px-6 py-3 rounded-lg shadow-md hover:bg-gray-200 transition duration-300 cursor-pointer">
-            Google Download
-          </button>
-          <button className="bg-gradient-to-br from-yellow-200 to-blue-500 px-6 py-3 rounded-lg shadow-md hover:bg-gray-200 transition duration-300 cursor-pointer">
-            Apple Download
-          </button>
-        </div>
+    <section className="py-16 w-full px-8 bg-gray-100 text-center">
+      <h2 className="text-4xl font-extrabold text-gray-800 mb-4">
+        Download the Sazee Logistics App
+      </h2>
+      <p className="text-gray-600 max-w-xl mx-auto mb-8">
+        Book shipments, track your deliveries in real-time, and manage logistics
+        from anywhere with our mobile app. Available on iOS and Android.
+      </p>
+
+      <div className="flex justify-center space-x-4">
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          <Image src={playstore} alt="Get it on Google Play" width={150} />
+        </a>
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          <Image src={appstore} alt="Download on the App Store" width={150} />
+        </a>
       </div>
-      <div className="flex flex-col items-center justify-center max-h-1/2">
-        <Image src={MockUp} alt="Sazee app icon" className="w-auto h-auto" />
-      </div>
-    </div>
+    </section>
   );
 };
 
