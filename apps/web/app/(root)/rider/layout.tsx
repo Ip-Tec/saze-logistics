@@ -4,7 +4,7 @@
 import React, { useEffect } from "react";
 import { supabase } from "@shared/supabaseClient";
 import GlassComponent from "@/components/ui/glass";
-import RiderSidebar from "@/components/rider/RiderSidebar";
+import RiderNavigation from "@/components/rider/RiderNavigation";
 import { ShieldCheck, HeartPulse, HardHat } from "lucide-react";
 
 export default function RiderLayout({
@@ -37,7 +37,7 @@ export default function RiderLayout({
   }, []);
 
   return (
-    <div className="md:p-0 h-full w-full bg-gradient-to-br from-blue-100 via-gray-50 to-green-50 flex items-center justify-center relative !overflow-hidden">
+    <div className="flex w-full h-full p-0 m-0 overflow-hidden">
       {/* Winding road path with 3 bends */}
       {/* Sample SVG tree (simplified) */}
       <svg
@@ -99,12 +99,16 @@ export default function RiderLayout({
         </div>
       </div>
 
-      <GlassComponent className="!m-0 !w-full !h-full">
-        <div className="md:flex w-full h-full p-0 m-0">
-          <RiderSidebar />
-          <main className="flex p-4 w-full overflow-y-auto">{children}</main>
-        </div>
+      <GlassComponent className="!bg-green-600/10 z-10 w-full flex flex-col h-full !mt-0 pt-16 mb-16 md:mb-0">
+        {/* <div className="md:flex w-full h-full p-0 m-0"> */}
+        {/* <main className="flex p-4 w-full overflow-y-auto pb-20 md:pb-4"> */}
+          {children}
+        {/* </main> */}
+        {/* </div> */}
       </GlassComponent>
+      <div className="!absolute !bottom-0 !left-0 w-full !fixed z-10">
+        <RiderNavigation />
+      </div>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import AnythingDelivered from "@/components/AnythingDelivered";
 
 export default function Home() {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center my-[24px]">
+    <div className="w-full h-full flex flex-col items-center justify-center">
       {/* Only wrap if your components need the auth context */}
       <AuthProvider>
         <Header />
