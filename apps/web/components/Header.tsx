@@ -19,12 +19,12 @@ const Header = () => {
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6">
           <Link
-            href="/track"
+            href="/auth"
             className="text-white hover:text-yellow-100 font-medium"
           >
-            Track Package
+            Join Us
           </Link>
-          <Link
+          {/* <Link
             href="/services"
             className="text-white hover:text-yellow-100 font-medium"
           >
@@ -41,7 +41,7 @@ const Header = () => {
             className="text-white hover:text-yellow-100 font-medium"
           >
             Contact
-          </Link>
+          </Link> */}
         </nav>
 
         {/* Mobile Menu Button */}
@@ -59,24 +59,7 @@ const Header = () => {
           >
             Track Package
           </Link>
-          <Link
-            href="#services"
-            className="text-white hover:text-yellow-100 font-medium"
-          >
-            Services
-          </Link>
-          <Link
-            href="/auth"
-            className="text-white hover:text-yellow-100 font-medium"
-          >
-            Become a Partner
-          </Link>
-          <Link
-            href="#contact"
-            className="text-white hover:text-yellow-100 font-medium"
-          >
-            Contact
-          </Link>
+        
         </nav>
       )}
     </header>
