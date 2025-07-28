@@ -97,7 +97,7 @@ export default function UserHomePage() {
   const dropoffRefs = useRef<Array<google.maps.places.Autocomplete | null>>([]);
 
   // --- Hooks for Data and Logic ---
-  const { pricePerKm, isPriceConfigLoading } = useDeliveryPricing(isLoaded);
+  const { pricing, isPriceConfigLoading } = useDeliveryPricing(isLoaded);
   const { riders, nearestRiderInfo, setFetchedRiders, setNearestRiderInfo } =
     useRiderLocations(
       isLoaded,
@@ -107,7 +107,12 @@ export default function UserHomePage() {
 
   // Effect to manage rider selection dropdown visibility based on nearestRiderInfo
   useEffect(() => {
-    console.log("Rider selection effect running. Riders:", riders.length, "Nearest:", nearestRiderInfo.rider);
+    console.log(
+      "Rider selection effect running. Riders:",
+      riders.length,
+      "Nearest:",
+      nearestRiderInfo.rider
+    );
     if (!riders.length || !packages[0]?.pickup?.coords) {
       setNearestRiderInfo({ rider: null, distanceKm: null });
       setShowRiderSelectionDropdown(false);
@@ -134,7 +139,7 @@ export default function UserHomePage() {
     packages[0]?.pickup?.coords,
     nearestRiderInfo.rider,
     nearestRiderInfo.distanceKm,
-    setNearestRiderInfo
+    setNearestRiderInfo,
   ]);
 
   // --- Geocoding and Map Interaction Callbacks ---
@@ -153,12 +158,15 @@ export default function UserHomePage() {
 
   // Diagnostic log for isLoaded state
   useEffect(() => {
-    console.log(`useLoadScript: isLoaded changed to ${isLoaded}, loadError: ${loadError?.message}`);
+    console.log(
+      `useLoadScript: isLoaded changed to ${isLoaded}, loadError: ${loadError?.message}`
+    );
     if (loadError) {
-      toast.error(`Map loading error: ${loadError.message}. Check API key and network.`);
+      toast.error(
+        `Map loading error: ${loadError.message}. Check API key and network.`
+      );
     }
   }, [isLoaded, loadError]);
-
 
   useEffect(() => {
     console.log("Fetching user and geolocation.");
@@ -194,7 +202,9 @@ export default function UserHomePage() {
     async (coords: LatLng): Promise<AddressDetail | null> => {
       if (!geocoderRef.current) {
         toast.error("Geocoder not ready.");
-        console.error("Attempted reverseGeocode but geocoderRef.current is null.");
+        console.error(
+          "Attempted reverseGeocode but geocoderRef.current is null."
+        );
         return null;
       }
       try {
@@ -271,10 +281,10 @@ export default function UserHomePage() {
                 : dropoffRefs?.current[packageIndex];
 
             if (inputRef) {
-                const inputElement = (inputRef as any).i || (inputRef as any).A;
-                if (inputElement && inputElement.value !== undefined) {
-                    inputElement.value = ad.text;
-                }
+              const inputElement = (inputRef as any).i || (inputRef as any).A;
+              if (inputElement && inputElement.value !== undefined) {
+                inputElement.value = ad.text;
+              }
             }
             return newPkgs;
           });
@@ -302,29 +312,25 @@ export default function UserHomePage() {
       setPickingLocationFor({ packageIndex, field });
       setIsManuallySettingUserLoc(false);
       toast.info(`Click map for ${field} of Package #${packageIndex + 1}.`);
-      console.log(`Picking location for Package #${packageIndex + 1}, field: ${field}`);
+      console.log(
+        `Picking location for Package #${packageIndex + 1}, field: ${field}`
+      );
     },
     []
   );
 
-  const addPackage = useCallback(
-    () => {
-      setPackages((pkgs) => [
-        ...pkgs,
-        { pickup: null, dropoff: null, quantity: 1, description: "" },
-      ]);
-      toast.info("Added a new package slot.");
-    },
-    []
-  );
+  const addPackage = useCallback(() => {
+    setPackages((pkgs) => [
+      ...pkgs,
+      { pickup: null, dropoff: null, quantity: 1, description: "" },
+    ]);
+    toast.info("Added a new package slot.");
+  }, []);
 
-  const removePackage = useCallback(
-    (i: number) => {
-      setPackages((pkgs) => pkgs.filter((_, j) => j !== i));
-      toast.info(`Removed Package #${i + 1}.`);
-    },
-    []
-  );
+  const removePackage = useCallback((i: number) => {
+    setPackages((pkgs) => pkgs.filter((_, j) => j !== i));
+    toast.info(`Removed Package #${i + 1}.`);
+  }, []);
 
   const handlePackageChange = useCallback(
     (
@@ -343,16 +349,17 @@ export default function UserHomePage() {
 
   // Calculate order details based on the first package
   const calculatedOrderDetails: CalculatedOrderDetails = useMemo(() => {
-    console.log("Calculating order details...");
+    console.log("Calculating order details with tiered pricing...");
     if (
       packages.length > 0 &&
       packages[0].pickup &&
       packages[0].dropoff &&
-      pricePerKm !== null &&
+      // Check if BOTH low and high prices are available from the DB
+      pricing.low !== null &&
+      pricing.high !== null &&
       isLoaded &&
       typeof window.google !== "undefined" &&
-      window.google.maps &&
-      window.google.maps.geometry
+      window.google.maps?.geometry
     ) {
       const pickupCoords = packages[0].pickup.coords;
       const dropoffCoords = packages[0].dropoff.coords;
@@ -362,8 +369,13 @@ export default function UserHomePage() {
           new window.google.maps.LatLng(dropoffCoords.lat, dropoffCoords.lng)
         );
       const distanceInKm = distanceInMeters / 1000;
-      const totalPrice = distanceInKm * pricePerKm;
-      console.log(`Distance: ${distanceInKm.toFixed(2)} km, Price: ${totalPrice.toFixed(2)}`);
+      const effectivePricePerKm =
+        distanceInKm <= pricing.threshold ? pricing.low : pricing.high;
+
+      const totalPrice = distanceInKm * effectivePricePerKm;
+      console.log(
+        `Distance: ${distanceInKm.toFixed(2)} km, Price: ${totalPrice.toFixed(2)}`
+      );
       return {
         distanceKm: parseFloat(distanceInKm.toFixed(2)),
         totalPrice: parseFloat(totalPrice.toFixed(2)),
@@ -371,7 +383,7 @@ export default function UserHomePage() {
     }
     console.log("Order details not fully calculated yet.");
     return { distanceKm: null, totalPrice: null };
-  }, [packages, pricePerKm, isLoaded]);
+  }, [packages, pricing, isLoaded]);
 
   const handleRiderSelectionChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -410,8 +422,14 @@ export default function UserHomePage() {
       toast.error("Ensure all packages have pickup/dropoff locations set.");
       return;
     }
-    if (pricePerKm === null || calculatedOrderDetails.totalPrice === null) {
-      toast.error("Price calculation error. Cannot book. Please try again later.");
+    if (
+      pricing.low === null ||
+      pricing.high === null ||
+      calculatedOrderDetails.totalPrice === null
+    ) {
+      toast.error(
+        "Price calculation error. Cannot book. Please try again later."
+      );
       return;
     }
 
@@ -468,7 +486,14 @@ export default function UserHomePage() {
     }
   };
 
-  console.log("Rendering UserHomePage. isLoaded:", isLoaded, "loadError:", loadError?.message, "geocoderRef.current:", geocoderRef.current);
+  console.log(
+    "Rendering UserHomePage. isLoaded:",
+    isLoaded,
+    "loadError:",
+    loadError?.message,
+    "geocoderRef.current:",
+    geocoderRef.current
+  );
 
   // If API key is explicitly missing from the environment
   if (!apiKey)
@@ -478,13 +503,14 @@ export default function UserHomePage() {
         <code className="font-mono">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code>.
       </div>
     );
-  
+
   // If useLoadScript reports a loading error
   if (loadError)
     return (
       <div className="flex items-center justify-center h-screen p-4 text-red-600 bg-red-50 text-center">
         Error loading Google Maps: {loadError.message}.<br />
-        Please check your API key, internet connection, and Google Cloud Console settings (enabled APIs, restrictions).
+        Please check your API key, internet connection, and Google Cloud Console
+        settings (enabled APIs, restrictions).
       </div>
     );
 
@@ -514,12 +540,16 @@ export default function UserHomePage() {
 
   // If all checks pass, render the main UI
   return (
-    <div className="mb-24 md:mb-0 relative flex flex-col md:flex-row h-screen w-full font-sans"> {/* Added pb-[72px] for mobile bottom navbar previously, now using mb-24 */}
+    <div className="mb-24 md:mb-0 relative flex flex-col md:flex-row h-screen w-full font-sans">
+      {" "}
+      {/* Added pb-[72px] for mobile bottom navbar previously, now using mb-24 */}
       <ToastContainer position="top-right" autoClose={5000} />
-
       <MapContainer
         mapCenter={mapCenter}
-        onMapLoad={(map) => { mapRef.current = map; console.log("GoogleMap instance loaded into ref."); }}
+        onMapLoad={(map) => {
+          mapRef.current = map;
+          console.log("GoogleMap instance loaded into ref.");
+        }}
         userLoc={userLoc}
         riders={riders}
         nearestRiderInfo={nearestRiderInfo}
@@ -529,7 +559,6 @@ export default function UserHomePage() {
         pickingLocationFor={pickingLocationFor}
         handleSetUserLocationManually={handleSetUserLocationManually}
       />
-
       <div className="md:w-1/3 bg-gray-50 p-4 overflow-y-auto h-1/2 md:h-full shadow-lg">
         <h2 className="text-2xl font-bold mb-4 text-gray-700">
           Request Delivery
@@ -539,7 +568,7 @@ export default function UserHomePage() {
             Loading delivery rate...
           </p>
         )}
-        {pricePerKm === null && !isPriceConfigLoading && (
+        {pricing.high === null || pricing.low === null && !isPriceConfigLoading && (
           <p className="text-sm text-red-600 mb-2">
             Delivery rate not available. Booking disabled.
           </p>
@@ -572,26 +601,26 @@ export default function UserHomePage() {
           disabled={
             isBooking ||
             packages.some((p) => !p.pickup || !p.dropoff) ||
-            pricePerKm === null ||
+            pricing.low === null ||
+            pricing.high === null ||
             isPriceConfigLoading
           }
           className="w-full !bg-orange-600 hover:!bg-orange-700 !py-3 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-4"
         >
           {isPriceConfigLoading
             ? "Loading Rate..."
-            : pricePerKm === null
+            : pricing.low === null || pricing.high === null
               ? "Rate Unavailable"
               : isBooking
                 ? "Proceeding to Payment..."
                 : "Review & Confirm"}
         </GlassButton>
       </div>
-
       {showSummary && (
         <BookingSummaryModal
           packages={packages}
           calculatedOrderDetails={calculatedOrderDetails}
-          pricePerKm={pricePerKm}
+          pricePerKm={pricing}
           riders={riders}
           nearestRiderInfo={nearestRiderInfo}
           showRiderSelectionDropdown={showRiderSelectionDropdown}

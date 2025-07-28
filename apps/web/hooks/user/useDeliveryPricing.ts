@@ -3,10 +3,15 @@ import { useState, useEffect } from "react";
 import { supabase } from "@shared/supabaseClient";
 import { toast } from "react-toastify";
 
-const PRICE_PER_KM_CONFIG_KEY = "price_per_km";
+const KEYS = ["price_per_km_low", "price_per_km_high", "distance_threshold_km"];
 
 export const useDeliveryPricing = (isLoaded: boolean) => {
-  const [pricePerKm, setPricePerKm] = useState<number | null>(null);
+  const [pricing, setPricing] = useState<{
+    low: number | null;
+    high: number | null;
+    threshold: number;
+  }>({ low: null, high: null, threshold: 3 });
+
   const [isPriceConfigLoading, setIsPriceConfigLoading] = useState(true);
 
   useEffect(() => {
@@ -16,41 +21,39 @@ export const useDeliveryPricing = (isLoaded: boolean) => {
       try {
         const { data, error } = await supabase
           .from("config")
-          .select("value")
-          .eq("key", PRICE_PER_KM_CONFIG_KEY)
-          .single();
-        if (error) {
-          if (error.code === "PGRST116") {
-            toast.warn(
-              `Price/km config (key: ${PRICE_PER_KM_CONFIG_KEY}) not found. Booking disabled.`
-            );
-          } else {
-            throw error;
-          }
-          setPricePerKm(null);
-        } else if (data && data.value) {
-          const parsedPrice = parseFloat(data.value);
-          if (!isNaN(parsedPrice)) {
-            setPricePerKm(parsedPrice);
-          } else {
-            toast.error(`Invalid price/km value. Booking disabled.`);
-            setPricePerKm(null);
-          }
-        } else {
-          toast.warn(`Price/km config not found. Booking disabled.`);
-          setPricePerKm(null);
+          .select("key, value")
+          .in("key", KEYS);
+
+        if (error || !data) {
+          toast.error(`Error fetching pricing configs`);
+          setIsPriceConfigLoading(false);
+          return;
         }
+
+        const priceMap: Record<string, number> = {};
+        for (const item of data) {
+          const parsed = parseFloat(item.value);
+          if (isNaN(parsed)) {
+            toast.error(`Invalid value for ${item.key}`);
+            continue;
+          }
+          priceMap[item.key] = parsed;
+        }
+
+        setPricing({
+          low: priceMap["price_per_km_low"] ?? null,
+          high: priceMap["price_per_km_high"] ?? null,
+          threshold: priceMap["distance_threshold_km"] ?? 3,
+        });
       } catch (err: any) {
-        toast.error(
-          `Error fetching price/km: ${err.message}. Booking disabled.`
-        );
-        setPricePerKm(null);
+        toast.error(`Error loading config: ${err.message}`);
       } finally {
         setIsPriceConfigLoading(false);
       }
     }
+
     fetchPriceConfig();
   }, [isLoaded]);
 
-  return { pricePerKm, isPriceConfigLoading };
+  return { pricing, isPriceConfigLoading };
 };

@@ -2,17 +2,21 @@
 "use client";
 
 import React from "react";
-import {
-  Package,
-  CalculatedOrderDetails,
-  Rider,
-} from "@/app/(root)/user/page"; // Import types from main page
-import RiderSelection from "./RiderSelection"; // Import the new RiderSelection component
+import { Package, CalculatedOrderDetails, Rider } from "@/app/(root)/user/page";
+import RiderSelection from "./RiderSelection";
+
+// -> Define the pricing prop type
+interface PricingInfo {
+  low: number | null;
+  high: number | null;
+  threshold: number;
+}
 
 interface BookingSummaryModalProps {
   packages: Package[];
   calculatedOrderDetails: CalculatedOrderDetails;
-  pricePerKm: number | null;
+  // -> Replace pricePerKm with the pricing object
+  pricing: PricingInfo;
   riders: Rider[];
   nearestRiderInfo: { rider: Rider | null; distanceKm: number | null };
   showRiderSelectionDropdown: boolean;
@@ -28,7 +32,8 @@ interface BookingSummaryModalProps {
 const BookingSummaryModal: React.FC<BookingSummaryModalProps> = ({
   packages,
   calculatedOrderDetails,
-  pricePerKm,
+  // -> Use the new pricing prop
+  pricing,
   riders,
   nearestRiderInfo,
   showRiderSelectionDropdown,
@@ -40,6 +45,14 @@ const BookingSummaryModal: React.FC<BookingSummaryModalProps> = ({
   isPriceConfigLoading,
   CLOSE_RIDER_THRESHOLD_KM,
 }) => {
+  // -> Calculate the effective rate from the final price and distance
+  const effectivePricePerKm =
+    calculatedOrderDetails.totalPrice !== null &&
+    calculatedOrderDetails.distanceKm && // ensure distance is not 0
+    calculatedOrderDetails.distanceKm > 0
+      ? calculatedOrderDetails.totalPrice / calculatedOrderDetails.distanceKm
+      : null;
+
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white w-full md:w-1/2 lg:w-1/3 max-h-[90vh] overflow-y-auto rounded-xl p-6 shadow-2xl flex flex-col">
@@ -55,12 +68,16 @@ const BookingSummaryModal: React.FC<BookingSummaryModalProps> = ({
           </p>
           <p className="text-sm">
             <strong className="text-gray-700">Rate:</strong>{" "}
-            {pricePerKm !== null ? `N${pricePerKm.toFixed(2)}/km` : "N/A"}
+            {/* -> Display the calculated effective rate */}
+            {effectivePricePerKm !== null
+              ? `₦${effectivePricePerKm.toFixed(2)}/km`
+              : "N/A"}
           </p>
           <p className="text-lg font-semibold">
             <strong className="text-gray-700">Est. Total:</strong>{" "}
+            {/* This part remains the same and is correct */}
             {calculatedOrderDetails.totalPrice !== null
-              ? `N${calculatedOrderDetails.totalPrice.toFixed(2)}`
+              ? `₦${calculatedOrderDetails.totalPrice.toFixed(2)}`
               : "Calculating..."}
           </p>
         </div>
@@ -75,6 +92,7 @@ const BookingSummaryModal: React.FC<BookingSummaryModalProps> = ({
           CLOSE_RIDER_THRESHOLD_KM={CLOSE_RIDER_THRESHOLD_KM}
         />
 
+        {/* ... rest of your package mapping JSX ... */}
         <div className="text-sm text-gray-500 mb-3">Packages:</div>
         <div className="space-y-2 mb-4 flex-grow overflow-y-auto max-h-[30vh]">
           {packages.map((pkg, i) => (
@@ -102,6 +120,7 @@ const BookingSummaryModal: React.FC<BookingSummaryModalProps> = ({
             </div>
           ))}
         </div>
+
         <div className="flex justify-end gap-3 mt-auto pt-4 border-t">
           <button
             onClick={() => setShowSummary(false)}
@@ -117,10 +136,10 @@ const BookingSummaryModal: React.FC<BookingSummaryModalProps> = ({
               (showRiderSelectionDropdown &&
                 !manuallySelectedRider &&
                 !nearestRiderInfo.rider &&
-                riders.length > 0 &&
-                riders.length > 0) || // Redundant riders.length > 0
-              (riders.length === 0 && !isPriceConfigLoading) ||
-              pricePerKm === null ||
+                riders.length > 0) ||
+              // -> Update the pricing check for the disabled state
+              pricing.low === null ||
+              pricing.high === null ||
               isPriceConfigLoading
             }
             className="px-5 py-2 cursor-pointer bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-wait"
