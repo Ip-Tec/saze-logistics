@@ -1,3 +1,4 @@
+// app/web/app/(root)/admin/settings/page.tsx
 'use client'
 
 import { useEffect, useState } from 'react'
