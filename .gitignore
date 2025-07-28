@@ -1,10 +1,14 @@
 # files
+.zip
+*.zip
 .vscode
 .env.local
 
 # Folders
 node_modules/
-apps/web/.turbo
+/saze-logistic
+apps/web/.turbo/
+
 
 .turbo/cache/3b202a9a7d9a675a-meta.json
 .turbo/daemon/e96b1bdc54f7b0b2-turbo.log.2025-06-11

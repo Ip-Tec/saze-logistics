@@ -33,7 +33,7 @@ const HeroSection = () => {
           <div className="flex">
             <Link
               href={"/order/"}
-              className="mt-10 px-6 py-3 bg-orange-400 text-white rounded-lg shadow-md hover:bg-orange-500 font-semibold"
+              className="mt-10 px-6 py-3 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600 font-semibold"
             >
               SHIP NOW
             </Link>
