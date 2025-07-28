@@ -1,78 +1,94 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { supabase } from '@shared/supabaseClient'
-import { Bell } from 'lucide-react'
-import { toast } from 'react-toastify'
+import { useEffect, useState } from "react";
+import { supabase } from "@shared/supabaseClient";
+import { Bell } from "lucide-react";
+import { toast } from "react-toastify";
 
 type Notification = {
-  id: string
-  title: string
-  message: string
-  read: boolean
-  created_at: string
-}
+  id: string;
+  user_id: string; // Add this
+  type: string | null; // Add this, to match your DB 'type' column
+  title: string;
+  body: string; // Change from 'message' to 'body'
+  read: boolean;
+  created_at: string;
+};
 
-export default function NotificationBell({ userId, role }: { userId: string; role: string }) {
-  const [notifications, setNotifications] = useState<Notification[]>([])
-  const [unreadCount, setUnreadCount] = useState(0)
-  const [open, setOpen] = useState(false)
+export default function NotificationBell({
+  userId,
+  role,
+}: {
+  userId: string;
+  role: string;
+}) {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [open, setOpen] = useState(false);
 
   const fetchNotifications = async () => {
     const { data, error } = await supabase
-      .from('notifications')
-      .select('*')
-      .eq('user_id', userId)
-      .eq('role', role)
-      .order('created_at', { ascending: false })
+      .from("notifications")
+      .select("*")
+      .eq("user_id", userId)
+      .eq("role", role)
+      .order("created_at", { ascending: false });
 
     if (error) {
-      toast.error('Failed to fetch notifications')
+      toast.error("Failed to fetch notifications");
     } else {
-      setNotifications(data || [])
-      setUnreadCount((data || []).filter(n => !n.read).length)
+      setNotifications(data || []);
+      setUnreadCount((data || []).filter((n) => !n.read).length);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchNotifications()
+    fetchNotifications();
 
     const channel = supabase
-      .channel('realtime:notifications')
+      .channel("realtime:notifications")
       .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'notifications' },
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "notifications" },
         (payload) => {
-          const newNotification = payload.new as Notification
-          if (newNotification.user_id === userId && newNotification.role === role) {
-            setNotifications(prev => [newNotification, ...prev])
-            setUnreadCount(prev => prev + 1)
+          const newNotification = payload.new as Notification;
+          if (
+            newNotification.user_id === userId &&
+            newNotification.type === role
+          ) {
+            setNotifications((prev) => [newNotification, ...prev]);
+            setUnreadCount((prev) => prev + 1);
           }
         }
       )
-      .subscribe()
+      .subscribe();
 
     return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [])
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   const markAllAsRead = async () => {
     const { error } = await supabase
-      .from('notifications')
+      .from("notifications")
       .update({ read: true })
-      .eq('user_id', userId)
-      .eq('role', role)
+      .eq("user_id", userId)
+      .eq("role", role);
 
     if (!error) {
-      setNotifications(notifications.map(n => ({ ...n, read: true })))
-      setUnreadCount(0)
+      setNotifications(notifications.map((n) => ({ ...n, read: true })));
+      setUnreadCount(0);
     }
-  }
+  };
 
   return (
     <div className="relative">
-      <button onClick={() => { setOpen(!open); markAllAsRead() }}>
+      <button
+        onClick={() => {
+          setOpen(!open);
+          markAllAsRead();
+        }}
+      >
         <Bell />
         {unreadCount > 0 && (
           <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
@@ -90,7 +106,7 @@ export default function NotificationBell({ userId, role }: { userId: string; rol
               {notifications.map((n) => (
                 <li key={n.id} className="border-b py-1 text-sm">
                   <strong>{n.title}</strong>
-                  <p>{n.message}</p>
+                  <p>{n.body}</p>
                 </li>
               ))}
             </ul>
@@ -98,5 +114,5 @@ export default function NotificationBell({ userId, role }: { userId: string; rol
         </div>
       )}
     </div>
-  )
+  );
 }

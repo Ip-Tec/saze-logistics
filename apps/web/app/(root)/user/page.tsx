@@ -9,6 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Libraries } from "@react-google-maps/api";
 import { useRouter } from "next/navigation"; // Import useRouter
+import { sendNotification } from "@/utils/sendNotification";
 
 // Import your new components and hooks
 import MapContainer from "@/components/user/MapContainer";
@@ -476,11 +477,53 @@ export default function UserHomePage() {
     };
 
     try {
+      // Attempt to send notification to the rider if one is assigned
+      if (finalRiderId) {
+        console.log(
+          `Sending notification to rider ${finalRiderId} for new order.`
+        );
+        const notificationResult = await sendNotification({
+          receiver_id: finalRiderId, // Rider's ID
+          title: "New Delivery Request!",
+          body: `A new delivery from ${packages[0]?.pickup?.text || "your area"} to ${packages[0]?.dropoff?.text || "a destination"} awaits.`,
+          type: "info", // or 'new_order' if you expand your types
+          metadata: {
+            orderType: "new_request",
+            userId: userId, // Include user's ID for rider context
+            pickupLocation: packages[0]?.pickup?.text,
+            dropoffLocation: packages[0]?.dropoff?.text,
+            packageDescription: packages[0]?.description,
+            totalAmount: calculatedOrderDetails.totalPrice,
+            distanceKm: calculatedOrderDetails.distanceKm,
+          },
+        });
+
+        if (notificationResult.success) {
+          toast.success("Rider notified about your request!");
+          console.log("Notification sent to rider:", notificationResult.data);
+        } else {
+          toast.warn(
+            "Could not notify the rider automatically. They will see the order soon."
+          );
+          console.error(
+            "Failed to send notification to rider:",
+            notificationResult.error
+          );
+        }
+      } else {
+        toast.info(
+          "No rider assigned yet. Your order will be available for pickup."
+        );
+      }
+
       localStorage.setItem("pendingOrderDetails", JSON.stringify(orderData));
       router.push("/user/checkout");
       console.log("Order details stored, redirecting to checkout.");
     } catch (error) {
-      console.error("Error storing order details for checkout:", error);
+      console.error(
+        "Error storing order details for checkout or sending notification:",
+        error
+      );
       toast.error("Could not proceed to checkout. Please try again.");
       setIsBooking(false);
     }
@@ -568,11 +611,12 @@ export default function UserHomePage() {
             Loading delivery rate...
           </p>
         )}
-        {pricing.high === null || pricing.low === null && !isPriceConfigLoading && (
-          <p className="text-sm text-red-600 mb-2">
-            Delivery rate not available. Booking disabled.
-          </p>
-        )}
+        {pricing.high === null ||
+          (pricing.low === null && !isPriceConfigLoading && (
+            <p className="text-sm text-red-600 mb-2">
+              Delivery rate not available. Booking disabled.
+            </p>
+          ))}
 
         {packages.map((pkg, i) => (
           <PackageForm
