@@ -620,7 +620,7 @@ export default function UserHomePage() {
         <BookingSummaryModal
           packages={packages}
           calculatedOrderDetails={calculatedOrderDetails}
-          pricePerKm={pricing}
+          pricing={pricing}
           riders={riders}
           nearestRiderInfo={nearestRiderInfo}
           showRiderSelectionDropdown={showRiderSelectionDropdown}
