@@ -20,9 +20,9 @@ const DownloadApp = () => {
         <a href="#" target="_blank" rel="noopener noreferrer">
           <Image src={playstore} alt="Get it on Google Play" width={150} />
         </a>
-        <a href="#" target="_blank" rel="noopener noreferrer">
+        {/*  <a href="#" target="_blank" rel="noopener noreferrer">
           <Image src={appstore} alt="Download on the App Store" width={150} />
-        </a>
+        </a>  */}
       </div>
     </section>
   );
