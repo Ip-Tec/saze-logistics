@@ -50,19 +50,19 @@ export default function AuthPage() {
 
             <div className="space-y-4">
               <Link
-                href="/auth/register/user"
+                href="/auth/register?role=user"
                 className="block w-full text-center bg-gray-100 py-4 rounded-xl hover:bg-gray-200 transition shadow-sm font-medium"
               >
                 👤 User
               </Link>
               <Link
-                href="/auth/register/rider"
+                href="/auth/register?role=rider"
                 className="block w-full text-center bg-gray-100 py-4 rounded-xl hover:bg-gray-200 transition shadow-sm font-medium"
               >
                 🛵 Rider
               </Link>
               <Link
-                href="/auth/register/vendor"
+                href="/auth/register?role=vendor"
                 className="block w-full text-center bg-gray-100 py-4 rounded-xl hover:bg-gray-200 transition shadow-sm font-medium"
               >
                 🏪 Vendor
