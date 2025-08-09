@@ -30,7 +30,10 @@ export default function UserNavbar() {
           {/* <Link href="/user/cart" className="hover:text-primary">
             Cart
           </Link> */}
-          <Link href="/user/category" className="hover:text-primary">
+          {/* <Link href="/user/category" className="hover:text-primary">
+            Vendors
+          </Link> */}
+          <Link href="/user/vendors" className="hover:text-primary">
             Vendors
           </Link>
           <Link href="/user/profile" className="hover:text-primary">
@@ -59,8 +62,15 @@ export default function UserNavbar() {
             <ListOrdered size={20} /> {/* Using ListOrdered icon for orders */}
             <span>Orders</span>
           </Link>
-          <Link
+          {/* <Link
             href="/user/category"
+            className="flex flex-col items-center text-gray-700 hover:text-orange-600"
+          >
+            <ClipboardList size={20} />
+            <span>Vendor</span>
+          </Link> */}
+          <Link
+            href="/user/vendors"
             className="flex flex-col items-center text-gray-700 hover:text-orange-600"
           >
             <ClipboardList size={20} />

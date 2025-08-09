@@ -86,6 +86,7 @@ export interface Vendor extends BaseUser {
   cuisineType: string[];
   businessRegistrationNumber: string;
   isApproved: boolean;
+  logo_url?: string;
   menuItems?: MenuItem[];
   openingHours?: OpeningHours;
   rating?: number | string;
