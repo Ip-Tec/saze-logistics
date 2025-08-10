@@ -1,14 +1,10 @@
 import { supabaseFE } from "@shared/supabaseClient";
-
 import { NextRequest, NextResponse } from "next/server";
 
-type Context = {
-  params: {
-    vendorId: string;
-  };
-};
-
-export async function GET(req: NextRequest, { params }: Context) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { vendorId: string } }
+) {
   const { vendorId } = params;
 
   const { data, error } = await supabaseFE
