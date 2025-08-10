@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { vendorId: string } }
+  { params }: { params: Promise<{ vendorId: string }> }
 ) {
-  const { vendorId } = params;
+  const { vendorId } = await params;
 
   const { data, error } = await supabaseFE
     .from("profiles")
