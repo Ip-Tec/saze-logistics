@@ -1,12 +1,15 @@
-import { NextResponse, NextRequest } from "next/server";
-import { supabaseFE  } from "@shared/supabaseClient";
+import { supabaseFE } from "@shared/supabaseClient";
 
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  req: NextRequest,
-  context: { params: { vendorId: string } }
-) {
-  const { vendorId } = context.params;
+type Context = {
+  params: {
+    vendorId: string;
+  };
+};
+
+export async function GET(req: NextRequest, { params }: Context) {
+  const { vendorId } = params;
 
   const { data, error } = await supabaseFE
     .from("profiles")
