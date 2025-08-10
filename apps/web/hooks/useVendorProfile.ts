@@ -12,11 +12,11 @@ import { Vendor } from "@shared/types";
 export interface VendorProfile extends Vendor {
   id: string;
   name: string;
-  description: string | null;
-  address: string | null;
-  phone: string | null;
-  logo_url: string | null;
-  banner_url: string | null;
+  description: string | undefined;
+  address: string | undefined;
+  phone: string | undefined;
+  logo_url: string | undefined;
+  banner_url: string | undefined;
   email: string;
 }
 
@@ -275,12 +275,12 @@ export function useVendorProfile() {
         return {
           ...prevProfile,
           ...profileUpdateData,
-          // Ensure nulls are handled correctly after update
-          description: profileUpdateData.description,
-          address: profileUpdateData.address,
-          phone: profileUpdateData.phone,
-          logo_url: profileUpdateData.logo_url ?? null,
-          banner_url: profileUpdateData.banner_url ?? null,
+          // Ensure undefined is used for optional fields
+          description: profileUpdateData.description ?? undefined,
+          address: profileUpdateData.address ?? undefined,
+          phone: profileUpdateData.phone ?? undefined,
+          logo_url: profileUpdateData.logo_url ?? undefined,
+          banner_url: profileUpdateData.banner_url ?? undefined,
         };
       });
 
