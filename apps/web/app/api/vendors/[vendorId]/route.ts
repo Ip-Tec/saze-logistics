@@ -1,14 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { supabaseFE  } from "@shared/supabaseClient";
 
 export async function GET(
-  req: Request,
-  { params }: { params: { vendorId: string } }
+  req: NextRequest,
+  context: { params: { vendorId: string } }
 ) {
+  const { vendorId } = context.params;
   const { data, error } = await supabaseFE
     .from("profiles")
     .select("*")
-    .eq("id", params.vendorId)
+    .eq("id", vendorId)
     .single();
 
   if (error) {
