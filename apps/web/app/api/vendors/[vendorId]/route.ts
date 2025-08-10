@@ -1,11 +1,13 @@
 import { NextResponse, NextRequest } from "next/server";
 import { supabaseFE  } from "@shared/supabaseClient";
 
+
 export async function GET(
   req: NextRequest,
   context: { params: { vendorId: string } }
 ) {
   const { vendorId } = context.params;
+
   const { data, error } = await supabaseFE
     .from("profiles")
     .select("*")
